@@ -3,11 +3,11 @@
 find_package(Qt5Network REQUIRED)
 
 set(SRCS
-
+    github_api.cpp
     )
 
 set(HEADERS
-    
+    github_api.hpp
     )
 
 #set of file to be moced
