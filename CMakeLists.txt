@@ -3,10 +3,12 @@
 find_package(Qt5Network REQUIRED)
 
 set(SRCS
+    connection.cpp
     github_api.cpp
     )
 
 set(HEADERS
+    connection.hpp
     github_api.hpp
     )
 
