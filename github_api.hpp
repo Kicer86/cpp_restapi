@@ -25,6 +25,7 @@
 // https://developer.github.com/v3/
 
 #include <string>
+#include <memory>
 
 #include "connection.hpp"
 
@@ -35,8 +36,8 @@ class GitHubApi
         GitHubApi(const GitHubApi &) = delete;
         ~GitHubApi();
 
-        GitHub::Connection connect(const std::string& = default_addr());     // anonymous access
-        GitHub::Connection connect(const std::string& token, const std::string& = default_addr());
+        std::unique_ptr<GitHub::AConnection> connect(const std::string& = default_addr());     // anonymous access
+        std::unique_ptr<GitHub::AConnection> connect(const std::string& token, const std::string& = default_addr());
 
         GitHubApi& operator=(const GitHubApi &) = delete;
 
