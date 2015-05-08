@@ -31,17 +31,17 @@ GitHubApi::~GitHubApi()
 }
 
 
-github::connection GitHubApi::connect(const std::string&)
+GitHub::Connection GitHubApi::connect(const std::string&)
 {
-    github::connection result;
+    GitHub::Connection result;
 
     return result;
 }
 
 
-github::connection GitHubApi::connect(const std::string& token, const std::string&)
+GitHub::Connection GitHubApi::connect(const std::string& token, const std::string&)
 {
-    github::connection result;
+    GitHub::Connection result;
 
     return result;
 }

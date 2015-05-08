@@ -35,8 +35,8 @@ class GitHubApi
         GitHubApi(const GitHubApi &) = delete;
         ~GitHubApi();
 
-        github::connection connect(const std::string& = default_addr());     // anonymous access
-        github::connection connect(const std::string& token, const std::string& = default_addr());
+        GitHub::Connection connect(const std::string& = default_addr());     // anonymous access
+        GitHub::Connection connect(const std::string& token, const std::string& = default_addr());
 
         GitHubApi& operator=(const GitHubApi &) = delete;
 

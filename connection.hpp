@@ -20,17 +20,17 @@
 #ifndef CONNECTION_H
 #define CONNECTION_H
 
-namespace github
+namespace GitHub
 {
-    class connection
+    class Connection
     {
         public:
-            connection();
-            connection(const connection &);
+            Connection();
+            Connection(const Connection &);
 
-            ~connection();
+            ~Connection();
 
-            connection& operator=(const connection &);
+            Connection& operator=(const Connection &);
     };
 }
 

@@ -19,28 +19,28 @@
 
 #include "connection.hpp"
 
-namespace github
+namespace GitHub
 {
 
-    connection::connection()
+    Connection::Connection()
     {
 
     }
 
 
-    connection::connection(const connection&)
+    Connection::Connection(const Connection&)
     {
 
     }
 
 
-    connection::~connection()
+    Connection::~Connection()
     {
 
     }
 
 
-    connection& connection::operator=(const connection&)
+    Connection& Connection::operator=(const Connection&)
     {
         return *this;
     }
