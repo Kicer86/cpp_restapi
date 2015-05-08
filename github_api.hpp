@@ -27,7 +27,9 @@
 #include <string>
 #include <memory>
 
-#include "connection.hpp"
+#include "aconnection.hpp"
+
+class QNetworkAccessManager;
 
 class GitHubApi
 {
@@ -36,12 +38,17 @@ class GitHubApi
         GitHubApi(const GitHubApi &) = delete;
         ~GitHubApi();
 
+        void set(QNetworkAccessManager *);
+
         std::unique_ptr<GitHub::AConnection> connect(const std::string& = default_addr());     // anonymous access
         std::unique_ptr<GitHub::AConnection> connect(const std::string& token, const std::string& = default_addr());
 
         GitHubApi& operator=(const GitHubApi &) = delete;
 
         static constexpr const char* default_addr();
+
+    private:
+        QNetworkAccessManager* m_manager;
 };
 
 #endif // GITHUBAPI_HPP

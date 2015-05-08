@@ -20,17 +20,24 @@
 #ifndef CONNECTION_HPP
 #define CONNECTION_HPP
 
+#include "aconnection.hpp"
+
+class QNetworkAccessManager;
+
 namespace GitHub
 {
-    class Connection
+    class Connection: public AConnection
     {
         public:
-            Connection();
+            Connection(QNetworkAccessManager *);
             Connection(const Connection &);
 
             ~Connection();
 
             Connection& operator=(const Connection &);
+
+        private:
+            QNetworkAccessManager* m_networkManager;
     };
 }
 

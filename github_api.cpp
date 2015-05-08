@@ -19,7 +19,9 @@
 
 #include "github_api.hpp"
 
-GitHubApi::GitHubApi()
+#include "connection.hpp"
+
+GitHubApi::GitHubApi(): m_manager(nullptr)
 {
 
 }
@@ -31,9 +33,15 @@ GitHubApi::~GitHubApi()
 }
 
 
+void GitHubApi::set(QNetworkAccessManager* manager)
+{
+    m_manager = manager;
+}
+
+
 std::unique_ptr<GitHub::AConnection> GitHubApi::connect(const std::string&)
 {
-    std::unique_ptr<GitHub::AConnection> result(new GitHub::Connection);
+    std::unique_ptr<GitHub::AConnection> result(new GitHub::Connection(m_manager));
 
     return result;
 }
@@ -41,7 +49,7 @@ std::unique_ptr<GitHub::AConnection> GitHubApi::connect(const std::string&)
 
 std::unique_ptr<GitHub::AConnection> GitHubApi::connect(const std::string& token, const std::string&)
 {
-    std::unique_ptr<GitHub::AConnection> result(new GitHub::Connection);
+    std::unique_ptr<GitHub::AConnection> result(new GitHub::Connection(m_manager));
 
     return result;
 }

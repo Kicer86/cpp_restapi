@@ -22,7 +22,7 @@
 namespace GitHub
 {
 
-    Connection::Connection()
+    Connection::Connection(QNetworkAccessManager* manager): m_networkManager(manager)
     {
 
     }
