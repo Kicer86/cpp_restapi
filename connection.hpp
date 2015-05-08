@@ -17,8 +17,8 @@
  *
  */
 
-#ifndef CONNECTION_H
-#define CONNECTION_H
+#ifndef CONNECTION_HPP
+#define CONNECTION_HPP
 
 namespace GitHub
 {
@@ -34,4 +34,4 @@ namespace GitHub
     };
 }
 
-#endif // CONNECTION_H
+#endif // CONNECTION_HPP
