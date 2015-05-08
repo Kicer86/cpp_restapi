@@ -24,12 +24,13 @@ namespace github
 {
     class connection
     {
-        connection();
-        connection(const connection &);
+        public:
+            connection();
+            connection(const connection &);
 
-        ~connection();
+            ~connection();
 
-        connection& operator=(const connection &);
+            connection& operator=(const connection &);
     };
 }
 
