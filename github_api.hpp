@@ -20,13 +20,17 @@
 #ifndef GITHUBAPI_HPP
 #define GITHUBAPI_HPP
 
+// Based on:
+// https://developer.github.com/guides/getting-started/
+// https://developer.github.com/v3/
+
 class GitHubApi
 {
     public:
         GitHubApi();
         GitHubApi(const GitHubApi &) = delete;
         ~GitHubApi();
-        
+
         GitHubApi& operator=(const GitHubApi &) = delete;
 };
 
