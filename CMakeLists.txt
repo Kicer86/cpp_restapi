@@ -8,6 +8,7 @@ set(SRCS
     )
 
 set(HEADERS
+    aconnection.hpp
     connection.hpp
     github_api.hpp
     )
