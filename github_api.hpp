@@ -24,6 +24,10 @@
 // https://developer.github.com/guides/getting-started/
 // https://developer.github.com/v3/
 
+#include <string>
+
+#include "connection.hpp"
+
 class GitHubApi
 {
     public:
@@ -31,7 +35,12 @@ class GitHubApi
         GitHubApi(const GitHubApi &) = delete;
         ~GitHubApi();
 
+        github::connection connect(const std::string& = default_addr());     // anonymous access
+        github::connection connect(const std::string& token, const std::string& = default_addr());
+
         GitHubApi& operator=(const GitHubApi &) = delete;
+
+        static constexpr const char* default_addr();
 };
 
 #endif // GITHUBAPI_HPP

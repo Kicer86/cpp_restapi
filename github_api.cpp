@@ -30,3 +30,25 @@ GitHubApi::~GitHubApi()
 
 }
 
+
+github::connection GitHubApi::connect(const std::string&)
+{
+    github::connection result;
+
+    return result;
+}
+
+
+github::connection GitHubApi::connect(const std::string& token, const std::string&)
+{
+    github::connection result;
+
+    return result;
+}
+
+
+constexpr const char* GitHubApi::default_addr()
+{
+    return "https://api.github.com";
+}
+
