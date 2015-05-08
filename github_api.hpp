@@ -24,8 +24,9 @@
 // https://developer.github.com/guides/getting-started/
 // https://developer.github.com/v3/
 
-#include <string>
 #include <memory>
+
+#include <QString>
 
 #include "aconnection.hpp"
 
@@ -34,21 +35,20 @@ class QNetworkAccessManager;
 class GitHubApi
 {
     public:
-        GitHubApi();
+        GitHubApi(const QString& addr = "https://api.github.com");
         GitHubApi(const GitHubApi &) = delete;
         ~GitHubApi();
 
         void set(QNetworkAccessManager *);
 
-        std::unique_ptr<GitHub::AConnection> connect(const std::string& = default_addr());     // anonymous access
-        std::unique_ptr<GitHub::AConnection> connect(const std::string& token, const std::string& = default_addr());
+        std::unique_ptr<GitHub::AConnection> connect();                        // anonymous access
+        std::unique_ptr<GitHub::AConnection> connect(const QString& token);
 
         GitHubApi& operator=(const GitHubApi &) = delete;
 
-        static constexpr const char* default_addr();
-
     private:
         QNetworkAccessManager* m_manager;
+        QString m_addres;
 };
 
 #endif // GITHUBAPI_HPP

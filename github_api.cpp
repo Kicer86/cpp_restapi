@@ -21,7 +21,7 @@
 
 #include "connection.hpp"
 
-GitHubApi::GitHubApi(): m_manager(nullptr)
+GitHubApi::GitHubApi(const QString& addr): m_manager(nullptr), m_addres(addr)
 {
 
 }
@@ -39,7 +39,7 @@ void GitHubApi::set(QNetworkAccessManager* manager)
 }
 
 
-std::unique_ptr<GitHub::AConnection> GitHubApi::connect(const std::string&)
+std::unique_ptr<GitHub::AConnection> GitHubApi::connect()
 {
     std::unique_ptr<GitHub::AConnection> result(new GitHub::Connection(m_manager));
 
@@ -47,16 +47,11 @@ std::unique_ptr<GitHub::AConnection> GitHubApi::connect(const std::string&)
 }
 
 
-std::unique_ptr<GitHub::AConnection> GitHubApi::connect(const std::string& token, const std::string&)
+std::unique_ptr<GitHub::AConnection> GitHubApi::connect(const QString& token)
 {
     std::unique_ptr<GitHub::AConnection> result(new GitHub::Connection(m_manager));
 
     return result;
 }
 
-
-constexpr const char* GitHubApi::default_addr()
-{
-    return "https://api.github.com";
-}
 
