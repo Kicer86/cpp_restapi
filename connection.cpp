@@ -19,10 +19,12 @@
 
 #include "connection.hpp"
 
+#include <cassert>
 #include <string>
 
 #include <QNetworkRequest>
 #include <QNetworkAccessManager>
+#include <QNetworkReply>
 
 
 namespace GitHub
@@ -31,7 +33,8 @@ namespace GitHub
     Connection::Connection(QNetworkAccessManager* manager, const QString& address, const QString& token):
         m_networkManager(manager),
         m_address(address),
-        m_token(token)
+        m_token(token),
+        m_reply(nullptr)
     {
 
     }
@@ -64,7 +67,22 @@ namespace GitHub
         const QUrl url = QString("%1/%2").arg(m_address).arg(query);
         request.setUrl(url);
 
-        m_networkManager->get(request);
+        assert(m_reply == nullptr);
+        m_reply = m_networkManager->get(request);
 
+        connect(m_reply, SIGNAL(readyRead()), this, SLOT(gotReply()));
     }
+
+
+    void Connection::gotReply()
+    {
+        assert(m_reply != nullptr);
+
+        QByteArray data = m_reply->readAll();
+        qDebug() << data;
+
+        m_reply->deleteLater();
+        m_reply = nullptr;
+    }
+
 }
