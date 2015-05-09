@@ -3,18 +3,25 @@
 #define ACONNECTION_HPP
 
 #include <QObject>
+#include <QNetworkReply>
+#include <QList>
 
 class QString;
+class QJsonDocument;
 
 namespace GitHub
 {
     struct AConnection: public QObject
     {
-        virtual ~AConnection() {}
+            Q_OBJECT
 
-        virtual void get(const QString &) = 0;
-        
-        Q_OBJECT
+        public:
+            virtual ~AConnection() {}
+
+            virtual void get(const QString &) = 0;
+
+        signals:
+            void gotReply(const QJsonDocument &, const QList<QNetworkReply::RawHeaderPair> &);
     };
 }
 

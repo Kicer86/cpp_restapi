@@ -25,6 +25,7 @@
 #include <QNetworkRequest>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QJsonDocument>
 
 
 namespace GitHub
@@ -78,8 +79,12 @@ namespace GitHub
     {
         assert(m_reply != nullptr);
 
-        QByteArray data = m_reply->readAll();
-        qDebug() << data;
+        const QByteArray data = m_reply->readAll();
+
+        const QJsonDocument doc = QJsonDocument::fromBinaryData(data);
+        const QList<QNetworkReply::RawHeaderPair> header = m_reply->rawHeaderPairs();
+
+        emit gotReply(doc, header);
 
         m_reply->deleteLater();
         m_reply = nullptr;

@@ -54,6 +54,8 @@ namespace GitHub
             // AConnection overrides:
             void get(const QString &) override;
 
+            using AConnection::gotReply;
+
         private slots:
             void gotReply();
     };
