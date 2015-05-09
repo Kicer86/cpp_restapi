@@ -22,6 +22,7 @@
 #include <string>
 
 #include <QNetworkRequest>
+#include <QNetworkAccessManager>
 
 
 namespace GitHub
@@ -57,8 +58,13 @@ namespace GitHub
     }
 
 
-    void Connection::get(const QString&)
+    void Connection::get(const QString& query)
     {
+        QNetworkRequest request = prepareRequest();
+        const QUrl url = QString("%1/%2").arg(m_address).arg(query);
+        request.setUrl(url);
+
+        m_networkManager->get(request);
 
     }
 }
