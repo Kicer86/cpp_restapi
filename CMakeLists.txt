@@ -20,10 +20,15 @@ set(HEADERS
 
 #set of file to be moced
 set(TO_MOC
-    
+    aconnection.hpp
+    connection.hpp
     )
 
 qt5_wrap_cpp(MOCED ${TO_MOC})
 
 add_library(github_api ${SRCS} ${MOCED} ${HEADERS})
 target_link_libraries(github_api PRIVATE Qt5::Network)
+target_include_directories(github_api PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
+
+generate_export_header(github_api)
+hideSymbols(github_api)

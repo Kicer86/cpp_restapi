@@ -29,10 +29,11 @@
 #include <QString>
 
 #include "aconnection.hpp"
+#include "github_api_export.h"
 
 class QNetworkAccessManager;
 
-class GitHubApi
+class GITHUB_API_EXPORT GitHubApi
 {
     public:
         GitHubApi(const QString& addr = "https://api.github.com");
