@@ -45,6 +45,9 @@ namespace GitHub
             const QString m_token;
 
             QNetworkRequest prepareRequest();
+
+            // AConnection overrides:
+            void get(const QString &) override;
     };
 }
 

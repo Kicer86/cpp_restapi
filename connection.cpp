@@ -56,4 +56,9 @@ namespace GitHub
         return requst;
     }
 
+
+    void Connection::get(const QString&)
+    {
+
+    }
 }
