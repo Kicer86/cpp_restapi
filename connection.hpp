@@ -22,22 +22,29 @@
 
 #include "aconnection.hpp"
 
+#include <QNetworkRequest>
+
 class QNetworkAccessManager;
+class QString;
 
 namespace GitHub
 {
     class Connection: public AConnection
     {
         public:
-            Connection(QNetworkAccessManager *);
-            Connection(const Connection &);
+            Connection(QNetworkAccessManager *, const QString& address, const QString& token);
+            Connection(const Connection &) = delete;
 
             ~Connection();
 
-            Connection& operator=(const Connection &);
+            Connection& operator=(const Connection &) = delete;
 
         private:
             QNetworkAccessManager* m_networkManager;
+            const QString m_address;
+            const QString m_token;
+
+            QNetworkRequest prepareRequest();
     };
 }
 

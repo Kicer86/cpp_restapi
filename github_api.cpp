@@ -41,7 +41,7 @@ void GitHubApi::set(QNetworkAccessManager* manager)
 
 std::unique_ptr<GitHub::AConnection> GitHubApi::connect()
 {
-    std::unique_ptr<GitHub::AConnection> result(new GitHub::Connection(m_manager));
+    std::unique_ptr<GitHub::AConnection> result(new GitHub::Connection(m_manager, m_addres, ""));
 
     return result;
 }
@@ -49,7 +49,7 @@ std::unique_ptr<GitHub::AConnection> GitHubApi::connect()
 
 std::unique_ptr<GitHub::AConnection> GitHubApi::connect(const QString& token)
 {
-    std::unique_ptr<GitHub::AConnection> result(new GitHub::Connection(m_manager));
+    std::unique_ptr<GitHub::AConnection> result(new GitHub::Connection(m_manager, m_addres, token));
 
     return result;
 }

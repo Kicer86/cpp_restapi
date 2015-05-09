@@ -19,16 +19,18 @@
 
 #include "connection.hpp"
 
+#include <string>
+
+#include <QNetworkRequest>
+
+
 namespace GitHub
 {
 
-    Connection::Connection(QNetworkAccessManager* manager): m_networkManager(manager)
-    {
-
-    }
-
-
-    Connection::Connection(const Connection&)
+    Connection::Connection(QNetworkAccessManager* manager, const QString& address, const QString& token):
+        m_networkManager(manager),
+        m_address(address),
+        m_token(token)
     {
 
     }
@@ -40,9 +42,18 @@ namespace GitHub
     }
 
 
-    Connection& Connection::operator=(const Connection&)
+    QNetworkRequest Connection::prepareRequest()
     {
-        return *this;
+        QNetworkRequest requst;
+
+        if (m_token.isEmpty() == false)
+        {
+            const QByteArray key("Authorization");
+            const QByteArray value = QString("token %1").arg(m_token).toLatin1();
+            requst.setRawHeader(key, value);
+        }
+
+        return requst;
     }
 
 }
