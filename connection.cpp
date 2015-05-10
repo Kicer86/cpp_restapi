@@ -34,8 +34,7 @@ namespace GitHub
     Connection::Connection(QNetworkAccessManager* manager, const QString& address, const QString& token):
         m_networkManager(manager),
         m_address(address),
-        m_token(token),
-        m_reply(nullptr)
+        m_token(token)
     {
 
     }
@@ -62,32 +61,15 @@ namespace GitHub
     }
 
 
-    void Connection::get(const QString& query)
+    std::unique_ptr<QNetworkReply> Connection::get(const QString& query)
     {
         QNetworkRequest request = prepareRequest();
         const QUrl url = QString("%1/%2").arg(m_address).arg(query);
         request.setUrl(url);
 
-        assert(m_reply == nullptr);
-        m_reply = m_networkManager->get(request);
+        QNetworkReply* reply = m_networkManager->get(request);
 
-        connect(m_reply, SIGNAL(readyRead()), this, SLOT(gotReply()));
-    }
-
-
-    void Connection::gotReply()
-    {
-        assert(m_reply != nullptr);
-
-        const QByteArray data = m_reply->readAll();
-
-        const QJsonDocument doc = QJsonDocument::fromBinaryData(data);
-        const QList<QNetworkReply::RawHeaderPair> header = m_reply->rawHeaderPairs();
-
-        emit gotReply(doc, header);
-
-        m_reply->deleteLater();
-        m_reply = nullptr;
+        return std::unique_ptr<QNetworkReply>(reply);
     }
 
 }

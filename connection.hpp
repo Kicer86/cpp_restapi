@@ -26,15 +26,12 @@
 
 
 class QNetworkAccessManager;
-class QNetworkReply;
 class QString;
 
 namespace GitHub
 {
     class Connection: public AConnection
     {
-            Q_OBJECT
-
         public:
             Connection(QNetworkAccessManager *, const QString& address, const QString& token);
             Connection(const Connection &) = delete;
@@ -47,17 +44,11 @@ namespace GitHub
             QNetworkAccessManager* m_networkManager;
             const QString m_address;
             const QString m_token;
-            QNetworkReply* m_reply;
 
             QNetworkRequest prepareRequest();
 
             // AConnection overrides:
-            void get(const QString &) override;
-
-            using AConnection::gotReply;
-
-        private slots:
-            void gotReply();
+            std::unique_ptr<QNetworkReply> get(const QString &) override;
     };
 }
 
