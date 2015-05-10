@@ -82,8 +82,6 @@ namespace GitHub
         const QByteArray data = m_reply->readAll();
         const QJsonDocument doc = QJsonDocument::fromJson(data);
 
-        qDebug() << m_reply->rawHeaderPairs();
-
         emit gotReply(doc);
 
         m_reply->deleteLater();
