@@ -21,7 +21,7 @@ namespace GitHub
             virtual void get(const QString &) = 0;
 
         signals:
-            void gotReply(const QJsonDocument &, const QList<QNetworkReply::RawHeaderPair> &);
+            void gotReply(const QJsonDocument &);
     };
 }
 

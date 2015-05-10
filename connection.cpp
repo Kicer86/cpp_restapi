@@ -80,11 +80,9 @@ namespace GitHub
         assert(m_reply != nullptr);
 
         const QByteArray data = m_reply->readAll();
-
         const QJsonDocument doc = QJsonDocument::fromBinaryData(data);
-        const QList<QNetworkReply::RawHeaderPair> header = m_reply->rawHeaderPairs();
 
-        emit gotReply(doc, header);
+        emit gotReply(doc);
 
         m_reply->deleteLater();
         m_reply = nullptr;
