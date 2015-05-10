@@ -80,7 +80,7 @@ namespace GitHub
         assert(m_reply != nullptr);
 
         const QByteArray data = m_reply->readAll();
-        const QJsonDocument doc = QJsonDocument::fromBinaryData(data);
+        const QJsonDocument doc = QJsonDocument::fromJson(data);
 
         emit gotReply(doc);
 

@@ -18,6 +18,8 @@ namespace GitHub
         public:
             virtual ~AConnection() {}
 
+        private:
+            friend class Request;
             virtual void get(const QString &) = 0;
 
         signals:
