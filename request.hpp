@@ -44,12 +44,14 @@ namespace GitHub
             Request& operator=(const Request &) = delete;
 
             const QJsonDocument& getUserInfo(const QString& user);
+            const QJsonDocument& getReleases(const QString& owner, const QString& repo);
 
         private:
             AConnection* m_connection;
             QEventLoop* m_eventLoop;
             QJsonDocument m_result;
 
+            const QJsonDocument& doRequest(const QString &);
             void waitForReply();
 
         private slots:

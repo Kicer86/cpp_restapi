@@ -41,10 +41,24 @@ namespace GitHub
 
     const QJsonDocument& Request::getUserInfo(const QString& user)
     {
+        const QString request = QString("users/%1").arg(user);
+        return doRequest(request);
+    }
+
+
+    const QJsonDocument& Request::getReleases(const QString& owner, const QString& repo)
+    {
+        const QString request = QString("repos/%1/%2/releases").arg(owner).arg(repo);
+        return doRequest(request);
+    }
+
+
+    const QJsonDocument& Request::doRequest(const QString& request)
+    {
         assert(m_result.isEmpty());
 
         m_result = QJsonDocument();
-        m_connection->get( QString("users/%1").arg(user) );
+        m_connection->get(request);
 
         waitForReply();
 
