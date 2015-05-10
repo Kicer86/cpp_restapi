@@ -20,20 +20,38 @@
 #ifndef REQUEST_HPP
 #define REQUEST_HPP
 
+#include <memory>
+
 #include <QObject>
 
-class Request: public QObject
+class QNetworkReply;
+
+namespace GitHub
 {
-        Q_OBJECT
 
-    public:
-        Request();
-        Request(const Request &) = delete;
-        ~Request();
+    struct AConnection;
 
-        Request& operator=(const Request &) = delete;
+    class Request: public QObject
+    {
+            Q_OBJECT
 
-        
-};
+        public:
+            Request(AConnection *);
+            Request(const Request &) = delete;
+            ~Request();
+
+            Request& operator=(const Request &) = delete;
+
+            void getUserInfo(const QString& user);
+
+        signals:
+            void got(const QJsonDocument &);
+
+        private:
+            std::unique_ptr<QNetworkReply> m_reply;
+            AConnection* m_connection;
+    };
+
+}
 
 #endif // REQUEST_H

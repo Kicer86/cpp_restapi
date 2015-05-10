@@ -18,14 +18,32 @@
  */
 
 #include "request.hpp"
+#include "aconnection.hpp"
 
-Request::Request()
+#include <cassert>
+#include <QNetworkReply>
+
+namespace GitHub
 {
 
-}
+    Request::Request(AConnection* connection): m_reply(nullptr), m_connection(connection)
+    {
+
+    }
 
 
-Request::~Request()
-{
+    Request::~Request()
+    {
+
+    }
+
+
+    void Request::getUserInfo(const QString& user)
+    {
+        assert(m_reply.get() == nullptr);
+
+        m_connection->get( QString("users/%1").arg(user) );
+        connect(m_connection, &AConnection::gotReply, this, &Request::got);
+    }
 
 }
