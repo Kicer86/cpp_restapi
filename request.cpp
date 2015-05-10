@@ -22,13 +22,14 @@
 
 #include <cassert>
 #include <QNetworkReply>
+#include <QEventLoop>
 
 namespace GitHub
 {
 
-    Request::Request(AConnection* connection): m_reply(nullptr), m_connection(connection)
+    Request::Request(AConnection* connection): m_connection(connection), m_eventLoop(nullptr), m_result()
     {
-
+        connect(m_connection, &AConnection::gotReply, this, &Request::gotReply);
     }
 
 
@@ -38,12 +39,32 @@ namespace GitHub
     }
 
 
-    void Request::getUserInfo(const QString& user)
+    const QJsonDocument& Request::getUserInfo(const QString& user)
     {
-        assert(m_reply.get() == nullptr);
+        assert(m_result.isEmpty());
 
+        m_result = QJsonDocument();
         m_connection->get( QString("users/%1").arg(user) );
-        connect(m_connection, &AConnection::gotReply, this, &Request::got);
+
+        waitForReply();
+
+        return m_result;
+    }
+
+
+    void Request::waitForReply()
+    {
+        assert(m_eventLoop == nullptr);
+
+        m_eventLoop = new QEventLoop;
+        m_eventLoop->exec();
+    }
+
+
+    void Request::gotReply(const QJsonDocument& json)
+    {
+        m_result = json;
+        m_eventLoop->exit();
     }
 
 }

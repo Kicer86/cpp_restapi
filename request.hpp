@@ -23,8 +23,9 @@
 #include <memory>
 
 #include <QObject>
+#include <QJsonDocument>
 
-class QNetworkReply;
+class QEventLoop;
 
 namespace GitHub
 {
@@ -42,14 +43,17 @@ namespace GitHub
 
             Request& operator=(const Request &) = delete;
 
-            void getUserInfo(const QString& user);
-
-        signals:
-            void got(const QJsonDocument &);
+            const QJsonDocument& getUserInfo(const QString& user);
 
         private:
-            std::unique_ptr<QNetworkReply> m_reply;
             AConnection* m_connection;
+            QEventLoop* m_eventLoop;
+            QJsonDocument m_result;
+
+            void waitForReply();
+
+        private slots:
+            void gotReply(const QJsonDocument &);
     };
 
 }
