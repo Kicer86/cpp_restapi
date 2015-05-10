@@ -71,7 +71,7 @@ namespace GitHub
         assert(m_reply == nullptr);
         m_reply = m_networkManager->get(request);
 
-        connect(m_reply, SIGNAL(readyRead()), this, SLOT(gotReply()));
+        connect(m_reply, SIGNAL(readChannelFinished()), this, SLOT(gotReply()));
     }
 
 
@@ -81,6 +81,8 @@ namespace GitHub
 
         const QByteArray data = m_reply->readAll();
         const QJsonDocument doc = QJsonDocument::fromJson(data);
+
+        qDebug() << m_reply->rawHeaderPairs();
 
         emit gotReply(doc);
 
