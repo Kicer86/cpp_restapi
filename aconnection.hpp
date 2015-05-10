@@ -2,22 +2,26 @@
 #ifndef ACONNECTION_HPP
 #define ACONNECTION_HPP
 
-#include <memory>
-
 #include <QObject>
+#include <QNetworkReply>
 #include <QList>
 
 class QString;
 class QJsonDocument;
-class QNetworkReply;
 
 namespace GitHub
 {
-    struct AConnection
+    struct AConnection: public QObject
     {
-        virtual ~AConnection() {}
+            Q_OBJECT
 
-        virtual std::unique_ptr<QNetworkReply> get(const QString &) = 0;
+        public:
+            virtual ~AConnection() {}
+
+            virtual void get(const QString &) = 0;
+
+        signals:
+            void gotReply(const QJsonDocument &, const QList<QNetworkReply::RawHeaderPair> &);
     };
 }
 
