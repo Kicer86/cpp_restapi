@@ -26,6 +26,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QJsonDocument>
+#include <QSignalMapper>
 
 
 namespace GitHub
@@ -33,11 +34,12 @@ namespace GitHub
 
     Connection::Connection(QNetworkAccessManager* manager, const QString& address, const QString& token):
         m_networkManager(manager),
+        m_signalMapper(new QSignalMapper(this)),
         m_address(address),
         m_token(token),
-        m_reply(nullptr)
+        m_replys()
     {
-
+        connect(m_signalMapper, SIGNAL(mapped(QObject*)), this, SLOT(gotReply(QObject *)));
     }
 
 
@@ -62,30 +64,39 @@ namespace GitHub
     }
 
 
-    void Connection::get(const QString& query)
+    void Connection::get(const QString& query, const std::function<void(const QJsonDocument &)>& callback)
     {
         QNetworkRequest request = prepareRequest();
         const QUrl url = QString("%1/%2").arg(m_address).arg(query);
         request.setUrl(url);
 
-        assert(m_reply == nullptr);
-        m_reply = m_networkManager->get(request);
+        QNetworkReply* reply = m_networkManager->get(request);
 
-        connect(m_reply, SIGNAL(readChannelFinished()), this, SLOT(gotReply()));
+        m_replys[reply] = callback;
+        m_signalMapper->setMapping(reply, reply);
+        connect(reply, SIGNAL(readChannelFinished()), m_signalMapper, SLOT(map()));
     }
 
 
-    void Connection::gotReply()
+    void Connection::gotReply(QObject* reply_obj)
     {
-        assert(m_reply != nullptr);
+        auto callback_it = m_replys.find(reply_obj);
+        assert(callback_it != m_replys.end());
 
-        const QByteArray data = m_reply->readAll();
-        const QJsonDocument doc = QJsonDocument::fromJson(data);
+        if (callback_it != m_replys.end())
+        {
+            auto callback = callback_it->second;
+            assert(dynamic_cast<QNetworkReply *>(reply_obj));
+            QNetworkReply* reply = static_cast<QNetworkReply *>(reply_obj);
 
-        emit gotReply(doc);
+            const QByteArray data = reply->readAll();
+            const QJsonDocument doc = QJsonDocument::fromJson(data);
 
-        m_reply->deleteLater();
-        m_reply = nullptr;
+            callback(doc);
+        }
+
+        reply_obj->deleteLater();
+        reply_obj = nullptr;
     }
 
 }

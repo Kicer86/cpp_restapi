@@ -29,7 +29,6 @@ namespace GitHub
 
     Request::Request(AConnection* connection): m_connection(connection), m_eventLoop(nullptr), m_result()
     {
-        connect(m_connection, &AConnection::gotReply, this, &Request::gotReply);
     }
 
 
@@ -57,8 +56,10 @@ namespace GitHub
     {
         assert(m_result.isEmpty());
 
+        auto callback = std::bind(&Request::gotReply, this, std::placeholders::_1);
+
         m_result = QJsonDocument();
-        m_connection->get(request);
+        m_connection->get(request, callback);
 
         waitForReply();
 

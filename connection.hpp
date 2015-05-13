@@ -28,10 +28,11 @@
 class QNetworkAccessManager;
 class QNetworkReply;
 class QString;
+class QSignalMapper;
 
 namespace GitHub
 {
-    class Connection: public AConnection
+    class Connection: public QObject, public AConnection
     {
             Q_OBJECT
 
@@ -45,19 +46,18 @@ namespace GitHub
 
         private:
             QNetworkAccessManager* m_networkManager;
+            QSignalMapper* m_signalMapper;
             const QString m_address;
             const QString m_token;
-            QNetworkReply* m_reply;
+            std::map<QObject *, Callback> m_replys;
 
             QNetworkRequest prepareRequest();
 
             // AConnection overrides:
-            void get(const QString &) override;
-
-            using AConnection::gotReply;
+            void get(const QString &, const Callback&) override;
 
         private slots:
-            void gotReply();
+            void gotReply(QObject *);
     };
 }
 

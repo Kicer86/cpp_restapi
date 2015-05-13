@@ -32,10 +32,8 @@ namespace GitHub
 
     struct AConnection;
 
-    class Request: public QObject
+    class Request
     {
-            Q_OBJECT
-
         public:
             Request(AConnection *);
             Request(const Request &) = delete;
@@ -53,8 +51,6 @@ namespace GitHub
 
             const QJsonDocument& doRequest(const QString &);
             void waitForReply();
-
-        private slots:
             void gotReply(const QJsonDocument &);
     };
 
