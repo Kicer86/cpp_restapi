@@ -61,8 +61,6 @@ namespace GitHub
 
     const QJsonDocument& Request::doRequest(const QString& request)
     {
-        assert(m_result.isEmpty());
-
         auto callback = std::bind(&Request::gotReply, this, std::placeholders::_1);
 
         m_result = QJsonDocument();
@@ -80,6 +78,7 @@ namespace GitHub
 
         m_eventLoop = new QEventLoop;
         m_eventLoop->exec();
+        delete m_eventLoop, m_eventLoop = nullptr;
     }
 
 
