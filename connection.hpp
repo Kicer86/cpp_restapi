@@ -20,7 +20,7 @@
 #ifndef CONNECTION_HPP
 #define CONNECTION_HPP
 
-#include "aconnection.hpp"
+#include "iconnection.hpp"
 
 #include <QNetworkRequest>
 
@@ -32,7 +32,7 @@ class QSignalMapper;
 
 namespace GitHub
 {
-    class Connection: public QObject, public AConnection
+    class Connection: public QObject, public IConnection
     {
             Q_OBJECT
 

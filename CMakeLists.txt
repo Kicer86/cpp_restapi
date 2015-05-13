@@ -17,7 +17,7 @@ set(SRCS
     )
 
 set(HEADERS
-    aconnection.hpp
+    iconnection.hpp
     connection.hpp
     github_api.hpp
     request.hpp

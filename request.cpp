@@ -18,7 +18,7 @@
  */
 
 #include "request.hpp"
-#include "aconnection.hpp"
+#include "iconnection.hpp"
 
 #include <cassert>
 #include <QNetworkReply>
@@ -27,7 +27,7 @@
 namespace GitHub
 {
 
-    Request::Request(AConnection* connection): m_connection(connection), m_eventLoop(nullptr), m_result()
+    Request::Request(IConnection* connection): m_connection(connection), m_eventLoop(nullptr), m_result()
     {
     }
 

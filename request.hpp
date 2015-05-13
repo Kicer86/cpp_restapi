@@ -30,12 +30,12 @@ class QEventLoop;
 namespace GitHub
 {
 
-    struct AConnection;
+    struct IConnection;
 
     class Request
     {
         public:
-            Request(AConnection *);
+            Request(IConnection *);
             Request(const Request &) = delete;
             ~Request();
 
@@ -46,7 +46,7 @@ namespace GitHub
             const QJsonDocument& getRelease(const QString& owner, const QString& repo, int id);
 
         private:
-            AConnection* m_connection;
+            IConnection* m_connection;
             QEventLoop* m_eventLoop;
             QJsonDocument m_result;
 

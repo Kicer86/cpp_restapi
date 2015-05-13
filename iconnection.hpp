@@ -13,12 +13,12 @@ class QJsonDocument;
 
 namespace GitHub
 {
-    struct AConnection
+    struct IConnection
     {
         public:
             typedef std::function<void(const QJsonDocument &)> Callback;
 
-            virtual ~AConnection() {}
+            virtual ~IConnection() {}
 
         private:
             friend class Request;

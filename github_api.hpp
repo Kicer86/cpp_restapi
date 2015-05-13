@@ -28,7 +28,7 @@
 
 #include <QString>
 
-#include "aconnection.hpp"
+#include "iconnection.hpp"
 #include "github_api_export.h"
 
 class QNetworkAccessManager;
@@ -42,8 +42,8 @@ class GITHUB_API_EXPORT GitHubApi
 
         void set(QNetworkAccessManager *);
 
-        std::unique_ptr<GitHub::AConnection> connect();                        // anonymous access
-        std::unique_ptr<GitHub::AConnection> connect(const QString& token);
+        std::unique_ptr<GitHub::IConnection> connect();                        // anonymous access
+        std::unique_ptr<GitHub::IConnection> connect(const QString& token);
 
         GitHubApi& operator=(const GitHubApi &) = delete;
 
