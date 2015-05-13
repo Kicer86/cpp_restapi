@@ -43,6 +43,7 @@ namespace GitHub
 
             const QJsonDocument& getUserInfo(const QString& user);
             const QJsonDocument& getReleases(const QString& owner, const QString& repo);
+            const QJsonDocument& getRelease(const QString& owner, const QString& repo, int id);
 
         private:
             AConnection* m_connection;

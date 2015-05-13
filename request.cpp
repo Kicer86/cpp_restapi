@@ -52,6 +52,13 @@ namespace GitHub
     }
 
 
+    const QJsonDocument& Request::getRelease(const QString& owner, const QString& repo, int id)
+    {
+        const QString request = QString("repos/%1/%2/releases/%3").arg(owner).arg(repo).arg(id);
+        return doRequest(request);
+    }
+
+
     const QJsonDocument& Request::doRequest(const QString& request)
     {
         assert(m_result.isEmpty());
