@@ -25,6 +25,8 @@
 #include <QObject>
 #include <QJsonDocument>
 
+#include "github_api_export.h"
+
 class QEventLoop;
 
 namespace GitHub
@@ -32,7 +34,7 @@ namespace GitHub
 
     struct IConnection;
 
-    class Request
+    class GITHUB_API_EXPORT Request
     {
         public:
             Request(IConnection *);
