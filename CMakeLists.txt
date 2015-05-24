@@ -11,6 +11,7 @@ include_directories(SYSTEM
                    )
 
 set(SRCS
+    iconnection.cpp
     connection.cpp
     github_api.cpp
     request.cpp
