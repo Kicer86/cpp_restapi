@@ -40,3 +40,9 @@ target_include_directories(github_api PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
 
 generate_export_header(github_api)
 hideSymbols(github_api)
+
+if(BUILD_SHARED_LIBS)
+    install(TARGETS github_api RUNTIME DESTINATION ${PATH_LIBS}
+                               LIBRARY DESTINATION ${PATH_LIBS})
+endif()
+
