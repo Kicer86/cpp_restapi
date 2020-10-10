@@ -1,14 +1,7 @@
 
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Network REQUIRED)
-
+find_package(Qt5 REQUIRED COMPONENTS Core Network)
 
 include(GenerateExportHeader)
-
-include_directories(SYSTEM
-                    ${Qt5Core_INCLUDE_DIRS}
-                    ${Qt5Network_INCLUDE_DIRS}
-                   )
 
 set(SRCS
     iconnection.cpp
@@ -33,8 +26,8 @@ qt5_wrap_cpp(MOCED ${TO_MOC})
 
 add_library(github_api ${SRCS} ${MOCED} ${HEADERS})
 target_link_libraries(github_api PRIVATE
-                                 Qt5::Core
-                                 Qt5::Network
+                                 Qt::Core
+                                 Qt::Network
                      )
 target_include_directories(github_api PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
 
