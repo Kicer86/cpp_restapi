@@ -1,5 +1,5 @@
 
-find_package(Qt5 REQUIRED COMPONENTS Core Network)
+find_package(Qt5 5.12 REQUIRED COMPONENTS Core Network)
 
 include(GenerateExportHeader)
 
@@ -20,8 +20,8 @@ add_library(github_api
 
 target_link_libraries(github_api
     PUBLIC
-        Qt::Core
-        Qt::Network
+        Qt5::Core
+        Qt5::Network
 )
 
 target_include_directories(github_api
