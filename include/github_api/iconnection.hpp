@@ -18,7 +18,7 @@ namespace GitHub
         public:
             typedef std::function<void(const QJsonDocument &)> Callback;
 
-            virtual ~IConnection();
+            virtual ~IConnection() = default;
 
         private:
             friend class Request;

@@ -17,12 +17,13 @@
  *
  */
 
-#include "request.hpp"
-#include "iconnection.hpp"
-
 #include <cassert>
 #include <QNetworkReply>
 #include <QEventLoop>
+
+#include <github_api/request.hpp>
+#include <github_api/iconnection.hpp>
+
 
 namespace GitHub
 {

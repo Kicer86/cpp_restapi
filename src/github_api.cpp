@@ -17,7 +17,7 @@
  *
  */
 
-#include "github_api.hpp"
+#include <github_api/github_api.hpp>
 
 #include "connection.hpp"
 

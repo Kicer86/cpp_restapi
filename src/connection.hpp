@@ -20,8 +20,7 @@
 #ifndef CONNECTION_HPP
 #define CONNECTION_HPP
 
-#include "iconnection.hpp"
-
+#include <github_api/iconnection.hpp>
 #include <QNetworkRequest>
 
 
