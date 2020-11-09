@@ -21,7 +21,7 @@
 
 #include "connection.hpp"
 
-GitHubApi::GitHubApi(const QString& addr): m_manager(nullptr), m_addres(addr)
+GitHubApi::GitHubApi(QNetworkAccessManager& manager, const QString& addr): m_manager(manager), m_addres(addr)
 {
 
 }
@@ -30,12 +30,6 @@ GitHubApi::GitHubApi(const QString& addr): m_manager(nullptr), m_addres(addr)
 GitHubApi::~GitHubApi()
 {
 
-}
-
-
-void GitHubApi::set(QNetworkAccessManager* manager)
-{
-    m_manager = manager;
 }
 
 

@@ -32,7 +32,7 @@
 namespace GitHub
 {
 
-    Connection::Connection(QNetworkAccessManager* manager, const QString& address, const QString& token):
+    Connection::Connection(QNetworkAccessManager& manager, const QString& address, const QString& token):
         m_networkManager(manager),
         m_signalMapper(new QSignalMapper(this)),
         m_address(address),
@@ -70,7 +70,7 @@ namespace GitHub
         const QUrl url = QString("%1/%2").arg(m_address).arg(query);
         request.setUrl(url);
 
-        QNetworkReply* reply = m_networkManager->get(request);
+        QNetworkReply* reply = m_networkManager.get(request);
 
         m_replys[reply] = callback;
         m_signalMapper->setMapping(reply, reply);

@@ -36,11 +36,9 @@ class QNetworkAccessManager;
 class GITHUB_API_EXPORT GitHubApi
 {
     public:
-        GitHubApi(const QString& addr = "https://api.github.com");
+        GitHubApi(QNetworkAccessManager &, const QString& addr = "https://api.github.com");
         GitHubApi(const GitHubApi &) = delete;
         ~GitHubApi();
-
-        void set(QNetworkAccessManager *);
 
         std::unique_ptr<GitHub::IConnection> connect();                        // anonymous access
         std::unique_ptr<GitHub::IConnection> connect(const QString& token);
@@ -48,7 +46,7 @@ class GITHUB_API_EXPORT GitHubApi
         GitHubApi& operator=(const GitHubApi &) = delete;
 
     private:
-        QNetworkAccessManager* m_manager;
+        QNetworkAccessManager& m_manager;
         QString m_addres;
 };
 

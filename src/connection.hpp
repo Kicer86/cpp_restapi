@@ -36,7 +36,7 @@ namespace GitHub
             Q_OBJECT
 
         public:
-            Connection(QNetworkAccessManager *, const QString& address, const QString& token);
+            Connection(QNetworkAccessManager &, const QString& address, const QString& token);
             Connection(const Connection &) = delete;
 
             ~Connection();
@@ -44,7 +44,7 @@ namespace GitHub
             Connection& operator=(const Connection &) = delete;
 
         private:
-            QNetworkAccessManager* m_networkManager;
+            QNetworkAccessManager& m_networkManager;
             QSignalMapper* m_signalMapper;
             const QString m_address;
             const QString m_token;
