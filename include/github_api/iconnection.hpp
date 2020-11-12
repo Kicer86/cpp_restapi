@@ -18,8 +18,6 @@ namespace GitHub
         public:
             virtual ~IConnection() = default;
 
-        private:
-            friend class Request;
             virtual std::string get(const std::string &) = 0;
     };
 }

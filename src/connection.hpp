@@ -23,15 +23,14 @@ namespace GitHub
 
             Connection& operator=(const Connection &) = delete;
 
+            std::string get(const std::string &) override;
+
         private:
             QNetworkAccessManager& m_networkManager;
             const QString m_address;
             const QString m_token;
 
             QNetworkRequest prepareRequest();
-
-            // IConnection overrides:
-            std::string get(const std::string &) override;
     };
 }
 

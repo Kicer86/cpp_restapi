@@ -30,21 +30,6 @@ namespace GitHub
     }
 
 
-    QNetworkRequest Connection::prepareRequest()
-    {
-        QNetworkRequest requst;
-
-        if (m_token.isEmpty() == false)
-        {
-            const QByteArray key("Authorization");
-            const QByteArray value = QString("token %1").arg(m_token).toLatin1();
-            requst.setRawHeader(key, value);
-        }
-
-        return requst;
-    }
-
-
     std::string Connection::get(const std::string& query)
     {
         std::string result;
@@ -67,5 +52,20 @@ namespace GitHub
         loop.exec();
 
         return result;
+    }
+
+
+    QNetworkRequest Connection::prepareRequest()
+    {
+        QNetworkRequest requst;
+
+        if (m_token.isEmpty() == false)
+        {
+            const QByteArray key("Authorization");
+            const QByteArray value = QString("token %1").arg(m_token).toLatin1();
+            requst.setRawHeader(key, value);
+        }
+
+        return requst;
     }
 }
