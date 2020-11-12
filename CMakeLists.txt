@@ -21,6 +21,6 @@ generate_export_header(github_api)
 
 if(GitHubAPI_QtBackend)
     add_subdirectory(src/qt_backend)
-    target_sources(github_api include/github_api/github_api_qt.hpp)
+    target_sources(github_api PRIVATE include/github_api/github_api_qt.hpp)
     target_link_libraries(github_api PRIVATE github_api_qt)
 endif()
