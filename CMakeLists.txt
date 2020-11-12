@@ -7,9 +7,9 @@ add_library(github_api
     include/github_api/github_api.hpp
     include/github_api/iconnection.hpp
     include/github_api/request.hpp
-    src/connection.cpp
-    src/connection.hpp
-    src/github_api.cpp
+    src/qt_backend/connection.cpp
+    src/qt_backend/connection.hpp
+    src/qt_backend/github_api.cpp
     src/request.cpp
 )
 
