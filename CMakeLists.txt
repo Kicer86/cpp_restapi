@@ -3,10 +3,6 @@ find_package(Qt5 5.12 REQUIRED COMPONENTS Core Network)
 
 include(GenerateExportHeader)
 
-qt5_wrap_cpp(MOCED
-    src/connection.hpp
-)
-
 add_library(github_api
     include/github_api/github_api.hpp
     include/github_api/iconnection.hpp
@@ -15,7 +11,6 @@ add_library(github_api
     src/connection.hpp
     src/github_api.cpp
     src/request.cpp
-    ${MOCED}
 )
 
 target_link_libraries(github_api

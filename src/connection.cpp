@@ -16,12 +16,12 @@ namespace GitHub
 
     Connection::Connection(QNetworkAccessManager& manager, const QString& address, const QString& token):
         m_networkManager(manager),
-        m_signalMapper(new QSignalMapper(this)),
         m_address(address),
         m_token(token),
         m_replys()
     {
-        connect(m_signalMapper, SIGNAL(mapped(QObject*)), this, SLOT(gotReply(QObject *)));
+        connect(&m_signalMapper, &QSignalMapper::mappedObject,
+                this, &Connection::gotReply);
     }
 
 
@@ -55,8 +55,9 @@ namespace GitHub
         QNetworkReply* reply = m_networkManager.get(request);
 
         m_replys[reply] = callback;
-        m_signalMapper->setMapping(reply, reply);
-        connect(reply, SIGNAL(readChannelFinished()), m_signalMapper, SLOT(map()));
+        m_signalMapper.setMapping(reply, reply);
+        connect(reply, &QNetworkReply::readChannelFinished,
+                &m_signalMapper, qOverload<>(&QSignalMapper::map));
     }
 
 
