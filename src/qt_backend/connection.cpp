@@ -12,9 +12,8 @@
 #include <QEventLoop>
 
 
-namespace GitHub
+namespace GitHub { namespace QtBackend
 {
-
     Connection::Connection(QNetworkAccessManager& manager, const QString& address, const QString& token):
         m_networkManager(manager),
         m_address(address),
@@ -68,4 +67,4 @@ namespace GitHub
 
         return requst;
     }
-}
+}}

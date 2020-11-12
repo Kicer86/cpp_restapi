@@ -12,7 +12,7 @@ int main(int argc, char** argv)
     QCoreApplication qapp(argc, argv);
     QNetworkAccessManager manager;
 
-    GitHubApi github(manager);
+    GitHub::QtBackend::Api github(manager);
     std::unique_ptr<GitHub::IConnection> connection = github.connect();
     GitHub::Request request(connection.get());
 

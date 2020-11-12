@@ -4,15 +4,15 @@
 
 #include <QNetworkRequest>
 #include <QSignalMapper>
+#include <QString>
 
 #include <github_api/iconnection.hpp>
 
 
 class QNetworkAccessManager;
-class QString;
 
-namespace GitHub
-{
+namespace GitHub { namespace QtBackend {
+
     class Connection: public QObject, public IConnection
     {
         public:
@@ -32,6 +32,7 @@ namespace GitHub
 
             QNetworkRequest prepareRequest();
     };
-}
+
+}}
 
 #endif // CONNECTION_HPP
