@@ -2,14 +2,7 @@
 #ifndef ACONNECTION_HPP
 #define ACONNECTION_HPP
 
-#include <functional>
-
-#include <QObject>
-#include <QNetworkReply>
-#include <QList>
-
-class QString;
-class QJsonDocument;
+#include <string>
 
 namespace GitHub
 {
