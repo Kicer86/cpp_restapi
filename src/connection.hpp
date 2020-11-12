@@ -9,7 +9,6 @@
 
 
 class QNetworkAccessManager;
-class QNetworkReply;
 class QString;
 
 namespace GitHub
@@ -26,17 +25,13 @@ namespace GitHub
 
         private:
             QNetworkAccessManager& m_networkManager;
-            QSignalMapper m_signalMapper;
             const QString m_address;
             const QString m_token;
-            std::map<QObject *, Callback> m_replys;
 
             QNetworkRequest prepareRequest();
 
-            // AConnection overrides:
-            void get(const std::string &, const Callback&) override;
-
-            void gotReply(QObject *);
+            // IConnection overrides:
+            std::string get(const std::string &) override;
     };
 }
 

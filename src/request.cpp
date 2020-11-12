@@ -1,8 +1,4 @@
 
-#include <cassert>
-#include <QNetworkReply>
-#include <QEventLoop>
-
 #include <github_api/request.hpp>
 #include <github_api/iconnection.hpp>
 
@@ -44,16 +40,6 @@ namespace GitHub
 
     std::string Request::doRequest(const std::string& request)
     {
-        std::string result;
-        QEventLoop loop;
-
-        m_connection->get(request, [&result, &loop](const std::string& json){
-            result = json;
-            loop.exit();
-        });
-
-        loop.exec();
-
-        return result;
+        return m_connection->get(request);
     }
 }

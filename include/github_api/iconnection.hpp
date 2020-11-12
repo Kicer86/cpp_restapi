@@ -16,13 +16,11 @@ namespace GitHub
     struct IConnection
     {
         public:
-            typedef std::function<void(const std::string &)> Callback;
-
             virtual ~IConnection() = default;
 
         private:
             friend class Request;
-            virtual void get(const std::string &, const Callback &) = 0;
+            virtual std::string get(const std::string &) = 0;
     };
 }
 
