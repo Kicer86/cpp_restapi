@@ -3,7 +3,7 @@
 #include <QDebug>
 #include <QNetworkAccessManager>
 
-#include <github_api/github_api.hpp>
+#include <github_api/github_api_qt.hpp>
 #include <github_api/request.hpp>
 
 

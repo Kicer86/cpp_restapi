@@ -6,7 +6,7 @@ include(GenerateExportHeader)
 add_subdirectory(src/qt_backend)
 
 add_library(github_api
-    include/github_api/github_api.hpp
+    include/github_api/github_api_qt.hpp
     include/github_api/iconnection.hpp
     include/github_api/request.hpp
     src/request.cpp
