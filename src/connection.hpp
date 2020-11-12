@@ -34,7 +34,7 @@ namespace GitHub
             QNetworkRequest prepareRequest();
 
             // AConnection overrides:
-            void get(const QString &, const Callback&) override;
+            void get(const std::string &, const Callback&) override;
 
             void gotReply(QObject *);
     };

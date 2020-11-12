@@ -16,13 +16,13 @@ namespace GitHub
     struct IConnection
     {
         public:
-            typedef std::function<void(const QJsonDocument &)> Callback;
+            typedef std::function<void(const std::string &)> Callback;
 
             virtual ~IConnection() = default;
 
         private:
             friend class Request;
-            virtual void get(const QString &, const Callback &) = 0;
+            virtual void get(const std::string &, const Callback &) = 0;
     };
 }
 

@@ -21,32 +21,32 @@ namespace GitHub
     }
 
 
-    const QJsonDocument& Request::getUserInfo(const QString& user)
+    const std::string& Request::getUserInfo(const std::string& user)
     {
-        const QString request = QString("users/%1").arg(user);
+        const std::string request = std::string("users/") + user;
         return doRequest(request);
     }
 
 
-    const QJsonDocument& Request::getReleases(const QString& owner, const QString& repo)
+    const std::string& Request::getReleases(const std::string& owner, const std::string& repo)
     {
-        const QString request = QString("repos/%1/%2/releases").arg(owner).arg(repo);
+        const std::string request = std::string("repos/") + owner + "/" + repo + "/releases";
         return doRequest(request);
     }
 
 
-    const QJsonDocument& Request::getRelease(const QString& owner, const QString& repo, int id)
+    const std::string& Request::getRelease(const std::string& owner, const std::string& repo, int id)
     {
-        const QString request = QString("repos/%1/%2/releases/%3").arg(owner).arg(repo).arg(id);
+        const std::string request = std::string("repos/") + owner + "/" + repo + "/releases/" + std::to_string(id);
         return doRequest(request);
     }
 
 
-    const QJsonDocument& Request::doRequest(const QString& request)
+    const std::string& Request::doRequest(const std::string& request)
     {
         auto callback = std::bind(&Request::gotReply, this, std::placeholders::_1);
 
-        m_result = QJsonDocument();
+        m_result.clear();
         m_connection->get(request, callback);
 
         waitForReply();
@@ -65,7 +65,7 @@ namespace GitHub
     }
 
 
-    void Request::gotReply(const QJsonDocument& json)
+    void Request::gotReply(const std::string& json)
     {
         m_result = json;
         m_eventLoop->exit();

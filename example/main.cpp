@@ -16,10 +16,9 @@ int main(int argc, char** argv)
     std::unique_ptr<GitHub::IConnection> connection = github.connect();
     GitHub::Request request(connection.get());
 
-    const QJsonDocument info = request.getUserInfo("Kicer86");
-    const QByteArray raw = info.toJson();
+    const std::string& json = request.getUserInfo("Kicer86");
 
-    qInfo() << raw;
+    qInfo() << json.c_str();
 
     return 0;
 }

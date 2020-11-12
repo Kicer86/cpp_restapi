@@ -46,10 +46,10 @@ namespace GitHub
     }
 
 
-    void Connection::get(const QString& query, const std::function<void(const QJsonDocument &)>& callback)
+    void Connection::get(const std::string& query, const std::function<void(const std::string &)>& callback)
     {
         QNetworkRequest request = prepareRequest();
-        const QUrl url = QString("%1/%2").arg(m_address).arg(query);
+        const QUrl url = QString("%1/%2").arg(m_address).arg(query.c_str());
         request.setUrl(url);
 
         QNetworkReply* reply = m_networkManager.get(request);
@@ -72,10 +72,10 @@ namespace GitHub
             assert(dynamic_cast<QNetworkReply *>(reply_obj));
             QNetworkReply* reply = static_cast<QNetworkReply *>(reply_obj);
 
-            const QByteArray data = reply->readAll();
-            const QJsonDocument doc = QJsonDocument::fromJson(data);
+            const QByteArray rawData = reply->readAll();
+            const std::string json(rawData.data());
 
-            callback(doc);
+            callback(json);
         }
 
         reply_obj->deleteLater();
