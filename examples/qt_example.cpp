@@ -16,9 +16,8 @@ int main(int argc, char** argv)
     std::unique_ptr<GitHub::IConnection> connection = github.connect();
     GitHub::Request request(connection.get());
 
-    const std::string json = request.getUserInfo("Kicer86");
-
-    qInfo() << json.c_str();
+    qInfo() << request.getRateLimit().c_str();
+    qInfo() << request.getUserInfo("Kicer86").c_str();
 
     return 0;
 }

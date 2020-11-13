@@ -13,7 +13,8 @@ int main(int argc, char** argv)
 
     const std::string json = request.getUserInfo("Kicer86");
 
-    std::cout << json.c_str() << '\n';
+    std::cout << request.getRateLimit() << '\n';
+    std::cout << request.getUserInfo("Kicer86") << '\n';
 
     return 0;
 }
