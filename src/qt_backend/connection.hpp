@@ -1,6 +1,6 @@
 
-#ifndef CONNECTION_HPP
-#define CONNECTION_HPP
+#ifndef CONNECTION_QT__HPP
+#define CONNECTION_QT__HPP
 
 #include <QNetworkRequest>
 #include <QSignalMapper>
@@ -35,4 +35,4 @@ namespace GitHub { namespace QtBackend {
 
 }}
 
-#endif // CONNECTION_HPP
+#endif
