@@ -7,8 +7,6 @@
 #include <QNetworkRequest>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QJsonDocument>
-#include <QSignalMapper>
 #include <QEventLoop>
 
 
