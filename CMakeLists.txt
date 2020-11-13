@@ -33,4 +33,6 @@ endif()
 
 if(GitHubAPI_CurlBackend)
     add_subdirectory(src/curl_backend)
+    target_sources(github_api PRIVATE include/github_api/github_api_curl.hpp)
+    target_link_libraries(github_api PRIVATE github_api_curl)
 endif()
