@@ -49,8 +49,7 @@ int main(int argc, char** argv)
     QNetworkAccessManager manager;
 
     GitHub::QtBackend::Api github(manager);
-    std::unique_ptr<GitHub::IConnection> connection = github.connect();
-    GitHub::Request request(connection.get());
+    GitHub::Request request(github.connect());
 
     qInfo() << request.getRateLimit().c_str();
     qInfo() << request.getUserInfo("Kicer86").c_str();
@@ -71,10 +70,7 @@ int main(int argc, char** argv)
 int main(int argc, char** argv)
 {
     GitHub::CurlBackend::Api github;
-    std::unique_ptr<GitHub::IConnection> connection = github.connect();
-    GitHub::Request request(connection.get());
-
-    const std::string json = request.getUserInfo("Kicer86");
+    GitHub::Request request(github.connect());
 
     std::cout << request.getRateLimit() << '\n';
     std::cout << request.getUserInfo("Kicer86") << '\n';
@@ -83,4 +79,4 @@ int main(int argc, char** argv)
 }
 ```
 
-Also please look into 'example' directory for details.
+Also please look into 'examples' directory for details.
