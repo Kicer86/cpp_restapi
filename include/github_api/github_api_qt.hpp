@@ -11,20 +11,21 @@
 #include <QString>
 
 #include "iconnection.hpp"
+#include "igithub_api.hpp"
 #include "github_api_export.h"
 
 class QNetworkAccessManager;
 
 namespace GitHub { namespace QtBackend {
 
-    class GITHUB_API_EXPORT Api
+    class GITHUB_API_EXPORT Api: public IApi
     {
         public:
             Api(QNetworkAccessManager &, const QString& addr = "https://api.github.com");
             Api(const Api &) = delete;
 
-            std::unique_ptr<GitHub::IConnection> connect();                        // anonymous access
-            std::unique_ptr<GitHub::IConnection> connect(const QString& token);
+            std::unique_ptr<GitHub::IConnection> connect() override;
+            std::unique_ptr<GitHub::IConnection> connect(const std::string& token) override;
 
             Api& operator=(const Api &) = delete;
 

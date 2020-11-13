@@ -8,10 +8,7 @@
 int main(int argc, char** argv)
 {
     GitHub::CurlBackend::Api github;
-    std::unique_ptr<GitHub::IConnection> connection = github.connect();
-    GitHub::Request request(connection.get());
-
-    const std::string json = request.getUserInfo("Kicer86");
+    GitHub::Request request(github.connect());
 
     std::cout << request.getRateLimit() << '\n';
     std::cout << request.getUserInfo("Kicer86") << '\n';

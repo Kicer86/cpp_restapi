@@ -20,9 +20,9 @@ std::unique_ptr<GitHub::IConnection> Api::connect()
 }
 
 
-std::unique_ptr<GitHub::IConnection> Api::connect(const QString& token)
+std::unique_ptr<GitHub::IConnection> Api::connect(const std::string& token)
 {
-    std::unique_ptr<GitHub::IConnection> result(new Connection(m_manager, m_addres, token));
+    std::unique_ptr<GitHub::IConnection> result(new Connection(m_manager, m_addres, token.c_str()));
 
     return result;
 }
