@@ -1,33 +1,38 @@
 
-find_package(Qt5 5.12 REQUIRED COMPONENTS Core Network)
+project(GitHubAPI)
+cmake_minimum_required(VERSION 3.16)
 
 include(GenerateExportHeader)
 
-qt5_wrap_cpp(MOCED
-    src/connection.hpp
-)
+option(GitHubAPI_QtBackend "Qt backend for GitHubApi" OFF)
+option(GitHubAPI_CurlBackend "libcurl backend for GitHubApi" OFF)
 
 add_library(github_api
-    include/github_api/github_api.hpp
     include/github_api/iconnection.hpp
     include/github_api/request.hpp
-    src/connection.cpp
-    src/connection.hpp
-    src/github_api.cpp
     src/request.cpp
-    ${MOCED}
-)
-
-target_link_libraries(github_api
-    PUBLIC
-        Qt5::Core
-        Qt5::Network
 )
 
 target_include_directories(github_api
     PUBLIC
-        ${CMAKE_CURRENT_BINARY_DIR}
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${PROJECT_BINARY_DIR}
+        ${PROJECT_SOURCE_DIR}/include
 )
 
 generate_export_header(github_api)
+
+if(NOT GitHubAPI_QtBackend AND NOT GitHubAPI_CurlBackend)
+    message(FATAL_ERROR "No backend was chosen. Set either GitHubAPI_QtBackend or GitHubAPI_CurlBackend variable to ON")
+endif()
+
+if(GitHubAPI_QtBackend)
+    add_subdirectory(src/qt_backend)
+    target_sources(github_api PRIVATE include/github_api/github_api_qt.hpp)
+    target_link_libraries(github_api PRIVATE github_api_qt)
+endif()
+
+if(GitHubAPI_CurlBackend)
+    add_subdirectory(src/curl_backend)
+    target_sources(github_api PRIVATE include/github_api/github_api_curl.hpp)
+    target_link_libraries(github_api PRIVATE github_api_curl)
+endif()

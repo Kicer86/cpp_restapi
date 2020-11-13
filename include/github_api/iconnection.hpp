@@ -2,27 +2,16 @@
 #ifndef ACONNECTION_HPP
 #define ACONNECTION_HPP
 
-#include <functional>
-
-#include <QObject>
-#include <QNetworkReply>
-#include <QList>
-
-class QString;
-class QJsonDocument;
+#include <string>
 
 namespace GitHub
 {
     struct IConnection
     {
         public:
-            typedef std::function<void(const QJsonDocument &)> Callback;
-
             virtual ~IConnection() = default;
 
-        private:
-            friend class Request;
-            virtual void get(const QString &, const Callback &) = 0;
+            virtual std::string get(const std::string &) = 0;
     };
 }
 

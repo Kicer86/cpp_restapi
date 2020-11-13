@@ -1,8 +1,4 @@
 
-#include <cassert>
-#include <QNetworkReply>
-#include <QEventLoop>
-
 #include <github_api/request.hpp>
 #include <github_api/iconnection.hpp>
 
@@ -10,7 +6,7 @@
 namespace GitHub
 {
 
-    Request::Request(IConnection* connection): m_connection(connection), m_eventLoop(nullptr), m_result()
+    Request::Request(IConnection* connection): m_connection(connection)
     {
     }
 
@@ -21,54 +17,35 @@ namespace GitHub
     }
 
 
-    const QJsonDocument& Request::getUserInfo(const QString& user)
+    std::string Request::getUserInfo(const std::string& user)
     {
-        const QString request = QString("users/%1").arg(user);
+        const std::string request = std::string("users/") + user;
         return doRequest(request);
     }
 
 
-    const QJsonDocument& Request::getReleases(const QString& owner, const QString& repo)
+    std::string Request::getReleases(const std::string& owner, const std::string& repo)
     {
-        const QString request = QString("repos/%1/%2/releases").arg(owner).arg(repo);
+        const std::string request = std::string("repos/") + owner + "/" + repo + "/releases";
         return doRequest(request);
     }
 
 
-    const QJsonDocument& Request::getRelease(const QString& owner, const QString& repo, int id)
+    std::string Request::getRelease(const std::string& owner, const std::string& repo, int id)
     {
-        const QString request = QString("repos/%1/%2/releases/%3").arg(owner).arg(repo).arg(id);
+        const std::string request = std::string("repos/") + owner + "/" + repo + "/releases/" + std::to_string(id);
         return doRequest(request);
     }
 
 
-    const QJsonDocument& Request::doRequest(const QString& request)
+    std::string Request::getRateLimit()
     {
-        auto callback = std::bind(&Request::gotReply, this, std::placeholders::_1);
-
-        m_result = QJsonDocument();
-        m_connection->get(request, callback);
-
-        waitForReply();
-
-        return m_result;
+        return doRequest("rate_limit");
     }
 
 
-    void Request::waitForReply()
+    std::string Request::doRequest(const std::string& request)
     {
-        assert(m_eventLoop == nullptr);
-
-        m_eventLoop = new QEventLoop;
-        m_eventLoop->exec();
-        delete m_eventLoop, m_eventLoop = nullptr;
+        return m_connection->get(request);
     }
-
-
-    void Request::gotReply(const QJsonDocument& json)
-    {
-        m_result = json;
-        m_eventLoop->exit();
-    }
-
 }
