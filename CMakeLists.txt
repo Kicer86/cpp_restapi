@@ -28,12 +28,18 @@ endif()
 
 if(GitHubAPI_QtBackend)
     add_subdirectory(src/qt_backend)
-    target_sources(github_api PRIVATE include/github_api/github_api_qt.hpp)
+    target_sources(github_api PRIVATE 
+        include/github_api/github_api_qt.hpp 
+        src/qt_backend/github_api.cpp
+    )
     target_link_libraries(github_api PRIVATE github_api_qt)
 endif()
 
 if(GitHubAPI_CurlBackend)
     add_subdirectory(src/curl_backend)
-    target_sources(github_api PRIVATE include/github_api/github_api_curl.hpp)
+    target_sources(github_api PRIVATE 
+        include/github_api/github_api_curl.hpp
+        src/curl_backend/github_api.cpp
+    )
     target_link_libraries(github_api PRIVATE github_api_curl)
 endif()
