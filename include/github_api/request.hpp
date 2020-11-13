@@ -24,6 +24,7 @@ namespace GitHub
             std::string getUserInfo(const std::string& user);
             std::string getReleases(const std::string& owner, const std::string& repo);
             std::string getRelease(const std::string& owner, const std::string& repo, int id);
+            std::string getRateLimit();
 
         private:
             IConnection* m_connection;

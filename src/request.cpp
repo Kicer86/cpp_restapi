@@ -38,6 +38,12 @@ namespace GitHub
     }
 
 
+    std::string Request::getRateLimit()
+    {
+        return doRequest("rate_limit");
+    }
+
+
     std::string Request::doRequest(const std::string& request)
     {
         return m_connection->get(request);
