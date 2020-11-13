@@ -18,6 +18,7 @@ namespace GitHub { namespace CurlBackend {
         public:
             Api(const std::string& addr = "https://api.github.com");
             Api(const Api &) = delete;
+            ~Api();
 
             std::unique_ptr<GitHub::IConnection> connect();                        // anonymous access
             std::unique_ptr<GitHub::IConnection> connect(const std::string& token);
