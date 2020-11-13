@@ -15,7 +15,7 @@ namespace GitHub
     class GITHUB_API_EXPORT Request
     {
         public:
-            Request(IConnection *);
+            Request(std::unique_ptr<IConnection>);
             Request(const Request &) = delete;
             ~Request();
 
@@ -27,7 +27,7 @@ namespace GitHub
             std::string getRateLimit();
 
         private:
-            IConnection* m_connection;
+            std::unique_ptr<IConnection> m_connection;
 
             std::string doRequest(const std::string &);
     };

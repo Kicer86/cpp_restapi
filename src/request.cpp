@@ -6,7 +6,8 @@
 namespace GitHub
 {
 
-    Request::Request(IConnection* connection): m_connection(connection)
+    Request::Request(std::unique_ptr<IConnection> connection)
+        : m_connection(std::move(connection))
     {
     }
 

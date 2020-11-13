@@ -13,8 +13,7 @@ int main(int argc, char** argv)
     QNetworkAccessManager manager;
 
     GitHub::QtBackend::Api github(manager);
-    std::unique_ptr<GitHub::IConnection> connection = github.connect();
-    GitHub::Request request(connection.get());
+    GitHub::Request request(github.connect());
 
     qInfo() << request.getRateLimit().c_str();
     qInfo() << request.getUserInfo("Kicer86").c_str();
