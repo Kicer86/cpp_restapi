@@ -40,6 +40,7 @@ std::string GitHub::CurlBackend::Connection::get(const std::string& request)
         curl_easy_setopt(curl, CURLOPT_URL, full_addr.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
+        curl_easy_setopt(curl, CURLOPT_USERAGENT, "github_api/1.0");
 
         curl_easy_perform(curl);
 
