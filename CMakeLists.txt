@@ -9,6 +9,7 @@ option(GitHubAPI_CurlBackend "libcurl backend for GitHubApi" OFF)
 
 add_library(github_api
     include/github_api/iconnection.hpp
+    include/github_api/igithub_api.hpp
     include/github_api/request.hpp
     src/request.cpp
 )
