@@ -10,6 +10,8 @@ namespace GitHub {
 class IApi
 {
 public:
+    virtual ~IApi() = default;
+
     virtual std::unique_ptr<GitHub::IConnection> connect() = 0;                             // anonymous access
     virtual std::unique_ptr<GitHub::IConnection> connect(const std::string& token) = 0;     // authorized connection
 };
