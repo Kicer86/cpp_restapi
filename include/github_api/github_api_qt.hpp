@@ -1,6 +1,6 @@
 
-#ifndef GITHUBAPI_HPP
-#define GITHUBAPI_HPP
+#ifndef GITHUBAPI_QT_HPP
+#define GITHUBAPI_QT_HPP
 
 // Based on:
 // https://developer.github.com/guides/getting-started/
@@ -35,5 +35,4 @@ namespace GitHub { namespace QtBackend {
 
 }}
 
-#endif // GITHUBAPI_HPP
-
+#endif
