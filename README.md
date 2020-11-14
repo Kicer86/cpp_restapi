@@ -9,10 +9,10 @@ Currently offered functionality is limited but very easy to extend.
 
 ## How to use it
 
-This is a CMake based project and is meant to be included as subproject.
+This is a CMake based project and is meant to be included as a subproject.
 
 Simply embed github_api's sources in your project,
-choose which http backend you prefer and include github_api project in your CMakeLists.txt with:
+choose which http backend you prefer and include github_api project in your CMakeLists.txt like this:
 
 ```cmake
 set(GitHubAPI_QtBackend ON)      # use this line if you prefer Qt backend
