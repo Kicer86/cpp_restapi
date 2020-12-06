@@ -1,5 +1,9 @@
 
-find_package(Qt5 5.12 REQUIRED COMPONENTS Core Network)
+if(GitHubAPI_UseQt6)
+    find_package(Qt6 REQUIRED COMPONENTS Core Network)
+else()
+    find_package(Qt5 5.15 REQUIRED COMPONENTS Core Network)
+endif()
 
 target_sources(github_api PRIVATE
     ${PROJECT_SOURCE_DIR}/include/github_api/github_api_qt.hpp
@@ -10,6 +14,6 @@ target_sources(github_api PRIVATE
 
 target_link_libraries(github_api
     PUBLIC
-        Qt5::Core
-        Qt5::Network
+        Qt::Core
+        Qt::Network
 )

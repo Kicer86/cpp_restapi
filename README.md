@@ -31,6 +31,9 @@ target_link_libraries(app
 
 and that's all.
 
+Qt backend can be compiled with Qt5 (default) or Qt6.
+Set GitHubAPI_UseQt6 CMake variable to TRUE to use Qt6.
+
 
 ## Qt example
 
