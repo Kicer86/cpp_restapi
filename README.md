@@ -2,7 +2,7 @@
 
 This is a c++ library for accessing GitHub REST API v3.
 
-For connection with GitHub Qt5 or libcurl are needed.
+For connection with GitHub Qt5/6 or libcurl are needed.
 It is up to the user which to use.
 
 Currently offered functionality is limited but very easy to extend.
