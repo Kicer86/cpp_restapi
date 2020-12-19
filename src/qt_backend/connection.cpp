@@ -39,12 +39,29 @@ namespace GitHub { namespace QtBackend
         QEventLoop loop;
         QNetworkReply* reply = m_networkManager.get(request);
 
-        connect(reply, &QNetworkReply::readChannelFinished, [&result, &loop, reply]() {
-
+        connect(reply, &QNetworkReply::readChannelFinished, [&result, &loop, reply]() 
+        {
             const QByteArray rawData = reply->readAll();
             result = rawData.data();
 
             loop.exit();
+        });
+
+        connect(reply, &QNetworkReply::errorOccurred, [reply, &query](QNetworkReply::NetworkError code) 
+        {
+            qDebug() << QString("Error (%1 - %2) occured when processing request %3")
+                .arg(code)
+                .arg(reply->errorString())
+                .arg(query.c_str());
+        });
+
+        connect(reply, &QNetworkReply::sslErrors, [&query](const QList<QSslError>& errors)
+        {
+            qDebug() << QString("Ssl errors occured when processing request %1:")
+                .arg(query.c_str());
+
+            for(const auto& error: qAsConst(errors))
+                qDebug() << error.errorString();
         });
 
         loop.exec();
