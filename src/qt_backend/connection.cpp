@@ -32,7 +32,8 @@ namespace GitHub { namespace QtBackend
         std::string result;
 
         QNetworkRequest request = prepareRequest();
-        const QUrl url = QString("%1/%2").arg(m_address).arg(query.c_str());
+        const QString url_str = QString("%1/%2").arg(m_address).arg(query.c_str());
+        const QUrl url(url_str);
         request.setUrl(url);
 
         QEventLoop loop;
@@ -54,15 +55,17 @@ namespace GitHub { namespace QtBackend
 
     QNetworkRequest Connection::prepareRequest()
     {
-        QNetworkRequest requst;
+        QNetworkRequest request;
 
         if (m_token.isEmpty() == false)
         {
             const QByteArray key("Authorization");
             const QByteArray value = QString("token %1").arg(m_token).toLatin1();
-            requst.setRawHeader(key, value);
+            request.setRawHeader(key, value);
         }
 
-        return requst;
+        request.setRawHeader("User-Agent", "github_api/1.0");
+
+        return request;
     }
 }}
