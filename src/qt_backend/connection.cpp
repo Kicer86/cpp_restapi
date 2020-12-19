@@ -43,6 +43,7 @@ namespace GitHub { namespace QtBackend
         {
             const QByteArray rawData = reply->readAll();
             result = rawData.data();
+            reply->deleteLater();
 
             loop.exit();
         });
@@ -64,7 +65,7 @@ namespace GitHub { namespace QtBackend
                 qDebug() << error.errorString();
         });
 
-        loop.exec();
+        loop.exec();        
 
         return result;
     }
