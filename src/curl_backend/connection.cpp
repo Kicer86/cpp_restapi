@@ -1,4 +1,4 @@
-
+#include <iterator>
 #include <cassert>
 #include <curl/curl.h>
 
