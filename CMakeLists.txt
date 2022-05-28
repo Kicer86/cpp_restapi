@@ -6,6 +6,7 @@ include(GenerateExportHeader)
 
 option(GitHubAPI_QtBackend "Qt backend for GitHubApi" OFF)
 option(GitHubAPI_CurlBackend "libcurl backend for GitHubApi" OFF)
+option(GitHubAPI_Tests "Enable GitHubApi tests" OFF)
 
 add_library(github_api
     include/github_api/iconnection.hpp
@@ -34,4 +35,6 @@ if(GitHubAPI_CurlBackend)
     add_subdirectory(src/curl_backend)
 endif()
 
-add_subdirectory(tests)
+if(GitHubAPI_Tests)
+    add_subdirectory(tests)
+endif()
