@@ -33,3 +33,5 @@ endif()
 if(GitHubAPI_CurlBackend)
     add_subdirectory(src/curl_backend)
 endif()
+
+add_subdirectory(tests)
