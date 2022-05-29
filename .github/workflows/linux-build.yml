@@ -1,0 +1,34 @@
+
+name: Build-Linux
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: false
+
+    - name: Install system dependencies
+      run: |
+        sudo apt-get install    \
+          ninja-build           \
+          libgmock-dev
+
+    - name: Build
+      uses: ashutoshvarma/action-cmake-build@master
+      with:
+        build-dir: ${{ runner.workspace }}/build
+        build-type: Release
+        run-test: true
