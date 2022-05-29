@@ -6,6 +6,12 @@ include(GenerateExportHeader)
 
 option(GitHubAPI_QtBackend "Qt backend for GitHubApi" OFF)
 option(GitHubAPI_CurlBackend "libcurl backend for GitHubApi" OFF)
+option(GitHubAPI_Tests "Enable GitHubApi tests. Forces GitHubAPI_QtBackend and GitHubAPI_CurlBackend to be ON" OFF)
+
+if(GitHubAPI_Tests)
+    set(GitHubAPI_QtBackend ON)
+    set(GitHubAPI_CurlBackend ON)
+endif()
 
 add_library(github_api
     include/github_api/iconnection.hpp
@@ -32,4 +38,9 @@ endif()
 
 if(GitHubAPI_CurlBackend)
     add_subdirectory(src/curl_backend)
+endif()
+
+if(GitHubAPI_Tests)
+    enable_testing()
+    add_subdirectory(tests)
 endif()
