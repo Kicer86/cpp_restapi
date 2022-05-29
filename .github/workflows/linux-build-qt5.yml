@@ -1,0 +1,38 @@
+
+name: Build-Linux-Qt5
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04]
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: false
+
+    - name: Install system dependencies
+      run: |
+        sudo apt-get install    \
+          ninja-build           \
+          libgmock-dev          \
+          qtbase5-dev           \
+          libcurl4-openssl-dev  \
+          libmicrohttpd-dev
+
+    - name: Build
+      uses: ashutoshvarma/action-cmake-build@master
+      with:
+        build-dir: ${{ runner.workspace }}/build
+        build-type: Release
+        configure-options: -DGitHubAPI_Tests=ON -DGitHubAPI_UseQt6=OFF
+        run-test: true
