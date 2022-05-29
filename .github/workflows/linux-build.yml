@@ -31,4 +31,5 @@ jobs:
       with:
         build-dir: ${{ runner.workspace }}/build
         build-type: Release
+        configure-options: -DGitHubAPI_Tests=ON
         run-test: true
