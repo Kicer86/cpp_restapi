@@ -1,5 +1,5 @@
 
-name: Build-Linux
+name: Build-Linux-Qt5
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-22.04]
 
     steps:
     - uses: actions/checkout@v2
@@ -24,12 +24,13 @@ jobs:
       run: |
         sudo apt-get install    \
           ninja-build           \
-          libgmock-dev
+          libgmock-dev          \
+          qtbase5-dev
 
     - name: Build
       uses: ashutoshvarma/action-cmake-build@master
       with:
         build-dir: ${{ runner.workspace }}/build
         build-type: Release
-        configure-options: -DGitHubAPI_Tests=ON
+        configure-options: -DGitHubAPI_Tests=ON -DGitHubAPI_UseQt6=OFF
         run-test: true
