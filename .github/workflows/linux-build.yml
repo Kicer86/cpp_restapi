@@ -25,7 +25,8 @@ jobs:
         sudo apt-get install    \
           ninja-build           \
           libgmock-dev          \
-          qtbase5-dev
+          qtbase5-dev           \
+          libcurl4-openssl-dev
 
     - name: Build
       uses: ashutoshvarma/action-cmake-build@master
