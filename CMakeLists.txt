@@ -41,5 +41,6 @@ if(GitHubAPI_CurlBackend)
 endif()
 
 if(GitHubAPI_Tests)
+    enable_testing()
     add_subdirectory(tests)
 endif()
