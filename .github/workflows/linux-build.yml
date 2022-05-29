@@ -26,7 +26,8 @@ jobs:
           ninja-build           \
           libgmock-dev          \
           qtbase5-dev           \
-          libcurl4-openssl-dev
+          libcurl4-openssl-dev  \
+          libmicrohttpd-dev
 
     - name: Build
       uses: ashutoshvarma/action-cmake-build@master
