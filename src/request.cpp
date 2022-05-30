@@ -24,6 +24,11 @@ namespace GitHub
         return doRequest(request);
     }
 
+    std::string Request::listUserRepo(const std::string& username)
+    {
+        const std::string request = std::string("users/") + username +"/repos";
+        return doRequest(request);
+    }
 
     std::string Request::getReleases(const std::string& owner, const std::string& repo)
     {
