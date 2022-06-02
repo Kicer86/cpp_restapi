@@ -83,7 +83,7 @@ namespace
      * @param m_token github auth token
      * @return std::pair<std::string, std::string> returns response body and response headers
      */
-    std::pair<std::string, std::string> __get(const std::string& request, const std::string& m_token)
+    std::pair<std::string, std::string> performQuery(const std::string& request, const std::string& m_token)
     {
         int pageNo = 1;
         CURL* curl = curl_easy_init();
@@ -165,7 +165,7 @@ GitHub::CurlBackend::Connection::~Connection()
 std::string GitHub::CurlBackend::Connection::get(const std::string& request) {
     int pageNo = 1;
     const std::string full_addr = m_address + "/" + request;
-    std::pair <std::string, std::string> response = __get(full_addr, m_token); // initial execution
+    std::pair <std::string, std::string> response = performQuery(full_addr, m_token); // initial execution
     result = response.first;
     header_links = response.second;
 
@@ -197,7 +197,7 @@ std::string GitHub::CurlBackend::Connection::get(const std::string& request) {
             pageNo++;
             next_link = next_link.substr(0, next_link.size()-1);
             next_link +=  std::to_string(pageNo);
-            __get(next_link, m_token);
+            performQuery(next_link, m_token);
         }
         // format the string data to meet the json format
         format_string(result);
