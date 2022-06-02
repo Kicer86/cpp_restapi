@@ -166,14 +166,15 @@ GitHub::CurlBackend::Connection::~Connection()
 }
 
 
-std::string GitHub::CurlBackend::Connection::get(const std::string& request) {
+std::string GitHub::CurlBackend::Connection::get(const std::string& request)
+{
+    std::string output;
+
     int pageNo = 1;
     const std::string full_addr = m_address + "/" + request;
     const std::pair<std::string, std::string> response = performQuery(full_addr, m_token); // initial execution
     const std::string& result = response.first;
     header_links = response.second;
-
-    bool paginate = false;
 
     // checks if the link keyword exists in header response
     std::string key_word = "link:";
@@ -181,13 +182,7 @@ std::string GitHub::CurlBackend::Connection::get(const std::string& request) {
     std::smatch match;
     regex_search(header_links, match, re);
 
-    if (std::regex_search(header_links, match, re))
-    {
-        paginate = true;
-    }
-
-    std::string output;
-
+    const bool paginate = std::regex_search(header_links, match, re);
     if (paginate)
     {
         // next link url and the number of pages
