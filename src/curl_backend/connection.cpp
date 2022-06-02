@@ -29,8 +29,6 @@
 
 namespace
 {
-    std::string finalResult;   // combination of result
-    std::string result;        // result
     std::string header_links;  //  response header
 
     /**
@@ -46,7 +44,10 @@ namespace
      *
      * @param result a combination of response returned from the git api
      */
-    void format_string(std::string& result){
+    std::string format_string(const std::string& result)
+    {
+        std::string formattedPack;
+
         int open_br = 0;
         int close_br = 0;
 
@@ -68,12 +69,15 @@ namespace
             }
             if (close_br == 1)
             {
-                finalResult += "},";
+                formattedPack += "},";
                 close_br = 0;
                 continue;
             }
-            finalResult += result[i];
+
+            formattedPack += result[i];
         }
+
+        return formattedPack;
     }
 
     /**
@@ -85,7 +89,7 @@ namespace
      */
     std::pair<std::string, std::string> performQuery(const std::string& request, const std::string& m_token)
     {
-        int pageNo = 1;
+        std::string result;
         CURL* curl = curl_easy_init();
 
         if (curl)
@@ -165,8 +169,8 @@ GitHub::CurlBackend::Connection::~Connection()
 std::string GitHub::CurlBackend::Connection::get(const std::string& request) {
     int pageNo = 1;
     const std::string full_addr = m_address + "/" + request;
-    std::pair <std::string, std::string> response = performQuery(full_addr, m_token); // initial execution
-    result = response.first;
+    const std::pair<std::string, std::string> response = performQuery(full_addr, m_token); // initial execution
+    const std::string& result = response.first;
     header_links = response.second;
 
     bool paginate = false;
@@ -177,11 +181,12 @@ std::string GitHub::CurlBackend::Connection::get(const std::string& request) {
     std::smatch match;
     regex_search(header_links, match, re);
 
-
     if (std::regex_search(header_links, match, re))
     {
         paginate = true;
     }
+
+    std::string output;
 
     if (paginate)
     {
@@ -200,18 +205,18 @@ std::string GitHub::CurlBackend::Connection::get(const std::string& request) {
             performQuery(next_link, m_token);
         }
         // format the string data to meet the json format
-        format_string(result);
+        output = format_string(result);
 
         // removing the trailing comma, to avoid error when converting to json format
-        int last_comma = finalResult.length()-1;
-        finalResult.erase(last_comma, 1);
+        int last_comma = output.length()-1;
+        output.erase(last_comma, 1);
     }
     else
     {
-        finalResult = result;
+        output = result;
     }
 
-    finalResult = "[" + finalResult + "]";
+    output = "[" + output + "]";
 
-    return finalResult;
+    return output;
 }
