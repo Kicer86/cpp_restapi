@@ -24,6 +24,7 @@
 #include <curl/curl.h>
 
 #include "connection.hpp"
+#include "header_utils.hpp"
 
 
 GitHub::CurlBackend::Connection::Connection(const std::string& address,
@@ -45,58 +46,6 @@ namespace
     std::string finalResult;   // combination of result
     std::string result;        // result
     std::string header_links;  //  response header
-
-    /**
-     * @brief the method takes in a http header and returns
-     *        the next link used for pagination and the
-     *        number of pages.
-     *
-     * @param header header data from the return data from
-     *               the api call
-     * @return std::pair <std::string, int> the last link
-     *         and the number of page
-     */
-    std::pair <std::string, int> checkPaginationLInk(const std::string& header)
-    {
-        std::istringstream header_(header);
-        std::string line;
-        std::string link;
-        int numberOfPage;
-        // iterating through each line of string
-        while (std::getline(header_, line))
-        {
-            std::istringstream eachLine(line);
-            // itereating through each word in line, words are seperated by space
-            bool found = false;
-            while (eachLine && !found)
-            {
-                std::string word;
-                eachLine >> word;
-                if (word == "rel=\"next\",")
-                {
-                    eachLine >> word;
-                    for (int i = 0; i < word.size(); i++)
-                    {
-                        if (word[i] == '<')
-                        {
-                            continue;
-                        }
-                        else if (word[i] == '>')
-                        {
-                            numberOfPage = word[i-1] - '0';
-                            break;
-                        }
-                        else
-                        {
-                            link = std::string(link)+word[i];
-                        }
-                    }
-                    found = true;
-                }
-            }
-        }
-        return std::make_pair(link, numberOfPage);
-    }
 
     /**
      * @brief The method takes list of multiple response of the json object
@@ -205,6 +154,7 @@ namespace
             curl_slist_free_all(list);
             curl_easy_cleanup(curl);
         }
+
         curl_global_cleanup();
         return std::make_pair(result, header_links);
     }
@@ -235,7 +185,7 @@ std::string GitHub::CurlBackend::Connection::get(const std::string& request) {
     if (paginate)
     {
         // next link url and the number of pages
-        std::pair <std::string, int> pagination = checkPaginationLInk(header_links);
+        std::pair <std::string, int> pagination = HeaderUtils::checkPaginationLInk(header_links);
         std::string next_link = pagination.first;
         int no_page = pagination.second;
 

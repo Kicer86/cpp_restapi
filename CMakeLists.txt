@@ -17,6 +17,8 @@ add_library(github_api
     include/github_api/iconnection.hpp
     include/github_api/igithub_api.hpp
     include/github_api/request.hpp
+    src/header_utils.cpp
+    src/header_utils.hpp
     src/request.cpp
 )
 
