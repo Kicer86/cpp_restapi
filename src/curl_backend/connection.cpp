@@ -11,16 +11,18 @@
  *
  * @copyright Copyright (c) 2020 Michał Walenciak
  ****************************************************************/
-#include <iterator>
+
+#include <algorithm>
 #include <cassert>
-#include <curl/curl.h>
+#include <iterator>
 #include <iostream>
+#include <regex>
 #include <sstream>
+#include <string>
+#include <utility>
 #include <vector>
-#include <algorithm>  // for copy
-#include <utility>  // for pair
-#include <string>  // for string
-#include <regex>  // for regex
+#include <curl/curl.h>
+
 #include "connection.hpp"
 
 
@@ -29,24 +31,21 @@ GitHub::CurlBackend::Connection::Connection(const std::string& address,
     : m_address(address)
     , m_token(token)
 {
+
 }
 
 
 GitHub::CurlBackend::Connection::~Connection()
 {
-}
-namespace
-{
-    std::string finalResult;  // combination of result
-    std::string result;  // result
-    std::string header_links;  //  response header
-    std::pair <std::string, int> checkPaginationLInk(const std::string& header);
-    std::pair<std::string, std::string> __get(const std::string& request, const std::string& m_token);
-    void format_string(std::string& result);
+
 }
 
 namespace
 {
+    std::string finalResult;   // combination of result
+    std::string result;        // result
+    std::string header_links;  //  response header
+
     /**
      * @brief the method takes in a http header and returns
      *        the next link used for pagination and the
@@ -98,9 +97,7 @@ namespace
         }
         return std::make_pair(link, numberOfPage);
     }
-}
-namespace
-{
+
     /**
      * @brief The method takes list of multiple response of the json object
      *        returned from the git api as one string. and then formats it to,
@@ -143,9 +140,7 @@ namespace
             finalResult += result[i];
         }
     }
-}
-namespace
-{
+
     /**
      * @brief The original get method used for querying a request
      *
@@ -264,6 +259,8 @@ std::string GitHub::CurlBackend::Connection::get(const std::string& request) {
     {
         finalResult = result;
     }
+
     finalResult = "[" + finalResult + "]";
+
     return finalResult;
 }
