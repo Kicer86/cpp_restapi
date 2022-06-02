@@ -29,8 +29,6 @@
 
 namespace
 {
-    std::string header_links;  //  response header
-
     /**
      * @brief The method takes list of multiple response of the json object
      *        returned from the git api as one string. and then formats it to,
@@ -90,6 +88,8 @@ namespace
     std::pair<std::string, std::string> performQuery(const std::string& request, const std::string& m_token)
     {
         std::string result;
+        std::string header_links;
+
         CURL* curl = curl_easy_init();
 
         if (curl)
@@ -173,7 +173,7 @@ std::string GitHub::CurlBackend::Connection::get(const std::string& request)
     const std::string full_addr = m_address + "/" + request;
     const std::pair<std::string, std::string> response = performQuery(full_addr, m_token); // initial execution
     const std::string& result = response.first;
-    header_links = response.second;
+    const std::string& header_links = response.second;
 
     // checks if the link keyword exists in header response
     std::string key_word = "link:";
