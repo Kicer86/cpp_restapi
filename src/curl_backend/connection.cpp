@@ -27,20 +27,6 @@
 #include "header_utils.hpp"
 
 
-GitHub::CurlBackend::Connection::Connection(const std::string& address,
-                                             const std::string& token)
-    : m_address(address)
-    , m_token(token)
-{
-
-}
-
-
-GitHub::CurlBackend::Connection::~Connection()
-{
-
-}
-
 namespace
 {
     std::string finalResult;   // combination of result
@@ -158,6 +144,21 @@ namespace
         curl_global_cleanup();
         return std::make_pair(result, header_links);
     }
+}
+
+
+GitHub::CurlBackend::Connection::Connection(const std::string& address,
+                                             const std::string& token)
+    : m_address(address)
+    , m_token(token)
+{
+
+}
+
+
+GitHub::CurlBackend::Connection::~Connection()
+{
+
 }
 
 
