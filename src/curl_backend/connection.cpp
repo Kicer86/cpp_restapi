@@ -170,7 +170,6 @@ std::string GitHub::CurlBackend::Connection::get(const std::string& request)
 {
     std::string output;
 
-    int pageNo = 1;
     const std::string full_addr = m_address + "/" + request;
     const std::pair<std::string, std::string> response = performQuery(full_addr, m_token); // initial execution
     const std::string& result = response.first;
@@ -190,13 +189,12 @@ std::string GitHub::CurlBackend::Connection::get(const std::string& request)
         std::string next_link = pagination.first;
         int no_page = pagination.second;
 
-        // make a subsequent request to __get method and append
+        // make a subsequent request to performQuery method and append
         // data to result pointer
-        while (pageNo < no_page)
+        for(int pageNo = 0; pageNo < no_page; pageNo++)
         {
-            pageNo++;
             next_link = next_link.substr(0, next_link.size()-1);
-            next_link +=  std::to_string(pageNo);
+            next_link +=  std::to_string(pageNo + 1);
             performQuery(next_link, m_token);
         }
         // format the string data to meet the json format
