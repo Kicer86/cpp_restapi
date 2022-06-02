@@ -26,6 +26,7 @@ namespace GitHub { namespace QtBackend {
 
             std::unique_ptr<GitHub::IConnection> connect() override;
             std::unique_ptr<GitHub::IConnection> connect(const std::string& token) override;
+            std::string address() const override;
 
             Api& operator=(const Api &) = delete;
 
