@@ -12,10 +12,9 @@
 
 namespace GitHub { namespace QtBackend
 {
-    Connection::Connection(QNetworkAccessManager& manager, const QString& address, const QString& token):
-        m_networkManager(manager),
-        m_address(address),
-        m_token(token)
+    Connection::Connection(QNetworkAccessManager& manager, const QString& address, const QString& token)
+        : BaseConnection(address.toStdString(), token.toStdString())
+        , m_networkManager(manager)
     {
 
     }
@@ -27,45 +26,53 @@ namespace GitHub { namespace QtBackend
     }
 
 
-    std::string Connection::get(const std::string& query)
+    std::pair<std::string, std::string> Connection::fetchPage(const std::string& page)
     {
-        std::string result;
+        std::pair<std::string, std::string> result;
 
         QNetworkRequest request = prepareRequest();
-        const QString url_str = QString("%1/%2").arg(m_address).arg(query.c_str());
-        const QUrl url(url_str);
+        const QUrl url(QString::fromStdString(page));
         request.setUrl(url);
 
         QEventLoop loop;
         QNetworkReply* reply = m_networkManager.get(request);
 
-        connect(reply, &QNetworkReply::readChannelFinished, [&result, &loop, reply]() 
+        connect(reply, &QNetworkReply::readChannelFinished, [&result, &loop, reply]()
         {
+            QString header;
+            QList<QByteArray> headerList = reply->rawHeaderList();
+            for(const QByteArray& head: headerList)
+                header.append(
+                    QString("%1: %2\n").arg(head.constData()).arg(reply->rawHeader(head).constData())
+                );
+
             const QByteArray rawData = reply->readAll();
-            result = rawData.data();
+            result.first = rawData.data();
+            result.second = header.toStdString();
+
             reply->deleteLater();
 
             loop.exit();
         });
 
-        connect(reply, &QNetworkReply::errorOccurred, [reply, &query](QNetworkReply::NetworkError code) 
+        connect(reply, &QNetworkReply::errorOccurred, [reply, &page](QNetworkReply::NetworkError code)
         {
             qDebug() << QString("Error (%1 - %2) occured when processing request %3")
                 .arg(code)
                 .arg(reply->errorString())
-                .arg(query.c_str());
+                .arg(page.c_str());
         });
 
-        connect(reply, &QNetworkReply::sslErrors, [&query](const QList<QSslError>& errors)
+        connect(reply, &QNetworkReply::sslErrors, [&page](const QList<QSslError>& errors)
         {
             qDebug() << QString("Ssl errors occured when processing request %1:")
-                .arg(query.c_str());
+                .arg(page.c_str());
 
             for(const auto& error: qAsConst(errors))
                 qDebug() << error.errorString();
         });
 
-        loop.exec();        
+        loop.exec();
 
         return result;
     }
@@ -75,10 +82,11 @@ namespace GitHub { namespace QtBackend
     {
         QNetworkRequest request;
 
-        if (m_token.isEmpty() == false)
+        const std::string& userToken = token();
+        if (userToken.empty() == false)
         {
             const QByteArray key("Authorization");
-            const QByteArray value = QString("token %1").arg(m_token).toLatin1();
+            const QByteArray value = QString("token %1").arg(userToken.c_str()).toLatin1();
             request.setRawHeader(key, value);
         }
 
