@@ -17,6 +17,9 @@
 #include <iterator>
 #include <string>
 #include <curl/curl.h>
+#include <json/value.h>
+#include <json/reader.h>
+#include <json/writer.h>
 
 #include "connection.hpp"
 #include "header_utils.hpp"
@@ -94,6 +97,22 @@ namespace
         curl_global_cleanup();
         return std::make_pair(result, header_links);
     }
+
+    void update(Json::Value& a, const Json::Value& b)
+    {
+        if (a.isArray() && b.isArray())
+            for (const auto& entry : b)
+                a.append(entry);
+
+        if (a.isObject() && b.isObject())
+        {
+            for (const auto& key : b.getMemberNames())
+                if (a[key].isObject())
+                    update(a[key], b[key]);
+                else
+                    a[key] = b[key];
+        }
+    }
 }
 
 
@@ -114,18 +133,31 @@ GitHub::CurlBackend::Connection::~Connection()
 
 std::string GitHub::CurlBackend::Connection::get(const std::string& request)
 {
-    std::string output;
     std::string nextPage = m_address + "/" + request;
+
+    Json::Value output;
 
     do
     {
+        Json::Reader reader;
+
         const std::pair<std::string, std::string> response = performQuery(nextPage, m_token);
         const std::string& header_links = response.second;
-        output += response.first;
+
+        Json::Value partialOutput;
+        reader.parse(response.first, partialOutput);
+
+        if (output.isNull())
+            output.swap(partialOutput);
+        else
+            update(output, partialOutput);
 
         nextPage = HeaderUtils::checkPaginationLInk(header_links);
     }
     while (nextPage.empty() == false);
 
-    return output;
+    Json::FastWriter fastWriter;
+    const std::string strOutput = fastWriter.write(output);
+
+    return strOutput;
 }
