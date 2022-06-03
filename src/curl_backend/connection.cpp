@@ -15,12 +15,7 @@
 #include <algorithm>
 #include <cassert>
 #include <iterator>
-#include <iostream>
-#include <regex>
-#include <sstream>
 #include <string>
-#include <utility>
-#include <vector>
 #include <curl/curl.h>
 
 #include "connection.hpp"
@@ -30,56 +25,7 @@
 namespace
 {
     /**
-     * @brief The method takes list of multiple response of the json object
-     *        returned from the git api as one string. and then formats it to,
-     *        a single string equivalent of json object string.
-     *
-     *        This method makes it possible to save the output as a json
-     *        file if need be, without having to do anything else.
-     *
-     *        git api returns data in json formats. making it easier for data
-     *         abstraction
-     *
-     * @param result a combination of response returned from the git api
-     */
-    std::string format_string(const std::string& result)
-    {
-        std::string formattedPack;
-
-        int open_br = 0;
-        int close_br = 0;
-
-        for (std::string::size_type i=0; i < result.size(); i++)
-        {
-            if (result[i] == '[' && result[i+1] == '{')
-            {
-                open_br = 1;
-                continue;
-            }
-            if (open_br == 1)
-            {
-                open_br = 0;
-            }
-            if (result[i+1] == ']' && result[i-1] == '}' )
-            {
-                close_br = 1;
-                continue;
-            }
-            if (close_br == 1)
-            {
-                formattedPack += "},";
-                close_br = 0;
-                continue;
-            }
-
-            formattedPack += result[i];
-        }
-
-        return formattedPack;
-    }
-
-    /**
-     * @brief The original get method used for querying a request
+     * @brief Method used for querying a request
      *
      * @param request request link
      * @param m_token github auth token
@@ -169,47 +115,17 @@ GitHub::CurlBackend::Connection::~Connection()
 std::string GitHub::CurlBackend::Connection::get(const std::string& request)
 {
     std::string output;
+    std::string nextPage = m_address + "/" + request;
 
-    const std::string full_addr = m_address + "/" + request;
-    const std::pair<std::string, std::string> response = performQuery(full_addr, m_token); // initial execution
-    const std::string& result = response.first;
-    const std::string& header_links = response.second;
-
-    // checks if the link keyword exists in header response
-    std::string key_word = "link:";
-    std::regex re("link:");
-    std::smatch match;
-    regex_search(header_links, match, re);
-
-    const bool paginate = std::regex_search(header_links, match, re);
-    if (paginate)
+    do
     {
-        // next link url and the number of pages
-        std::pair <std::string, int> pagination = HeaderUtils::checkPaginationLInk(header_links);
-        std::string next_link = pagination.first;
-        int no_page = pagination.second;
+        const std::pair<std::string, std::string> response = performQuery(nextPage, m_token);
+        const std::string& header_links = response.second;
+        output += response.first;
 
-        // make a subsequent request to performQuery method and append
-        // data to result pointer
-        for(int pageNo = 0; pageNo < no_page; pageNo++)
-        {
-            next_link = next_link.substr(0, next_link.size()-1);
-            next_link +=  std::to_string(pageNo + 1);
-            performQuery(next_link, m_token);
-        }
-        // format the string data to meet the json format
-        output = format_string(result);
-
-        // removing the trailing comma, to avoid error when converting to json format
-        int last_comma = output.length()-1;
-        output.erase(last_comma, 1);
+        nextPage = HeaderUtils::checkPaginationLInk(header_links);
     }
-    else
-    {
-        output = result;
-    }
-
-    output = "[" + output + "]";
+    while (nextPage.empty() == false);
 
     return output;
 }

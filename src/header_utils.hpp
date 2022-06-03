@@ -19,16 +19,13 @@ namespace HeaderUtils
 
     /**
     * @brief the method takes in a http header and returns
-    *        the next link used for pagination and the
-    *        number of pages
+    *        the next link used for pagination
     *
     * @param header header data from the return data from
     *               the api call
-    * @return std::pair <std::string, int> the last link
-    *         and the number of page
+    * @return next page url
     */
-    std::pair <std::string, int> checkPaginationLInk(const std::string& header);
-
+    std::string checkPaginationLInk(const std::string& header);
 }
 
 #endif
