@@ -98,7 +98,7 @@ namespace
 
 
 GitHub::CurlBackend::Connection::Connection(const std::string& address,
-                                             const std::string& token)
+                                            const std::string& token)
     : m_address(address)
     , m_token(token)
 {
