@@ -152,7 +152,7 @@ std::string GitHub::CurlBackend::Connection::get(const std::string& request)
         else
             update(output, partialOutput);
 
-        nextPage = HeaderUtils::checkPaginationLInk(header_links);
+        nextPage = HeaderUtils::getNextPageUrl(header_links);
     }
     while (nextPage.empty() == false);
 

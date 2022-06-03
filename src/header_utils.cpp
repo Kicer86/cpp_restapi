@@ -7,7 +7,7 @@
 namespace HeaderUtils
 {
 
-    std::string checkPaginationLInk(const std::string& header)
+    std::string getNextPageUrl(const std::string& header)
     {
         std::istringstream header_(header);
         std::string line;

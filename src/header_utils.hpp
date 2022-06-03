@@ -16,7 +16,6 @@
 
 namespace HeaderUtils
 {
-
     /**
     * @brief the method takes in a http header and returns
     *        the next link used for pagination
@@ -25,7 +24,7 @@ namespace HeaderUtils
     *               the api call
     * @return next page url
     */
-    std::string checkPaginationLInk(const std::string& header);
+    std::string getNextPageUrl(const std::string& header);
 }
 
 #endif
