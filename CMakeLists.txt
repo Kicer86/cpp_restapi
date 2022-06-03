@@ -32,10 +32,12 @@ target_include_directories(github_api
     PUBLIC
         ${PROJECT_BINARY_DIR}
         ${PROJECT_SOURCE_DIR}/include
+    PRIVATE SYSTEM
+        ${JSONCPP_INCLUDE_DIRS}
 )
 
 target_link_libraries(github_api
-    PUBLIC
+    PRIVATE
         ${JSONCPP_LIBRARIES}
 )
 
