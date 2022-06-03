@@ -11,7 +11,7 @@
 #ifndef HEADER_UTILS_HPP_INCLUDED
 #define HEADER_UTILS_HPP_INCLUDED
 
-#include <sstream>
+#include <string>
 
 
 namespace HeaderUtils
