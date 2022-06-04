@@ -6,6 +6,7 @@
 #include "base_connection.hpp"
 #include "header_utils.hpp"
 
+
 namespace
 {
     void update(Json::Value& a, const Json::Value& b)

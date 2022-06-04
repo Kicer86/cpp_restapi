@@ -1,16 +1,9 @@
-/****************************************************************
- * @file connection.cpp
+/**
  * @author Kicer86@gmail.com
  * @brief The initial file and api is return by Michał Walenciak.
- *        The script below makes curl request to github rest api v3
- *        and returns a response.
  *        Kevin Mukuna(mukuna.kevin@gmail.com) modified the file
  *        to allow pagination.
- * @version 0.1
- * @date 2022-05-25
- *
- * @copyright Copyright (c) 2020 Michał Walenciak
- ****************************************************************/
+ */
 
 #include <algorithm>
 #include <cassert>

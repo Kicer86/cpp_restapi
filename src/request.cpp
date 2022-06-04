@@ -3,6 +3,11 @@
 #include <github_api/iconnection.hpp>
 
 
+// Based on:
+// https://developer.github.com/guides/getting-started/
+// https://developer.github.com/v3/
+
+
 namespace GitHub
 {
 

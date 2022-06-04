@@ -16,8 +16,12 @@
 
 class QNetworkAccessManager;
 
-namespace GitHub { namespace QtBackend {
+namespace GitHub { namespace QtBackend
+{
 
+    /**
+     * @brief Class for establishing connection with GitHub api with Qt's QNetworkAccessManager
+     */
     class GITHUB_API_EXPORT Api: public IApi
     {
         public:
