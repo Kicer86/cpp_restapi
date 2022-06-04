@@ -13,8 +13,7 @@ namespace
         if (a.isArray() && b.isArray())
             for (const auto& entry : b)
                 a.append(entry);
-
-        if (a.isObject() && b.isObject())
+        else if (a.isObject() && b.isObject())
         {
             for (const auto& key : b.getMemberNames())
                 if (a[key].isObject())
