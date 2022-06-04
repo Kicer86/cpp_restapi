@@ -31,4 +31,10 @@ std::unique_ptr<GitHub::IConnection> Api::connect(const std::string& token)
     return std::unique_ptr<GitHub::IConnection>(new Connection(m_addres, token));
 }
 
+
+std::string Api::address() const
+{
+    return m_addres;
+}
+
 }}

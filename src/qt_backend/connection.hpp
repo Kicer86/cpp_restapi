@@ -6,14 +6,14 @@
 #include <QSignalMapper>
 #include <QString>
 
-#include <github_api/iconnection.hpp>
+#include "base_connection.hpp"
 
 
 class QNetworkAccessManager;
 
 namespace GitHub { namespace QtBackend {
 
-    class Connection: public QObject, public IConnection
+    class Connection: public QObject, public BaseConnection
     {
         public:
             Connection(QNetworkAccessManager &, const QString& address, const QString& token);
@@ -23,12 +23,10 @@ namespace GitHub { namespace QtBackend {
 
             Connection& operator=(const Connection &) = delete;
 
-            std::string get(const std::string &) override;
+            std::pair<std::string, std::string> fetchPage(const std::string& request) override;
 
         private:
             QNetworkAccessManager& m_networkManager;
-            const QString m_address;
-            const QString m_token;
 
             QNetworkRequest prepareRequest();
     };

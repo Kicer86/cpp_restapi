@@ -2,6 +2,10 @@
 project(GitHubAPI)
 cmake_minimum_required(VERSION 3.16)
 
+find_package(PkgConfig REQUIRED)
+
+pkg_check_modules(JSONCPP REQUIRED jsoncpp)
+
 include(GenerateExportHeader)
 
 option(GitHubAPI_QtBackend "Qt backend for GitHubApi" OFF)
@@ -17,6 +21,10 @@ add_library(github_api
     include/github_api/iconnection.hpp
     include/github_api/igithub_api.hpp
     include/github_api/request.hpp
+    src/base_connection.cpp
+    src/base_connection.hpp
+    src/header_utils.cpp
+    src/header_utils.hpp
     src/request.cpp
 )
 
@@ -24,6 +32,13 @@ target_include_directories(github_api
     PUBLIC
         ${PROJECT_BINARY_DIR}
         ${PROJECT_SOURCE_DIR}/include
+    PRIVATE SYSTEM
+        ${JSONCPP_INCLUDE_DIRS}
+)
+
+target_link_libraries(github_api
+    PRIVATE
+        ${JSONCPP_LIBRARIES}
 )
 
 generate_export_header(github_api)

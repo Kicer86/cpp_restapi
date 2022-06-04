@@ -1,24 +1,37 @@
-#include <iterator>
+/**
+ * @author Kicer86@gmail.com
+ * @brief The initial file and api is return by Michał Walenciak.
+ *        Kevin Mukuna(mukuna.kevin@gmail.com) modified the file
+ *        to allow pagination.
+ */
+
+#include <algorithm>
 #include <cassert>
+#include <iterator>
+#include <string>
 #include <curl/curl.h>
 
 #include "connection.hpp"
 
-GitHub::CurlBackend::Connection::Connection(const std::string& address, const std::string& token)
-    : m_address(address)
-    , m_token(token)
+
+GitHub::CurlBackend::Connection::Connection(const std::string& address,
+                                            const std::string& token)
+    : BaseConnection(address, token)
 {
+
 }
 
 
 GitHub::CurlBackend::Connection::~Connection()
 {
+
 }
 
 
-std::string GitHub::CurlBackend::Connection::get(const std::string& request)
+std::pair<std::string, std::string> GitHub::CurlBackend::Connection::fetchPage(const std::string& page)
 {
     std::string result;
+    std::string header_links;
 
     CURL* curl = curl_easy_init();
 
@@ -28,26 +41,43 @@ std::string GitHub::CurlBackend::Connection::get(const std::string& request)
         std::string authorization;
 
         typedef size_t (*WriteCallback)(char *ptr, size_t size, size_t nmemb, void *userdata);
+        typedef size_t (*HeaderCallback)(char *buffer, size_t size, size_t nitems, void *userdata);
         WriteCallback write_callback = [](char *ptr, size_t size, size_t nmemb, void* result_raw)
         {
             assert(size == 1);
 
             std::string& result = *static_cast<std::string*>(result_raw);
-            std::copy(ptr, ptr + nmemb, std::back_inserter(result));
+            std::copy(ptr, ((ptr + nmemb)), std::back_inserter(result));
 
             return nmemb;
         };
+        /**
+            * @brief This is used as a callback that receives
+            *        header data, the header data is used for pagination.
+            *        see the following link for more info
+            *        https://curl.se/libcurl/c/CURLOPT_HEADERFUNCTION.html
+            */
+        HeaderCallback header_callback = [](char *buffer, size_t size,size_t nitems, void *userdata)
+        {
+            std::string& header_links = *static_cast<std::string*>(userdata);
+            std::copy(buffer, buffer+nitems, std::back_inserter(header_links));
 
-        const std::string full_addr = m_address + "/" + request;
+            return (size * nitems);
+        };
 
-        curl_easy_setopt(curl, CURLOPT_URL, full_addr.c_str());
+        // const std::string full_addr = m_address + "/" + request;
+
+        curl_easy_setopt(curl, CURLOPT_URL, page.c_str());
+        curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, header_callback);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
+        curl_easy_setopt(curl, CURLOPT_HEADERDATA, &header_links);
         curl_easy_setopt(curl, CURLOPT_USERAGENT, "github_api/1.0");
 
-        if (m_token.empty() == false)
+        const std::string& userToken = token();
+        if (userToken.empty() == false)
         {
-            authorization = std::string("Authorization: token ") + m_token;
+            authorization = std::string("Authorization: token ") + userToken;
             list = curl_slist_append(list, authorization.c_str());
 
             curl_easy_setopt(curl, CURLOPT_HTTPHEADER, list);
@@ -59,5 +89,6 @@ std::string GitHub::CurlBackend::Connection::get(const std::string& request)
         curl_easy_cleanup(curl);
     }
 
-    return result;
+    curl_global_cleanup();
+    return std::make_pair(result, header_links);
 }

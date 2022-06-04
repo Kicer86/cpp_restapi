@@ -17,3 +17,8 @@ target_link_libraries(github_api
         Qt::Core
         Qt::Network
 )
+
+target_include_directories(github_api
+    PRIVATE
+        ${PROJECT_SOURCE_DIR}/src
+)
