@@ -2,9 +2,15 @@
 project(GitHubAPI)
 cmake_minimum_required(VERSION 3.16)
 
-find_package(PkgConfig REQUIRED)
+find_package(jsoncpp CONFIG)
 
-pkg_check_modules(JSONCPP REQUIRED jsoncpp)
+if(jsoncpp_FOUND)
+    set(JSONCPP_LIBRARIES jsoncpp_lib)
+else()
+    find_package(PkgConfig REQUIRED)
+
+    pkg_check_modules(JSONCPP REQUIRED jsoncpp)
+endif()
 
 include(GenerateExportHeader)
 
