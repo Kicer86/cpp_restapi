@@ -1,0 +1,52 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "ninja_debug_vcpkg",
+      "displayName": "Ninja Debug Config",
+      "description": "Configure with vcpkg toolchain",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "generator": "Ninja",
+      "toolchainFile": "${sourceDir}/vcpkg/scripts/buildsystems/vcpkg.cmake",
+      "cacheVariables": {
+        "GitHubAPI_QtBackend": "ON",
+        "GitHubAPI_UseQt6": "TRUE"
+      }
+    },
+    {
+      "name": "ninja_release_vcpkg",
+      "displayName": "Ninja Release Config",
+      "description": "Configure with vcpkg toolchain",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "generator": "Ninja",
+      "toolchainFile": "${sourceDir}/vcpkg/scripts/buildsystems/vcpkg.cmake",
+      "cacheVariables": {
+        "GitHubAPI_QtBackend": "ON",
+        "GitHubAPI_UseQt6": "TRUE"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "Ninja Debug",
+      "configurePreset": "ninja_debug_vcpkg",
+      "displayName": "Build Debug",
+      "description": "Build Debug with Ninja",
+      "configuration": "Debug"
+    },
+    {
+      "name": "Ninja Release",
+      "configurePreset": "ninja_release_vcpkg",
+      "displayName": "Build Release",
+      "description": "Build Release with Ninja",
+      "configuration": "Release"
+    }
+  ]
+}

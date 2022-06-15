@@ -33,10 +33,11 @@ jobs:
         version: '6.3.0'
         cached: ${{ steps.cache-qt.outputs.cache-hit }}
 
+    - name: Run vcpkg
+      uses: lukka/run-vcpkg@v10.2
+
     - name: Build
-      uses: ashutoshvarma/action-cmake-build@master
+      uses: lukka/run-cmake@v10
       with:
-        build-dir: ${{ runner.workspace }}/build
-        build-type: Release
-        configure-options: -DGitHubAPI_Tests=ON -DGitHubAPI_UseQt6=ON
-        run-test: true
+        configurePreset: 'ninja_release_vcpkg'
+        buildPreset: 'Ninja Release'

@@ -1,0 +1,11 @@
+
+{
+  "name": "github_api",
+  "version-string": "1.0.0",
+  "port-version": 1,
+  "homepage": "https://github.com/Kicer86/github_api",
+  "description": "This is a c++ library for accessing GitHub REST API v3.",
+  "dependencies": [
+    "jsoncpp"
+  ]
+}
