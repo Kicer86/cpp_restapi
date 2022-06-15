@@ -1,0 +1,43 @@
+
+name: Build-Windows-Qt6
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+
+    - name: Cache Qt
+      id: cache-qt
+      uses: actions/cache@v2
+      with:
+        path: ${{ runner.workspace }}/Qt
+        key: ${{ runner.os }}-QtCache2
+
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+      with:
+        version: '6.3.0'
+        cached: ${{ steps.cache-qt.outputs.cache-hit }}
+
+    - name: Run vcpkg
+      uses: lukka/run-vcpkg@v10.2
+
+    - name: Build
+      uses: lukka/run-cmake@v10
+      with:
+        configurePreset: 'ninja_release_vcpkg'
+        buildPreset: 'Ninja Release'
