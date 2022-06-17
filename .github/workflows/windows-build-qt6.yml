@@ -33,6 +33,9 @@ jobs:
         version: '6.3.0'
         cached: ${{ steps.cache-qt.outputs.cache-hit }}
 
+    - name: disable debug build for vcpkg
+      run: echo 'set(VCPKG_BUILD_TYPE "release")' >> vcpkg/triplets/x64-windows.cmake
+
     - name: Run vcpkg
       uses: lukka/run-vcpkg@v10.2
 
