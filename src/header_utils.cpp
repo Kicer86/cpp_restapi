@@ -14,7 +14,7 @@ namespace HeaderUtils
         std::string line;
         std::string link;
 
-        const std::regex nextPageRegex(R"(^link\: <([^>]+)>; rel="next".*)");
+        const std::regex nextPageRegex(R"(^[Ll]ink\:.*<([^>]+)>; rel="next".*)");
 
         // iterating through each line of string
         while (std::getline(header_, line))
