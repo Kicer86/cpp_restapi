@@ -280,7 +280,7 @@ namespace GitHub
 
     std::string Request::getRepository(const std::string& owner, const std::string& repo)
     {
-        const std::string request = std::string("repos/") + owner + repo;
+        const std::string request = std::string("repos/") + owner + "/" + repo;
         return doRequest(request);
     }
 
@@ -291,12 +291,12 @@ namespace GitHub
     }
 
     std::string Request::getRepoLang(const std::string& owner, const std::string& repo) {
-        const std::string request = std::string("repos/") + owner + repo + "/languages";
+        const std::string request = std::string("repos/") + owner + "/" + repo + "/languages";
         return doRequest(request);
     }
 
     std::string Request::repoContributors(const std::string& owner, const std::string& repo) {
-        const std::string request = std::string("repos/") + owner + repo + "/contributors";
+        const std::string request = std::string("repos/") + owner + "/" + repo + "/contributors";
         return doRequest(request);
     }
 
