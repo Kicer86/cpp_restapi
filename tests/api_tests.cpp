@@ -82,7 +82,7 @@ TYPED_TEST(ApiTest, pagination)
 
     GithubServerMock::Response response2(200, R"({"someotherfield":"value"})");
     const std::string thirdPage = api.address() + "/url/to/last/page&page=3";
-    response2.addHeader( {"link", "<" + thirdPage + ">; rel=\"next\""} );
+    response2.addHeader( {"Link", "<some_previous_page>; rel=\"prev\", <" + thirdPage + ">; rel=\"next\""} );
 
     GithubServerMock::Response response3(200, R"({"more_fields":"value234"})");
 
@@ -104,7 +104,7 @@ TYPED_TEST(ApiTest, arraysPagination)
 
     GithubServerMock::Response response1(200, R"([{"login":"userName1234","id":1234}])");
     const std::string secondPage = api.address() + "/url/to/second/page&page=2";
-    response1.addHeader( {"link", "<" + secondPage + ">; rel=\"next\""} );
+    response1.addHeader( {"Link", "<" + secondPage + ">; rel=\"next\""} );
 
     GithubServerMock::Response response2(200, R"([{"someotherfield":"value"}])");
     const std::string thirdPage = api.address() + "/url/to/last/page&page=3";
