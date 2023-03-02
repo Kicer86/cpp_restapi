@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.16)
 find_package(jsoncpp CONFIG)
 
 if(jsoncpp_FOUND)
-    set(JSONCPP_LIBRARIES jsoncpp_lib)
+    set(JSONCPP_LIBRARIES JsonCpp::JsonCpp)
 else()
     find_package(PkgConfig REQUIRED)
 
