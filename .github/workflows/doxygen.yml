@@ -1,0 +1,23 @@
+
+name: Generate Doxygen
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v4
+
+    - name: Generate Docs
+      uses: mattnotmitt/doxygen-action@v1.9.5
+
+    - name: Deploy to Github Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs/html
