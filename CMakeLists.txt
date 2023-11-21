@@ -1,6 +1,10 @@
 
-project(GitHubAPI)
 cmake_minimum_required(VERSION 3.16)
+project(GitHubAPI)
+
+if(POLICY CMP0135)
+    cmake_policy(SET CMP0135 NEW)
+endif()
 
 find_package(jsoncpp CONFIG)
 
@@ -16,7 +20,7 @@ include(GenerateExportHeader)
 
 option(GitHubAPI_QtBackend "Qt backend for GitHubApi" OFF)
 option(GitHubAPI_CurlBackend "libcurl backend for GitHubApi" OFF)
-option(GitHubAPI_Tests "Enable GitHubApi tests. Forces GitHubAPI_QtBackend and GitHubAPI_CurlBackend to be ON" OFF)
+option(GitHubAPI_Tests "Enable GitHubApi tests. Forces both GitHubAPI_QtBackend and GitHubAPI_CurlBackend to be ON" OFF)
 
 if(GitHubAPI_Tests)
     set(GitHubAPI_QtBackend ON)
