@@ -1,0 +1,4 @@
+var searchData=
+[
+  ['connect_0',['connect',['../classGitHub_1_1CurlBackend_1_1Api.html#afadc7bef5bc33b8a5311a95917edd7f8',1,'GitHub::CurlBackend::Api::connect() override'],['../classGitHub_1_1CurlBackend_1_1Api.html#ad312f2551257879392fe9436c467098d',1,'GitHub::CurlBackend::Api::connect(const std::string &amp;token) override'],['../classGitHub_1_1QtBackend_1_1Api.html#a6f85ecc5fca56873f233fd0108d8536d',1,'GitHub::QtBackend::Api::connect() override'],['../classGitHub_1_1QtBackend_1_1Api.html#a305f5d7d612af7d41c4f38131b591c75',1,'GitHub::QtBackend::Api::connect(const std::string &amp;token) override'],['../classGitHub_1_1IApi.html#ae71ee63ae06fd32ea2c6616f2b94753d',1,'GitHub::IApi::connect()=0'],['../classGitHub_1_1IApi.html#abae58cce73ae597178cd62f10002b9ae',1,'GitHub::IApi::connect(const std::string &amp;token)=0']]]
+];
