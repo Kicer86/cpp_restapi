@@ -19,14 +19,14 @@ public:
      * @brief open anonymous connection with GitHub api
      * @return \ref GitHub::IConnection object which can be used with \ref GitHub::Request
      */
-    virtual std::unique_ptr<GitHub::IConnection> connect() = 0;
+    virtual std::unique_ptr<cpp_restapi::IConnection> connect() = 0;
 
     /**
      * @brief open authorized connection with GitHub api
      * @param token GitHub's authentication token. One can be generated on https://github.com/settings/tokens
      * @return \ref GitHub::IConnection object which can be used with \ref GitHub::Request
      */
-    virtual std::unique_ptr<GitHub::IConnection> connect(const std::string& token) = 0;
+    virtual std::unique_ptr<cpp_restapi::IConnection> connect(const std::string& token) = 0;
 
     /**
      * @return GitHub api address

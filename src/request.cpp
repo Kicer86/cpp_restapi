@@ -1,6 +1,5 @@
 
 #include <github_api/request.hpp>
-#include <github_api/iconnection.hpp>
 
 
 // Based on:
@@ -11,7 +10,7 @@
 namespace GitHub
 {
 
-    Request::Request(std::unique_ptr<IConnection> connection)
+    Request::Request(std::unique_ptr<cpp_restapi::IConnection> connection)
         : m_connection(std::move(connection))
     {
     }

@@ -5,13 +5,12 @@
 #include <memory>
 #include <string>
 
+#include <cpp_restapi/iconnection.hpp>
 #include "github_api_export.h"
 
 
 namespace GitHub
 {
-    struct IConnection;
-
     /**
      * @brief GitHub api actions.
      *
@@ -27,7 +26,7 @@ namespace GitHub
     class GITHUB_API_EXPORT Request
     {
         public:
-            Request(std::unique_ptr<IConnection>);
+            Request(std::unique_ptr<cpp_restapi::IConnection>);
             Request(const Request &) = delete;
             ~Request();
 
@@ -506,7 +505,7 @@ namespace GitHub
             std::string repoContributors(const std::string& owner, const std::string& repo);
 
         private:
-            std::unique_ptr<IConnection> m_connection;
+            std::unique_ptr<cpp_restapi::IConnection> m_connection;
 
             std::string doRequest(const std::string &);
     };

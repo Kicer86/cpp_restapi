@@ -10,7 +10,7 @@
 
 #include <QString>
 
-#include "iconnection.hpp"
+#include "cpp_restapi/iconnection.hpp"
 #include "igithub_api.hpp"
 #include "github_api_export.h"
 
@@ -28,8 +28,8 @@ namespace GitHub { namespace QtBackend
             Api(QNetworkAccessManager &, const QString& addr = "https://api.github.com");
             Api(const Api &) = delete;
 
-            std::unique_ptr<GitHub::IConnection> connect() override;
-            std::unique_ptr<GitHub::IConnection> connect(const std::string& token) override;
+            std::unique_ptr<cpp_restapi::IConnection> connect() override;
+            std::unique_ptr<cpp_restapi::IConnection> connect(const std::string& token) override;
             std::string address() const override;
 
             Api& operator=(const Api &) = delete;

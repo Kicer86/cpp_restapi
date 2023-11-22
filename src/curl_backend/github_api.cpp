@@ -20,15 +20,15 @@ Api::~Api()
 }
 
 
-std::unique_ptr<GitHub::IConnection> Api::connect()
+std::unique_ptr<cpp_restapi::IConnection> Api::connect()
 {
     return connect(std::string());
 }
 
 
-std::unique_ptr<GitHub::IConnection> Api::connect(const std::string& token)
+std::unique_ptr<cpp_restapi::IConnection> Api::connect(const std::string& token)
 {
-    return std::unique_ptr<GitHub::IConnection>(new Connection(m_addres, token));
+    return std::unique_ptr<cpp_restapi::IConnection>(new Connection(m_addres, token));
 }
 
 

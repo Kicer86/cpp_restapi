@@ -2,11 +2,11 @@
 #ifndef BASE_CONNECTION_HPP_INCLUDED
 #define BASE_CONNECTION_HPP_INCLUDED
 
-#include <github_api/iconnection.hpp>
+#include <cpp_restapi/iconnection.hpp>
 
 namespace GitHub
 {
-    class BaseConnection: public GitHub::IConnection
+    class BaseConnection: public cpp_restapi::IConnection
     {
     public:
         explicit BaseConnection(const std::string& address, const std::string& token);
