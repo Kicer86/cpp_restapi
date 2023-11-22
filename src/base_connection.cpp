@@ -66,13 +66,18 @@ std::string GitHub::BaseConnection::get(const std::string& request)
 }
 
 
-const std::string & GitHub::BaseConnection::address() const
+std::map<std::string, std::string> GitHub::BaseConnection::getHeaderEntries() const
 {
-    return m_address;
+    std::map<std::string, std::string> entries;
+
+    if (m_token.empty() == false)
+        entries.emplace("Authorization", "token " + m_token);
+
+    return entries;
 }
 
 
-const std::string & GitHub::BaseConnection::token() const
+const std::string & GitHub::BaseConnection::address() const
 {
-    return m_token;
+    return m_address;
 }

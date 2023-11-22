@@ -82,13 +82,10 @@ namespace GitHub { namespace QtBackend
     {
         QNetworkRequest request;
 
-        const std::string& userToken = token();
-        if (userToken.empty() == false)
-        {
-            const QByteArray key("Authorization");
-            const QByteArray value = QString("token %1").arg(userToken.c_str()).toLatin1();
-            request.setRawHeader(key, value);
-        }
+        const auto header_entries = getHeaderEntries();
+
+        for(const auto& [k, v]: header_entries)
+            request.setRawHeader(k.c_str(), v.c_str());
 
         request.setRawHeader("User-Agent", "github_api/1.0");
 

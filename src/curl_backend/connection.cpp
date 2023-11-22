@@ -74,14 +74,15 @@ std::pair<std::string, std::string> GitHub::CurlBackend::Connection::fetchPage(c
         curl_easy_setopt(curl, CURLOPT_HEADERDATA, &header_links);
         curl_easy_setopt(curl, CURLOPT_USERAGENT, "github_api/1.0");
 
-        const std::string& userToken = token();
-        if (userToken.empty() == false)
-        {
-            authorization = std::string("Authorization: token ") + userToken;
-            list = curl_slist_append(list, authorization.c_str());
+        const auto header_entries = getHeaderEntries();
 
-            curl_easy_setopt(curl, CURLOPT_HTTPHEADER, list);
+        for(const auto& [k, v]: header_entries)
+        {
+            const std::string entry = k + ": " + v;
+            list = curl_slist_append(list, entry.c_str());
         }
+
+        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, list);
 
         curl_easy_perform(curl);
 
