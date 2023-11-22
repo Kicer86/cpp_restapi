@@ -16,6 +16,9 @@ else()
     pkg_check_modules(JSONCPP REQUIRED jsoncpp)
 endif()
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 include(GenerateExportHeader)
 
 option(GitHubAPI_QtBackend "Qt backend for GitHubApi" OFF)
@@ -28,13 +31,8 @@ if(GitHubAPI_Tests)
 endif()
 
 add_library(github_api
-    include/github_api/iconnection.hpp
-    include/github_api/igithub_api.hpp
-    include/github_api/request.hpp
     src/base_connection.cpp
-    src/base_connection.hpp
     src/header_utils.cpp
-    src/header_utils.hpp
     src/request.cpp
 )
 
