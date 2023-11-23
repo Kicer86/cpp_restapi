@@ -11,7 +11,7 @@
 
 class QNetworkAccessManager;
 
-namespace GitHub { namespace QtBackend {
+namespace cpp_restapi { namespace QtBackend {
 
     class Connection: public QObject, public BaseConnection
     {

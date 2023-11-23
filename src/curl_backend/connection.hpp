@@ -5,7 +5,7 @@
 #include "base_connection.hpp"
 
 
-namespace GitHub { namespace CurlBackend {
+namespace cpp_restapi { namespace CurlBackend {
 
     class Connection: public BaseConnection
     {

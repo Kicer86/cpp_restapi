@@ -26,7 +26,7 @@ namespace
 }
 
 
-GitHub::BaseConnection::BaseConnection(const std::string& address, const std::string& token)
+cpp_restapi::BaseConnection::BaseConnection(const std::string& address, const std::string& token)
     : m_address(address)
     , m_token(token)
 {
@@ -34,7 +34,7 @@ GitHub::BaseConnection::BaseConnection(const std::string& address, const std::st
 }
 
 
-std::string GitHub::BaseConnection::get(const std::string& request)
+std::string cpp_restapi::BaseConnection::get(const std::string& request)
 {
     std::string nextPage = m_address + "/" + request;
 
@@ -66,7 +66,7 @@ std::string GitHub::BaseConnection::get(const std::string& request)
 }
 
 
-std::map<std::string, std::string> GitHub::BaseConnection::getHeaderEntries() const
+std::map<std::string, std::string> cpp_restapi::BaseConnection::getHeaderEntries() const
 {
     std::map<std::string, std::string> entries;
 
@@ -77,7 +77,7 @@ std::map<std::string, std::string> GitHub::BaseConnection::getHeaderEntries() co
 }
 
 
-const std::string & GitHub::BaseConnection::address() const
+const std::string & cpp_restapi::BaseConnection::address() const
 {
     return m_address;
 }

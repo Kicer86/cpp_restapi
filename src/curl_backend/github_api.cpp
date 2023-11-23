@@ -28,7 +28,7 @@ std::unique_ptr<cpp_restapi::IConnection> Api::connect()
 
 std::unique_ptr<cpp_restapi::IConnection> Api::connect(const std::string& token)
 {
-    return std::unique_ptr<cpp_restapi::IConnection>(new Connection(m_addres, token));
+    return std::unique_ptr<cpp_restapi::IConnection>(new cpp_restapi::CurlBackend::Connection(m_addres, token));
 }
 
 

@@ -14,7 +14,7 @@
 #include "connection.hpp"
 
 
-GitHub::CurlBackend::Connection::Connection(const std::string& address,
+cpp_restapi::CurlBackend::Connection::Connection(const std::string& address,
                                             const std::string& token)
     : BaseConnection(address, token)
 {
@@ -22,13 +22,13 @@ GitHub::CurlBackend::Connection::Connection(const std::string& address,
 }
 
 
-GitHub::CurlBackend::Connection::~Connection()
+cpp_restapi::CurlBackend::Connection::~Connection()
 {
 
 }
 
 
-std::pair<std::string, std::string> GitHub::CurlBackend::Connection::fetchPage(const std::string& page)
+std::pair<std::string, std::string> cpp_restapi::CurlBackend::Connection::fetchPage(const std::string& page)
 {
     std::string result;
     std::string header_links;

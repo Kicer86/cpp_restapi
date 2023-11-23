@@ -7,7 +7,7 @@
 #include <cpp_restapi/iconnection.hpp>
 
 
-namespace GitHub
+namespace cpp_restapi
 {
     class BaseConnection: public cpp_restapi::IConnection
     {
