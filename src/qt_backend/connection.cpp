@@ -10,7 +10,7 @@
 #include <QEventLoop>
 
 
-namespace cpp_restapi { namespace QtBackend
+namespace cpp_restapi::QtBackend
 {
     Connection::Connection(QNetworkAccessManager& manager, const QString& address, const QString& token)
         : BaseConnection(address.toStdString(), token.toStdString())
@@ -91,4 +91,4 @@ namespace cpp_restapi { namespace QtBackend
 
         return request;
     }
-}}
+}
