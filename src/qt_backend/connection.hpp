@@ -16,7 +16,7 @@ namespace cpp_restapi { namespace QtBackend {
     class Connection: public QObject, public BaseConnection
     {
         public:
-            Connection(QNetworkAccessManager &, const QString& address, const QString& token);
+            [[deprecated]] Connection(QNetworkAccessManager &, const QString& address, const QString& token);
             Connection(const Connection &) = delete;
 
             ~Connection();
