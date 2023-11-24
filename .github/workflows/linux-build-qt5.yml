@@ -38,3 +38,10 @@ jobs:
         build-type: Release
         configure-options: -DGitHubAPI_Tests=ON -DGitHubAPI_UseQt6=OFF
         run-test: true
+
+    - name: Build Examples
+      uses: ashutoshvarma/action-cmake-build@master
+      with:
+        source-dir: ${{ github.workspace }}/examples
+        build-dir: ${{ runner.workspace }}/build-examples
+        build-type: Release
