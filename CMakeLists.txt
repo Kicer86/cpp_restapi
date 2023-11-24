@@ -33,7 +33,7 @@ endif()
 add_library(github_api
     src/base_connection.cpp
     src/header_utils.cpp
-    src/request.cpp
+    src/services/github/request.cpp
 )
 
 target_include_directories(github_api
