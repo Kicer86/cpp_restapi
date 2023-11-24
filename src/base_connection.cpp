@@ -28,7 +28,14 @@ namespace
 
 cpp_restapi::BaseConnection::BaseConnection(const std::string& address, const std::string& token)
     : m_address(address)
-    , m_token(token)
+{
+    if (token.empty() == false)
+        m_headerEntries.emplace("Authorization", "token " + token);
+}
+
+cpp_restapi::BaseConnection::BaseConnection(const std::string& address, const std::map<std::string, std::string>& headerEntries)
+    : m_address(address)
+    , m_headerEntries(headerEntries)
 {
 
 }
@@ -66,14 +73,9 @@ std::string cpp_restapi::BaseConnection::get(const std::string& request)
 }
 
 
-std::map<std::string, std::string> cpp_restapi::BaseConnection::getHeaderEntries() const
+const std::map<std::string, std::string>& cpp_restapi::BaseConnection::getHeaderEntries() const
 {
-    std::map<std::string, std::string> entries;
-
-    if (m_token.empty() == false)
-        entries.emplace("Authorization", "token " + m_token);
-
-    return entries;
+    return m_headerEntries;
 }
 
 
