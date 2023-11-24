@@ -1,6 +1,6 @@
 
-project(GitHubApiExample)
 cmake_minimum_required(VERSION 3.10)
+project(GitHubApiExample)
 
 set(GitHubAPI_QtBackend ON)
 set(GitHubAPI_CurlBackend ON)
