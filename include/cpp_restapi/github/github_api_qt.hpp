@@ -20,7 +20,7 @@ namespace cpp_restapi::GitHub::QtBackend
 {
 
     /**
-     * @brief Class for establishing connection with GitHub api with Qt's QNetworkAccessManager
+     * @brief Class for establishing connection with GitHub api with Qt's QNetworkAccessManager. Deprecated, use GitHubConnectionBuilder instead
      */
     class GITHUB_API_DEPRECATED_EXPORT Api: public cpp_restapi::GitHubBase
     {

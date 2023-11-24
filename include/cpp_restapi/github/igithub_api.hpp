@@ -12,9 +12,9 @@ namespace cpp_restapi::GitHub
 {
 
 /**
- * @brief common interface for all api backends
+ * @brief common interface for all api backends. Deprecated, use GitHubConnectionBuilder instead
  */
-class [[deprecated]] IApi
+class [[deprecated("Use GitHubConnectionBuilder")]] IApi
 {
 public:
     virtual ~IApi() = default;

@@ -29,6 +29,7 @@ target_link_libraries(api_tests
 
 target_include_directories(api_tests
     PRIVATE
+        ${PROJECT_SOURCE_DIR}/src
         ${httpmockserver_SOURCE_DIR}/include
 )
 

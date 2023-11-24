@@ -11,7 +11,7 @@
 namespace cpp_restapi::GitHub::CurlBackend
 {
     /**
-     * @brief Class for establishing connection with GitHub api with Curl
+     * @brief Class for establishing connection with GitHub api with Curl. Deprecated, use GitHubConnectionBuilder instead
      */
     class GITHUB_API_DEPRECATED_EXPORT Api: public cpp_restapi::GitHubBase
     {
