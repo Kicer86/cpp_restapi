@@ -15,8 +15,8 @@
 
 namespace cpp_restapi::CurlBackend
 {
-    Connection::Connection(const std::string& address, const std::string& token)
-        : BaseConnection(address, token)
+    Connection::Connection(const std::string& address, const std::map<std::string, std::string>& headerEntries)
+        : BaseConnection(address, headerEntries)
     {
 
     }

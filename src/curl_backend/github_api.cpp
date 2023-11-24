@@ -5,10 +5,11 @@
 #include "connection.hpp"
 
 
-namespace GitHub { namespace CurlBackend {
+namespace GitHub::CurlBackend
+{
 
 Api::Api(const std::string& addr)
-    : m_addres(addr)
+    : cpp_restapi::GitHubBase(addr)
 {
     curl_global_init(CURL_GLOBAL_DEFAULT);
 }
@@ -20,21 +21,14 @@ Api::~Api()
 }
 
 
-std::unique_ptr<cpp_restapi::IConnection> Api::connect()
-{
-    return connect(std::string());
-}
-
-
 std::unique_ptr<cpp_restapi::IConnection> Api::connect(const std::string& token)
 {
-    return std::unique_ptr<cpp_restapi::IConnection>(new cpp_restapi::CurlBackend::Connection(m_addres, token));
+    std::map<std::string, std::string> headerEntries;
+
+    if (token.empty() == false)
+        headerEntries.emplace("Authorization", "token " + token);
+
+    return std::make_unique<cpp_restapi::CurlBackend::Connection>(address(), headerEntries);
 }
 
-
-std::string Api::address() const
-{
-    return m_addres;
 }
-
-}}

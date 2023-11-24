@@ -2,7 +2,11 @@
 #ifndef GITHUBAPI_HPP
 #define GITHUBAPI_HPP
 
+#include <memory>
 #include <string>
+
+#include <cpp_restapi/iconnection.hpp>
+
 
 namespace GitHub
 {
@@ -16,12 +20,6 @@ public:
     virtual ~IApi() = default;
 
     /**
-     * @brief open anonymous connection with GitHub api
-     * @return \ref GitHub::IConnection object which can be used with \ref GitHub::Request
-     */
-    virtual std::unique_ptr<cpp_restapi::IConnection> connect() = 0;
-
-    /**
      * @brief open authorized connection with GitHub api
      * @param token GitHub's authentication token. One can be generated on https://github.com/settings/tokens
      * @return \ref GitHub::IConnection object which can be used with \ref GitHub::Request
@@ -31,7 +29,7 @@ public:
     /**
      * @return GitHub api address
      */
-    virtual std::string address() const = 0;
+    virtual const std::string& address() const = 0;
 };
 
 }

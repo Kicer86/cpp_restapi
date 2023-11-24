@@ -12,13 +12,6 @@
 
 namespace cpp_restapi::QtBackend
 {
-    Connection::Connection(QNetworkAccessManager& manager, const QString& address, const QString& token)
-        : BaseConnection(address.toStdString(), token.toStdString())
-        , m_networkManager(manager)
-    {
-
-    }
-
     Connection::Connection(QNetworkAccessManager& manager, const std::string& address, const std::map<std::string, std::string>& headerEntries)
         : BaseConnection(address, headerEntries)
         , m_networkManager(manager)

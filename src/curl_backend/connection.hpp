@@ -10,8 +10,7 @@ namespace cpp_restapi { namespace CurlBackend {
     class Connection: public BaseConnection
     {
         public:
-            [[deprecated]] Connection(const std::string& address, const std::string& token);
-            Connection(const std::string& address, const std::map<std::string, std::string>& token);
+            Connection(const std::string& address, const std::map<std::string, std::string>& headerEntries);
             Connection(const Connection &) = delete;
 
             ~Connection();

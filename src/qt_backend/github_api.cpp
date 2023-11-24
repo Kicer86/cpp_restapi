@@ -4,33 +4,25 @@
 #include "connection.hpp"
 
 
-namespace GitHub { namespace QtBackend {
-
-Api::Api(QNetworkAccessManager& manager, const QString& addr): m_manager(manager), m_addres(addr)
+namespace GitHub::QtBackend
 {
 
-}
-
-
-std::unique_ptr<cpp_restapi::IConnection> Api::connect()
+Api::Api(QNetworkAccessManager& manager, const QString& addr)
+    : cpp_restapi::GitHubBase(addr.toStdString())
+    , m_manager(manager)
 {
-    std::unique_ptr<cpp_restapi::IConnection> result(new cpp_restapi::QtBackend::Connection(m_manager, m_addres, ""));
 
-    return result;
 }
 
 
 std::unique_ptr<cpp_restapi::IConnection> Api::connect(const std::string& token)
 {
-    std::unique_ptr<cpp_restapi::IConnection> result(new cpp_restapi::QtBackend::Connection(m_manager, m_addres, token.c_str()));
+    std::map<std::string, std::string> headerEntries;
 
-    return result;
+    if (token.empty() == false)
+        headerEntries.emplace("Authorization", "token " + token);
+
+    return std::make_unique<cpp_restapi::QtBackend::Connection>(m_manager, address(), headerEntries);
 }
 
-
-std::string Api::address() const
-{
-    return m_addres.toStdString();
 }
-
-}}

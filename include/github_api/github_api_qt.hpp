@@ -11,34 +11,31 @@
 #include <QString>
 
 #include "cpp_restapi/iconnection.hpp"
-#include "igithub_api.hpp"
+#include "github_api_base.hpp"
 #include "github_api_export.h"
 
 class QNetworkAccessManager;
 
-namespace GitHub { namespace QtBackend
+namespace GitHub::QtBackend
 {
 
     /**
      * @brief Class for establishing connection with GitHub api with Qt's QNetworkAccessManager
      */
-    class GITHUB_API_EXPORT Api: public IApi
+    class GITHUB_API_EXPORT Api: public cpp_restapi::GitHubBase
     {
         public:
             Api(QNetworkAccessManager &, const QString& addr = "https://api.github.com");
             Api(const Api &) = delete;
 
-            std::unique_ptr<cpp_restapi::IConnection> connect() override;
-            std::unique_ptr<cpp_restapi::IConnection> connect(const std::string& token) override;
-            std::string address() const override;
+            std::unique_ptr<cpp_restapi::IConnection> connect(const std::string& token = "") override;
 
             Api& operator=(const Api &) = delete;
 
         private:
             QNetworkAccessManager& m_manager;
-            QString m_addres;
     };
 
-}}
+}
 
 #endif
