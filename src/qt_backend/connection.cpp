@@ -1,5 +1,5 @@
 
-#include "connection.hpp"
+#include <cpp_restapi/qt_connection.hpp>
 
 #include <cassert>
 #include <string>

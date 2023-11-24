@@ -1,7 +1,6 @@
 
 #include <cpp_restapi/github/github_api_qt.hpp>
-
-#include "connection.hpp"
+#include <cpp_restapi/qt_connection.hpp>
 
 
 namespace cpp_restapi::GitHub::QtBackend

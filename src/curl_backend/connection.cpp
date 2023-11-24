@@ -11,7 +11,8 @@
 #include <string>
 #include <curl/curl.h>
 
-#include "connection.hpp"
+#include <cpp_restapi/curl_connection.hpp>
+
 
 namespace cpp_restapi::CurlBackend
 {

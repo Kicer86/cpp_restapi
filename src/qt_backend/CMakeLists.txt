@@ -8,7 +8,6 @@ endif()
 target_sources(github_api PRIVATE
     ${PROJECT_SOURCE_DIR}/include/github_api/github_api_qt.hpp
     connection.cpp
-    connection.hpp
     github_api.cpp
 )
 

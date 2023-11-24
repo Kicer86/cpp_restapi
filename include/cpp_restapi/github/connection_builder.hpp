@@ -2,6 +2,9 @@
 #ifndef CONNECTION_BUILDER_HPP_INCLUDED
 #define CONNECTION_BUILDER_HPP_INCLUDED
 
+#include <map>
+#include <memory>
+
 #include <cpp_restapi/iconnection.hpp>
 
 

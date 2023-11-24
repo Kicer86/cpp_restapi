@@ -4,8 +4,8 @@
 #include <httpmockserver/mock_server.h>
 #include <httpmockserver/test_environment.h>
 
-#include "curl_backend/connection.hpp"
-#include "qt_backend/connection.hpp"
+#include "cpp_restapi/curl_connection.hpp"
+#include "cpp_restapi/qt_connection.hpp"
 #include "cpp_restapi/github/github_api_curl.hpp"
 #include "cpp_restapi/github/github_api_qt.hpp"
 #include "cpp_restapi/github/connection_builder.hpp"

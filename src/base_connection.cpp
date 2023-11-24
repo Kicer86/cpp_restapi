@@ -3,7 +3,7 @@
 #include <json/reader.h>
 #include <json/writer.h>
 
-#include "base_connection.hpp"
+#include <cpp_restapi/base_connection.hpp>
 #include "header_utils.hpp"
 
 
