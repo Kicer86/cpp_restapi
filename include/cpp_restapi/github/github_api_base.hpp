@@ -6,7 +6,7 @@
 
 namespace cpp_restapi
 {
-    class GitHubBase: public cpp_restapi::GitHub::IApi
+    class [[deprecated]] GitHubBase: public cpp_restapi::GitHub::IApi
     {
         public:
             GitHubBase(const std::string& address);

@@ -14,7 +14,7 @@ namespace cpp_restapi::GitHub
 /**
  * @brief common interface for all api backends
  */
-class IApi
+class [[deprecated]] IApi
 {
 public:
     virtual ~IApi() = default;

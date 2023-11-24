@@ -13,7 +13,7 @@ namespace cpp_restapi::GitHub::CurlBackend
     /**
      * @brief Class for establishing connection with GitHub api with Curl
      */
-    class GITHUB_API_EXPORT Api: public cpp_restapi::GitHubBase
+    class GITHUB_API_DEPRECATED_EXPORT Api: public cpp_restapi::GitHubBase
     {
         public:
             Api(const std::string& addr = "https://api.github.com");
