@@ -1,5 +1,5 @@
 
-#include "github_api/github_api_base.hpp"
+#include "cpp_restapi/github/github_api_base.hpp"
 
 
 namespace cpp_restapi

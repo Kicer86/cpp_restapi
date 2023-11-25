@@ -1,10 +1,10 @@
 
-#include <github_api/github_api_qt.hpp>
+#include <cpp_restapi/github/github_api_qt.hpp>
 
 #include "connection.hpp"
 
 
-namespace GitHub::QtBackend
+namespace cpp_restapi::GitHub::QtBackend
 {
 
 Api::Api(QNetworkAccessManager& manager, const QString& addr)

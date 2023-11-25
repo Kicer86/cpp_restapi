@@ -8,7 +8,7 @@
 #include <cpp_restapi/iconnection.hpp>
 
 
-namespace GitHub
+namespace cpp_restapi::GitHub
 {
 
 /**

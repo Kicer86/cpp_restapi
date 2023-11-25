@@ -4,9 +4,9 @@
 #include <httpmockserver/mock_server.h>
 #include <httpmockserver/test_environment.h>
 
-#include "github_api/github_api_curl.hpp"
-#include "github_api/github_api_qt.hpp"
-#include "github_api/request.hpp"
+#include "cpp_restapi/github/github_api_curl.hpp"
+#include "cpp_restapi/github/github_api_qt.hpp"
+#include "cpp_restapi/github/request.hpp"
 
 #include "github_server_mock.hpp"
 
@@ -15,6 +15,7 @@ using testing::_;
 using testing::Return;
 using testing::NiceMock;
 
+using namespace cpp_restapi;
 
 namespace
 {

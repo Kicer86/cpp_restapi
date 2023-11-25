@@ -1,30 +1,5 @@
 
-#ifndef GITHUBAPI_CURL_HPP
-#define GITHUBAPI_CURL_HPP
+#warning This file is deprecated. Please include <cpp_restapi/github/github_api_qt.hpp> instead
+#include <cpp_restapi/github/github_api_curl.hpp>
 
-#include <memory>
-
-#include "cpp_restapi/iconnection.hpp"
-#include "github_api_base.hpp"
-#include "github_api_export.h"
-
-namespace GitHub { namespace CurlBackend
-{
-    /**
-     * @brief Class for establishing connection with GitHub api with Curl
-     */
-    class GITHUB_API_EXPORT Api: public cpp_restapi::GitHubBase
-    {
-        public:
-            Api(const std::string& addr = "https://api.github.com");
-            Api(const Api &) = delete;
-            ~Api();
-
-            std::unique_ptr<cpp_restapi::IConnection> connect(const std::string& token = "") override;
-
-            Api& operator=(const Api &) = delete;
-    };
-
-}}
-
-#endif
+namespace GitHub = cpp_restapi::GitHub;

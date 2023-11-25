@@ -1,11 +1,11 @@
 
 #include <curl/curl.h>
 
-#include <github_api/github_api_curl.hpp>
+#include <cpp_restapi/github/github_api_curl.hpp>
 #include "connection.hpp"
 
 
-namespace GitHub::CurlBackend
+namespace cpp_restapi::GitHub::CurlBackend
 {
 
 Api::Api(const std::string& addr)

@@ -2,12 +2,11 @@
 #ifndef GITHUB_API_BASE_HPP_INCLUDED
 #define GITHUB_API_BASE_HPP_INCLUDED
 
-#include "github_api/igithub_api.hpp"
+#include "igithub_api.hpp"
 
 namespace cpp_restapi
 {
-
-    class GitHubBase: public GitHub::IApi
+    class GitHubBase: public cpp_restapi::GitHub::IApi
     {
         public:
             GitHubBase(const std::string& address);
@@ -17,7 +16,6 @@ namespace cpp_restapi
         private:
             std::string m_address;
     };
-
 }
 
 #endif
