@@ -1,14 +1,15 @@
 
 #include <iostream>
 
-#include <github_api/github_api_curl.hpp>
-#include <github_api/request.hpp>
+#include <cpp_restapi/curl_connection.hpp>
+#include <cpp_restapi/github/connection_builder.hpp>
+#include <cpp_restapi/github/request.hpp>
 
 
 int main(int argc, char** argv)
 {
-    GitHub::CurlBackend::Api github;
-    GitHub::Request request(github.connect());
+    auto connection = cpp_restapi::GitHub::ConnectionBuilder().build<cpp_restapi::CurlBackend::Connection>();
+    cpp_restapi::GitHub::Request request(std::move(connection));
 
     std::cout << request.getRateLimit() << '\n';
     std::cout << request.getUserInfo("Kicer86") << '\n';
