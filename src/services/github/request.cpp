@@ -10,7 +10,7 @@
 namespace cpp_restapi::GitHub
 {
 
-    Request::Request(std::unique_ptr<cpp_restapi::IConnection> connection)
+    Request::Request(std::shared_ptr<cpp_restapi::IConnection> connection)
         : m_connection(std::move(connection))
     {
     }

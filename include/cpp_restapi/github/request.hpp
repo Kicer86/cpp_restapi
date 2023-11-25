@@ -26,7 +26,7 @@ namespace cpp_restapi::GitHub
     class GITHUB_API_EXPORT Request
     {
         public:
-            Request(std::unique_ptr<cpp_restapi::IConnection>);
+            Request(std::shared_ptr<cpp_restapi::IConnection>);
             Request(const Request &) = delete;
             ~Request();
 
@@ -505,7 +505,7 @@ namespace cpp_restapi::GitHub
             std::string repoContributors(const std::string& owner, const std::string& repo);
 
         private:
-            std::unique_ptr<cpp_restapi::IConnection> m_connection;
+            std::shared_ptr<cpp_restapi::IConnection> m_connection;
 
             std::string doRequest(const std::string &);
     };

@@ -55,9 +55,9 @@ namespace cpp_restapi::GitHub
              * @param args backend specific arguments to be passed to connection.
              */
             template<typename CT, typename... Args>
-            std::unique_ptr<IConnection> build(Args&&... args)
+            std::shared_ptr<IConnection> build(Args&&... args)
             {
-                return std::make_unique<CT>(std::forward<Args>(args)..., m_address, m_headerEntries);
+                return std::make_shared<CT>(std::forward<Args>(args)..., m_address, m_headerEntries);
             }
 
         private:

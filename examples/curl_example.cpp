@@ -9,7 +9,7 @@
 int main(int argc, char** argv)
 {
     auto connection = cpp_restapi::GitHub::ConnectionBuilder().build<cpp_restapi::CurlBackend::Connection>();
-    cpp_restapi::GitHub::Request request(std::move(connection));
+    cpp_restapi::GitHub::Request request(connection);
 
     std::cout << request.getRateLimit() << '\n';
     std::cout << request.getUserInfo("Kicer86") << '\n';

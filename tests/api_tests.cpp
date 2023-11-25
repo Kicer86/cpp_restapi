@@ -28,7 +28,7 @@ namespace
     T buildApi();
 
     template<typename T>
-    std::unique_ptr<IConnection> buildNewApi();
+    std::shared_ptr<IConnection> buildNewApi();
 
     template<>
     GitHub::CurlBackend::Api buildApi<GitHub::CurlBackend::Api>()
@@ -44,13 +44,13 @@ namespace
     }
 
     template<>
-    std::unique_ptr<IConnection> buildNewApi<GitHub::CurlBackend::Api>()
+    std::shared_ptr<IConnection> buildNewApi<GitHub::CurlBackend::Api>()
     {
         return GitHub::ConnectionBuilder().setAddress(std::string("http://localhost:") + std::to_string(port)).build<CurlBackend::Connection>();
     }
 
     template<>
-    std::unique_ptr<IConnection>buildNewApi<GitHub::QtBackend::Api>()
+    std::shared_ptr<IConnection>buildNewApi<GitHub::QtBackend::Api>()
     {
         static QNetworkAccessManager networkmanager;
         return GitHub::ConnectionBuilder().setAddress(std::string("http://localhost:") + std::to_string(port)).build<QtBackend::Connection>(networkmanager);
@@ -113,7 +113,7 @@ TYPED_TEST(ApiTest, newInterface)
     using Connection = typename BackendTraits<TypeParam>::Connection;
     auto connection = buildNewApi<TypeParam>();
 
-    GitHub::Request request(std::move(connection));
+    GitHub::Request request(connection);
     const auto info = request.getUserInfo("userName1234");
 
     EXPECT_EQ(info, "{\"id\":1234,\"login\":\"userName1234\"}\n");
