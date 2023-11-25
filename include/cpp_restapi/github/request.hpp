@@ -18,8 +18,8 @@ namespace cpp_restapi::GitHub
      * executed on GitHub's api.
      *
      * Before one can use it a connection with github needs to be established.
-     * Use \ref GitHub::QtBackend::Api or \ref GitHub::CurlBackend::Api
-     * to construct an \ref GitHub::IConnection object.
+     * Use \ref cpp_restapi::GitHub::ConnectionBuilder
+     * to construct a \ref cpp_restapi::IConnection object.
      *
      * All methods return a response in json format.
      */
@@ -79,7 +79,6 @@ namespace cpp_restapi::GitHub
              */
             std::string listUserRepo(const std::string& user);
 
-
             // --------------- user info related api
 
             /**
@@ -97,6 +96,7 @@ namespace cpp_restapi::GitHub
              * @return std::string list of gitub account
              */
             std::string listUsers();
+
             /**
              * @brief Provides publicly available information about
              * someone with a GitHub account.
@@ -105,7 +105,6 @@ namespace cpp_restapi::GitHub
              * @return std::string
              */
             std::string getUser(const std::string& username);
-
 
             // issues related api methods
             /**
@@ -263,6 +262,7 @@ namespace cpp_restapi::GitHub
              *         The days array is a group of commits per day, starting on Sunday
              */
             std::string getLastYearCommit(const std::string& owner, const std::string& repo);
+
             /**
              * @brief Get all contributor commit activity
              *

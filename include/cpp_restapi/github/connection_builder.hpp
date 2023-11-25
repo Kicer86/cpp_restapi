@@ -10,6 +10,10 @@
 
 namespace cpp_restapi::GitHub
 {
+    /**
+     * @brief Connection build for GitHub api
+     */
+
     class ConnectionBuilder
     {
         public:
@@ -20,6 +24,13 @@ namespace cpp_restapi::GitHub
 
             ConnectionBuilder(const ConnectionBuilder &) = delete;
 
+            /**
+             * @brief change github api address.
+             * @param address api address
+             *
+             * Default value is https://api.github.com
+             * Api address should not be change in normal conditions. It is used for testing.
+             */
             ConnectionBuilder& setAddress(const std::string& address)
             {
                 m_address = address;
@@ -27,6 +38,10 @@ namespace cpp_restapi::GitHub
                 return *this;
             }
 
+            /**
+             * @brief set token used for authorization
+             * @param token token to be used for authorization
+             */
             ConnectionBuilder& setToken(const std::string& token)
             {
                 m_headerEntries.emplace("Authorization", "token " + token);
@@ -34,6 +49,11 @@ namespace cpp_restapi::GitHub
                 return *this;
             }
 
+            /**
+             * @brief build @ref cpp_restapi::IConnection object
+             * @tparam CT connection type (Qt or Curl backend). @ref cpp_restapi::CurlBackend::Connection or @ref cpp_restapi::QtBackend::Connection
+             * @param args backend specific arguments to be passed to connection.
+             */
             template<typename CT, typename... Args>
             std::unique_ptr<IConnection> build(Args&&... args)
             {

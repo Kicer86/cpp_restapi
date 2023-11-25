@@ -12,7 +12,7 @@ namespace cpp_restapi::GitHub
 {
 
 /**
- * @brief common interface for all api backends. Deprecated, use GitHubConnectionBuilder instead
+ * @brief common interface for all api backends. Deprecated, use @ref cpp_restapi::GitHub::ConnectionBuilder instead
  */
 class [[deprecated("Use GitHubConnectionBuilder")]] IApi
 {
@@ -22,7 +22,7 @@ public:
     /**
      * @brief open authorized connection with GitHub api
      * @param token GitHub's authentication token. One can be generated on https://github.com/settings/tokens
-     * @return \ref GitHub::IConnection object which can be used with \ref GitHub::Request
+     * @return \ref cpp_restapi::IConnection object which can be used with \ref cpp_restapi::GitHub::Request
      */
     virtual std::unique_ptr<cpp_restapi::IConnection> connect(const std::string& token) = 0;
 
