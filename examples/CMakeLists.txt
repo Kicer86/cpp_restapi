@@ -10,7 +10,7 @@ endif()
 set(GitHubAPI_UseQt6 ${Qt6_FOUND})
 set(GitHubAPI_QtBackend ON)
 set(GitHubAPI_CurlBackend ON)
-add_subdirectory(.. github_api_root)                #include directory with github_api
+add_subdirectory(.. cpp_restapi_root)                #include directory with github_api
 
 add_executable(deprecated_qt_example deprecated_qt_example.cpp)
 add_executable(deprecated_curl_example deprecated_curl_example.cpp)
