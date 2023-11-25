@@ -1,30 +1,36 @@
-# GitHub API for c++
+
+# Rest API for c++
 
 This is a c++ library originally written for accessing GitHub REST API v3.
-Currently reorganized to be easily used with any API available.
+Currently reorganized to be easily used with any Rest API available.
 
 It supports two backends for establishing connections with remote API servers:
 Qt5/6 and Curl.
+
+##### Warning:
+As the library was not yet fully renamed (to provide backward compatibility) from being GitHub only API (github_api)
+to more general one (cpp_restapi), github_api and cpp_restapi names may occur interchangeably.
+Do not use classes marked as deprecated in new projects.
 
 ## How to use it
 
 This is a CMake based project and is meant to be included as a subproject.
 
-Simply embed github_api's sources in your project,
-choose which http backend you prefer (both can be used simoultanously) and include github_api project in your CMakeLists.txt like this:
+Simply embed cpp_restapi's sources in your project,
+choose which http backend you prefer (both can be used simoultanously) and include cpp_restapi project in your CMakeLists.txt like this:
 
 ```cmake
 set(GitHubAPI_QtBackend ON)      # use this line if you prefer Qt backend
 set(GitHubAPI_CurlBackend ON)    # use this line if you prefer Curl backend
-add_subdirectory(github_api)
+add_subdirectory(cpp_restapi)
 ```
 
-Then you can link your application against github_api:
+Then you can link your application against cpp_restapi:
 
 ```cmake
 target_link_libraries(app
     PRIVATE
-        github_api
+        cpp_restapi
 )
 ```
 

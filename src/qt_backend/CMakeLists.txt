@@ -5,19 +5,19 @@ else()
     find_package(Qt5 5.15 REQUIRED COMPONENTS Core Network)
 endif()
 
-target_sources(github_api PRIVATE
+target_sources(cpp_restapi PRIVATE
     ${PROJECT_SOURCE_DIR}/include/github_api/github_api_qt.hpp
     connection.cpp
     github_api.cpp
 )
 
-target_link_libraries(github_api
+target_link_libraries(cpp_restapi
     PUBLIC
         Qt::Core
         Qt::Network
 )
 
-target_include_directories(github_api
+target_include_directories(cpp_restapi
     PRIVATE
         ${PROJECT_SOURCE_DIR}/src
 )

@@ -6,7 +6,7 @@
 #include <string>
 
 #include <cpp_restapi/iconnection.hpp>
-#include "github_api_export.h"
+#include "cpp_restapi_export.h"
 
 
 namespace cpp_restapi::GitHub
@@ -23,7 +23,7 @@ namespace cpp_restapi::GitHub
      *
      * All methods return a response in json format.
      */
-    class GITHUB_API_EXPORT Request
+    class CPP_RESTAPI_EXPORT Request
     {
         public:
             Request(std::shared_ptr<cpp_restapi::IConnection>);

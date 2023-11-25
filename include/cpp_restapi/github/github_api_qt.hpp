@@ -12,7 +12,7 @@
 
 #include "cpp_restapi/iconnection.hpp"
 #include "github_api_base.hpp"
-#include "github_api_export.h"
+#include "cpp_restapi_export.h"
 
 class QNetworkAccessManager;
 
@@ -22,7 +22,7 @@ namespace cpp_restapi::GitHub::QtBackend
     /**
      * @brief Class for establishing connection with GitHub api with Qt's QNetworkAccessManager. Deprecated, use @ref cpp_restapi::GitHub::ConnectionBuilder instead
      */
-    class GITHUB_API_DEPRECATED_EXPORT Api: public cpp_restapi::GitHubBase
+    class CPP_RESTAPI_DEPRECATED_EXPORT Api: public cpp_restapi::GitHubBase
     {
         public:
             Api(QNetworkAccessManager &, const QString& addr = "https://api.github.com");

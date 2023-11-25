@@ -36,5 +36,5 @@ target_link_libraries(qt_example
 
 target_link_libraries(curl_example
     PRIVATE
-        github_api
+        cpp_restapi
 )
