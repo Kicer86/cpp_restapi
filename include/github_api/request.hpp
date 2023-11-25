@@ -38,7 +38,7 @@ namespace GitHub
              * @param user GitHub user name
              * @return api response in json format
              *
-             * Request user information. Equivalent of fetching https://api.github.com/users/<user>
+             * Request user information. Equivalent of fetching https://api.github.com/users/\<user>
              */
             std::string getUserInfo(const std::string& user);
 
@@ -48,7 +48,7 @@ namespace GitHub
              * @param repo user's repository name
              * @return api response in json format
              *
-             * Request list of releases for repository. Equivalent of fetching https://api.github.com/repos/<user>/<repo>/releases
+             * Request list of releases for repository. Equivalent of fetching https://api.github.com/repos/\<user>/\<repo>/releases
              */
             std::string getReleases(const std::string& user, const std::string& repo);
 
@@ -59,7 +59,7 @@ namespace GitHub
              * @param id release id. Id is returned as a part of \ref getReleases
              * @return api response in json format
              *
-             * Request details of release. Equivalent of fetching https://api.github.com/repos/<user>/<repo>/releases/<id>
+             * Request details of release. Equivalent of fetching https://api.github.com/repos/\<user>/\<repo>/releases/\<id>
              */
             std::string getRelease(const std::string& user, const std::string& repo, int id);
 
@@ -76,7 +76,7 @@ namespace GitHub
              * @param user GitHub user name
              * @return api response in json format
              *
-             * Request list of repositories for user. Equivalent of fetching https://api.github.com/users/<user>/repos
+             * Request list of repositories for user. Equivalent of fetching https://api.github.com/users/\<user>/repos
              */
             std::string listUserRepo(const std::string& user);
 
@@ -102,7 +102,7 @@ namespace GitHub
              * @brief Provides publicly available information about
              * someone with a GitHub account.
              *
-             * @param user github user name
+             * @param username github user name
              * @return std::string
              */
             std::string getUser(const std::string& username);
