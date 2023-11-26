@@ -1,5 +1,11 @@
 
+# For compatibility. TODO: remove
 if(GitHubAPI_UseQt6)
+    set(CppRestAPI_UseQt6 ${GitHubAPI_UseQt6})
+    message(WARNING "GitHubAPI_UseQt6 is deprecated, please use CppRestAPI_UseQt6")
+endif()
+
+if(CppRestAPI_UseQt6)
     find_package(Qt6 REQUIRED COMPONENTS Core Network)
 else()
     find_package(Qt5 5.15 REQUIRED COMPONENTS Core Network)

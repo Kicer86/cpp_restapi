@@ -21,13 +21,27 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(GenerateExportHeader)
 
-option(GitHubAPI_QtBackend "Qt backend for GitHubApi" OFF)
-option(GitHubAPI_CurlBackend "libcurl backend for GitHubApi" OFF)
-option(GitHubAPI_Tests "Enable GitHubApi tests. Forces both GitHubAPI_QtBackend and GitHubAPI_CurlBackend to be ON" OFF)
-
+# For compatibility. TODO: remove
+if(GitHubAPI_QtBackend)
+    set(CppRestAPI_QtBackend ${GitHubAPI_QtBackend})
+    message(WARNING "GitHubAPI_QtBackend is deprecated, please use CppRestAPI_QtBackend")
+endif()
+if(GitHubAPI_CurlBackend)
+    set(CppRestAPI_CurlBackend ${GitHubAPI_CurlBackend})
+    message(WARNING "GitHubAPI_CurlBackend is deprecated, please use CppRestAPI_CurlBackend")
+endif()
 if(GitHubAPI_Tests)
-    set(GitHubAPI_QtBackend ON)
-    set(GitHubAPI_CurlBackend ON)
+    set(CppRestAPI_Tests ${GitHubAPI_Tests})
+    message(WARNING "GitHubAPI_Tests is deprecated, please use CppRestAPI_Tests")
+endif()
+
+option(CppRestAPI_QtBackend "Qt backend for GitHubApi" OFF)
+option(CppRestAPI_CurlBackend "libcurl backend for GitHubApi" OFF)
+option(CppRestAPI_Tests "Enable GitHubApi tests. Forces both CppRestAPI_QtBackend and CppRestAPI_CurlBackend to be ON" OFF)
+
+if(CppRestAPI_Tests)
+    set(CppRestAPI_QtBackend ON)
+    set(CppRestAPI_CurlBackend ON)
 endif()
 
 add_library(cpp_restapi
@@ -54,19 +68,19 @@ generate_export_header(cpp_restapi)
 
 add_library(github_api ALIAS cpp_restapi)
 
-if(NOT GitHubAPI_QtBackend AND NOT GitHubAPI_CurlBackend)
-    message(FATAL_ERROR "No backend was chosen. Set either GitHubAPI_QtBackend or GitHubAPI_CurlBackend variable to ON")
+if(NOT CppRestAPI_QtBackend AND NOT CppRestAPI_CurlBackend)
+    message(FATAL_ERROR "No backend was chosen. Set either CppRestAPI_QtBackend or CppRestAPI_CurlBackend variable to ON")
 endif()
 
-if(GitHubAPI_QtBackend)
+if(CppRestAPI_QtBackend)
     add_subdirectory(src/qt_backend)
 endif()
 
-if(GitHubAPI_CurlBackend)
+if(CppRestAPI_CurlBackend)
     add_subdirectory(src/curl_backend)
 endif()
 
-if(GitHubAPI_Tests)
+if(CppRestAPI_Tests)
     enable_testing()
     add_subdirectory(tests)
 endif()
