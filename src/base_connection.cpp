@@ -75,6 +75,11 @@ std::string BaseConnection::get(const std::string& request)
 }
 
 
+const std::string& BaseConnection::url() const
+{
+    return m_address;
+}
+
 const std::map<std::string, std::string>& BaseConnection::getHeaderEntries() const
 {
     return m_headerEntries;
