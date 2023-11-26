@@ -16,6 +16,8 @@ add_executable(deprecated_qt_example deprecated_qt_example.cpp)
 add_executable(deprecated_curl_example deprecated_curl_example.cpp)
 add_executable(qt_example qt_example.cpp)
 add_executable(curl_example curl_example.cpp)
+add_executable(bare_curl_connection_example bare_curl_connection_example.cpp)
+add_executable(bare_qt_connection_example bare_qt_connection_example.cpp)
 
 target_link_libraries(deprecated_qt_example
     PRIVATE
@@ -35,6 +37,16 @@ target_link_libraries(qt_example
 )
 
 target_link_libraries(curl_example
+    PRIVATE
+        cpp_restapi
+)
+
+target_link_libraries(bare_curl_connection_example
+    PRIVATE
+        cpp_restapi
+)
+
+target_link_libraries(bare_qt_connection_example
     PRIVATE
         cpp_restapi
 )
