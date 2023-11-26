@@ -20,6 +20,11 @@ namespace cpp_restapi
              * @return api response in json format
              */
             virtual std::string get(const std::string& request) = 0;
+
+            /**
+             * @brief return API url
+             */
+            virtual const std::string& url() const = 0;
     };
 }
 
