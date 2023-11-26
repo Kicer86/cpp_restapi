@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['iconnection_2ehpp_0',['iconnection.hpp',['../d9/d6d/iconnection_8hpp.html',1,'']]],
-  ['igithub_5fapi_2ehpp_1',['igithub_api.hpp',['../de/da5/igithub__api_8hpp.html',1,'']]]
+  ['connection_5fbuilder_2ehpp_0',['connection_builder.hpp',['../d7/dd4/connection__builder_8hpp.html',1,'']]],
+  ['curl_5fconnection_2ehpp_1',['curl_connection.hpp',['../de/d0e/curl__connection_8hpp.html',1,'']]]
 ];

@@ -1,27 +1,6 @@
 var searchData=
 [
-  ['get_0',['get',['../d0/da4/structGitHub_1_1IConnection.html#adc9d2b76e9ae4ea9dbec4a81e7ca0098',1,'GitHub::IConnection']]],
-  ['getauntenticateduser_1',['getAuntenticatedUser',['../dd/d52/classGitHub_1_1Request.html#a6e0612fa6e46b148d21daf7a4783e3d5',1,'GitHub::Request']]],
-  ['getcommitcount_2',['getCommitCount',['../dd/d52/classGitHub_1_1Request.html#aac8a5308bfa538ab0d6b7e734c1cb11c',1,'GitHub::Request']]],
-  ['getcommits_3',['getCommits',['../dd/d52/classGitHub_1_1Request.html#a64a1637dc2a39e841bb52a25d18dfdfe',1,'GitHub::Request']]],
-  ['getcommunityprofilemetrics_4',['getCommunityProfileMetrics',['../dd/d52/classGitHub_1_1Request.html#a0b513c5b8e47367dcd569f0f44d6fcda',1,'GitHub::Request']]],
-  ['getcontributorsactivity_5',['getcontributorsActivity',['../dd/d52/classGitHub_1_1Request.html#aa35155bc2ec765427af3d423d4b2eaaa',1,'GitHub::Request']]],
-  ['gethourlycommitcount_6',['getHourlyCommitCount',['../dd/d52/classGitHub_1_1Request.html#a92d845b6b36ebf317101e90f7f1298c9',1,'GitHub::Request']]],
-  ['getissue_7',['getIssue',['../dd/d52/classGitHub_1_1Request.html#a5bd0de42fe36fa709b9ac7c939779952',1,'GitHub::Request']]],
-  ['getlastyearcommit_8',['getLastYearCommit',['../dd/d52/classGitHub_1_1Request.html#aa995ffced1a89176bd7e3fb7cc05e3fb',1,'GitHub::Request']]],
-  ['getorgrepo_9',['getOrgRepo',['../dd/d52/classGitHub_1_1Request.html#ab7a58c560b8aac9aaddca07d5e60351f',1,'GitHub::Request']]],
-  ['getpageviews_10',['getPageViews',['../dd/d52/classGitHub_1_1Request.html#a00e7c396842cf2b657df2a2d9654ba2d',1,'GitHub::Request']]],
-  ['getpullrequest_11',['getPullRequest',['../dd/d52/classGitHub_1_1Request.html#a0ba683a3716ec957e7668853519068d9',1,'GitHub::Request']]],
-  ['getratelimit_12',['getRateLimit',['../dd/d52/classGitHub_1_1Request.html#a418e15877c0a151615eb8b7ca922718f',1,'GitHub::Request']]],
-  ['getrefferalpaths_13',['getRefferalPaths',['../dd/d52/classGitHub_1_1Request.html#af86986f47dc0522fad23bd73231b9c1c',1,'GitHub::Request']]],
-  ['getrelease_14',['getRelease',['../dd/d52/classGitHub_1_1Request.html#ae887c88eb54644debcc376999a477b89',1,'GitHub::Request']]],
-  ['getreleases_15',['getReleases',['../dd/d52/classGitHub_1_1Request.html#a0813cb71005da09a5708e96e5ec7a31d',1,'GitHub::Request']]],
-  ['getrepoclones_16',['getRepoClones',['../dd/d52/classGitHub_1_1Request.html#ae45480e21d3db525e16349316c4d62e2',1,'GitHub::Request']]],
-  ['getrepolang_17',['getRepoLang',['../dd/d52/classGitHub_1_1Request.html#a3b0ed4f42adf6ee4bb68056f05dc5a64',1,'GitHub::Request']]],
-  ['getrepository_18',['getRepository',['../dd/d52/classGitHub_1_1Request.html#abbf693f17c7e5a1f96ecfe72c5a32fe7',1,'GitHub::Request']]],
-  ['getreposubscription_19',['getRepoSubscription',['../dd/d52/classGitHub_1_1Request.html#a0d5f80d41b5918429c62a84a1175389b',1,'GitHub::Request']]],
-  ['gettopreferralsource_20',['getTopreferralSource',['../dd/d52/classGitHub_1_1Request.html#a62aa03fc1fd05f2879c085fa277ce55b',1,'GitHub::Request']]],
-  ['getuser_21',['getUser',['../dd/d52/classGitHub_1_1Request.html#a36336b2e24138296af262170d02cc89c',1,'GitHub::Request']]],
-  ['getuserinfo_22',['getUserInfo',['../dd/d52/classGitHub_1_1Request.html#a51e6b007f0050e2857aa7789e0437c2a',1,'GitHub::Request']]],
-  ['getweeklycommit_23',['getWeeklyCommit',['../dd/d52/classGitHub_1_1Request.html#aca8fdb2854694dd70cd52fc6345cb664',1,'GitHub::Request']]]
+  ['connect_0',['connect',['../da/d38/classcpp__restapi_1_1GitHub_1_1CurlBackend_1_1Api.html#a6fd53689366b1fffa87e9a62ea34615b',1,'cpp_restapi::GitHub::CurlBackend::Api::connect()'],['../d3/de8/classcpp__restapi_1_1GitHub_1_1QtBackend_1_1Api.html#a8a8fdc879d01511bb871bdbeb0bcc5cc',1,'cpp_restapi::GitHub::QtBackend::Api::connect()'],['../df/d4c/classcpp__restapi_1_1GitHub_1_1IApi.html#a8d9b022cb9c10b2b9b11846b9e666151',1,'cpp_restapi::GitHub::IApi::connect()']]],
+  ['connection_1',['Connection',['../d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html#ad022f295f7ac2ea83124e6835d19bd47',1,'cpp_restapi::CurlBackend::Connection::Connection(const std::string &amp;address, const std::map&lt; std::string, std::string &gt; &amp;headerEntries)'],['../d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html#aa122d5104272e78ab96656cb14389c91',1,'cpp_restapi::CurlBackend::Connection::Connection(const Connection &amp;)=delete'],['../d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html#a2130930b8b175fb481a4097bc7a92f25',1,'cpp_restapi::QtBackend::Connection::Connection(QNetworkAccessManager &amp;, const std::string &amp;address, const std::map&lt; std::string, std::string &gt; &amp;headerEntries)'],['../d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html#a2cae7b29cad0fe2d6dc9c6f22678bbb6',1,'cpp_restapi::QtBackend::Connection::Connection(const Connection &amp;)=delete']]],
+  ['connectionbuilder_2',['ConnectionBuilder',['../d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html#a7fffe44745e2b38e13c95dc88d02c808',1,'cpp_restapi::GitHub::ConnectionBuilder::ConnectionBuilder()'],['../d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html#a02daea0a18ccaf4f75042c5063c5bf84',1,'cpp_restapi::GitHub::ConnectionBuilder::ConnectionBuilder(const ConnectionBuilder &amp;)=delete']]]
 ];

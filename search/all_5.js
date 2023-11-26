@@ -1,5 +1,9 @@
 var searchData=
 [
-  ['operator_3d_0',['operator=',['../da/d5c/classGitHub_1_1CurlBackend_1_1Api.html#a213fb38d2b798fd599b0a98b55413d14',1,'GitHub::CurlBackend::Api::operator=()'],['../d9/d50/classGitHub_1_1QtBackend_1_1Api.html#acb04591478458e8e01e3a1885da949a2',1,'GitHub::QtBackend::Api::operator=()'],['../dd/d52/classGitHub_1_1Request.html#adeea7afc6f973b8b2e0ccfed7f4418cb',1,'GitHub::Request::operator=(const Request &amp;)=delete']]],
-  ['orgissues_1',['orgIssues',['../dd/d52/classGitHub_1_1Request.html#a06c1336fbab50aad34f7ff291d64f5b1',1,'GitHub::Request']]]
+  ['iapi_0',['IApi',['../df/d4c/classcpp__restapi_1_1GitHub_1_1IApi.html',1,'cpp_restapi::GitHub']]],
+  ['iconnection_1',['IConnection',['../de/dd0/structcpp__restapi_1_1IConnection.html',1,'cpp_restapi']]],
+  ['iconnection_2ehpp_2',['iconnection.hpp',['../d9/d6d/iconnection_8hpp.html',1,'']]],
+  ['igithub_5fapi_2ehpp_3',['igithub_api.hpp',['../de/da5/igithub__api_8hpp.html',1,'']]],
+  ['isprmerged_4',['isPRmerged',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a99cca8918c62936a64d702eaa283c141',1,'cpp_restapi::GitHub::Request']]],
+  ['issues_5',['issues',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#aa80720a39b06b9f89907fe7a94eed78e',1,'cpp_restapi::GitHub::Request']]]
 ];
