@@ -15,7 +15,7 @@ Do not use classes marked as deprecated in new projects.
 # Submodules
 
 This repository has submodules which are not necessary to build and use this project.<br>
-You may need them if you want to build unit tests (`GitHubAPI_Tests` cmake varible set to `TRUE`).<br><br>
+You may need them if you want to build unit tests (`CppRestAPI_Tests` cmake varible set to `TRUE`).<br><br>
 Another submodule is `vcpkg` which can simplify build by providing required dependencies.<br>
 Please mind that vcpkg uses **telemetry**.<br>
 Look here for more details: https://learn.microsoft.com/vcpkg/about/privacy
@@ -28,8 +28,8 @@ Simply embed cpp_restapi's sources in your project,
 choose which http backend you prefer (both can be used simoultanously) and include `cpp_restapi` project in your `CMakeLists.txt` like this:
 
 ```cmake
-set(GitHubAPI_QtBackend ON)      # use this line if you prefer Qt backend
-set(GitHubAPI_CurlBackend ON)    # use this line if you prefer Curl backend
+set(CppRestAPI_QtBackend ON)      # use this line if you prefer Qt backend
+set(CppRestAPI_CurlBackend ON)    # use this line if you prefer Curl backend
 add_subdirectory(cpp_restapi)
 ```
 
@@ -48,7 +48,7 @@ and that's all.
 Depending on your choice of backend you may need to install libcurl and/or Qt libraries.
 
 Qt backend can be compiled with Qt5 (default) or Qt6.
-Set `GitHubAPI_UseQt6` CMake variable to `TRUE` to use Qt6.
+Set `CppRestAPI_UseQt6` CMake variable to `TRUE` to use Qt6.
 
 
 ## Examples

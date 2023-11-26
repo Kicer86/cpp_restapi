@@ -15,8 +15,8 @@
       "generator": "Ninja",
       "toolchainFile": "${sourceDir}/vcpkg/scripts/buildsystems/vcpkg.cmake",
       "cacheVariables": {
-        "GitHubAPI_QtBackend": "ON",
-        "GitHubAPI_UseQt6": "TRUE"
+        "CppRestAPI_QtBackend": "ON",
+        "CppRestAPI_UseQt6": "TRUE"
       }
     },
     {
@@ -28,8 +28,8 @@
       "generator": "Ninja",
       "toolchainFile": "${sourceDir}/vcpkg/scripts/buildsystems/vcpkg.cmake",
       "cacheVariables": {
-        "GitHubAPI_QtBackend": "ON",
-        "GitHubAPI_UseQt6": "TRUE"
+        "CppRestAPI_QtBackend": "ON",
+        "CppRestAPI_UseQt6": "TRUE"
       }
     }
   ],
