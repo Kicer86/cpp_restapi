@@ -21,20 +21,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(GenerateExportHeader)
 
-# For compatibility. TODO: remove
-if(GitHubAPI_QtBackend)
-    set(CppRestAPI_QtBackend ${GitHubAPI_QtBackend})
-    message(WARNING "GitHubAPI_QtBackend is deprecated, please use CppRestAPI_QtBackend")
-endif()
-if(GitHubAPI_CurlBackend)
-    set(CppRestAPI_CurlBackend ${GitHubAPI_CurlBackend})
-    message(WARNING "GitHubAPI_CurlBackend is deprecated, please use CppRestAPI_CurlBackend")
-endif()
-if(GitHubAPI_Tests)
-    set(CppRestAPI_Tests ${GitHubAPI_Tests})
-    message(WARNING "GitHubAPI_Tests is deprecated, please use CppRestAPI_Tests")
-endif()
-
 option(CppRestAPI_QtBackend "Qt backend for GitHubApi" OFF)
 option(CppRestAPI_CurlBackend "libcurl backend for GitHubApi" OFF)
 option(CppRestAPI_Tests "Enable GitHubApi tests. Forces both CppRestAPI_QtBackend and CppRestAPI_CurlBackend to be ON" OFF)
@@ -47,7 +33,6 @@ endif()
 add_library(cpp_restapi
     src/base_connection.cpp
     src/header_utils.cpp
-    src/services/github/github_api_base.cpp
     src/services/github/request.cpp
 )
 
