@@ -1,6 +1,5 @@
 
-#include <github_api/request.hpp>
-#include <github_api/iconnection.hpp>
+#include <cpp_restapi/github/request.hpp>
 
 
 // Based on:
@@ -8,10 +7,10 @@
 // https://developer.github.com/v3/
 
 
-namespace GitHub
+namespace cpp_restapi::GitHub
 {
 
-    Request::Request(std::unique_ptr<IConnection> connection)
+    Request::Request(std::shared_ptr<cpp_restapi::IConnection> connection)
         : m_connection(std::move(connection))
     {
     }

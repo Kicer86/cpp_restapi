@@ -3,7 +3,7 @@
 #include <json/reader.h>
 #include <json/writer.h>
 
-#include "base_connection.hpp"
+#include <cpp_restapi/base_connection.hpp>
 #include "header_utils.hpp"
 
 
@@ -25,16 +25,25 @@ namespace
     }
 }
 
+namespace cpp_restapi
+{
 
-GitHub::BaseConnection::BaseConnection(const std::string& address, const std::string& token)
+BaseConnection::BaseConnection(const std::string& address, const std::string& token)
     : m_address(address)
-    , m_token(token)
+{
+    if (token.empty() == false)
+        m_headerEntries.emplace("Authorization", "token " + token);
+}
+
+BaseConnection::BaseConnection(const std::string& address, const std::map<std::string, std::string>& headerEntries)
+    : m_address(address)
+    , m_headerEntries(headerEntries)
 {
 
 }
 
 
-std::string GitHub::BaseConnection::get(const std::string& request)
+std::string BaseConnection::get(const std::string& request)
 {
     std::string nextPage = m_address + "/" + request;
 
@@ -66,13 +75,15 @@ std::string GitHub::BaseConnection::get(const std::string& request)
 }
 
 
-const std::string & GitHub::BaseConnection::address() const
+const std::map<std::string, std::string>& BaseConnection::getHeaderEntries() const
+{
+    return m_headerEntries;
+}
+
+
+const std::string & BaseConnection::address() const
 {
     return m_address;
 }
 
-
-const std::string & GitHub::BaseConnection::token() const
-{
-    return m_token;
 }

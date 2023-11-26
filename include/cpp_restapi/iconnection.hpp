@@ -4,8 +4,11 @@
 
 #include <string>
 
-namespace GitHub
+namespace cpp_restapi
 {
+    /**
+     * @brief Interface representing connection with rest api server
+     */
     struct IConnection
     {
         public:

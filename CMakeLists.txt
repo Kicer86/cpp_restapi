@@ -1,6 +1,6 @@
 
 cmake_minimum_required(VERSION 3.16)
-project(GitHubAPI)
+project(cppRestAPI)
 
 if(POLICY CMP0135)
     cmake_policy(SET CMP0135 NEW)
@@ -16,6 +16,9 @@ else()
     pkg_check_modules(JSONCPP REQUIRED jsoncpp)
 endif()
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 include(GenerateExportHeader)
 
 option(GitHubAPI_QtBackend "Qt backend for GitHubApi" OFF)
@@ -27,18 +30,14 @@ if(GitHubAPI_Tests)
     set(GitHubAPI_CurlBackend ON)
 endif()
 
-add_library(github_api
-    include/github_api/iconnection.hpp
-    include/github_api/igithub_api.hpp
-    include/github_api/request.hpp
+add_library(cpp_restapi
     src/base_connection.cpp
-    src/base_connection.hpp
     src/header_utils.cpp
-    src/header_utils.hpp
-    src/request.cpp
+    src/services/github/github_api_base.cpp
+    src/services/github/request.cpp
 )
 
-target_include_directories(github_api
+target_include_directories(cpp_restapi
     PUBLIC
         ${PROJECT_BINARY_DIR}
         ${PROJECT_SOURCE_DIR}/include
@@ -46,12 +45,14 @@ target_include_directories(github_api
         ${JSONCPP_INCLUDE_DIRS}
 )
 
-target_link_libraries(github_api
+target_link_libraries(cpp_restapi
     PRIVATE
         ${JSONCPP_LIBRARIES}
 )
 
-generate_export_header(github_api)
+generate_export_header(cpp_restapi)
+
+add_library(github_api ALIAS cpp_restapi)
 
 if(NOT GitHubAPI_QtBackend AND NOT GitHubAPI_CurlBackend)
     message(FATAL_ERROR "No backend was chosen. Set either GitHubAPI_QtBackend or GitHubAPI_CurlBackend variable to ON")

@@ -4,9 +4,12 @@
 #include <httpmockserver/mock_server.h>
 #include <httpmockserver/test_environment.h>
 
-#include "github_api/github_api_curl.hpp"
-#include "github_api/github_api_qt.hpp"
-#include "github_api/request.hpp"
+#include "cpp_restapi/curl_connection.hpp"
+#include "cpp_restapi/qt_connection.hpp"
+#include "cpp_restapi/github/github_api_curl.hpp"
+#include "cpp_restapi/github/github_api_qt.hpp"
+#include "cpp_restapi/github/connection_builder.hpp"
+#include "cpp_restapi/github/request.hpp"
 
 #include "github_server_mock.hpp"
 
@@ -15,6 +18,7 @@ using testing::_;
 using testing::Return;
 using testing::NiceMock;
 
+using namespace cpp_restapi;
 
 namespace
 {
@@ -23,18 +27,33 @@ namespace
     template<typename T>
     T buildApi();
 
+    template<typename T>
+    std::shared_ptr<IConnection> buildNewApi();
+
     template<>
     GitHub::CurlBackend::Api buildApi<GitHub::CurlBackend::Api>()
     {
         return GitHub::CurlBackend::Api(std::string("http://localhost:") + std::to_string(port));
     }
 
-
     template<>
     GitHub::QtBackend::Api buildApi<GitHub::QtBackend::Api>()
     {
         static QNetworkAccessManager networkmanager;
         return GitHub::QtBackend::Api(networkmanager, QString("http://localhost:%1").arg(port));
+    }
+
+    template<>
+    std::shared_ptr<IConnection> buildNewApi<GitHub::CurlBackend::Api>()
+    {
+        return GitHub::ConnectionBuilder().setAddress(std::string("http://localhost:") + std::to_string(port)).build<CurlBackend::Connection>();
+    }
+
+    template<>
+    std::shared_ptr<IConnection>buildNewApi<GitHub::QtBackend::Api>()
+    {
+        static QNetworkAccessManager networkmanager;
+        return GitHub::ConnectionBuilder().setAddress(std::string("http://localhost:") + std::to_string(port)).build<QtBackend::Connection>(networkmanager);
     }
 }
 
@@ -52,6 +71,21 @@ class ApiTest: public testing::Test
         NiceMock<GithubServerMock> server;
 };
 
+template<typename>
+struct BackendTraits;
+
+template<>
+struct BackendTraits<GitHub::CurlBackend::Api>
+{
+    using Connection = CurlBackend::Connection;
+};
+
+template<>
+struct BackendTraits<GitHub::QtBackend::Api>
+{
+    using Connection = QtBackend::Connection;
+};
+
 using Backends = testing::Types<GitHub::CurlBackend::Api, GitHub::QtBackend::Api>;
 TYPED_TEST_SUITE(ApiTest, Backends);
 
@@ -65,6 +99,21 @@ TYPED_TEST(ApiTest, fetchRegularUser)
     auto connection = api.connect();
 
     GitHub::Request request(std::move(connection));
+    const auto info = request.getUserInfo("userName1234");
+
+    EXPECT_EQ(info, "{\"id\":1234,\"login\":\"userName1234\"}\n");
+}
+
+
+TYPED_TEST(ApiTest, newInterface)
+{
+    GithubServerMock::Response response(200, R"({"login":"userName1234","id":1234"})");
+    ON_CALL(this->server, responseHandler).WillByDefault(Return(response));
+
+    using Connection = typename BackendTraits<TypeParam>::Connection;
+    auto connection = buildNewApi<TypeParam>();
+
+    GitHub::Request request(connection);
     const auto info = request.getUserInfo("userName1234");
 
     EXPECT_EQ(info, "{\"id\":1234,\"login\":\"userName1234\"}\n");

@@ -1,4 +1,8 @@
 
+#ifndef GITHUB_SERVER_MOCK_HPP_INCLUDED
+#define GITHUB_SERVER_MOCK_HPP_INCLUDED
+
+
 #include <gmock/gmock.h>
 #include <httpmockserver/mock_server.h>
 
@@ -18,3 +22,5 @@ class GithubServerMock: public httpmock::MockServer {
                 (override)
     );
 };
+
+#endif

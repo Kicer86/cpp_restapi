@@ -3,14 +3,15 @@
 #define CONNECTION_QT_HPP
 
 #include "base_connection.hpp"
+#include "cpp_restapi_export.h"
 
 
-namespace GitHub { namespace CurlBackend {
+namespace cpp_restapi { namespace CurlBackend {
 
-    class Connection: public BaseConnection
+    class CPP_RESTAPI_EXPORT Connection: public BaseConnection
     {
         public:
-            Connection(const std::string& address, const std::string& token);
+            Connection(const std::string& address, const std::map<std::string, std::string>& headerEntries);
             Connection(const Connection &) = delete;
 
             ~Connection();

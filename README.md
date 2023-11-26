@@ -1,49 +1,80 @@
-# GitHub API for c++
 
-This is a c++ library for accessing GitHub REST API v3.
+# Rest API for c++
 
-For connection with GitHub Qt5/6 or libcurl are needed.
-It is up to the user which to use.
+This is a c++ library originally written for accessing GitHub REST API v3.
+Currently reorganized to be easily used with any Rest API available.
 
-Currently offered functionality is limited but very easy to extend.
+It supports two backends for establishing connections with remote API servers:
+Qt5/6 and Curl.
+
+##### Warning:
+The library is being renamed from GitHub_API to cpp_RestAPI.
+At this moment, to provide backward compatibility, old interfaces are still available but are about to be removed.
+Do not use classes marked as deprecated in new projects.
 
 ## How to use it
 
 This is a CMake based project and is meant to be included as a subproject.
 
-Simply embed github_api's sources in your project,
-choose which http backend you prefer and include github_api project in your CMakeLists.txt like this:
+Simply embed cpp_restapi's sources in your project,
+choose which http backend you prefer (both can be used simoultanously) and include cpp_restapi project in your CMakeLists.txt like this:
 
 ```cmake
 set(GitHubAPI_QtBackend ON)      # use this line if you prefer Qt backend
 set(GitHubAPI_CurlBackend ON)    # use this line if you prefer Curl backend
-add_subdirectory(github_api)
+add_subdirectory(cpp_restapi)
 ```
 
-Then you can link your application against github_api:
+Then you can link your application against cpp_restapi:
 
 ```cmake
 target_link_libraries(app
     PRIVATE
-        github_api
+        cpp_restapi
 )
 ```
 
 and that's all.
 
+##### Note:
+Depending on your choice of backend you may need to install libcurl and/or Qt libraries.
+
 Qt backend can be compiled with Qt5 (default) or Qt6.
 Set GitHubAPI_UseQt6 CMake variable to TRUE to use Qt6.
 
 
-## Qt example
+## Examples
+
+## Simplest usage
 
 ```c++
+#include <iostream>
+
+#include <cpp_restapi/curl_connection.hpp>
+
+
+int main(int argc, char** argv)
+{
+    // Access The Star Wars API
+    cpp_restapi::CurlBackend::Connection connection("https://swapi.dev/api", {});
+
+    std::cout << connection.get("people/1") << '\n';
+    std::cout << connection.get("starships/12/") << '\n';
+
+    return 0;
+}
+```
+
+This example accesses The Star Wars API using curl backend
+As you can see it is enought to instantiate `cpp_restapi::CurlBackend::Connection` object providing API url and after that request can be made.
+
+Qt version:
+```c++
+#include <iostream>
 #include <QCoreApplication>
-#include <QDebug>
 #include <QNetworkAccessManager>
 
-#include <github_api/github_api_qt.hpp>
-#include <github_api/request.hpp>
+#include <cpp_restapi/curl_connection.hpp>
 
 
 int main(int argc, char** argv)
@@ -51,8 +82,40 @@ int main(int argc, char** argv)
     QCoreApplication qapp(argc, argv);
     QNetworkAccessManager manager;
 
-    GitHub::QtBackend::Api github(manager);
-    GitHub::Request request(github.connect());
+    // Access The Star Wars API
+    cpp_restapi::QtBackend::Connection connection(manager, "https://swapi.dev/api", {});
+
+    std::cout << connection.get("people/1") << '\n';
+    std::cout << connection.get("starships/12/") << '\n';
+
+    return 0;
+}
+```
+
+### Dedicated GitHub helpers
+
+For accessing GitHub API it is possible to use exactly the same apporach as presented above.
+However, for conveniance, there are also additional helpers available:
+
+#### Qt example
+
+```c++
+#include <QCoreApplication>
+#include <QDebug>
+#include <QNetworkAccessManager>
+
+#include <cpp_restapi/qt_connection.hpp>
+#include <cpp_restapi/github/connection_builder.hpp>
+#include <cpp_restapi/github/request.hpp>
+
+
+int main(int argc, char** argv)
+{
+    QCoreApplication qapp(argc, argv);
+    QNetworkAccessManager manager;
+
+    auto connection = cpp_restapi::GitHub::ConnectionBuilder().build<cpp_restapi::QtBackend::Connection>(manager);
+    cpp_restapi::GitHub::Request request(connection);
 
     qInfo() << request.getRateLimit().c_str();
     qInfo() << request.getUserInfo("Kicer86").c_str();
@@ -61,19 +124,26 @@ int main(int argc, char** argv)
 }
 ```
 
-## libcurl example
+Here connection is being build with `ConnectionBuilder`. Builder provides methods for setting additional connection parameters (passed as a second argument to `Connection` after API url).
+It also sets the API url automatically.
+Refer documentation of `ConnectionBuilder` for more details.
+
+Additionaly there is also `cpp_restapi::GitHub::Request` class available which comes with accessors to most common API requests.
+
+#### libcurl example
 
 ```c++
 #include <iostream>
 
-#include <github_api/github_api_curl.hpp>
-#include <github_api/request.hpp>
+#include <cpp_restapi/curl_connection.hpp>
+#include <cpp_restapi/github/connection_builder.hpp>
+#include <cpp_restapi/github/request.hpp>
 
 
 int main(int argc, char** argv)
 {
-    GitHub::CurlBackend::Api github;
-    GitHub::Request request(github.connect());
+    auto connection = cpp_restapi::GitHub::ConnectionBuilder().build<cpp_restapi::CurlBackend::Connection>();
+    cpp_restapi::GitHub::Request request(connection);
 
     std::cout << request.getRateLimit() << '\n';
     std::cout << request.getUserInfo("Kicer86") << '\n';
