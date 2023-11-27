@@ -15,10 +15,11 @@ Do not use classes marked as deprecated in new projects.
 # Submodules
 
 This repository has submodules which are not necessary to build and use this project.<br>
-You may need them if you want to build unit tests (`CppRestAPI_Tests` cmake varible set to `TRUE`).<br><br>
+You may need them if you want to build unit tests (`CppRestAPI_Tests` cmake varible set to `TRUE`).
+
 Another submodule is `vcpkg` which can simplify build by providing required dependencies.<br>
 Please mind that vcpkg uses **telemetry**.<br>
-Look here for more details: https://learn.microsoft.com/vcpkg/about/privacy
+Visit https://learn.microsoft.com/vcpkg/about/privacy for more details:
 
 ## How to use it
 
@@ -73,7 +74,7 @@ int main(int argc, char** argv)
 }
 ```
 
-This example accesses The Star Wars API using curl backend
+This example accesses The Star Wars API using curl backend.<br>
 As you can see it is enought to instantiate `cpp_restapi::CurlBackend::Connection` object providing API url and after that request can be made.
 
 Qt version:
@@ -102,7 +103,7 @@ int main(int argc, char** argv)
 
 ### Dedicated GitHub helpers
 
-For accessing GitHub API it is possible to use exactly the same apporach as presented above.
+For accessing GitHub API it is possible to use exactly the same apporach as presented above.<br>
 However, for conveniance, there are also additional helpers available:
 
 #### Qt example
@@ -132,8 +133,9 @@ int main(int argc, char** argv)
 }
 ```
 
-Here connection is being build with `ConnectionBuilder`. Builder provides methods for setting additional connection parameters (passed as a second argument to `Connection` after API url).
-It also sets the API url automatically.
+Here connection is being build with `ConnectionBuilder`.<br>
+Builder provides methods for setting additional connection parameters (passed as a second argument to `Connection` after API url).<br>
+It also sets the API url automatically.<br>
 Refer documentation of `ConnectionBuilder` for more details.
 
 Additionaly there is also `cpp_restapi::GitHub::Request` class available which comes with accessors to most common API requests.
