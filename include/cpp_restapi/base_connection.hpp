@@ -5,6 +5,7 @@
 #include <map>
 
 #include <cpp_restapi/iconnection.hpp>
+#include "cpp_restapi_export.h"
 
 
 namespace cpp_restapi
@@ -12,7 +13,7 @@ namespace cpp_restapi
     /**
      * @brief base class with common parts for backend specific implementations
      */
-    class BaseConnection: public cpp_restapi::IConnection
+    class CPP_RESTAPI_EXPORT BaseConnection: public cpp_restapi::IConnection
     {
     public:
         [[deprecated]] explicit BaseConnection(const std::string& address, const std::string& token);
