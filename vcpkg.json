@@ -6,6 +6,7 @@
   "homepage": "https://github.com/Kicer86/cpp_restapi",
   "description": "A c++ Rest API library",
   "dependencies": [
-    "jsoncpp"
+    "jsoncpp",
+    "cpp-httplib"
   ]
 }

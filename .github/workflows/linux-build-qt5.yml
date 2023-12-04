@@ -28,7 +28,7 @@ jobs:
           libgmock-dev          \
           qtbase5-dev           \
           libcurl4-openssl-dev  \
-          libmicrohttpd-dev     \
+          libcpp-httplib-dev    \
           libjsoncpp-dev
 
     - name: Build

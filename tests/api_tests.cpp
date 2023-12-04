@@ -1,8 +1,7 @@
 
 #include <QNetworkAccessManager>
 #include <gmock/gmock.h>
-#include <httpmockserver/mock_server.h>
-#include <httpmockserver/test_environment.h>
+#include <httplib.h>
 
 #include "cpp_restapi/curl_connection.hpp"
 #include "cpp_restapi/qt_connection.hpp"
@@ -32,7 +31,7 @@ namespace
     }
 
     template<>
-    std::shared_ptr<IConnection>buildNewApi<QtBackend::Connection>()
+    std::shared_ptr<IConnection> buildNewApi<QtBackend::Connection>()
     {
         static QNetworkAccessManager networkmanager;
         return GitHub::ConnectionBuilder().setAddress(std::string("http://localhost:") + std::to_string(port)).build<QtBackend::Connection>(networkmanager);
@@ -46,11 +45,11 @@ class ApiTest: public testing::Test
     public:
         ApiTest(): server(port)
         {
-            server.start();
+
         }
 
     protected:
-        NiceMock<GithubServerMock> server;
+        GithubServerMock server;
 };
 
 
@@ -60,8 +59,8 @@ TYPED_TEST_SUITE(ApiTest, Backends);
 
 TYPED_TEST(ApiTest, fetchRegularUser)
 {
-    GithubServerMock::Response response(200, R"({"login":"userName1234","id":1234"})");
-    ON_CALL(this->server, responseHandler).WillByDefault(Return(response));
+    this->server.responseHandler(".*", 200, R"({"login":"userName1234","id":1234"})");
+    this->server.listen();
 
     auto connection = buildNewApi<TypeParam>();
 
@@ -76,19 +75,13 @@ TYPED_TEST(ApiTest, pagination)
 {
     auto connection = buildNewApi<TypeParam>();
 
-    GithubServerMock::Response response1(200, R"({"login":"userName1234","id":1234})");
     const std::string secondPage = connection->url() + "/url/to/second/page&page=2";
-    response1.addHeader( {"link", "<" + secondPage + ">; rel=\"next\""} );
-
-    GithubServerMock::Response response2(200, R"({"someotherfield":"value"})");
     const std::string thirdPage = connection->url() + "/url/to/last/page&page=3";
-    response2.addHeader( {"Link", "<some_previous_page>; rel=\"prev\", <" + thirdPage + ">; rel=\"next\""} );
 
-    GithubServerMock::Response response3(200, R"({"more_fields":"value234"})");
-
-    ON_CALL(this->server, responseHandler("/users/userName1234", _, _, _, _)).WillByDefault(Return(response1));
-    ON_CALL(this->server, responseHandler("/url/to/second/page&page=2", _, _, _, _)).WillByDefault(Return(response2));
-    ON_CALL(this->server, responseHandler("/url/to/last/page&page=3", _, _, _, _)).WillByDefault(Return(response3));
+    this->server.responseHandler("/users/userName1234",         200, R"({"login":"userName1234","id":1234})",   { {"Link", "<" + secondPage + ">; rel=\"next\""} } );
+    this->server.responseHandler("/url/to/second/page&page=2",  200, R"({"someotherfield":"value"}))",          { {"Link", "<some_previous_page>; rel=\"prev\", <" + thirdPage + ">; rel=\"next\""} } );
+    this->server.responseHandler("/url/to/last/page&page=3",    200, R"({"more_fields":"value234"})");
+    this->server.listen();
 
     GitHub::Request request(std::move(connection));
     const auto info = request.getUserInfo("userName1234");
@@ -101,19 +94,13 @@ TYPED_TEST(ApiTest, arraysPagination)
 {
     auto connection = buildNewApi<TypeParam>();
 
-    GithubServerMock::Response response1(200, R"([{"login":"userName1234","id":1234}])");
     const std::string secondPage = connection->url() + "/url/to/second/page&page=2";
-    response1.addHeader( {"Link", "<" + secondPage + ">; rel=\"next\""} );
-
-    GithubServerMock::Response response2(200, R"([{"someotherfield":"value"}])");
     const std::string thirdPage = connection->url() + "/url/to/last/page&page=3";
-    response2.addHeader( {"link", "<" + thirdPage + ">; rel=\"next\""} );
 
-    GithubServerMock::Response response3(200, R"([{"more_fields":"value234"}])");
-
-    ON_CALL(this->server, responseHandler("/users/userName1234", _, _, _, _)).WillByDefault(Return(response1));
-    ON_CALL(this->server, responseHandler("/url/to/second/page&page=2", _, _, _, _)).WillByDefault(Return(response2));
-    ON_CALL(this->server, responseHandler("/url/to/last/page&page=3", _, _, _, _)).WillByDefault(Return(response3));
+    this->server.responseHandler("/users/userName1234",         200, R"([{"login":"userName1234","id":1234}])", { {"Link", "<" + secondPage + ">; rel=\"next\""} } );
+    this->server.responseHandler("/url/to/second/page&page=2",  200, R"([{"someotherfield":"value"}]))",        { {"Link", "<some_previous_page>; rel=\"prev\", <" + thirdPage + ">; rel=\"next\""} } );
+    this->server.responseHandler("/url/to/last/page&page=3",    200, R"([{"more_fields":"value234"}])");
+    this->server.listen();
 
     GitHub::Request request(std::move(connection));
     const auto info = request.getUserInfo("userName1234");
