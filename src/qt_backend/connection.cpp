@@ -50,6 +50,7 @@ namespace cpp_restapi::QtBackend
             result.first = rawData.data();
             result.second = header.toStdString();
 
+            reply->close();
             reply->deleteLater();
 
             loop.exit();
