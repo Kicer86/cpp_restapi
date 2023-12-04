@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['get_0',['get',['../dd/d4e/classcpp__restapi_1_1BaseConnection.html#a0450232692026b9fe147ef08b31f7b98',1,'cpp_restapi::BaseConnection::get()'],['../de/dd0/structcpp__restapi_1_1IConnection.html#ab3ee829a93ec8753eb56a95adb5b8229',1,'cpp_restapi::IConnection::get()']]],
+  ['get_0',['get',['../de/dd0/structcpp__restapi_1_1IConnection.html#ab3ee829a93ec8753eb56a95adb5b8229',1,'cpp_restapi::IConnection::get()'],['../dd/d4e/classcpp__restapi_1_1BaseConnection.html#a0450232692026b9fe147ef08b31f7b98',1,'cpp_restapi::BaseConnection::get()']]],
   ['getauntenticateduser_1',['getAuntenticatedUser',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#afd16bf90636956f67d533d237ed238df',1,'cpp_restapi::GitHub::Request']]],
   ['getcommitcount_2',['getCommitCount',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#ac30a57177a77c6ecf1985284c187ef50',1,'cpp_restapi::GitHub::Request']]],
   ['getcommits_3',['getCommits',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#ae4ec6f8548bc1ec3a24cf34e0ee1270f',1,'cpp_restapi::GitHub::Request']]],
@@ -24,9 +24,5 @@ var searchData=
   ['gettopreferralsource_21',['getTopreferralSource',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a5eef046fef22f3ba91a8a436aba594bd',1,'cpp_restapi::GitHub::Request']]],
   ['getuser_22',['getUser',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a272ace06567573afc49769351655be7e',1,'cpp_restapi::GitHub::Request']]],
   ['getuserinfo_23',['getUserInfo',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a64adfa6d26f2f1bd796b51e4db00e2c4',1,'cpp_restapi::GitHub::Request']]],
-  ['getweeklycommit_24',['getWeeklyCommit',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a4b7ae0fda44bd010137800e5edf40dac',1,'cpp_restapi::GitHub::Request']]],
-  ['github_5fapi_5fbase_2ehpp_25',['github_api_base.hpp',['../d8/d1f/github__api__base_8hpp.html',1,'']]],
-  ['github_5fapi_5fcurl_2ehpp_26',['github_api_curl.hpp',['../d4/d7b/github__api_2github__api__curl_8hpp.html',1,'(Global Namespace)'],['../d0/de9/cpp__restapi_2github_2github__api__curl_8hpp.html',1,'(Global Namespace)']]],
-  ['github_5fapi_5fqt_2ehpp_27',['github_api_qt.hpp',['../de/da0/github__api_2github__api__qt_8hpp.html',1,'(Global Namespace)'],['../dd/d21/cpp__restapi_2github_2github__api__qt_8hpp.html',1,'(Global Namespace)']]],
-  ['githubbase_28',['GitHubBase',['../d6/d69/classcpp__restapi_1_1GitHubBase.html',1,'cpp_restapi::GitHubBase'],['../d6/d69/classcpp__restapi_1_1GitHubBase.html#ae3c3fee5571dab8333608cc1e39f7e2e',1,'cpp_restapi::GitHubBase::GitHubBase()']]]
+  ['getweeklycommit_24',['getWeeklyCommit',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a4b7ae0fda44bd010137800e5edf40dac',1,'cpp_restapi::GitHub::Request']]]
 ];

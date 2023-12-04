@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['githubbase_0',['GitHubBase',['../d6/d69/classcpp__restapi_1_1GitHubBase.html',1,'cpp_restapi']]]
+  ['request_0',['Request',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html',1,'cpp_restapi::GitHub']]]
 ];

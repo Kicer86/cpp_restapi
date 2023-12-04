@@ -24,6 +24,5 @@ var searchData=
   ['gettopreferralsource_21',['getTopreferralSource',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a5eef046fef22f3ba91a8a436aba594bd',1,'cpp_restapi::GitHub::Request']]],
   ['getuser_22',['getUser',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a272ace06567573afc49769351655be7e',1,'cpp_restapi::GitHub::Request']]],
   ['getuserinfo_23',['getUserInfo',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a64adfa6d26f2f1bd796b51e4db00e2c4',1,'cpp_restapi::GitHub::Request']]],
-  ['getweeklycommit_24',['getWeeklyCommit',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a4b7ae0fda44bd010137800e5edf40dac',1,'cpp_restapi::GitHub::Request']]],
-  ['githubbase_25',['GitHubBase',['../d6/d69/classcpp__restapi_1_1GitHubBase.html#ae3c3fee5571dab8333608cc1e39f7e2e',1,'cpp_restapi::GitHubBase']]]
+  ['getweeklycommit_24',['getWeeklyCommit',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a4b7ae0fda44bd010137800e5edf40dac',1,'cpp_restapi::GitHub::Request']]]
 ];
