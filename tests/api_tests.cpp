@@ -22,19 +22,31 @@ namespace
     constexpr int port = 9010;
 
     template<typename T>
-    std::shared_ptr<IConnection> buildNewApi();
+    std::shared_ptr<IConnection> buildConnection(GitHub::ConnectionBuilder &);
 
     template<>
-    std::shared_ptr<IConnection> buildNewApi<CurlBackend::Connection>()
+    std::shared_ptr<IConnection> buildConnection<CurlBackend::Connection>(GitHub::ConnectionBuilder& builder)
     {
-        return GitHub::ConnectionBuilder().setAddress(std::string("http://localhost:") + std::to_string(port)).build<CurlBackend::Connection>();
+        return builder.build<CurlBackend::Connection>();
     }
 
     template<>
-    std::shared_ptr<IConnection> buildNewApi<QtBackend::Connection>()
+    std::shared_ptr<IConnection> buildConnection<QtBackend::Connection>(GitHub::ConnectionBuilder& builder)
     {
         static QNetworkAccessManager networkmanager;
-        return GitHub::ConnectionBuilder().setAddress(std::string("http://localhost:") + std::to_string(port)).build<QtBackend::Connection>(networkmanager);
+        return builder.build<QtBackend::Connection>(networkmanager);
+    }
+
+    template<typename T>
+    std::shared_ptr<IConnection> buildNewApi(std::function<void(GitHub::ConnectionBuilder &)> c = {})
+    {
+        auto builder = GitHub::ConnectionBuilder();
+        builder.setAddress(std::string("http://localhost:") + std::to_string(port));
+
+        if (c)
+            c(builder);
+
+        return buildConnection<T>(builder);
     }
 }
 
