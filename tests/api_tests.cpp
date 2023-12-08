@@ -71,7 +71,7 @@ TYPED_TEST_SUITE(ApiTest, Backends);
 
 TYPED_TEST(ApiTest, fetchRegularUser)
 {
-    this->server.responseHandler(".*", 200, R"({"login":"userName1234","id":1234"})");
+    EXPECT_CALL(this->server, request(_, _)).WillOnce(Return(GithubServerMock::Response{ R"({"login":"userName1234","id":1234"})", {} }));
     this->server.listen();
 
     auto connection = buildNewApi<TypeParam>();
@@ -90,9 +90,10 @@ TYPED_TEST(ApiTest, pagination)
     const std::string secondPage = connection->url() + "/url/to/second/page&page=2";
     const std::string thirdPage = connection->url() + "/url/to/last/page&page=3";
 
-    this->server.responseHandler("/users/userName1234",         200, R"({"login":"userName1234","id":1234})",   { {"Link", "<" + secondPage + ">; rel=\"next\""} } );
-    this->server.responseHandler("/url/to/second/page&page=2",  200, R"({"someotherfield":"value"}))",          { {"Link", "<some_previous_page>; rel=\"prev\", <" + thirdPage + ">; rel=\"next\""} } );
-    this->server.responseHandler("/url/to/last/page&page=3",    200, R"({"more_fields":"value234"})");
+    EXPECT_CALL(this->server, request("/users/userName1234", _)).WillOnce(Return(GithubServerMock::Response{ R"({"login":"userName1234","id":1234})", { {"Link", "<" + secondPage + ">; rel=\"next\""} } }));
+    EXPECT_CALL(this->server, request("/url/to/second/page&page=2", _)).WillOnce(Return(GithubServerMock::Response{ R"({"someotherfield":"value"})", { {"Link", "<some_previous_page>; rel=\"prev\", <" + thirdPage + ">; rel=\"next\""} } }));
+    EXPECT_CALL(this->server, request("/url/to/last/page&page=3", _)).WillOnce(Return(GithubServerMock::Response{ R"({"more_fields":"value234"})", {} }));
+
     this->server.listen();
 
     GitHub::Request request(std::move(connection));
@@ -109,9 +110,10 @@ TYPED_TEST(ApiTest, arraysPagination)
     const std::string secondPage = connection->url() + "/url/to/second/page&page=2";
     const std::string thirdPage = connection->url() + "/url/to/last/page&page=3";
 
-    this->server.responseHandler("/users/userName1234",         200, R"([{"login":"userName1234","id":1234}])", { {"Link", "<" + secondPage + ">; rel=\"next\""} } );
-    this->server.responseHandler("/url/to/second/page&page=2",  200, R"([{"someotherfield":"value"}]))",        { {"Link", "<some_previous_page>; rel=\"prev\", <" + thirdPage + ">; rel=\"next\""} } );
-    this->server.responseHandler("/url/to/last/page&page=3",    200, R"([{"more_fields":"value234"}])");
+    EXPECT_CALL(this->server, request("/users/userName1234", _)).WillOnce(Return(GithubServerMock::Response{ R"([{"login":"userName1234","id":1234}])", { {"Link", "<" + secondPage + ">; rel=\"next\""} } }));
+    EXPECT_CALL(this->server, request("/url/to/second/page&page=2", _)).WillOnce(Return(GithubServerMock::Response{ R"([{"someotherfield":"value"}])", { {"Link", "<some_previous_page>; rel=\"prev\", <" + thirdPage + ">; rel=\"next\""} } }));
+    EXPECT_CALL(this->server, request("/url/to/last/page&page=3", _)).WillOnce(Return(GithubServerMock::Response{ R"([{"more_fields":"value234"}])", {} }));
+
     this->server.listen();
 
     GitHub::Request request(std::move(connection));
