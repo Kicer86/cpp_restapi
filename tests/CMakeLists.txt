@@ -3,7 +3,8 @@ find_package(GTest REQUIRED CONFIG)
 find_package(httplib REQUIRED)
 
 add_executable(api_tests
-    api_tests.cpp
+    connection_tests.cpp
+    github_request_tests.cpp
     main.cpp
 )
 

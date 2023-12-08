@@ -5,8 +5,6 @@
 
 #include "cpp_restapi/curl_connection.hpp"
 #include "cpp_restapi/qt_connection.hpp"
-#include "cpp_restapi/github/connection_builder.hpp"
-#include "cpp_restapi/github/request.hpp"
 
 #include "github_server_mock.hpp"
 
@@ -22,40 +20,28 @@ namespace
     constexpr int port = 9010;
 
     template<typename T>
-    std::shared_ptr<IConnection> buildConnection(GitHub::ConnectionBuilder &);
+    auto buildConnection();
 
     template<>
-    std::shared_ptr<IConnection> buildConnection<CurlBackend::Connection>(GitHub::ConnectionBuilder& builder)
+    auto buildConnection<CurlBackend::Connection>()
     {
-        return builder.build<CurlBackend::Connection>();
+        return std::make_unique<CurlBackend::Connection>(std::string("http://localhost:") + std::to_string(port), std::map<std::string, std::string>{});
     }
 
     template<>
-    std::shared_ptr<IConnection> buildConnection<QtBackend::Connection>(GitHub::ConnectionBuilder& builder)
+    auto buildConnection<QtBackend::Connection>()
     {
         static QNetworkAccessManager networkmanager;
-        return builder.build<QtBackend::Connection>(networkmanager);
-    }
-
-    template<typename T>
-    std::shared_ptr<IConnection> buildNewApi(std::function<void(GitHub::ConnectionBuilder &)> c = {})
-    {
-        auto builder = GitHub::ConnectionBuilder();
-        builder.setAddress(std::string("http://localhost:") + std::to_string(port));
-
-        if (c)
-            c(builder);
-
-        return buildConnection<T>(builder);
+        return std::make_unique<QtBackend::Connection>(networkmanager, std::string("http://localhost:") + std::to_string(port), std::map<std::string, std::string>{});
     }
 }
 
 
 template <typename T>
-class ApiTest: public testing::Test
+class ConnectionTest: public testing::Test
 {
     public:
-        ApiTest(): server(port)
+        ConnectionTest(): server(port)
         {
 
         }
@@ -66,26 +52,12 @@ class ApiTest: public testing::Test
 
 
 using Backends = testing::Types<CurlBackend::Connection, QtBackend::Connection>;
-TYPED_TEST_SUITE(ApiTest, Backends);
+TYPED_TEST_SUITE(ConnectionTest, Backends);
 
 
-TYPED_TEST(ApiTest, fetchRegularUser)
+TYPED_TEST(ConnectionTest, pagination)
 {
-    EXPECT_CALL(this->server, request(_, _)).WillOnce(Return(GithubServerMock::Response{ R"({"login":"userName1234","id":1234"})", {} }));
-    this->server.listen();
-
-    auto connection = buildNewApi<TypeParam>();
-
-    GitHub::Request request(std::move(connection));
-    const auto info = request.getUserInfo("userName1234");
-
-    EXPECT_EQ(info, "{\"id\":1234,\"login\":\"userName1234\"}\n");
-}
-
-
-TYPED_TEST(ApiTest, pagination)
-{
-    auto connection = buildNewApi<TypeParam>();
+    auto connection = buildConnection<TypeParam>();
 
     const std::string secondPage = connection->url() + "/url/to/second/page&page=2";
     const std::string thirdPage = connection->url() + "/url/to/last/page&page=3";
@@ -96,16 +68,14 @@ TYPED_TEST(ApiTest, pagination)
 
     this->server.listen();
 
-    GitHub::Request request(std::move(connection));
-    const auto info = request.getUserInfo("userName1234");
-
+    const auto info = connection->get("users/userName1234");
     EXPECT_EQ(info, "{\"id\":1234,\"login\":\"userName1234\",\"more_fields\":\"value234\",\"someotherfield\":\"value\"}\n");
 }
 
 
-TYPED_TEST(ApiTest, arraysPagination)
+TYPED_TEST(ConnectionTest, arraysPagination)
 {
-    auto connection = buildNewApi<TypeParam>();
+    auto connection = buildConnection<TypeParam>();
 
     const std::string secondPage = connection->url() + "/url/to/second/page&page=2";
     const std::string thirdPage = connection->url() + "/url/to/last/page&page=3";
@@ -116,8 +86,6 @@ TYPED_TEST(ApiTest, arraysPagination)
 
     this->server.listen();
 
-    GitHub::Request request(std::move(connection));
-    const auto info = request.getUserInfo("userName1234");
-
+    const auto info = connection->get("users/userName1234");
     EXPECT_EQ(info, "[{\"id\":1234,\"login\":\"userName1234\"},{\"someotherfield\":\"value\"},{\"more_fields\":\"value234\"}]\n");
 }
