@@ -9,6 +9,8 @@
 class GithubServerMock
 {
   public:
+    using Response = std::pair<std::string, httplib::Headers>;
+
     explicit GithubServerMock(int port = 9200)
       : m_port(port)
     {
@@ -25,6 +27,14 @@ class GithubServerMock
 
     void listen()
     {
+      m_svr.Get("/.*", [this](const httplib::Request& req, httplib::Response& res)
+      {
+        const auto response = request(req.path, req.headers);
+        res.set_content(response.first, "text/plain");
+
+        for(const auto& [key, value]: response.second)
+          res.set_header(key, value);
+      });
 
       m_svrThread = std::thread([this]()
       {
@@ -35,18 +45,7 @@ class GithubServerMock
       m_svr.wait_until_ready();
     }
 
-    void responseHandler(const std::string& request, int status, std::string response, const std::map<std::string, std::string>& header = {})
-    {
-      assert(not m_svrThread.joinable());
-
-      m_svr.Get(request, [response, header](const httplib::Request& req, httplib::Response& res)
-      {
-        res.set_content(response, "text/plain");
-
-        for (const auto& [key, value]: header)
-          res.set_header(key, value);
-      });
-    }
+    MOCK_METHOD(Response, request, (const std::string& path, const httplib::Headers& header), (const));
 
   private:
     httplib::Server m_svr;
