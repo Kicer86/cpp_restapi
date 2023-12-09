@@ -16,7 +16,6 @@ namespace cpp_restapi
     class CPP_RESTAPI_EXPORT BaseConnection: public cpp_restapi::IConnection
     {
     public:
-        [[deprecated]] explicit BaseConnection(const std::string& address, const std::string& token);
         explicit BaseConnection(const std::string& address, const std::map<std::string, std::string>& headerEntries);
 
         std::string get(const std::string &) final;
