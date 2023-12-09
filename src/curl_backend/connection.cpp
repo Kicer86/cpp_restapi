@@ -29,7 +29,7 @@ namespace cpp_restapi::CurlBackend
     }
 
 
-    std::pair<std::string, std::string> cpp_restapi::CurlBackend::Connection::fetchPage(const std::string& page)
+    std::pair<std::string, std::string> Connection::fetchPage(const std::string& page)
     {
         std::string result;
         std::string header_links;
