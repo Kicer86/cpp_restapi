@@ -28,13 +28,6 @@ namespace
 namespace cpp_restapi
 {
 
-BaseConnection::BaseConnection(const std::string& address, const std::string& token)
-    : m_address(address)
-{
-    if (token.empty() == false)
-        m_headerEntries.emplace("Authorization", "token " + token);
-}
-
 BaseConnection::BaseConnection(const std::string& address, const std::map<std::string, std::string>& headerEntries)
     : m_address(address)
     , m_headerEntries(headerEntries)
