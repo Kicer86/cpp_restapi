@@ -3,8 +3,8 @@
 #include "base_connection.hpp"
 #include "cpp_restapi_export.h"
 
-namespace cpp_restapi::CppHttplibBackend {
-
+namespace cpp_restapi::CppHttplibBackend
+{
     class CPP_RESTAPI_EXPORT Connection: public BaseConnection
     {
         public:
@@ -17,6 +17,5 @@ namespace cpp_restapi::CppHttplibBackend {
 
             std::pair<std::string, std::string> fetchPage(const std::string& request) override;
     };
-
 }
 
