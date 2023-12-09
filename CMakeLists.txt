@@ -21,9 +21,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(GenerateExportHeader)
 
-option(CppRestAPI_QtBackend "Qt backend for GitHubApi" OFF)
-option(CppRestAPI_CurlBackend "libcurl backend for GitHubApi" OFF)
-option(CppRestAPI_Tests "Enable GitHubApi tests. Forces both CppRestAPI_QtBackend and CppRestAPI_CurlBackend to be ON" OFF)
+option(CppRestAPI_QtBackend "Qt backend for CppRestAPI" OFF)
+option(CppRestAPI_CurlBackend "libcurl backend for CppRestAPI" OFF)
+option(CppRestAPI_Tests "Enable CppRestAPI tests. Forces both CppRestAPI_QtBackend and CppRestAPI_CurlBackend to be ON" OFF)
 
 if(CppRestAPI_Tests)
     set(CppRestAPI_QtBackend ON)
