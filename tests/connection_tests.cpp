@@ -3,6 +3,7 @@
 #include <gmock/gmock.h>
 #include <httplib.h>
 
+#include "cpp_restapi/cpp-httplib_connection.hpp"
 #include "cpp_restapi/curl_connection.hpp"
 #include "cpp_restapi/qt_connection.hpp"
 
@@ -34,6 +35,12 @@ namespace
         static QNetworkAccessManager networkmanager;
         return std::make_unique<QtBackend::Connection>(networkmanager, std::string("http://localhost:") + std::to_string(port), std::map<std::string, std::string>{});
     }
+
+    template<>
+    auto buildConnection<CppHttplibBackend::Connection>()
+    {
+        return std::make_unique<CppHttplibBackend::Connection>(std::string("http://localhost:") + std::to_string(port), std::map<std::string, std::string>{});
+    }
 }
 
 
@@ -51,7 +58,7 @@ class ConnectionTest: public testing::Test
 };
 
 
-using Backends = testing::Types<CurlBackend::Connection, QtBackend::Connection>;
+using Backends = testing::Types<CurlBackend::Connection, QtBackend::Connection, CppHttplibBackend::Connection>;
 TYPED_TEST_SUITE(ConnectionTest, Backends);
 
 
