@@ -76,7 +76,7 @@ TYPED_TEST(ApiTest, fetchRegularUser)
 
     auto connection = buildNewApi<TypeParam>();
 
-    GitHub::Request request(std::move(connection));
+    GitHub::Request request(connection);
     const auto info = request.getUserInfo("userName1234");
 
     EXPECT_EQ(info, "{\"id\":1234,\"login\":\"userName1234\"}\n");
@@ -93,7 +93,7 @@ TYPED_TEST(ApiTest, authorization)
         builder.setToken("github_token");
     });
 
-    GitHub::Request request(std::move(connection));
+    GitHub::Request request(connection);
     const auto info = request.getUserInfo("userName1234");
 
     EXPECT_EQ(info, "{\"id\":1234,\"login\":\"userName1234\"}\n");
