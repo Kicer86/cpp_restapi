@@ -12,8 +12,8 @@
 
 class QNetworkAccessManager;
 
-namespace cpp_restapi { namespace QtBackend {
-
+namespace cpp_restapi::QtBackend
+{
     class CPP_RESTAPI_EXPORT Connection: public QObject, public BaseConnection
     {
         public:
@@ -31,7 +31,6 @@ namespace cpp_restapi { namespace QtBackend {
 
             QNetworkRequest prepareRequest();
     };
-
-}}
+}
 
 #endif
