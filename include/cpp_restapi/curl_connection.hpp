@@ -6,8 +6,8 @@
 #include "cpp_restapi_export.h"
 
 
-namespace cpp_restapi { namespace CurlBackend {
-
+namespace cpp_restapi::CurlBackend
+{
     class CPP_RESTAPI_EXPORT Connection: public BaseConnection
     {
         public:
@@ -20,7 +20,6 @@ namespace cpp_restapi { namespace CurlBackend {
 
             std::pair<std::string, std::string> fetchPage(const std::string& request) override;
     };
-
-}}
+}
 
 #endif
