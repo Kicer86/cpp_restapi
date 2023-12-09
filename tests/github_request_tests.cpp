@@ -3,6 +3,7 @@
 #include <gmock/gmock.h>
 #include <httplib.h>
 
+#include "cpp_restapi/cpp-httplib_connection.hpp"
 #include "cpp_restapi/curl_connection.hpp"
 #include "cpp_restapi/qt_connection.hpp"
 #include "cpp_restapi/github/connection_builder.hpp"
@@ -37,6 +38,12 @@ namespace
         return builder.build<QtBackend::Connection>(networkmanager);
     }
 
+    template<>
+    std::shared_ptr<IConnection> buildConnection<CppHttplibBackend::Connection>(GitHub::ConnectionBuilder& builder)
+    {
+       return builder.build<CppHttplibBackend::Connection>();
+    }
+
     template<typename T>
     std::shared_ptr<IConnection> buildNewApi(std::function<void(GitHub::ConnectionBuilder &)> c = {})
     {
@@ -65,7 +72,7 @@ class ApiTest: public testing::Test
 };
 
 
-using Backends = testing::Types<CurlBackend::Connection, QtBackend::Connection>;
+using Backends = testing::Types<CurlBackend::Connection, QtBackend::Connection, CppHttplibBackend::Connection>;
 TYPED_TEST_SUITE(ApiTest, Backends);
 
 
