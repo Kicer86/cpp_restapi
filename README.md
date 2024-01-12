@@ -166,4 +166,4 @@ Also please look into 'examples' directory for details.
 
 ## Links
 
-Code documentation available at https://kicer86.github.io/github_api/index.html
+Code documentation available at https://kicer86.github.io/cpp_restapi/index.html

@@ -73,7 +73,7 @@ namespace cpp_restapi::CurlBackend
             curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
             curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
             curl_easy_setopt(curl, CURLOPT_HEADERDATA, &header_links);
-            curl_easy_setopt(curl, CURLOPT_USERAGENT, "github_api/1.0");
+            curl_easy_setopt(curl, CURLOPT_USERAGENT, "cpp_restapi/2.0");
 
             const auto header_entries = getHeaderEntries();
 

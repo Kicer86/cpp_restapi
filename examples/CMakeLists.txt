@@ -10,7 +10,7 @@ endif()
 set(CppRestAPI_UseQt6 ${Qt6_FOUND})
 set(CppRestAPI_QtBackend ON)
 set(CppRestAPI_CurlBackend ON)
-add_subdirectory(.. cpp_restapi_root)                #include directory with github_api
+add_subdirectory(.. cpp_restapi_root)                #include directory with cpp_restapi
 
 add_executable(qt_example qt_example.cpp)
 add_executable(curl_example curl_example.cpp)
@@ -19,7 +19,7 @@ add_executable(bare_qt_connection_example bare_qt_connection_example.cpp)
 
 target_link_libraries(qt_example
     PRIVATE
-        github_api
+        cpp_restapi
         Qt::Network
 )
 

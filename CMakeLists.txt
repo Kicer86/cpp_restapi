@@ -51,8 +51,6 @@ target_link_libraries(cpp_restapi
 
 generate_export_header(cpp_restapi)
 
-add_library(github_api ALIAS cpp_restapi)
-
 if(NOT CppRestAPI_QtBackend AND NOT CppRestAPI_CurlBackend)
     message(FATAL_ERROR "No backend was chosen. Set either CppRestAPI_QtBackend or CppRestAPI_CurlBackend variable to ON")
 endif()

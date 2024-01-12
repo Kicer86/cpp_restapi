@@ -87,7 +87,7 @@ namespace cpp_restapi::QtBackend
         for(const auto& [k, v]: header_entries)
             request.setRawHeader(k.c_str(), v.c_str());
 
-        request.setRawHeader("User-Agent", "github_api/1.0");
+        request.setRawHeader("User-Agent", "cpp_restapi/2.0");
 
         return request;
     }
