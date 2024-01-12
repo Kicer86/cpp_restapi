@@ -6,6 +6,7 @@
   "homepage": "https://github.com/Kicer86/github_api",
   "description": "This is a c++ library for accessing GitHub REST API v3.",
   "dependencies": [
-    "jsoncpp"
+    "jsoncpp",
+    "cpp-httplib"
   ]
 }
