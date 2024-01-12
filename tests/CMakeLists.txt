@@ -24,7 +24,7 @@ target_link_libraries(api_tests
         httpmockserver
         microhttpd
 
-        github_api
+        cpp_restapi
 )
 
 target_include_directories(api_tests
