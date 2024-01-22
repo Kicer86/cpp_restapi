@@ -5,14 +5,14 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     reviewers:
       - "Kicer86"
 
   - package-ecosystem: "gitsubmodule"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     reviewers:
       - "Kicer86"
     
