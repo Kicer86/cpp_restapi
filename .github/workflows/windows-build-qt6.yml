@@ -28,7 +28,7 @@ jobs:
         key: ${{ runner.os }}-QtCache2
 
     - name: Install Qt
-      uses: jurplel/install-qt-action@v3
+      uses: jurplel/install-qt-action@v4
       with:
         version: '6.3.0'
         cached: ${{ steps.cache-qt.outputs.cache-hit }}
