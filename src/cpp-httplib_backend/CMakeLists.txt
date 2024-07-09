@@ -1,5 +1,5 @@
 
-find_package(httplib 0.14.0 REQUIRED)
+find_package(httplib REQUIRED)
 
 target_sources(cpp_restapi
     PRIVATE

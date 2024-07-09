@@ -1,6 +1,6 @@
 
 find_package(GTest REQUIRED CONFIG)
-find_package(httplib 0.14.0 REQUIRED)
+find_package(httplib REQUIRED)
 
 add_executable(api_tests
     connection_tests.cpp
