@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-22.04]
+        os: [ubuntu-24.04]
 
     steps:
     - uses: actions/checkout@v4
@@ -28,7 +28,7 @@ jobs:
           libgmock-dev          \
           qt6-base-dev          \
           libcurl4-openssl-dev  \
-          libmicrohttpd-dev     \
+          libcpp-httplib-dev    \
           libjsoncpp-dev
 
     - name: Build
