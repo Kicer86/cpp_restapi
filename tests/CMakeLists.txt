@@ -1,6 +1,15 @@
 
 find_package(GTest REQUIRED CONFIG)
-find_package(httplib REQUIRED)
+find_package(httplib)
+
+if(httplib_FOUND)
+    set(HTTPLIB_LIBRARIES httplib::httplib)
+else()
+    find_package(PkgConfig REQUIRED)
+
+    pkg_check_modules(HTTPLIB REQUIRED cpp-httplib)
+endif()
+
 
 add_executable(api_tests
     connection_tests.cpp
@@ -12,7 +21,7 @@ target_link_libraries(api_tests
     PRIVATE
         GTest::gtest
         GTest::gmock
-        httplib::httplib
+        ${HTTPLIB_LIBRARIES}
 
         cpp_restapi
 )
