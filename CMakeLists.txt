@@ -23,14 +23,14 @@ include(GenerateExportHeader)
 
 option(CppRestAPI_QtBackend "Qt backend for CppRestAPI" OFF)
 option(CppRestAPI_CurlBackend "libcurl backend for CppRestAPI" OFF)
-option(CppRestAPI_HttplibBackend "cpp-httplib backend for CppRestAPI" OFF)
+option(CppRestAPI_CppHttplibBackend "cpp-httplib backend for CppRestAPI" OFF)
 option(CppRestAPI_Tests "Enable CppRestAPI tests. Forces all backends to be ON" OFF)
 option(CppRestAPI_Examples "Build CppRestAPI examples. Forces all backends to be ON" OFF)
 
 if(CppRestAPI_Tests OR CppRestAPI_Examples)
     set(CppRestAPI_QtBackend ON)
     set(CppRestAPI_CurlBackend ON)
-    set(CppRestAPI_HttplibBackend ON)
+    set(CppRestAPI_CppHttplibBackend ON)
 endif()
 
 add_library(cpp_restapi
@@ -66,7 +66,7 @@ if(CppRestAPI_CurlBackend)
     add_subdirectory(src/curl_backend)
 endif()
 
-if(CppRestAPI_HttplibBackend)
+if(CppRestAPI_CppHttplibBackend)
     add_subdirectory(src/cpp-httplib_backend)
 endif()
 
