@@ -1,16 +1,9 @@
 
-cmake_minimum_required(VERSION 3.10)
-project(GitHubApiExample)
-
-find_package(Qt6 COMPONENTS Network Core)
-if (NOT Qt6_FOUND)
-    find_package(Qt5 REQUIRED COMPONENTS Network Core)
+if(CppRestAPI_UseQt6)
+    find_package(Qt6 REQUIRED COMPONENTS Core Network)
+else()
+    find_package(Qt5 5.15 REQUIRED COMPONENTS Core Network)
 endif()
-
-set(CppRestAPI_UseQt6 ${Qt6_FOUND})
-set(CppRestAPI_QtBackend ON)
-set(CppRestAPI_CurlBackend ON)
-add_subdirectory(.. cpp_restapi_root)                #include directory with cpp_restapi
 
 add_executable(qt_example qt_example.cpp)
 add_executable(curl_example curl_example.cpp)
