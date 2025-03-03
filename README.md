@@ -14,7 +14,7 @@ You may need them if you want to build unit tests (`CppRestAPI_Tests` cmake vari
 
 Another submodule is `vcpkg` which can simplify build by providing required dependencies.<br>
 Please mind that vcpkg uses **telemetry**.<br>
-Visit https://learn.microsoft.com/vcpkg/about/privacy for more details:
+Visit https://learn.microsoft.com/vcpkg/about/privacy for more details.
 
 ## How to use it
 
