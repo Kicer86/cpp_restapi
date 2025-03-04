@@ -8,11 +8,9 @@ It supports three backends for establishing connections with remote API servers:
 Qt6/5, Curl and cpp-httplib.
 
 # Submodules
+This repository comes with submodules which are not necessary to build and use this project.<br>
 
-This repository has submodules which are not necessary to build and use this project.<br>
-You may need them if you want to build unit tests (`CppRestAPI_Tests` cmake varible set to `TRUE`).
-
-Another submodule is `vcpkg` which can simplify build by providing required dependencies.<br>
+As of now the only submodule is `vcpkg` which can simplify build by providing required dependencies.<br>
 Please mind that vcpkg uses **telemetry**.<br>
 Visit https://learn.microsoft.com/vcpkg/about/privacy for more details.
 
@@ -49,6 +47,14 @@ If no Qt6 is found, an automatic fallback to Qt5 will happen.
 
 Set `CppRestAPI_UseQt5` CMake variable to `TRUE` to force Qt5 usage (in case both versions are available).
 
+##### Standalone build:
+It is possible to build this project as any other regular CMake project by invoking:
+```bash
+cmake -B build
+cmake --build build
+```
+
+It can be usefull if you want to play with examples from `examples` dir or to run unit tests.
 
 ## Examples
 
@@ -201,6 +207,20 @@ int main(int argc, char** argv)
 ```
 
 Also please look into 'examples' directory for details.
+
+## Building examples
+Examples are located in the 'examples' directory of the project. 
+To build them set `CppRestAPI_Examples` CMake variable to `ON`.
+It can be done when invoking `cmake` command by providing `-DCppRestAPI_Examples=ON` commanline argument (see `Standalone build` section).
+Or by modifying entry `CppRestAPI_Examples` in CMakeCache.txt file located in build directory of an already configured project.
+
+Please mind that setting `CppRestAPI_Examples` to `ON` will force all backends to be used.
+
+## Building unit tests
+Unit tests are located in 'tests' directory of the project.
+To build them set `CppRestAPI_Tests` CMake variable to `ON`.
+
+Please mind that setting `CppRestAPI_Tests` to `ON` will force all backends to be used.
 
 ## Links
 
