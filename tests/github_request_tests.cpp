@@ -57,6 +57,20 @@ namespace
     }
 }
 
+// Case-insensitive comparison function
+bool caseInsensitiveEqual(const std::string& a, const std::string& b) {
+    return std::equal(a.begin(), a.end(),
+                      b.begin(), b.end(),
+                      [](char c1, char c2) { return std::tolower(c1) == std::tolower(c2); });
+}
+
+
+// Custom matcher for case-insensitive key comparison
+MATCHER_P2(PairCaseInsensitive, expectedKey, expectedValue, "")
+{
+    return caseInsensitiveEqual(arg.first, expectedKey) && arg.second == expectedValue;
+}
+
 
 template <typename T>
 class ApiTest: public testing::Test
@@ -92,7 +106,9 @@ TYPED_TEST(ApiTest, fetchRegularUser)
 
 TYPED_TEST(ApiTest, authorization)
 {
-    EXPECT_CALL(this->server, request(_, Contains(std::pair<std::string, std::string>{"Authorization", "token github_token"}))).WillOnce(Return(GithubServerMock::Response{ R"({"login":"userName1234","id":1234"})", {} }));
+    EXPECT_CALL(this->server, request(_, Contains(PairCaseInsensitive("authorization", "token github_token"))))
+        .WillOnce(Return(GithubServerMock::Response{ R"({"login":"userName1234","id":1234"})", {} }));
+
     this->server.listen();
 
     auto connection = buildNewApi<TypeParam>([](GitHub::ConnectionBuilder& builder)

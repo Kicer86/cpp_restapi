@@ -69,7 +69,7 @@ namespace cpp_restapi::QtBackend
             qDebug() << QString("Ssl errors occured when processing request %1:")
                 .arg(page.c_str());
 
-            for(const auto& error: qAsConst(errors))
+            for(const auto& error: std::as_const(errors))
                 qDebug() << error.errorString();
         });
 
