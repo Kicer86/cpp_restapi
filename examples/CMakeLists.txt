@@ -1,8 +1,12 @@
 
-if(CppRestAPI_UseQt6)
-    find_package(Qt6 REQUIRED COMPONENTS Core Network)
-else()
+if(CppRestAPI_UseQt5)
     find_package(Qt5 5.15 REQUIRED COMPONENTS Core Network)
+else()
+    find_package(Qt6 COMPONENTS Core Network)
+
+    if(NOT Qt6_FOUND)
+        find_package(Qt5 5.15 REQUIRED COMPONENTS Core Network)
+    endif()
 endif()
 
 add_executable(qt_example qt_example.cpp)

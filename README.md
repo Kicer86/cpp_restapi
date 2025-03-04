@@ -5,7 +5,7 @@ This is a c++ library originally written for accessing GitHub REST API v3.
 Currently reorganized to be easily used with any Rest API available.
 
 It supports three backends for establishing connections with remote API servers:
-Qt5/6, Curl and cpp-httplib.
+Qt6/5, Curl and cpp-httplib.
 
 # Submodules
 
@@ -44,8 +44,10 @@ and that's all.
 ##### Note:
 Depending on your choice of backend you may need to install libcurl, Qt and/or cpp-httplib libraries.
 
-Qt backend can be compiled with Qt5 (default) or Qt6.
-Set `CppRestAPI_UseQt6` CMake variable to `TRUE` to use Qt6.
+Qt backend can be compiled with Qt6 (default) or Qt5.
+If no Qt6 is found, an automatic fallback to Qt5 will happen.
+
+Set `CppRestAPI_UseQt5` CMake variable to `TRUE` to force Qt5 usage (in case both versions are available).
 
 
 ## Examples

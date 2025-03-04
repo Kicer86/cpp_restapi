@@ -16,7 +16,7 @@
       "toolchainFile": "${sourceDir}/vcpkg/scripts/buildsystems/vcpkg.cmake",
       "cacheVariables": {
         "CppRestAPI_QtBackend": "ON",
-        "CppRestAPI_UseQt6": "TRUE"
+        "CppRestAPI_UseQt5": "FALSE"
       }
     },
     {
@@ -29,7 +29,7 @@
       "toolchainFile": "${sourceDir}/vcpkg/scripts/buildsystems/vcpkg.cmake",
       "cacheVariables": {
         "CppRestAPI_QtBackend": "ON",
-        "CppRestAPI_UseQt6": "TRUE"
+        "CppRestAPI_UseQt5": "FALSE"
       }
     }
   ],
