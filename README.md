@@ -87,7 +87,7 @@ Qt version:
 #include <QCoreApplication>
 #include <QNetworkAccessManager>
 
-#include <cpp_restapi/curl_connection.hpp>
+#include <cpp_restapi/qt_connection.hpp>
 
 
 int main(int argc, char** argv)
