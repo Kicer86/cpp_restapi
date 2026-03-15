@@ -8,7 +8,21 @@ namespace cpp_restapi
 
 std::vector<SseEvent> SseParser::feed(const std::string& chunk)
 {
-    m_buffer.append(chunk);
+    // Normalize line endings: CRLF and standalone CR become LF
+    for (std::size_t i = 0; i < chunk.size(); ++i)
+    {
+        if (chunk[i] == '\r')
+        {
+            if (i + 1 < chunk.size() && chunk[i + 1] == '\n')
+                ++i;
+
+            m_buffer.push_back('\n');
+        }
+        else
+        {
+            m_buffer.push_back(chunk[i]);
+        }
+    }
 
     std::vector<SseEvent> events;
     const std::string delimiter = "\n\n";

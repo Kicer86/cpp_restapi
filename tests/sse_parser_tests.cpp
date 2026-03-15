@@ -166,3 +166,35 @@ TEST(SseParserTest, consecutiveEventsAcrossMultipleFeeds)
     ASSERT_THAT(events, SizeIs(1));
     EXPECT_EQ(events[0].data, "second");
 }
+
+
+TEST(SseParserTest, crlfLineEndings)
+{
+    SseParser parser;
+    const auto events = parser.feed("event: update\r\ndata: hello\r\n\r\n");
+
+    ASSERT_THAT(events, SizeIs(1));
+    EXPECT_EQ(events[0].event, "update");
+    EXPECT_EQ(events[0].data, "hello");
+}
+
+
+TEST(SseParserTest, standaloneCrLineEndings)
+{
+    SseParser parser;
+    const auto events = parser.feed("data: hello\r\r");
+
+    ASSERT_THAT(events, SizeIs(1));
+    EXPECT_EQ(events[0].data, "hello");
+}
+
+
+TEST(SseParserTest, mixedLineEndings)
+{
+    SseParser parser;
+    const auto events = parser.feed("event: test\r\ndata: one\ndata: two\r\n\n");
+
+    ASSERT_THAT(events, SizeIs(1));
+    EXPECT_EQ(events[0].event, "test");
+    EXPECT_EQ(events[0].data, "one\ntwo");
+}
