@@ -2,6 +2,7 @@
 #include <httplib.h>
 
 #include <cpp_restapi/cpp-httplib_connection.hpp>
+#include "cpp-httplib_sse_connection.hpp"
 
 
 namespace cpp_restapi::CppHttplibBackend
@@ -38,5 +39,13 @@ namespace cpp_restapi::CppHttplibBackend
             header += key + ": " + value + "\n";
 
         return {response->body, header};
+    }
+
+
+    std::unique_ptr<ISseConnection> Connection::subscribe(const std::string& request, EventCallback callback)
+    {
+        auto sse = std::make_unique<SseConnection>(address(), getHeaderEntries());
+        sse->subscribe(request, std::move(callback));
+        return sse;
     }
 }

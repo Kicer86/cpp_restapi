@@ -36,6 +36,7 @@ endif()
 add_library(cpp_restapi
     src/base_connection.cpp
     src/header_utils.cpp
+    src/sse_parser.cpp
     src/services/github/request.cpp
 )
 

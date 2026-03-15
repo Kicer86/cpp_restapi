@@ -1,5 +1,6 @@
 
 #include <cpp_restapi/qt_connection.hpp>
+#include "qt_sse_connection.hpp"
 
 #include <cassert>
 #include <string>
@@ -91,5 +92,13 @@ namespace cpp_restapi::QtBackend
         request.setRawHeader("User-Agent", "cpp_restapi/2.0");
 
         return request;
+    }
+
+
+    std::unique_ptr<ISseConnection> Connection::subscribe(const std::string& request, EventCallback callback)
+    {
+        auto sse = std::make_unique<SseConnection>(m_networkManager, address(), getHeaderEntries());
+        sse->subscribe(request, std::move(callback));
+        return sse;
     }
 }

@@ -14,6 +14,7 @@ endif()
 add_executable(api_tests
     connection_tests.cpp
     github_request_tests.cpp
+    sse_parser_tests.cpp
     main.cpp
 )
 
