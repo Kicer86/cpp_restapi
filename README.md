@@ -217,18 +217,21 @@ a standard mechanism for receiving a stream of events from a server over HTTP.
 SSE support is available for all three backends via `SseConnection` classes.
 Each backend provides a `subscribe()` method that connects to an SSE endpoint
 and delivers parsed events through a callback.
+The `subscribe()` call is non-blocking — events are received on an internal
+thread (or via the Qt event loop for the Qt backend). Use `close()` to stop.
 
 ### SSE with curl
 
 ```c++
 #include <iostream>
+#include <thread>
+#include <chrono>
 
 #include <cpp_restapi/curl_sse_connection.hpp>
 
 
 int main(int argc, char** argv)
 {
-    // Connect to an SSE endpoint (blocks until connection closes)
     cpp_restapi::CurlBackend::SseConnection connection("http://localhost:8080", {});
 
     connection.subscribe("events", [](const cpp_restapi::SseEvent& event)
@@ -237,6 +240,10 @@ int main(int argc, char** argv)
         std::cout << "Data: " << event.data << '\n';
     });
 
+    // Do other work while events arrive in the background
+    std::this_thread::sleep_for(std::chrono::seconds(30));
+
+    connection.close();
     return 0;
 }
 ```
@@ -268,20 +275,18 @@ int main(int argc, char** argv)
 }
 ```
 
-Note: Unlike curl and cpp-httplib backends where `subscribe()` blocks,
-the Qt backend is non-blocking and relies on the Qt event loop.
-
 ### SSE with cpp-httplib
 
 ```c++
 #include <iostream>
+#include <thread>
+#include <chrono>
 
 #include <cpp_restapi/cpp-httplib_sse_connection.hpp>
 
 
 int main(int argc, char** argv)
 {
-    // Connect to an SSE endpoint (blocks until connection closes)
     cpp_restapi::CppHttplibBackend::SseConnection connection("http://localhost:8080", {});
 
     connection.subscribe("events", [](const cpp_restapi::SseEvent& event)
@@ -290,6 +295,10 @@ int main(int argc, char** argv)
         std::cout << "Data: " << event.data << '\n';
     });
 
+    // Do other work while events arrive in the background
+    std::this_thread::sleep_for(std::chrono::seconds(30));
+
+    connection.close();
     return 0;
 }
 ```
