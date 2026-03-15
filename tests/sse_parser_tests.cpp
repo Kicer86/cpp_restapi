@@ -198,3 +198,31 @@ TEST(SseParserTest, mixedLineEndings)
     EXPECT_EQ(events[0].event, "test");
     EXPECT_EQ(events[0].data, "one\ntwo");
 }
+
+
+TEST(SseParserTest, commentOnlyBlockIsNotDispatched)
+{
+    SseParser parser;
+    const auto events = parser.feed(": keep-alive\n\n");
+
+    EXPECT_THAT(events, IsEmpty());
+}
+
+
+TEST(SseParserTest, blockWithoutDataFieldIsNotDispatched)
+{
+    SseParser parser;
+    const auto events = parser.feed("event: ping\nid: 1\n\n");
+
+    EXPECT_THAT(events, IsEmpty());
+}
+
+
+TEST(SseParserTest, dataFieldWithEmptyValueIsDispatched)
+{
+    SseParser parser;
+    const auto events = parser.feed("data\n\n");
+
+    ASSERT_THAT(events, SizeIs(1));
+    EXPECT_EQ(events[0].data, "");
+}

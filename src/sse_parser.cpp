@@ -1,6 +1,7 @@
 #include <cpp_restapi/sse_parser.hpp>
 
 #include <charconv>
+#include <optional>
 
 
 namespace cpp_restapi
@@ -33,21 +34,24 @@ std::vector<SseEvent> SseParser::feed(const std::string& chunk)
         std::string block = m_buffer.substr(0, pos);
         m_buffer.erase(0, pos + delimiter.size());
 
-        // skip empty blocks (e.g. from comment-only messages)
         if (block.empty())
             continue;
 
-        events.push_back(parseBlock(block));
+        auto event = parseBlock(block);
+
+        if (event.has_value())
+            events.push_back(std::move(*event));
     }
 
     return events;
 }
 
 
-SseEvent SseParser::parseBlock(const std::string& block)
+std::optional<SseEvent> SseParser::parseBlock(const std::string& block)
 {
     SseEvent event;
     std::string dataAccumulator;
+    bool hasData = false;
 
     std::string::size_type lineStart = 0;
     while (lineStart < block.size())
@@ -84,6 +88,7 @@ SseEvent SseParser::parseBlock(const std::string& block)
 
         if (field == "data")
         {
+            hasData = true;
             if (!dataAccumulator.empty())
                 dataAccumulator += '\n';
             dataAccumulator += value;
@@ -106,6 +111,9 @@ SseEvent SseParser::parseBlock(const std::string& block)
     }
 
     event.data = dataAccumulator;
+
+    if (!hasData)
+        return std::nullopt;
 
     return event;
 }

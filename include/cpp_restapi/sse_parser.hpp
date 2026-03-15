@@ -1,6 +1,7 @@
 #ifndef SSE_PARSER_HPP_INCLUDED
 #define SSE_PARSER_HPP_INCLUDED
 
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -31,7 +32,7 @@ namespace cpp_restapi
     private:
         std::string m_buffer;
 
-        static SseEvent parseBlock(const std::string& block);
+        static std::optional<SseEvent> parseBlock(const std::string& block);
     };
 }
 
