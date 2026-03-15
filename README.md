@@ -214,10 +214,10 @@ In addition to regular REST requests, the library supports
 [Server-Sent Events](https://html.spec.whatwg.org/multipage/server-sent-events.html) —
 a standard mechanism for receiving a stream of events from a server over HTTP.
 
-SSE support is available for all three backends via `SseConnection` classes.
-Each backend provides a `subscribe()` method that connects to an SSE endpoint
-and delivers parsed events through a callback.
-The `subscribe()` call is non-blocking — events are received on an internal
+SSE support is available for all three backends via `Connection::subscribe()`.
+The method connects to an SSE endpoint,
+delivers parsed events through a callback and returns an `ISseConnection` handle.
+The call is non-blocking — events are received on an internal
 thread (or via the Qt event loop for the Qt backend). Use `close()` to stop.
 
 ### SSE with curl
@@ -227,14 +227,14 @@ thread (or via the Qt event loop for the Qt backend). Use `close()` to stop.
 #include <thread>
 #include <chrono>
 
-#include <cpp_restapi/curl_sse_connection.hpp>
+#include <cpp_restapi/curl_connection.hpp>
 
 
 int main(int argc, char** argv)
 {
-    cpp_restapi::CurlBackend::SseConnection connection("http://localhost:8080", {});
+    cpp_restapi::CurlBackend::Connection connection("http://localhost:8080", {});
 
-    connection.subscribe("events", [](const cpp_restapi::SseEvent& event)
+    auto sse = connection.subscribe("events", [](const cpp_restapi::SseEvent& event)
     {
         std::cout << "Event: " << event.event << '\n';
         std::cout << "Data: " << event.data << '\n';
@@ -243,7 +243,7 @@ int main(int argc, char** argv)
     // Do other work while events arrive in the background
     std::this_thread::sleep_for(std::chrono::seconds(30));
 
-    connection.close();
+    sse->close();
     return 0;
 }
 ```
@@ -255,7 +255,7 @@ int main(int argc, char** argv)
 #include <QCoreApplication>
 #include <QNetworkAccessManager>
 
-#include <cpp_restapi/qt_sse_connection.hpp>
+#include <cpp_restapi/qt_connection.hpp>
 
 
 int main(int argc, char** argv)
@@ -263,9 +263,9 @@ int main(int argc, char** argv)
     QCoreApplication qapp(argc, argv);
     QNetworkAccessManager manager;
 
-    cpp_restapi::QtBackend::SseConnection connection(manager, "http://localhost:8080", {});
+    cpp_restapi::QtBackend::Connection connection(manager, "http://localhost:8080", {});
 
-    connection.subscribe("events", [](const cpp_restapi::SseEvent& event)
+    auto sse = connection.subscribe("events", [](const cpp_restapi::SseEvent& event)
     {
         std::cout << "Event: " << event.event << '\n';
         std::cout << "Data: " << event.data << '\n';
@@ -282,14 +282,14 @@ int main(int argc, char** argv)
 #include <thread>
 #include <chrono>
 
-#include <cpp_restapi/cpp-httplib_sse_connection.hpp>
+#include <cpp_restapi/cpp-httplib_connection.hpp>
 
 
 int main(int argc, char** argv)
 {
-    cpp_restapi::CppHttplibBackend::SseConnection connection("http://localhost:8080", {});
+    cpp_restapi::CppHttplibBackend::Connection connection("http://localhost:8080", {});
 
-    connection.subscribe("events", [](const cpp_restapi::SseEvent& event)
+    auto sse = connection.subscribe("events", [](const cpp_restapi::SseEvent& event)
     {
         std::cout << "Event: " << event.event << '\n';
         std::cout << "Data: " << event.data << '\n';
@@ -298,7 +298,7 @@ int main(int argc, char** argv)
     // Do other work while events arrive in the background
     std::this_thread::sleep_for(std::chrono::seconds(30));
 
-    connection.close();
+    sse->close();
     return 0;
 }
 ```
@@ -315,7 +315,7 @@ The `SseEvent` struct exposes all standard SSE fields:
 | `retry` | `int`         | Reconnection time in ms (from `retry:` field, -1 if N/A) |
 
 ## Building examples
-Examples are located in the 'examples' directory of the project. 
+Examples are located in the 'examples' directory of the project.
 To build them set `CppRestAPI_Examples` CMake variable to `ON`.
 It can be done when invoking `cmake` command by providing `-DCppRestAPI_Examples=ON` commanline argument (see `Standalone build` section).
 Or by modifying entry `CppRestAPI_Examples` in CMakeCache.txt file located in build directory of an already configured project.
