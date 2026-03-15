@@ -317,7 +317,7 @@ The `SseEvent` struct exposes all standard SSE fields:
 ## Building examples
 Examples are located in the 'examples' directory of the project.
 To build them set `CppRestAPI_Examples` CMake variable to `ON`.
-It can be done when invoking `cmake` command by providing `-DCppRestAPI_Examples=ON` commanline argument (see `Standalone build` section).
+It can be done when invoking `cmake` command by providing `-DCppRestAPI_Examples=ON` command line argument (see `Standalone build` section).
 Or by modifying entry `CppRestAPI_Examples` in CMakeCache.txt file located in build directory of an already configured project.
 
 Please mind that setting `CppRestAPI_Examples` to `ON` will force all backends to be used.
