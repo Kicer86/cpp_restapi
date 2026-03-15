@@ -34,7 +34,7 @@ void SseConnection::close()
 {
     m_running = false;
 
-    if (m_thread.joinable())
+    if (m_thread.joinable() && std::this_thread::get_id() != m_thread.get_id())
         m_thread.join();
 }
 
@@ -88,6 +88,17 @@ void SseConnection::run(const std::string& url, EventCallback callback)
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &ctx);
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, list);
         curl_easy_setopt(curl, CURLOPT_USERAGENT, "cpp_restapi/2.0");
+
+        typedef int (*XferInfoCallback)(void*, curl_off_t, curl_off_t, curl_off_t, curl_off_t);
+        XferInfoCallback xferinfo_callback = [](void* clientp, curl_off_t, curl_off_t, curl_off_t, curl_off_t) -> int
+        {
+            const auto* running = static_cast<const std::atomic<bool>*>(clientp);
+            return running->load() ? 0 : 1;
+        };
+
+        curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L);
+        curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, xferinfo_callback);
+        curl_easy_setopt(curl, CURLOPT_XFERINFODATA, &m_running);
 
         curl_easy_perform(curl);
 
