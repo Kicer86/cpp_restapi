@@ -208,6 +208,103 @@ int main(int argc, char** argv)
 
 Also please look into 'examples' directory for details.
 
+## Server-Sent Events (SSE)
+
+In addition to regular REST requests, the library supports
+[Server-Sent Events](https://html.spec.whatwg.org/multipage/server-sent-events.html) —
+a standard mechanism for receiving a stream of events from a server over HTTP.
+
+SSE support is available for all three backends via `SseConnection` classes.
+Each backend provides a `subscribe()` method that connects to an SSE endpoint
+and delivers parsed events through a callback.
+
+### SSE with curl
+
+```c++
+#include <iostream>
+
+#include <cpp_restapi/curl_sse_connection.hpp>
+
+
+int main(int argc, char** argv)
+{
+    // Connect to an SSE endpoint (blocks until connection closes)
+    cpp_restapi::CurlBackend::SseConnection connection("http://localhost:8080", {});
+
+    connection.subscribe("events", [](const cpp_restapi::SseEvent& event)
+    {
+        std::cout << "Event: " << event.event << '\n';
+        std::cout << "Data: " << event.data << '\n';
+    });
+
+    return 0;
+}
+```
+
+### SSE with Qt
+
+```c++
+#include <iostream>
+#include <QCoreApplication>
+#include <QNetworkAccessManager>
+
+#include <cpp_restapi/qt_sse_connection.hpp>
+
+
+int main(int argc, char** argv)
+{
+    QCoreApplication qapp(argc, argv);
+    QNetworkAccessManager manager;
+
+    cpp_restapi::QtBackend::SseConnection connection(manager, "http://localhost:8080", {});
+
+    connection.subscribe("events", [](const cpp_restapi::SseEvent& event)
+    {
+        std::cout << "Event: " << event.event << '\n';
+        std::cout << "Data: " << event.data << '\n';
+    });
+
+    return qapp.exec();
+}
+```
+
+Note: Unlike curl and cpp-httplib backends where `subscribe()` blocks,
+the Qt backend is non-blocking and relies on the Qt event loop.
+
+### SSE with cpp-httplib
+
+```c++
+#include <iostream>
+
+#include <cpp_restapi/cpp-httplib_sse_connection.hpp>
+
+
+int main(int argc, char** argv)
+{
+    // Connect to an SSE endpoint (blocks until connection closes)
+    cpp_restapi::CppHttplibBackend::SseConnection connection("http://localhost:8080", {});
+
+    connection.subscribe("events", [](const cpp_restapi::SseEvent& event)
+    {
+        std::cout << "Event: " << event.event << '\n';
+        std::cout << "Data: " << event.data << '\n';
+    });
+
+    return 0;
+}
+```
+
+### SseEvent fields
+
+The `SseEvent` struct exposes all standard SSE fields:
+
+| Field   | Type          | Description                                              |
+|---------|---------------|----------------------------------------------------------|
+| `event` | `std::string` | Event type (from `event:` field, empty if not specified)  |
+| `data`  | `std::string` | Event payload (from `data:` field(s), joined with `\n`)  |
+| `id`    | `std::string` | Last event ID (from `id:` field)                         |
+| `retry` | `int`         | Reconnection time in ms (from `retry:` field, -1 if N/A) |
+
 ## Building examples
 Examples are located in the 'examples' directory of the project. 
 To build them set `CppRestAPI_Examples` CMake variable to `ON`.
