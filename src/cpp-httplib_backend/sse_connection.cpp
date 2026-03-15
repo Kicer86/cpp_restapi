@@ -14,11 +14,33 @@ SseConnection::SseConnection(const std::string& address,
 }
 
 
+SseConnection::~SseConnection()
+{
+    close();
+}
+
+
 void SseConnection::subscribe(const std::string& request, EventCallback callback)
 {
-    m_callback = std::move(callback);
-    m_parser = SseParser{};
+    close();
+
     m_running = true;
+    m_thread = std::thread(&SseConnection::run, this, request, std::move(callback));
+}
+
+
+void SseConnection::close()
+{
+    m_running = false;
+
+    if (m_thread.joinable())
+        m_thread.join();
+}
+
+
+void SseConnection::run(const std::string& request, EventCallback callback)
+{
+    SseParser parser;
 
     auto pos = m_address.find("//");
     if (pos == std::string::npos)
@@ -49,29 +71,20 @@ void SseConnection::subscribe(const std::string& request, EventCallback callback
     headers.emplace("Accept", "text/event-stream");
 
     cli.Get(query, headers,
-        [this](const char* data, size_t len) -> bool
+        [this, &parser, &callback](const char* data, size_t len) -> bool
         {
             if (!m_running)
                 return false;
 
             const std::string chunk(data, len);
-            const auto events = m_parser.feed(chunk);
+            const auto events = parser.feed(chunk);
 
             for (const auto& event : events)
-                m_callback(event);
+                callback(event);
 
-            return m_running;
+            return m_running.load();
         }
     );
-
-    m_running = false;
-}
-
-
-void SseConnection::close()
-{
-    m_running = false;
-    m_callback = nullptr;
 }
 
 }
