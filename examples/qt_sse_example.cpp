@@ -10,9 +10,9 @@ int main(int argc, char** argv)
     QCoreApplication qapp(argc, argv);
     QNetworkAccessManager manager;
 
-    cpp_restapi::QtBackend::Connection connection(manager, "http://localhost:8080", {});
+    cpp_restapi::QtBackend::Connection connection(manager, "https://sse.dev", {});
 
-    auto sse = connection.subscribe("events", [](const cpp_restapi::SseEvent& event)
+    auto sse = connection.subscribe("test", [](const cpp_restapi::SseEvent& event)
     {
         std::cout << "Event: " << event.event << '\n';
         std::cout << "Data: " << event.data << '\n';

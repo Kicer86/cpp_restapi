@@ -7,9 +7,9 @@
 
 int main(int argc, char** argv)
 {
-    cpp_restapi::CurlBackend::Connection connection("http://localhost:8080", {});
+    cpp_restapi::CurlBackend::Connection connection("https://sse.dev", {});
 
-    auto sse = connection.subscribe("events", [](const cpp_restapi::SseEvent& event)
+    auto sse = connection.subscribe("test", [](const cpp_restapi::SseEvent& event)
     {
         std::cout << "Event: " << event.event << '\n';
         std::cout << "Data: " << event.data << '\n';
