@@ -2,7 +2,7 @@
 #include <httplib.h>
 
 #include <cpp_restapi/cpp-httplib_connection.hpp>
-#include <cpp_restapi/cpp-httplib_sse_connection.hpp>
+#include "cpp-httplib_sse_connection.hpp"
 
 
 namespace cpp_restapi::CppHttplibBackend

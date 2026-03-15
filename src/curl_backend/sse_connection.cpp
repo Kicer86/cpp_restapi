@@ -1,4 +1,4 @@
-#include <cpp_restapi/curl_sse_connection.hpp>
+#include "curl_sse_connection.hpp"
 
 #include <curl/curl.h>
 

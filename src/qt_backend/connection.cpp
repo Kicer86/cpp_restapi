@@ -1,6 +1,6 @@
 
 #include <cpp_restapi/qt_connection.hpp>
-#include <cpp_restapi/qt_sse_connection.hpp>
+#include "qt_sse_connection.hpp"
 
 #include <cassert>
 #include <string>

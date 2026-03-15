@@ -12,7 +12,7 @@
 #include <curl/curl.h>
 
 #include <cpp_restapi/curl_connection.hpp>
-#include <cpp_restapi/curl_sse_connection.hpp>
+#include "curl_sse_connection.hpp"
 
 
 namespace cpp_restapi::CurlBackend

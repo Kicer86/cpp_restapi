@@ -7,8 +7,8 @@
 #include <QObject>
 #include <QNetworkRequest>
 
-#include "isse_connection.hpp"
-#include "sse_parser.hpp"
+#include <cpp_restapi/isse_connection.hpp>
+#include <cpp_restapi/sse_parser.hpp>
 #include "cpp_restapi_export.h"
 
 class QNetworkAccessManager;
