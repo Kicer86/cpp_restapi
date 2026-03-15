@@ -89,6 +89,7 @@ $(function(){ initResizable(false); });
 <div id="doc-content">
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="../../d0/da9/structcpp__restapi_1_1IConnection-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">cpp_restapi::IConnection Struct Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
@@ -112,6 +113,11 @@ Inheritance diagram for cpp_restapi::IConnection:</div>
   </map>
 </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:add5e8cd8587dcf938bb388482ccda961" id="r_add5e8cd8587dcf938bb388482ccda961"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#add5e8cd8587dcf938bb388482ccda961">EventCallback</a> = std::function&lt;void(const <a class="el" href="../../d9/d37/structcpp__restapi_1_1SseEvent.html">SseEvent</a>&amp;)&gt;</td></tr>
+<tr class="separator:add5e8cd8587dcf938bb388482ccda961"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab85ba8ffe44f1ebfa2ff329c007cc4f0" id="r_ab85ba8ffe44f1ebfa2ff329c007cc4f0"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab85ba8ffe44f1ebfa2ff329c007cc4f0">~IConnection</a> ()=default</td></tr>
@@ -122,10 +128,28 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a926bcc0cb45165be9ec26c89ade97916" id="r_a926bcc0cb45165be9ec26c89ade97916"><td class="memItemLeft" align="right" valign="top">virtual const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a926bcc0cb45165be9ec26c89ade97916">url</a> () const =0</td></tr>
 <tr class="memdesc:a926bcc0cb45165be9ec26c89ade97916"><td class="mdescLeft">&#160;</td><td class="mdescRight">return API url  <br /></td></tr>
 <tr class="separator:a926bcc0cb45165be9ec26c89ade97916"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4c696d81fd7d810d0c1e027045cee3c" id="r_ad4c696d81fd7d810d0c1e027045cee3c"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; <a class="el" href="../../d6/dff/structcpp__restapi_1_1ISseConnection.html">ISseConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad4c696d81fd7d810d0c1e027045cee3c">subscribe</a> (const std::string &amp;request, <a class="el" href="#add5e8cd8587dcf938bb388482ccda961">EventCallback</a> callback)=0</td></tr>
+<tr class="memdesc:ad4c696d81fd7d810d0c1e027045cee3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subscribe to an SSE endpoint.  <br /></td></tr>
+<tr class="separator:ad4c696d81fd7d810d0c1e027045cee3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface representing connection with rest api server. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="add5e8cd8587dcf938bb388482ccda961" name="add5e8cd8587dcf938bb388482ccda961"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add5e8cd8587dcf938bb388482ccda961">&#9670;&#160;</a></span>EventCallback</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#add5e8cd8587dcf938bb388482ccda961">cpp_restapi::IConnection::EventCallback</a> = std::function&lt;void(const <a class="el" href="../../d9/d37/structcpp__restapi_1_1SseEvent.html">SseEvent</a>&amp;)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ab85ba8ffe44f1ebfa2ff329c007cc4f0" name="ab85ba8ffe44f1ebfa2ff329c007cc4f0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab85ba8ffe44f1ebfa2ff329c007cc4f0">&#9670;&#160;</a></span>~IConnection()</h2>
 
@@ -185,6 +209,47 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>api response in json format </dd></dl>
 
 <p>Implemented in <a class="el" href="../../dd/d4e/classcpp__restapi_1_1BaseConnection.html#a0450232692026b9fe147ef08b31f7b98">cpp_restapi::BaseConnection</a>.</p>
+
+</div>
+</div>
+<a id="ad4c696d81fd7d810d0c1e027045cee3c" name="ad4c696d81fd7d810d0c1e027045cee3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4c696d81fd7d810d0c1e027045cee3c">&#9670;&#160;</a></span>subscribe()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::unique_ptr&lt; <a class="el" href="../../d6/dff/structcpp__restapi_1_1ISseConnection.html">ISseConnection</a> &gt; cpp_restapi::IConnection::subscribe </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>request</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#add5e8cd8587dcf938bb388482ccda961">EventCallback</a></td>          <td class="paramname"><span class="paramname"><em>callback</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Subscribe to an SSE endpoint. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">request</td><td>API endpoint path (e.g. "events" or "api/v1/events") </td></tr>
+    <tr><td class="paramname">callback</td><td>function called for each received SSE event </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SSE connection handle; use its close() method to stop </dd></dl>
+
+<p>Implemented in <a class="el" href="../../de/d13/classcpp__restapi_1_1CppHttplibBackend_1_1Connection.html#a03d08ab6e18d90a9aa43e33d69da8f65">cpp_restapi::CppHttplibBackend::Connection</a>, <a class="el" href="../../d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html#a3ac825ad9a5e0080383e600ff8c01c26">cpp_restapi::CurlBackend::Connection</a>, and <a class="el" href="../../d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html#a289cd4038110a13adabf1e01e5ed9aeb">cpp_restapi::QtBackend::Connection</a>.</p>
 
 </div>
 </div>

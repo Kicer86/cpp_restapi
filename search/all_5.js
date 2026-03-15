@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['iconnection_0',['IConnection',['../de/dd0/structcpp__restapi_1_1IConnection.html',1,'cpp_restapi']]],
-  ['iconnection_2ehpp_1',['iconnection.hpp',['../d9/d6d/iconnection_8hpp.html',1,'']]],
-  ['isprmerged_2',['isPRmerged',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a99cca8918c62936a64d702eaa283c141',1,'cpp_restapi::GitHub::Request']]],
-  ['issues_3',['issues',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#aa80720a39b06b9f89907fe7a94eed78e',1,'cpp_restapi::GitHub::Request']]]
+  ['feed_0',['feed',['../d6/d83/classcpp__restapi_1_1SseParser.html#a81d4189c596d6680b2f7d2047efe87e7',1,'cpp_restapi::SseParser']]],
+  ['fetchpage_1',['fetchPage',['../dd/d4e/classcpp__restapi_1_1BaseConnection.html#aef1b4468c8bf75cc83c71eb33663a921',1,'cpp_restapi::BaseConnection::fetchPage()'],['../de/d13/classcpp__restapi_1_1CppHttplibBackend_1_1Connection.html#af74498ebb3eea9d1b07c0c5028d5e637',1,'cpp_restapi::CppHttplibBackend::Connection::fetchPage()'],['../d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html#a54deb58574f4f86f1d3fb0bf1a62722a',1,'cpp_restapi::CurlBackend::Connection::fetchPage()'],['../d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html#a7194a4187a50274ebfee287d4bc6b50a',1,'cpp_restapi::QtBackend::Connection::fetchPage()']]]
 ];

@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['url_0',['url',['../dd/d4e/classcpp__restapi_1_1BaseConnection.html#a649d1f78bac941a9d7a6901854d9588d',1,'cpp_restapi::BaseConnection::url()'],['../de/dd0/structcpp__restapi_1_1IConnection.html#a926bcc0cb45165be9ec26c89ade97916',1,'cpp_restapi::IConnection::url()']]]
+  ['repocontributors_0',['repoContributors',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a4f9914c6ae931e7750f1927cf3cfd3b8',1,'cpp_restapi::GitHub::Request']]],
+  ['request_1',['Request',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html',1,'cpp_restapi::GitHub::Request'],['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#af2d1c820d49b720f1644fcdab75b7f28',1,'cpp_restapi::GitHub::Request::Request(std::shared_ptr&lt; cpp_restapi::IConnection &gt;)'],['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a3da3f31f5d68320f4fc91dea947e1241',1,'cpp_restapi::GitHub::Request::Request(const Request &amp;)=delete']]],
+  ['request_2ehpp_2',['request.hpp',['../d6/d6f/request_8hpp.html',1,'']]],
+  ['retry_3',['retry',['../d9/d37/structcpp__restapi_1_1SseEvent.html#a636a1bc6de14affd7184b1904057b1f9',1,'cpp_restapi::SseEvent']]]
 ];

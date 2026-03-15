@@ -1,5 +1,10 @@
 var searchData=
 [
-  ['operator_3d_0',['operator=',['../de/d13/classcpp__restapi_1_1CppHttplibBackend_1_1Connection.html#a0dea7f375bcce77ed0ded297fc8ec5c1',1,'cpp_restapi::CppHttplibBackend::Connection::operator=()'],['../d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html#a9853e2dfca1b626bed78a26cdc4f5da8',1,'cpp_restapi::CurlBackend::Connection::operator=()'],['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#ab1b2c354af4768da1fee099502cc1f7e',1,'cpp_restapi::GitHub::Request::operator=()'],['../d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html#af6f4d805421a2152f71205691d95b9be',1,'cpp_restapi::QtBackend::Connection::operator=()']]],
-  ['orgissues_1',['orgIssues',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#ad97829d0e4b81fcb5c6d41b5936bf62a',1,'cpp_restapi::GitHub::Request']]]
+  ['iconnection_0',['IConnection',['../de/dd0/structcpp__restapi_1_1IConnection.html',1,'cpp_restapi']]],
+  ['iconnection_2ehpp_1',['iconnection.hpp',['../d9/d6d/iconnection_8hpp.html',1,'']]],
+  ['id_2',['id',['../d9/d37/structcpp__restapi_1_1SseEvent.html#a17171c9f16ed7196cbbeed3a527647b1',1,'cpp_restapi::SseEvent']]],
+  ['isprmerged_3',['isPRmerged',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a99cca8918c62936a64d702eaa283c141',1,'cpp_restapi::GitHub::Request']]],
+  ['isse_5fconnection_2ehpp_4',['isse_connection.hpp',['../d8/dc4/isse__connection_8hpp.html',1,'']]],
+  ['isseconnection_5',['ISseConnection',['../d6/dff/structcpp__restapi_1_1ISseConnection.html',1,'cpp_restapi']]],
+  ['issues_6',['issues',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#aa80720a39b06b9f89907fe7a94eed78e',1,'cpp_restapi::GitHub::Request']]]
 ];
