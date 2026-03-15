@@ -4,52 +4,12 @@
 #include <optional>
 
 
-namespace cpp_restapi
+namespace
 {
 
-std::vector<SseEvent> SseParser::feed(const std::string& chunk)
+std::optional<cpp_restapi::SseEvent> parseBlock(const std::string& block)
 {
-    // Normalize line endings: CRLF and standalone CR become LF
-    for (std::size_t i = 0; i < chunk.size(); ++i)
-    {
-        if (chunk[i] == '\r')
-        {
-            if (i + 1 < chunk.size() && chunk[i + 1] == '\n')
-                ++i;
-
-            m_buffer.push_back('\n');
-        }
-        else
-        {
-            m_buffer.push_back(chunk[i]);
-        }
-    }
-
-    std::vector<SseEvent> events;
-    const std::string delimiter = "\n\n";
-
-    std::string::size_type pos = 0;
-    while ((pos = m_buffer.find(delimiter)) != std::string::npos)
-    {
-        std::string block = m_buffer.substr(0, pos);
-        m_buffer.erase(0, pos + delimiter.size());
-
-        if (block.empty())
-            continue;
-
-        auto event = parseBlock(block);
-
-        if (event.has_value())
-            events.push_back(std::move(*event));
-    }
-
-    return events;
-}
-
-
-std::optional<SseEvent> SseParser::parseBlock(const std::string& block)
-{
-    SseEvent event;
+    cpp_restapi::SseEvent event;
     std::string dataAccumulator;
     bool hasData = false;
 
@@ -116,6 +76,51 @@ std::optional<SseEvent> SseParser::parseBlock(const std::string& block)
         return std::nullopt;
 
     return event;
+}
+
+} // anonymous namespace
+
+
+namespace cpp_restapi
+{
+
+std::vector<SseEvent> SseParser::feed(const std::string& chunk)
+{
+    // Normalize line endings: CRLF and standalone CR become LF
+    for (std::size_t i = 0; i < chunk.size(); ++i)
+    {
+        if (chunk[i] == '\r')
+        {
+            if (i + 1 < chunk.size() && chunk[i + 1] == '\n')
+                ++i;
+
+            m_buffer.push_back('\n');
+        }
+        else
+        {
+            m_buffer.push_back(chunk[i]);
+        }
+    }
+
+    std::vector<SseEvent> events;
+    const std::string delimiter = "\n\n";
+
+    std::string::size_type pos = 0;
+    while ((pos = m_buffer.find(delimiter)) != std::string::npos)
+    {
+        std::string block = m_buffer.substr(0, pos);
+        m_buffer.erase(0, pos + delimiter.size());
+
+        if (block.empty())
+            continue;
+
+        auto event = parseBlock(block);
+
+        if (event.has_value())
+            events.push_back(std::move(*event));
+    }
+
+    return events;
 }
 
 }
