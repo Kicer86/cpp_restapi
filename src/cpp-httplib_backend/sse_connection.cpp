@@ -33,7 +33,7 @@ void SseConnection::close()
 {
     m_running = false;
 
-    if (m_thread.joinable())
+    if (m_thread.joinable() && std::this_thread::get_id() != m_thread.get_id())
         m_thread.join();
 }
 
