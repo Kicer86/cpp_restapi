@@ -1,8 +1,10 @@
 #ifndef SSE_CONNECTION_CURL_HPP_INCLUDED
 #define SSE_CONNECTION_CURL_HPP_INCLUDED
 
+#include <atomic>
 #include <map>
 #include <string>
+#include <thread>
 
 #include "isse_connection.hpp"
 #include "sse_parser.hpp"
@@ -16,8 +18,8 @@ namespace cpp_restapi::CurlBackend
      *
      * Uses libcurl to establish a streaming HTTP connection
      * to an SSE endpoint and delivers parsed events via callback.
-     * The subscribe() call blocks until the connection is closed
-     * (either by the server or via close()).
+     * The subscribe() call is non-blocking — streaming runs on
+     * an internal thread. Use close() to stop.
      */
     class CPP_RESTAPI_EXPORT SseConnection: public cpp_restapi::ISseConnection
     {
@@ -36,9 +38,10 @@ namespace cpp_restapi::CurlBackend
     private:
         std::string m_address;
         std::map<std::string, std::string> m_headerEntries;
-        SseParser m_parser;
-        EventCallback m_callback;
-        bool m_running = false;
+        std::thread m_thread;
+        std::atomic<bool> m_running{false};
+
+        void run(const std::string& url, EventCallback callback);
     };
 }
 

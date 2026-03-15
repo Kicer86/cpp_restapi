@@ -22,11 +22,26 @@ SseConnection::~SseConnection()
 
 void SseConnection::subscribe(const std::string& request, EventCallback callback)
 {
-    m_callback = std::move(callback);
-    m_parser = SseParser{};
-    m_running = true;
+    close();
 
+    m_running = true;
     const std::string fullUrl = m_address + "/" + request;
+    m_thread = std::thread(&SseConnection::run, this, fullUrl, std::move(callback));
+}
+
+
+void SseConnection::close()
+{
+    m_running = false;
+
+    if (m_thread.joinable())
+        m_thread.join();
+}
+
+
+void SseConnection::run(const std::string& url, EventCallback callback)
+{
+    SseParser parser;
 
     CURL* curl = curl_easy_init();
 
@@ -35,11 +50,11 @@ void SseConnection::subscribe(const std::string& request, EventCallback callback
         struct WriteContext
         {
             SseParser* parser;
-            ISseConnection::EventCallback* callback;
-            bool* running;
+            const ISseConnection::EventCallback* callback;
+            const std::atomic<bool>* running;
         };
 
-        WriteContext ctx{&m_parser, &m_callback, &m_running};
+        WriteContext ctx{&parser, &callback, &m_running};
 
         typedef size_t (*WriteCallback)(char* ptr, size_t size, size_t nmemb, void* userdata);
         WriteCallback write_callback = [](char* ptr, size_t size, size_t nmemb, void* userdata) -> size_t
@@ -47,7 +62,7 @@ void SseConnection::subscribe(const std::string& request, EventCallback callback
             auto* ctx = static_cast<WriteContext*>(userdata);
 
             if (!*ctx->running)
-                return 0;  // returning 0 aborts the transfer
+                return 0;
 
             const std::string chunk(ptr, size * nmemb);
             const auto events = ctx->parser->feed(chunk);
@@ -68,7 +83,7 @@ void SseConnection::subscribe(const std::string& request, EventCallback callback
 
         list = curl_slist_append(list, "Accept: text/event-stream");
 
-        curl_easy_setopt(curl, CURLOPT_URL, fullUrl.c_str());
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &ctx);
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, list);
@@ -79,15 +94,6 @@ void SseConnection::subscribe(const std::string& request, EventCallback callback
         curl_slist_free_all(list);
         curl_easy_cleanup(curl);
     }
-
-    m_running = false;
-}
-
-
-void SseConnection::close()
-{
-    m_running = false;
-    m_callback = nullptr;
 }
 
 }
