@@ -6,11 +6,11 @@
 #include <memory>
 #include <string>
 
+#include "isse_connection.hpp"
 #include "sse_event.hpp"
 
 namespace cpp_restapi
 {
-    struct ISseConnection;
 
     /**
      * @brief Interface representing connection with rest api server

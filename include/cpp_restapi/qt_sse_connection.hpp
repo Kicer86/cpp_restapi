@@ -24,8 +24,6 @@ namespace cpp_restapi::QtBackend
      */
     class CPP_RESTAPI_EXPORT SseConnection: public QObject, public cpp_restapi::ISseConnection
     {
-        Q_OBJECT
-
     public:
         SseConnection(QNetworkAccessManager& manager,
                       const std::string& address,
