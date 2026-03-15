@@ -105,7 +105,7 @@ std::optional<SseEvent> SseParser::parseBlock(const std::string& block)
         {
             int parsed = 0;
             const auto [ptr, ec] = std::from_chars(value.data(), value.data() + value.size(), parsed);
-            if (ec == std::errc{} && ptr == value.data() + value.size())
+            if (ec == std::errc{} && ptr == value.data() + value.size() && parsed >= 0)
                 event.retry = parsed;
         }
     }

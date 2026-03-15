@@ -226,3 +226,16 @@ TEST(SseParserTest, dataFieldWithEmptyValueIsDispatched)
     ASSERT_THAT(events, SizeIs(1));
     EXPECT_EQ(events[0].data, "");
 }
+
+
+TEST(SseParserTest, negativeRetryIsIgnored)
+{
+    SseParser parser;
+    const auto events = parser.feed(
+        "retry: -5\n"
+        "data: test\n\n"
+    );
+
+    ASSERT_THAT(events, SizeIs(1));
+    EXPECT_EQ(events[0].retry, -1);
+}
