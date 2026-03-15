@@ -12,6 +12,7 @@
 #include <curl/curl.h>
 
 #include <cpp_restapi/curl_connection.hpp>
+#include <cpp_restapi/curl_sse_connection.hpp>
 
 
 namespace cpp_restapi::CurlBackend
@@ -93,5 +94,13 @@ namespace cpp_restapi::CurlBackend
 
         curl_global_cleanup();
         return std::make_pair(result, header_links);
+    }
+
+
+    std::unique_ptr<ISseConnection> Connection::subscribe(const std::string& request, EventCallback callback)
+    {
+        auto sse = std::make_unique<SseConnection>(address(), getHeaderEntries());
+        sse->subscribe(request, std::move(callback));
+        return sse;
     }
 }
