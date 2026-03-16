@@ -5,12 +5,23 @@
 #include <functional>
 #include <memory>
 #include <string>
+#include <vector>
 
+#include "ipagination_strategy.hpp"
 #include "isse_connection.hpp"
 #include "sse_event.hpp"
 
 namespace cpp_restapi
 {
+
+    /**
+     * @brief HTTP response containing body and raw headers
+     */
+    struct Response
+    {
+        std::string body;
+        std::string headers;
+    };
 
     /**
      * @brief Interface representing connection with rest api server
@@ -26,8 +37,33 @@ namespace cpp_restapi
              * @brief perform a request to api
              * @param request api request. For example "users/SomeUserName/repos"
              * @return api response in json format
+             * @deprecated Use fetch() for single requests or fetch() with IPaginationStrategy for paginated requests.
+             *             This method has hardcoded GitHub-specific pagination logic.
              */
+            [[deprecated("Use fetch() or fetch() with IPaginationStrategy instead")]]
             virtual std::string get(const std::string& request) = 0;
+
+            /**
+             * @brief Perform a single HTTP request
+             * @param request relative API path (e.g. "api/v1/disks")
+             * @return response body
+             */
+            virtual std::string fetch(const std::string& request) = 0;
+
+            /**
+             * @brief Perform requests with automatic pagination
+             * @param request relative API path
+             * @param strategy pagination strategy defining how to discover next page and merge results
+             * @return merged response body from all pages
+             */
+            virtual std::string fetch(const std::string& request, IPaginationStrategy& strategy) = 0;
+
+            /**
+             * @brief Perform a single HTTP request returning full response
+             * @param url full URL to fetch
+             * @return response with body and raw headers
+             */
+            virtual Response fetchResponse(const std::string& url) = 0;
 
             /**
              * @brief return API url

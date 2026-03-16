@@ -19,6 +19,9 @@ namespace cpp_restapi
         explicit BaseConnection(const std::string& address, const std::map<std::string, std::string>& headerEntries);
 
         std::string get(const std::string &) final;
+        std::string fetch(const std::string& request) final;
+        std::string fetch(const std::string& request, IPaginationStrategy& strategy) final;
+        Response fetchResponse(const std::string& url) final;
         const std::string& url() const final;
         virtual std::pair<std::string, std::string> fetchPage(const std::string& request) = 0;
 
