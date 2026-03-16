@@ -73,6 +73,14 @@ const std::string& BaseConnection::url() const
     return m_address;
 }
 
+
+Response BaseConnection::fetchResponse(const std::string& requestUrl)
+{
+    auto [body, headers] = fetchPage(requestUrl);
+    return {std::move(body), std::move(headers)};
+}
+
+
 const std::map<std::string, std::string>& BaseConnection::getHeaderEntries() const
 {
     return m_headerEntries;
