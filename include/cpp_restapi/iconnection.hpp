@@ -48,10 +48,7 @@ namespace cpp_restapi
              * @param request relative API path (e.g. "api/v1/disks")
              * @return response body
              */
-            std::string fetch(const std::string& request)
-            {
-                return fetchResponse(url() + "/" + request).body;
-            }
+            virtual std::string fetch(const std::string& request) = 0;
 
             /**
              * @brief Perform requests with automatic pagination
@@ -59,21 +56,7 @@ namespace cpp_restapi
              * @param strategy pagination strategy defining how to discover next page and merge results
              * @return merged response body from all pages
              */
-            std::string fetch(const std::string& request, IPaginationStrategy& strategy)
-            {
-                std::string nextUrl = url() + "/" + request;
-                std::vector<std::string> pages;
-
-                do
-                {
-                    auto resp = fetchResponse(nextUrl);
-                    pages.push_back(std::move(resp.body));
-                    nextUrl = strategy.nextPageUrl(resp.headers);
-                }
-                while (!nextUrl.empty());
-
-                return strategy.merge(pages);
-            }
+            virtual std::string fetch(const std::string& request, IPaginationStrategy& strategy) = 0;
 
             /**
              * @brief Perform a single HTTP request returning full response

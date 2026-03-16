@@ -1,29 +1,7 @@
 
-#include <json/value.h>
-#include <json/reader.h>
-#include <json/writer.h>
-
 #include <cpp_restapi/base_connection.hpp>
-#include "header_utils.hpp"
+#include <cpp_restapi/link_header_pagination_strategy.hpp>
 
-
-namespace
-{
-    void update(Json::Value& a, const Json::Value& b)
-    {
-        if (a.isArray() && b.isArray())
-            for (const auto& entry : b)
-                a.append(entry);
-        else if (a.isObject() && b.isObject())
-        {
-            for (const auto& key : b.getMemberNames())
-                if (a[key].isObject())
-                    update(a[key], b[key]);
-                else
-                    a[key] = b[key];
-        }
-    }
-}
 
 namespace cpp_restapi
 {
@@ -38,33 +16,31 @@ BaseConnection::BaseConnection(const std::string& address, const std::map<std::s
 
 std::string BaseConnection::get(const std::string& request)
 {
-    std::string nextPage = m_address + "/" + request;
+    LinkHeaderPaginationStrategy strategy;
+    return fetch(request, strategy);
+}
 
-    Json::Value output;
+
+std::string BaseConnection::fetch(const std::string& request)
+{
+    return fetchResponse(m_address + "/" + request).body;
+}
+
+
+std::string BaseConnection::fetch(const std::string& request, IPaginationStrategy& strategy)
+{
+    std::string nextUrl = m_address + "/" + request;
+    std::vector<std::string> pages;
 
     do
     {
-        Json::Reader reader;
-
-        const std::pair<std::string, std::string> response = fetchPage(nextPage);
-        const std::string& header_links = response.second;
-
-        Json::Value partialOutput;
-        reader.parse(response.first, partialOutput);
-
-        if (output.isNull())
-            output.swap(partialOutput);
-        else
-            update(output, partialOutput);
-
-        nextPage = HeaderUtils::getNextPageUrl(header_links);
+        auto resp = fetchResponse(nextUrl);
+        pages.push_back(std::move(resp.body));
+        nextUrl = strategy.nextPageUrl(resp.headers);
     }
-    while (nextPage.empty() == false);
+    while (!nextUrl.empty());
 
-    Json::FastWriter fastWriter;
-    const std::string strOutput = fastWriter.write(output);
-
-    return strOutput;
+    return strategy.merge(pages);
 }
 
 
