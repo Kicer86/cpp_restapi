@@ -1,0 +1,87 @@
+name: Static-Analysis
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  clang-tidy:
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        submodules: false
+
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update &&  \
+        sudo apt-get install    \
+          ninja-build           \
+          clang-tidy            \
+          libgmock-dev          \
+          qt6-base-dev          \
+          libcurl4-openssl-dev  \
+          libcpp-httplib-dev    \
+          libjsoncpp-dev
+
+    - name: Configure
+      run: |
+        cmake -B build -G Ninja \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_CXX_CLANG_TIDY=clang-tidy \
+          -DCppRestAPI_Tests=ON \
+          -DCppRestAPI_UseQt6=ON \
+          -DCppRestAPI_Examples=ON
+
+    - name: Build with clang-tidy
+      run: cmake --build build 2>&1 | tee clang-tidy-output.txt
+
+    - name: Check for clang-tidy warnings
+      run: |
+        if grep -q "warning:" clang-tidy-output.txt; then
+          echo "::warning::clang-tidy found issues"
+          grep "warning:" clang-tidy-output.txt
+        fi
+
+  cppcheck:
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        submodules: false
+
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update &&  \
+        sudo apt-get install    \
+          ninja-build           \
+          cppcheck              \
+          libgmock-dev          \
+          qt6-base-dev          \
+          libcurl4-openssl-dev  \
+          libcpp-httplib-dev    \
+          libjsoncpp-dev
+
+    - name: Configure (generate compile_commands.json)
+      run: |
+        cmake -B build -G Ninja \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+          -DCppRestAPI_Tests=ON \
+          -DCppRestAPI_UseQt6=ON \
+          -DCppRestAPI_Examples=ON
+
+    - name: Run cppcheck
+      run: |
+        cppcheck \
+          --project=build/compile_commands.json \
+          --enable=warning,performance,portability \
+          --suppress=missingIncludeSystem \
+          --error-exitcode=1 \
+          --inline-suppr \
+          -i build/ \
+          2>&1 | tee cppcheck-output.txt
