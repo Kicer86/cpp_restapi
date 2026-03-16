@@ -6,7 +6,6 @@
 #include <string>
 
 #include <cpp_restapi/iconnection.hpp>
-#include <cpp_restapi/link_header_pagination_strategy.hpp>
 #include "cpp_restapi_export.h"
 
 

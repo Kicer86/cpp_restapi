@@ -1,5 +1,6 @@
 
 #include <cpp_restapi/github/request.hpp>
+#include <cpp_restapi/link_header_pagination_strategy.hpp>
 
 
 // Based on:
