@@ -2,7 +2,7 @@
 #include <json/reader.h>
 #include <json/writer.h>
 
-#include <cpp_restapi/github/link_header_pagination_strategy.hpp>
+#include <cpp_restapi/link_header_pagination_strategy.hpp>
 #include "header_utils.hpp"
 
 
@@ -24,7 +24,7 @@ namespace
     }
 }
 
-namespace cpp_restapi::GitHub
+namespace cpp_restapi
 {
 
 std::string LinkHeaderPaginationStrategy::nextPageUrl(const std::string& responseHeaders)

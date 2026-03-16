@@ -4,7 +4,7 @@
 #include <cpp_restapi/ipagination_strategy.hpp>
 #include "cpp_restapi_export.h"
 
-namespace cpp_restapi::GitHub
+namespace cpp_restapi
 {
 
     /**
@@ -12,6 +12,7 @@ namespace cpp_restapi::GitHub
      *
      * Discovers the next page via the Link: <url>; rel="next" header
      * and merges JSON responses by concatenating arrays or deep-merging objects.
+     * Used by GitHub API and other services that paginate with Link headers.
      */
     class CPP_RESTAPI_EXPORT LinkHeaderPaginationStrategy: public IPaginationStrategy
     {
