@@ -6,6 +6,7 @@
 #include <string>
 
 #include <cpp_restapi/iconnection.hpp>
+#include <cpp_restapi/github/link_header_pagination_strategy.hpp>
 #include "cpp_restapi_export.h"
 
 
@@ -506,6 +507,7 @@ namespace cpp_restapi::GitHub
 
         private:
             std::shared_ptr<cpp_restapi::IConnection> m_connection;
+            LinkHeaderPaginationStrategy m_paginationStrategy;
 
             std::string doRequest(const std::string &);
     };
