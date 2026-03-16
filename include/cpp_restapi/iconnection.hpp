@@ -37,7 +37,10 @@ namespace cpp_restapi
              * @brief perform a request to api
              * @param request api request. For example "users/SomeUserName/repos"
              * @return api response in json format
+             * @deprecated Use fetch() for single requests or fetch() with IPaginationStrategy for paginated requests.
+             *             This method has hardcoded GitHub-specific pagination logic.
              */
+            [[deprecated("Use fetch() or fetch() with IPaginationStrategy instead")]]
             virtual std::string get(const std::string& request) = 0;
 
             /**
