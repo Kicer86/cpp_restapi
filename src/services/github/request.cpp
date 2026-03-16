@@ -302,6 +302,7 @@ namespace cpp_restapi::GitHub
 
     std::string Request::doRequest(const std::string& request)
     {
-        return m_connection->fetch(request, m_paginationStrategy);
+        cpp_restapi::LinkHeaderPaginationStrategy pagination;
+        return m_connection->fetch(request, pagination);
     }
 }

@@ -507,7 +507,6 @@ namespace cpp_restapi::GitHub
 
         private:
             std::shared_ptr<cpp_restapi::IConnection> m_connection;
-            cpp_restapi::LinkHeaderPaginationStrategy m_paginationStrategy;
 
             std::string doRequest(const std::string &);
     };
