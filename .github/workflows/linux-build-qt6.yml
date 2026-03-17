@@ -28,14 +28,11 @@ jobs:
         sudo apt-get update &&  \
         sudo apt-get install    \
           ninja-build           \
+          libgmock-dev          \
           qt6-base-dev          \
           libcurl4-openssl-dev  \
           libcpp-httplib-dev    \
           libjsoncpp-dev
-
-    - name: Install pre-built GoogleTest (GCC only)
-      if: matrix.compiler.cc == 'gcc'
-      run: sudo apt-get install libgmock-dev
 
     - name: Build (${{ matrix.compiler.cc }})
       uses: ashutoshvarma/action-cmake-build@master
@@ -45,4 +42,6 @@ jobs:
         cc: ${{ matrix.compiler.cc }}
         cxx: ${{ matrix.compiler.cxx }}
         configure-options: -DCppRestAPI_Tests=ON -DCppRestAPI_UseQt6=ON -DCppRestAPI_Examples=ON
-        run-test: true
+
+    - name: Run tests
+      run: ctest --test-dir ${{ runner.workspace }}/build --output-on-failure
