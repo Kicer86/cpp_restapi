@@ -8,7 +8,7 @@ on:
 
 jobs:
   asan:
-    name: ASan (${{ matrix.compiler.cc }})
+    name: ASan (${{ matrix.compiler.cc }}, ${{ matrix.build_type }})
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
@@ -16,6 +16,7 @@ jobs:
         compiler:
           - { cc: gcc, cxx: g++ }
           - { cc: clang, cxx: clang++ }
+        build_type: [Debug, Release]
 
     steps:
     - uses: actions/checkout@v6
@@ -36,7 +37,7 @@ jobs:
     - name: Configure
       run: |
         cmake -B build -G Ninja \
-          -DCMAKE_BUILD_TYPE=Debug \
+          -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
           -DCMAKE_C_COMPILER=${{ matrix.compiler.cc }} \
           -DCMAKE_CXX_COMPILER=${{ matrix.compiler.cxx }} \
           -DCMAKE_CXX_FLAGS="-fsanitize=address -fno-omit-frame-pointer" \
