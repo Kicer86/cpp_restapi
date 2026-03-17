@@ -53,4 +53,4 @@ jobs:
 
     - name: Run tests under Valgrind (on failure)
       if: failure()
-      run: valgrind --track-origins=yes --show-reachable=yes --num-callers=20 build/api_tests --gtest_filter="ConnectionTest/0.*" 2>&1
+      run: valgrind --track-origins=yes --show-reachable=yes --num-callers=20 build/tests/api_tests --gtest_filter="ConnectionTest/0.*" 2>&1
