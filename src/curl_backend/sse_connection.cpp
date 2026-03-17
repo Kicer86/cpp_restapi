@@ -102,8 +102,8 @@ void SseConnection::run(const std::string& url, EventCallback callback)
 
         curl_easy_perform(curl);
 
-        curl_slist_free_all(list);
         curl_easy_cleanup(curl);
+        curl_slist_free_all(list);
     }
 }
 
