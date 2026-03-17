@@ -22,9 +22,7 @@ class GithubServerMock
 
     ~GithubServerMock()
     {
-      httplib::Client cli("localhost", m_port);
       m_svr.stop();
-
       m_svrThread.join();
     }
 
