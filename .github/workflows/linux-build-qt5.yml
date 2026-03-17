@@ -28,11 +28,14 @@ jobs:
         sudo apt-get update &&  \
         sudo apt-get install    \
           ninja-build           \
-          libgmock-dev          \
           qtbase5-dev           \
           libcurl4-openssl-dev  \
           libcpp-httplib-dev    \
           libjsoncpp-dev
+
+    - name: Install pre-built GoogleTest (GCC only)
+      if: matrix.compiler.cc == 'gcc'
+      run: sudo apt-get install libgmock-dev
 
     - name: Build (${{ matrix.compiler.cc }})
       uses: ashutoshvarma/action-cmake-build@master
