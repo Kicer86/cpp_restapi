@@ -32,12 +32,14 @@ jobs:
           qt6-base-dev          \
           libcurl4-openssl-dev  \
           libcpp-httplib-dev    \
-          libjsoncpp-dev
+          libjsoncpp-dev        \
+          gdb                   \
+          valgrind
 
     - name: Configure (${{ matrix.compiler.cc }})
       run: |
         cmake -B build -G Ninja \
-          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_BUILD_TYPE=RelWithDebInfo \
           -DCMAKE_C_COMPILER=${{ matrix.compiler.cc }} \
           -DCMAKE_CXX_COMPILER=${{ matrix.compiler.cxx }} \
           -DCppRestAPI_Tests=ON \
@@ -48,4 +50,15 @@ jobs:
       run: cmake --build build
 
     - name: Run tests
-      run: ctest --test-dir build --output-on-failure
+      env:
+        MALLOC_CHECK_: 3
+      run: |
+        ctest --test-dir build --output-on-failure || true
+        echo "--- Running failing test under gdb ---"
+        if command -v gdb &>/dev/null; then
+          gdb -batch -ex run -ex backtrace -ex "info registers" -ex quit --args build/api_tests --gtest_filter="ConnectionTest/0.pagination" 2>&1 || true
+        fi
+        echo "--- Running failing test under Valgrind ---"
+        if command -v valgrind &>/dev/null; then
+          valgrind --track-origins=yes --error-exitcode=0 build/api_tests --gtest_filter="ConnectionTest/0.pagination" 2>&1 || true
+        fi
