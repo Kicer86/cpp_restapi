@@ -26,20 +26,20 @@ namespace
     template<>
     auto buildConnection<CurlBackend::Connection>()
     {
-        return std::make_unique<CurlBackend::Connection>(std::string("http://localhost:") + std::to_string(port), std::map<std::string, std::string>{});
+        return std::make_unique<CurlBackend::Connection>(std::string("http://127.0.0.1:") + std::to_string(port), std::map<std::string, std::string>{});
     }
 
     template<>
     auto buildConnection<QtBackend::Connection>()
     {
         static QNetworkAccessManager networkmanager;
-        return std::make_unique<QtBackend::Connection>(networkmanager, std::string("http://localhost:") + std::to_string(port), std::map<std::string, std::string>{});
+        return std::make_unique<QtBackend::Connection>(networkmanager, std::string("http://127.0.0.1:") + std::to_string(port), std::map<std::string, std::string>{});
     }
 
     template<>
     auto buildConnection<CppHttplibBackend::Connection>()
     {
-        return std::make_unique<CppHttplibBackend::Connection>(std::string("http://localhost:") + std::to_string(port), std::map<std::string, std::string>{});
+        return std::make_unique<CppHttplibBackend::Connection>(std::string("http://127.0.0.1:") + std::to_string(port), std::map<std::string, std::string>{});
     }
 }
 

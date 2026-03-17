@@ -39,7 +39,7 @@ class GithubServerMock
 
       m_svrThread = std::thread([this]()
       {
-        m_svr.listen("localhost", m_port);
+        m_svr.listen("127.0.0.1", m_port);
       });
 
       // wait for server to be ready
