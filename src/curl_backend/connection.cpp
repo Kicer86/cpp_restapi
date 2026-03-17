@@ -92,7 +92,6 @@ namespace cpp_restapi::CurlBackend
             curl_easy_cleanup(curl);
         }
 
-        curl_global_cleanup();
         return std::make_pair(result, header_links);
     }
 
