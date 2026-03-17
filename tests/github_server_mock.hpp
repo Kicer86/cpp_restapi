@@ -14,7 +14,10 @@ class GithubServerMock
     explicit GithubServerMock(int port = 9200)
       : m_port(port)
     {
-
+      m_svr.set_socket_options([](socket_t sock) {
+        int yes = 1;
+        setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, reinterpret_cast<const char *>(&yes), sizeof(yes));
+      });
     }
 
     ~GithubServerMock()
