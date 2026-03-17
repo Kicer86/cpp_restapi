@@ -1,0 +1,86 @@
+name: Sanitizers
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  asan:
+    name: AddressSanitizer
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        submodules: false
+
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update &&  \
+        sudo apt-get install    \
+          ninja-build           \
+          libgmock-dev          \
+          qt6-base-dev          \
+          libcurl4-openssl-dev  \
+          libcpp-httplib-dev    \
+          libjsoncpp-dev
+
+    - name: Configure
+      run: |
+        cmake -B build -G Ninja \
+          -DCMAKE_BUILD_TYPE=Debug \
+          -DCMAKE_CXX_FLAGS="-fsanitize=address -fno-omit-frame-pointer" \
+          -DCMAKE_C_FLAGS="-fsanitize=address -fno-omit-frame-pointer" \
+          -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address" \
+          -DCppRestAPI_Tests=ON \
+          -DCppRestAPI_UseQt6=ON \
+          -DCppRestAPI_Examples=OFF
+
+    - name: Build
+      run: cmake --build build
+
+    - name: Run tests under ASan
+      env:
+        ASAN_OPTIONS: detect_leaks=1:halt_on_error=1:print_stats=1
+      run: ctest --test-dir build --output-on-failure
+
+  ubsan:
+    name: UndefinedBehaviorSanitizer
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        submodules: false
+
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update &&  \
+        sudo apt-get install    \
+          ninja-build           \
+          libgmock-dev          \
+          qt6-base-dev          \
+          libcurl4-openssl-dev  \
+          libcpp-httplib-dev    \
+          libjsoncpp-dev
+
+    - name: Configure
+      run: |
+        cmake -B build -G Ninja \
+          -DCMAKE_BUILD_TYPE=Debug \
+          -DCMAKE_CXX_FLAGS="-fsanitize=undefined -fno-omit-frame-pointer" \
+          -DCMAKE_C_FLAGS="-fsanitize=undefined -fno-omit-frame-pointer" \
+          -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=undefined" \
+          -DCppRestAPI_Tests=ON \
+          -DCppRestAPI_UseQt6=ON \
+          -DCppRestAPI_Examples=OFF
+
+    - name: Build
+      run: cmake --build build
+
+    - name: Run tests under UBSan
+      env:
+        UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
+      run: ctest --test-dir build --output-on-failure
