@@ -37,7 +37,7 @@ jobs:
     - name: Configure (${{ matrix.compiler.cc }})
       run: |
         cmake -B build -G Ninja \
-          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_BUILD_TYPE=RelWithDebInfo \
           -DCMAKE_C_COMPILER=${{ matrix.compiler.cc }} \
           -DCMAKE_CXX_COMPILER=${{ matrix.compiler.cxx }} \
           -DCppRestAPI_Tests=ON \
