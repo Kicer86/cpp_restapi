@@ -36,12 +36,14 @@ std::string LinkHeaderPaginationStrategy::nextPageUrl(const std::string& respons
 std::string LinkHeaderPaginationStrategy::merge(const std::vector<std::string>& pages)
 {
     Json::Value output;
-    Json::Reader reader;
+    Json::CharReaderBuilder readerBuilder;
+    const std::unique_ptr<Json::CharReader> reader(readerBuilder.newCharReader());
 
     for (const auto& page : pages)
     {
         Json::Value parsed;
-        reader.parse(page, parsed);
+        std::string errs;
+        reader->parse(page.data(), page.data() + page.size(), &parsed, &errs);
 
         if (output.isNull())
             output.swap(parsed);
@@ -49,8 +51,9 @@ std::string LinkHeaderPaginationStrategy::merge(const std::vector<std::string>& 
             update(output, parsed);
     }
 
-    Json::FastWriter fastWriter;
-    return fastWriter.write(output);
+    Json::StreamWriterBuilder writerBuilder;
+    writerBuilder["indentation"] = "";
+    return Json::writeString(writerBuilder, output) + "\n";
 }
 
 }
