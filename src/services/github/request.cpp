@@ -1,4 +1,6 @@
 
+#include <expected>
+
 #include <cpp_restapi/github/request.hpp>
 #include <cpp_restapi/link_header_pagination_strategy.hpp>
 
@@ -57,8 +59,7 @@ namespace cpp_restapi::GitHub
 
     std::string Request::getAuthenticatedUser()
     {
-        const std::string request = std::string("user");
-        return doRequest(request);
+        return doRequest("user");
     }
 
     std::string Request::getAuntenticatedUser()
@@ -309,6 +310,6 @@ namespace cpp_restapi::GitHub
     std::string Request::doRequest(const std::string& request)
     {
         cpp_restapi::LinkHeaderPaginationStrategy pagination;
-        return m_connection->fetch(request, pagination);
+        return m_connection->fetch(request, pagination).value_or(std::string{});
     }
 }
