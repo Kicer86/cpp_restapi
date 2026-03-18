@@ -1,7 +1,7 @@
 
 #include <gmock/gmock.h>
 
-#include <cpp_restapi/base_connection.hpp>
+#include <cpp_restapi/threaded_connection.hpp>
 #include <cpp_restapi/link_header_pagination_strategy.hpp>
 
 using namespace cpp_restapi;
@@ -9,10 +9,10 @@ using namespace cpp_restapi;
 
 namespace
 {
-    class StubConnection: public BaseConnection
+    class StubConnection: public ThreadedConnection
     {
     public:
-        using BaseConnection::BaseConnection;
+        using ThreadedConnection::ThreadedConnection;
 
         struct PageResponse
         {
