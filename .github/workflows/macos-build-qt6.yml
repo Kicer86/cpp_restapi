@@ -15,23 +15,15 @@ jobs:
       with:
         submodules: false
 
-    - name: Install system dependencies
-      run: |
-        brew install           \
-          ninja                \
-          googletest           \
-          qt@6                 \
-          curl                 \
-          cpp-httplib          \
-          jsoncpp
-
-    - name: Set Qt6 prefix path
-      run: echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@6)" >> "$GITHUB_ENV"
+    - uses: ./.github/actions/setup-macos
+      id: setup
+      with:
+        qt-version: '6'
 
     - name: Build
       uses: ashutoshvarma/action-cmake-build@master
       with:
         build-dir: ${{ runner.workspace }}/build
         build-type: Release
-        configure-options: -DCppRestAPI_Tests=ON -DCppRestAPI_UseQt6=ON -DCppRestAPI_Examples=ON -DCMAKE_PREFIX_PATH=${{ env.CMAKE_PREFIX_PATH }}
+        configure-options: -DCppRestAPI_Tests=ON -DCppRestAPI_UseQt6=ON -DCppRestAPI_Examples=ON -DCMAKE_PREFIX_PATH=${{ steps.setup.outputs.cmake-prefix-path }}
         run-test: true
