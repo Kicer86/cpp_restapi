@@ -31,8 +31,13 @@ jobs:
           libgmock-dev          \
           qt6-base-dev          \
           libcurl4-openssl-dev  \
-          libcpp-httplib-dev    \
           libjsoncpp-dev
+
+    - name: Install cpp-httplib from source
+      run: |
+        git clone --depth 1 https://github.com/yhirose/cpp-httplib.git /tmp/cpp-httplib
+        cmake -B /tmp/cpp-httplib/build -S /tmp/cpp-httplib
+        sudo cmake --install /tmp/cpp-httplib/build
 
     - name: Configure
       run: |
@@ -78,8 +83,13 @@ jobs:
           libgmock-dev          \
           qt6-base-dev          \
           libcurl4-openssl-dev  \
-          libcpp-httplib-dev    \
           libjsoncpp-dev
+
+    - name: Install cpp-httplib from source
+      run: |
+        git clone --depth 1 https://github.com/yhirose/cpp-httplib.git /tmp/cpp-httplib
+        cmake -B /tmp/cpp-httplib/build -S /tmp/cpp-httplib
+        sudo cmake --install /tmp/cpp-httplib/build
 
     - name: Configure
       run: |
