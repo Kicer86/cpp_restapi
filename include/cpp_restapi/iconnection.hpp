@@ -32,7 +32,9 @@ namespace cpp_restapi
     struct IConnection
     {
         public:
-            using EventCallback = std::function<void(const SseEvent&)>;
+            using EventCallback   = std::function<void(const SseEvent&)>;
+            using FetchCallback   = std::function<void(Response)>;
+            using ErrorCallback   = std::function<void(std::string)>;
 
             virtual ~IConnection() = default;
 
@@ -84,6 +86,23 @@ namespace cpp_restapi
              * @return SSE connection handle; use its close() method to stop
              */
             virtual std::unique_ptr<ISseConnection> subscribe(const std::string& request, EventCallback callback) = 0;
+
+            /**
+             * @brief Perform an HTTP GET request asynchronously
+             *
+             * Non-blocking. @p onSuccess is called with the full response when the
+             * request completes successfully; @p onError is called with an error
+             * message if the request fails. The callbacks may be invoked from a
+             * background thread (non-Qt backends) or from the Qt event-loop thread
+             * (Qt backend) — callers must handle thread-safety accordingly.
+             *
+             * @param url  Full URL to fetch (e.g. "http://host:port/api/v1/info")
+             * @param onSuccess called with Response{body, headers} on success
+             * @param onError   called with an error string on failure (optional)
+             */
+            virtual void fetch(const std::string& url,
+                               FetchCallback onSuccess,
+                               ErrorCallback onError = {}) = 0;
     };
 }
 
