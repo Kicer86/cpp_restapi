@@ -47,11 +47,13 @@ jobs:
           cp -r docs/html "gh-pages/${TAG}"
           rm -rf docs/html
           git checkout HEAD -- .
+          git clean -fd --exclude=gh-pages
         done
 
     - name: Generate docs for master
       run: |
         git checkout master -- .
+        git clean -fd --exclude=gh-pages
         sed -i "s/^PROJECT_NUMBER.*/PROJECT_NUMBER = master/" Doxyfile
         doxygen Doxyfile
         rm -rf gh-pages/master
