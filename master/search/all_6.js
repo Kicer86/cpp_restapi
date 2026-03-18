@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['get_0',['get',['../de/dd0/structcpp__restapi_1_1IConnection.html#ab3ee829a93ec8753eb56a95adb5b8229',1,'cpp_restapi::IConnection::get()'],['../dd/d4e/classcpp__restapi_1_1BaseConnection.html#a0450232692026b9fe147ef08b31f7b98',1,'cpp_restapi::BaseConnection::get()']]],
+  ['get_0',['get',['../dd/d4e/classcpp__restapi_1_1BaseConnection.html#a0450232692026b9fe147ef08b31f7b98',1,'cpp_restapi::BaseConnection::get()'],['../de/dd0/structcpp__restapi_1_1IConnection.html#ab3ee829a93ec8753eb56a95adb5b8229',1,'cpp_restapi::IConnection::get()']]],
   ['getauntenticateduser_1',['getAuntenticatedUser',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#afd16bf90636956f67d533d237ed238df',1,'cpp_restapi::GitHub::Request']]],
   ['getauthenticateduser_2',['getAuthenticatedUser',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#ab296ccbe30f1b7189faf082a53c37c3c',1,'cpp_restapi::GitHub::Request']]],
   ['getcommitcount_3',['getCommitCount',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#ac30a57177a77c6ecf1985284c187ef50',1,'cpp_restapi::GitHub::Request']]],
@@ -25,5 +25,6 @@ var searchData=
   ['gettopreferralsource_22',['getTopreferralSource',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a5eef046fef22f3ba91a8a436aba594bd',1,'cpp_restapi::GitHub::Request']]],
   ['getuser_23',['getUser',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a272ace06567573afc49769351655be7e',1,'cpp_restapi::GitHub::Request']]],
   ['getuserinfo_24',['getUserInfo',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a64adfa6d26f2f1bd796b51e4db00e2c4',1,'cpp_restapi::GitHub::Request']]],
-  ['getweeklycommit_25',['getWeeklyCommit',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a4b7ae0fda44bd010137800e5edf40dac',1,'cpp_restapi::GitHub::Request']]]
+  ['getweeklycommit_25',['getWeeklyCommit',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a4b7ae0fda44bd010137800e5edf40dac',1,'cpp_restapi::GitHub::Request']]],
+  ['github_20helpers_26',['Dedicated GitHub helpers',['../index.html#autotoc_md7',1,'']]]
 ];
