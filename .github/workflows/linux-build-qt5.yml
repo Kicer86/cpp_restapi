@@ -39,19 +39,11 @@ jobs:
         cmake -B /tmp/cpp-httplib/build -S /tmp/cpp-httplib -DHTTPLIB_USE_ZSTD_IF_AVAILABLE=OFF
         sudo cmake --install /tmp/cpp-httplib/build
 
-    - name: Configure (${{ matrix.compiler.cc }})
-      run: |
-        cmake -B build -G Ninja \
-          -DCMAKE_BUILD_TYPE=Release \
-          -DCMAKE_C_COMPILER=${{ matrix.compiler.cc }} \
-          -DCMAKE_CXX_COMPILER=${{ matrix.compiler.cxx }} \
-          -DCppRestAPI_Tests=ON \
-          -DCppRestAPI_UseQt6=OFF \
-          -DCppRestAPI_Examples=ON
-
     - name: Build
-      run: cmake --build build
-
-    - name: Run tests
-      run: ctest --test-dir build --output-on-failure
+      uses: ashutoshvarma/action-cmake-build@master
+      with:
+        build-dir: ${{ runner.workspace }}/build
+        build-type: Release
+        configure-options: -DCppRestAPI_Tests=ON -DCppRestAPI_UseQt6=OFF -DCppRestAPI_Examples=ON -DCMAKE_C_COMPILER=${{ matrix.compiler.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.compiler.cxx }}
+        run-test: true
 
