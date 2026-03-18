@@ -55,10 +55,15 @@ namespace cpp_restapi::GitHub
     }
 
 
-    std::string Request::getAuntenticatedUser()
+    std::string Request::getAuthenticatedUser()
     {
         const std::string request = std::string("user");
         return doRequest(request);
+    }
+
+    std::string Request::getAuntenticatedUser()
+    {
+        return getAuthenticatedUser();
     }
 
     std::string Request::listUsers()
