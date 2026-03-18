@@ -34,8 +34,9 @@ jobs:
     - name: Check for clang-tidy warnings
       run: |
         if grep -q "warning:" clang-tidy-output.txt; then
-          echo "::warning::clang-tidy found issues"
+          echo "::error::clang-tidy found issues"
           grep "warning:" clang-tidy-output.txt
+          exit 1
         fi
 
   cppcheck:
@@ -63,7 +64,7 @@ jobs:
       run: |
         cppcheck \
           --project=build/compile_commands.json \
-          --enable=warning,performance,portability \
+          --enable=warning,style,performance,portability \
           --suppress=missingIncludeSystem \
           --error-exitcode=1 \
           --inline-suppr \
