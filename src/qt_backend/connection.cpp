@@ -27,9 +27,9 @@ namespace cpp_restapi::QtBackend
     }
 
 
-    std::pair<std::string, std::string> Connection::fetchPage(const std::string& page)
+    Response Connection::fetchPage(const std::string& page)
     {
-        std::pair<std::string, std::string> result;
+        Response result;
 
         QNetworkRequest request = prepareRequest();
         const QUrl url(QString::fromStdString(page));
@@ -40,6 +40,8 @@ namespace cpp_restapi::QtBackend
 
         connect(reply, &QNetworkReply::readChannelFinished, [&result, &loop, reply]()
         {
+            result.statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+
             QString header;
             QList<QByteArray> headerList = reply->rawHeaderList();
             for(const QByteArray& head: headerList)
@@ -48,8 +50,8 @@ namespace cpp_restapi::QtBackend
                 );
 
             const QByteArray rawData = reply->readAll();
-            result.first = rawData.data();
-            result.second = header.toStdString();
+            result.body = rawData.toStdString();
+            result.headers = header.toStdString();
 
             reply->close();
             reply->deleteLater();

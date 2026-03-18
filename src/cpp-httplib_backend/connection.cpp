@@ -14,7 +14,7 @@ namespace cpp_restapi::CppHttplibBackend
     }
 
 
-    std::pair<std::string, std::string> Connection::fetchPage(const std::string& page)
+    Response Connection::fetchPage(const std::string& page)
     {
         auto pos = page.find("//");
         if (pos == std::string::npos)
@@ -35,13 +35,13 @@ namespace cpp_restapi::CppHttplibBackend
         const auto response = cli.Get(query, headers);
 
         if (!response)
-            return {};
+            return {};  // statusCode = 0: network-level failure
 
         std::string header;
         for(const auto& [key, value]: response->headers)
             header += key + ": " + value + "\n";
 
-        return {response->body, header};
+        return {response->body, std::move(header), response->status};
     }
 
 

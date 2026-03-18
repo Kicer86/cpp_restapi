@@ -17,26 +17,31 @@ BaseConnection::BaseConnection(const std::string& address, const std::map<std::s
 std::string BaseConnection::get(const std::string& request)
 {
     LinkHeaderPaginationStrategy strategy;
-    return fetch(request, strategy);
+    // Deprecated method: throws std::bad_expected_access<HttpError> on error.
+    return fetch(request, strategy).value();
 }
 
 
-std::string BaseConnection::fetch(const std::string& request)
+std::expected<std::string, HttpError> BaseConnection::fetch(const std::string& request)
 {
-    return fetchResponse(m_address + "/" + request).body;
+    return fetchResponse(m_address + "/" + request)
+        .transform([](Response&& resp) { return std::move(resp.body); });
 }
 
 
-std::string BaseConnection::fetch(const std::string& request, IPaginationStrategy& strategy)
+std::expected<std::string, HttpError> BaseConnection::fetch(const std::string& request, IPaginationStrategy& strategy)
 {
     std::string nextUrl = m_address + "/" + request;
     std::vector<std::string> pages;
 
     do
     {
-        auto resp = fetchResponse(nextUrl);
-        pages.push_back(std::move(resp.body));
-        nextUrl = strategy.nextPageUrl(resp.headers);
+        auto result = fetchResponse(nextUrl);
+        if (!result)
+            return std::unexpected(std::move(result.error()));
+
+        nextUrl = strategy.nextPageUrl(result->headers);
+        pages.push_back(std::move(result->body));
     }
     while (!nextUrl.empty());
 
@@ -50,10 +55,18 @@ const std::string& BaseConnection::url() const
 }
 
 
-Response BaseConnection::fetchResponse(const std::string& requestUrl)
+std::expected<Response, HttpError> BaseConnection::fetchResponse(const std::string& requestUrl)
 {
-    auto [body, headers] = fetchPage(requestUrl);
-    return {std::move(body), std::move(headers)};
+    Response resp = fetchPage(requestUrl);
+
+    if (resp.statusCode == 0)
+        return std::unexpected(HttpError{0, std::move(resp.body), "Network error: no response received"});
+
+    if (resp.statusCode >= 400)
+        return std::unexpected(HttpError{resp.statusCode, std::move(resp.body),
+                                         "HTTP error " + std::to_string(resp.statusCode)});
+
+    return resp;
 }
 
 

@@ -2,11 +2,13 @@
 #ifndef ACONNECTION_HPP
 #define ACONNECTION_HPP
 
+#include <expected>
 #include <functional>
 #include <memory>
 #include <string>
 #include <vector>
 
+#include "http_error.hpp"
 #include "ipagination_strategy.hpp"
 #include "isse_connection.hpp"
 #include "sse_event.hpp"
@@ -15,12 +17,13 @@ namespace cpp_restapi
 {
 
     /**
-     * @brief HTTP response containing body and raw headers
+     * @brief HTTP response containing body, raw headers and the HTTP status code
      */
     struct Response
     {
         std::string body;
         std::string headers;
+        int         statusCode = 0;  ///< HTTP status code (e.g. 200, 404). 0 means no response was received (network error).
     };
 
     /**
@@ -46,24 +49,28 @@ namespace cpp_restapi
             /**
              * @brief Perform a single HTTP request
              * @param request relative API path (e.g. "api/v1/disks")
-             * @return response body
+             * @return response body on success, or an HttpError describing the failure
+             *
+             * Returns std::unexpected(HttpError) when:
+             * - The server returns a 4xx or 5xx status code
+             * - A network-level failure occurs (statusCode == 0 in the error)
              */
-            virtual std::string fetch(const std::string& request) = 0;
+            virtual std::expected<std::string, HttpError> fetch(const std::string& request) = 0;
 
             /**
              * @brief Perform requests with automatic pagination
              * @param request relative API path
              * @param strategy pagination strategy defining how to discover next page and merge results
-             * @return merged response body from all pages
+             * @return merged response body from all pages on success, or an HttpError on first failure
              */
-            virtual std::string fetch(const std::string& request, IPaginationStrategy& strategy) = 0;
+            virtual std::expected<std::string, HttpError> fetch(const std::string& request, IPaginationStrategy& strategy) = 0;
 
             /**
-             * @brief Perform a single HTTP request returning full response
+             * @brief Perform a single HTTP request returning the full response
              * @param url full URL to fetch
-             * @return response with body and raw headers
+             * @return full Response (body, headers, statusCode) on success, or an HttpError on failure
              */
-            virtual Response fetchResponse(const std::string& url) = 0;
+            virtual std::expected<Response, HttpError> fetchResponse(const std::string& url) = 0;
 
             /**
              * @brief return API url

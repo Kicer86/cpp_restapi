@@ -2,6 +2,7 @@
 #ifndef BASE_CONNECTION_HPP_INCLUDED
 #define BASE_CONNECTION_HPP_INCLUDED
 
+#include <expected>
 #include <map>
 
 #include <cpp_restapi/iconnection.hpp>
@@ -19,11 +20,11 @@ namespace cpp_restapi
         explicit BaseConnection(const std::string& address, const std::map<std::string, std::string>& headerEntries);
 
         std::string get(const std::string &) final;
-        std::string fetch(const std::string& request) final;
-        std::string fetch(const std::string& request, IPaginationStrategy& strategy) final;
-        Response fetchResponse(const std::string& url) final;
+        std::expected<std::string, HttpError> fetch(const std::string& request) final;
+        std::expected<std::string, HttpError> fetch(const std::string& request, IPaginationStrategy& strategy) final;
+        std::expected<Response, HttpError> fetchResponse(const std::string& url) final;
         const std::string& url() const final;
-        virtual std::pair<std::string, std::string> fetchPage(const std::string& request) = 0;
+        virtual Response fetchPage(const std::string& request) = 0;
 
     protected:
         const std::map<std::string, std::string>& getHeaderEntries() const;

@@ -30,17 +30,17 @@ namespace cpp_restapi::CurlBackend
     }
 
 
-    std::pair<std::string, std::string> Connection::fetchPage(const std::string& page)
+    Response Connection::fetchPage(const std::string& page)
     {
-        std::string result;
-        std::string header_links;
+        std::string body;
+        std::string headers;
+        int statusCode = 0;
 
         CURL* curl = curl_easy_init();
 
         if (curl)
         {
             curl_slist *list = nullptr;
-            std::string authorization;
 
             typedef size_t (*WriteCallback)(char *ptr, size_t size, size_t nmemb, void *userdata);
             typedef size_t (*HeaderCallback)(char *buffer, size_t size, size_t nitems, void *userdata);
@@ -67,13 +67,11 @@ namespace cpp_restapi::CurlBackend
                 return (size * nitems);
             };
 
-            // const std::string full_addr = m_address + "/" + request;
-
             curl_easy_setopt(curl, CURLOPT_URL, page.c_str());
             curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, header_callback);
             curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
-            curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
-            curl_easy_setopt(curl, CURLOPT_HEADERDATA, &header_links);
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, &body);
+            curl_easy_setopt(curl, CURLOPT_HEADERDATA, &headers);
             curl_easy_setopt(curl, CURLOPT_USERAGENT, "cpp_restapi/2.0");
 
             const auto header_entries = getHeaderEntries();
@@ -86,13 +84,18 @@ namespace cpp_restapi::CurlBackend
 
             curl_easy_setopt(curl, CURLOPT_HTTPHEADER, list);
 
-            curl_easy_perform(curl);
+            if (curl_easy_perform(curl) == CURLE_OK)
+            {
+                long code = 0;
+                curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &code);
+                statusCode = static_cast<int>(code);
+            }
 
             curl_easy_cleanup(curl);
             curl_slist_free_all(list);
         }
 
-        return std::make_pair(result, header_links);
+        return {std::move(body), std::move(headers), statusCode};
     }
 
 
