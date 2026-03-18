@@ -31,6 +31,7 @@ jobs:
           libgmock-dev          \
           qt6-base-dev          \
           libcurl4-openssl-dev  \
+          libcpp-httplib-dev    \
           libjsoncpp-dev
 
     - name: Configure
@@ -77,6 +78,7 @@ jobs:
           libgmock-dev          \
           qt6-base-dev          \
           libcurl4-openssl-dev  \
+          libcpp-httplib-dev    \
           libjsoncpp-dev
 
     - name: Configure

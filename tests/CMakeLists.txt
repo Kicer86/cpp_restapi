@@ -13,16 +13,14 @@ if(NOT GTest_FOUND)
     FetchContent_MakeAvailable(googletest)
 endif()
 
-find_package(httplib QUIET)
+find_package(httplib)
 
-if(NOT httplib_FOUND AND NOT TARGET httplib::httplib)
-    include(FetchContent)
-    FetchContent_Declare(httplib
-        GIT_REPOSITORY https://github.com/yhirose/cpp-httplib.git
-        GIT_TAG        v0.37.1
-        GIT_SHALLOW    TRUE
-    )
-    FetchContent_MakeAvailable(httplib)
+if(httplib_FOUND)
+    set(HTTPLIB_LIBRARIES httplib::httplib)
+else()
+    find_package(PkgConfig REQUIRED)
+
+    pkg_check_modules(HTTPLIB REQUIRED cpp-httplib)
 endif()
 
 
@@ -37,7 +35,7 @@ target_link_libraries(api_tests
     PRIVATE
         GTest::gtest
         GTest::gmock
-        httplib::httplib
+        ${HTTPLIB_LIBRARIES}
 
         cpp_restapi
 )
