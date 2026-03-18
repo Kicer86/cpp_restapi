@@ -33,6 +33,10 @@ jobs:
       run: |
         sed -i "s/^PROJECT_NUMBER.*/PROJECT_NUMBER = ${{ steps.version.outputs.slug }}/" Doxyfile
 
+    - name: Download doxygen-awesome theme
+      run: |
+        git clone --depth 1 https://github.com/jothepro/doxygen-awesome-css.git
+
     - name: Generate Docs
       uses: mattnotmitt/doxygen-action@v1.12.0
 
@@ -60,44 +64,7 @@ jobs:
     - name: Generate landing page
       run: |
         cd gh-pages
-        # collect all version directories (vX.Y.Z), sort descending
-        VERSIONS=$(find . -maxdepth 1 -type d -name 'v*' | sed 's|./||' | sort -rV)
-
-        cat > index.html << 'HEADER'
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>cpp Rest API – Documentation</title>
-          <style>
-            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif; max-width: 700px; margin: 60px auto; padding: 0 20px; color: #333; }
-            h1 { border-bottom: 2px solid #eee; padding-bottom: 12px; }
-            ul { list-style: none; padding: 0; }
-            li { margin: 8px 0; }
-            a { color: #0366d6; text-decoration: none; font-size: 1.1em; }
-            a:hover { text-decoration: underline; }
-            .latest-tag { font-size: 0.8em; color: #6a737d; margin-left: 6px; }
-          </style>
-        </head>
-        <body>
-          <h1>cpp Rest API – Documentation</h1>
-          <ul>
-            <li><a href="master/">master</a> <span class="latest-tag">(development)</span></li>
-        HEADER
-
-        FIRST=true
-        for V in $VERSIONS; do
-          TAG=""
-          if $FIRST; then TAG=' <span class="latest-tag">(latest release)</span>'; FIRST=false; fi
-          echo "    <li><a href=\"${V}/\">${V}</a>${TAG}</li>" >> index.html
-        done
-
-        cat >> index.html << 'FOOTER'
-          </ul>
-        </body>
-        </html>
-        FOOTER
+        bash "$GITHUB_WORKSPACE/.github/generate-docs-index.sh"
 
     - name: Deploy to Github Pages
       uses: peaceiris/actions-gh-pages@v4
