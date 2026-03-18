@@ -125,8 +125,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af1b6b8ff025c0d6b7a4a7b8923ad5b12" id="r_af1b6b8ff025c0d6b7a4a7b8923ad5b12"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af1b6b8ff025c0d6b7a4a7b8923ad5b12">listUserRepo</a> (const std::string &amp;user)</td></tr>
 <tr class="memdesc:af1b6b8ff025c0d6b7a4a7b8923ad5b12"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html" title="GitHub api actions.">Request</a> list of user repositories.  <br /></td></tr>
 <tr class="separator:af1b6b8ff025c0d6b7a4a7b8923ad5b12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab296ccbe30f1b7189faf082a53c37c3c" id="r_ab296ccbe30f1b7189faf082a53c37c3c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab296ccbe30f1b7189faf082a53c37c3c">getAuthenticatedUser</a> ()</td></tr>
+<tr class="memdesc:ab296ccbe30f1b7189faf082a53c37c3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the authenticated user info.  <br /></td></tr>
+<tr class="separator:ab296ccbe30f1b7189faf082a53c37c3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd16bf90636956f67d533d237ed238df" id="r_afd16bf90636956f67d533d237ed238df"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afd16bf90636956f67d533d237ed238df">getAuntenticatedUser</a> ()</td></tr>
-<tr class="memdesc:afd16bf90636956f67d533d237ed238df"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the authenticated user info  <br /></td></tr>
 <tr class="separator:afd16bf90636956f67d533d237ed238df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6569e1311e0b81eda1985edffcf1cc13" id="r_a6569e1311e0b81eda1985edffcf1cc13"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6569e1311e0b81eda1985edffcf1cc13">listUsers</a> ()</td></tr>
 <tr class="memdesc:a6569e1311e0b81eda1985edffcf1cc13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lists all users, in the order that they signed up on <a class="el" href="../../dc/de3/namespacecpp__restapi_1_1GitHub.html">GitHub</a>. This list includes personal user accounts and organization accounts.  <br /></td></tr>
@@ -328,9 +330,27 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="../../da/d58/deprecated.html#_deprecated000001">Deprecated</a></b></dt><dd>Use <a class="el" href="#ab296ccbe30f1b7189faf082a53c37c3c" title="Get the authenticated user info.">getAuthenticatedUser()</a> instead (fixes typo in method name). </dd></dl>
 
-<p>get the authenticated user info </p>
-<dl class="section return"><dt>Returns</dt><dd>std::string json std::string response </dd></dl>
+</div>
+</div>
+<a id="ab296ccbe30f1b7189faf082a53c37c3c" name="ab296ccbe30f1b7189faf082a53c37c3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab296ccbe30f1b7189faf082a53c37c3c">&#9670;&#160;</a></span>getAuthenticatedUser()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string cpp_restapi::GitHub::Request::getAuthenticatedUser </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the authenticated user info. </p>
+<dl class="section return"><dt>Returns</dt><dd>api response in json format </dd></dl>
 
 </div>
 </div>
