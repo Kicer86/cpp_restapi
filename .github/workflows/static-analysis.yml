@@ -1,0 +1,72 @@
+name: Static-Analysis
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  clang-tidy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        submodules: false
+
+    - uses: ./.github/actions/setup-linux
+      with:
+        extra-packages: qt6-base-dev clang-tidy
+
+    - name: Configure
+      run: |
+        cmake -B build -G Ninja \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_CXX_CLANG_TIDY=clang-tidy \
+          -DCppRestAPI_Tests=ON \
+          -DCppRestAPI_UseQt6=ON \
+          -DCppRestAPI_Examples=ON
+
+    - name: Build with clang-tidy
+      run: cmake --build build 2>&1 | tee clang-tidy-output.txt
+
+    - name: Check for clang-tidy warnings
+      run: |
+        if grep -q "warning:" clang-tidy-output.txt; then
+          echo "::error::clang-tidy found issues"
+          grep "warning:" clang-tidy-output.txt
+          exit 1
+        fi
+
+  cppcheck:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        submodules: false
+
+    - uses: ./.github/actions/setup-linux
+      with:
+        extra-packages: qt6-base-dev cppcheck
+
+    - name: Configure (generate compile_commands.json)
+      run: |
+        cmake -B build -G Ninja \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+          -DCppRestAPI_Tests=ON \
+          -DCppRestAPI_UseQt6=ON \
+          -DCppRestAPI_Examples=ON
+
+    - name: Run cppcheck
+      run: |
+        cppcheck \
+          --project=build/compile_commands.json \
+          --enable=warning,style,performance,portability \
+          --suppress=missingIncludeSystem \
+          --error-exitcode=1 \
+          --inline-suppr \
+          -i build/ \
+          2>&1 | tee cppcheck-output.txt

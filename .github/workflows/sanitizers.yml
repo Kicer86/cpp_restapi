@@ -1,0 +1,89 @@
+name: Sanitizers
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  asan:
+    name: ASan (${{ matrix.compiler.cc }}, ${{ matrix.build_type }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler:
+          - { cc: gcc, cxx: g++ }
+          - { cc: clang, cxx: clang++ }
+        build_type: [Debug, Release]
+
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        submodules: false
+
+    - uses: ./.github/actions/setup-linux
+      with:
+        extra-packages: qt6-base-dev
+
+    - name: Configure
+      run: |
+        cmake -B build -G Ninja \
+          -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
+          -DCMAKE_C_COMPILER=${{ matrix.compiler.cc }} \
+          -DCMAKE_CXX_COMPILER=${{ matrix.compiler.cxx }} \
+          -DCMAKE_CXX_FLAGS="-fsanitize=address -fno-omit-frame-pointer" \
+          -DCMAKE_C_FLAGS="-fsanitize=address -fno-omit-frame-pointer" \
+          -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address" \
+          -DCppRestAPI_Tests=ON \
+          -DCppRestAPI_UseQt6=ON \
+          -DCppRestAPI_Examples=OFF
+
+    - name: Build
+      run: cmake --build build
+
+    - name: Run tests under ASan
+      env:
+        ASAN_OPTIONS: detect_leaks=1:halt_on_error=1:print_stats=1
+      run: ctest --test-dir build --output-on-failure
+
+  ubsan:
+    name: UBSan (${{ matrix.compiler.cc }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler:
+          - { cc: gcc, cxx: g++ }
+          - { cc: clang, cxx: clang++ }
+
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        submodules: false
+
+    - uses: ./.github/actions/setup-linux
+      with:
+        extra-packages: qt6-base-dev
+
+    - name: Configure
+      run: |
+        cmake -B build -G Ninja \
+          -DCMAKE_BUILD_TYPE=Debug \
+          -DCMAKE_C_COMPILER=${{ matrix.compiler.cc }} \
+          -DCMAKE_CXX_COMPILER=${{ matrix.compiler.cxx }} \
+          -DCMAKE_CXX_FLAGS="-fsanitize=undefined -fno-omit-frame-pointer" \
+          -DCMAKE_C_FLAGS="-fsanitize=undefined -fno-omit-frame-pointer" \
+          -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=undefined" \
+          -DCppRestAPI_Tests=ON \
+          -DCppRestAPI_UseQt6=ON \
+          -DCppRestAPI_Examples=OFF
+
+    - name: Build
+      run: cmake --build build
+
+    - name: Run tests under UBSan
+      env:
+        UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
+      run: ctest --test-dir build --output-on-failure

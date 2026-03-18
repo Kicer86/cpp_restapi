@@ -19,13 +19,13 @@ SseConnection::SseConnection(QNetworkAccessManager& manager,
 
 SseConnection::~SseConnection()
 {
-    close();
+    closeImpl();
 }
 
 
 void SseConnection::subscribe(const std::string& request, EventCallback callback)
 {
-    close();
+    closeImpl();
 
     m_callback = std::move(callback);
 
@@ -53,6 +53,12 @@ void SseConnection::subscribe(const std::string& request, EventCallback callback
 
 
 void SseConnection::close()
+{
+    closeImpl();
+}
+
+
+void SseConnection::closeImpl()
 {
     if (m_reply != nullptr)
     {

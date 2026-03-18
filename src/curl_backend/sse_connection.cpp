@@ -16,13 +16,13 @@ SseConnection::SseConnection(const std::string& address,
 
 SseConnection::~SseConnection()
 {
-    close();
+    closeImpl();
 }
 
 
 void SseConnection::subscribe(const std::string& request, EventCallback callback)
 {
-    close();
+    closeImpl();
 
     m_running = true;
     const std::string fullUrl = m_address + "/" + request;
@@ -31,6 +31,12 @@ void SseConnection::subscribe(const std::string& request, EventCallback callback
 
 
 void SseConnection::close()
+{
+    closeImpl();
+}
+
+
+void SseConnection::closeImpl()
 {
     m_running = false;
 
@@ -102,8 +108,8 @@ void SseConnection::run(const std::string& url, EventCallback callback)
 
         curl_easy_perform(curl);
 
-        curl_slist_free_all(list);
         curl_easy_cleanup(curl);
+        curl_slist_free_all(list);
     }
 }
 

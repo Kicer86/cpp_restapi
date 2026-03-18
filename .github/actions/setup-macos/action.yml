@@ -1,0 +1,31 @@
+name: 'Setup macOS Build Environment'
+description: 'Install common build dependencies via Homebrew on macOS'
+
+inputs:
+  qt-version:
+    description: 'Qt major version to install (5 or 6)'
+    required: true
+
+outputs:
+  cmake-prefix-path:
+    description: 'CMAKE_PREFIX_PATH pointing to the installed Qt'
+    value: ${{ steps.qt-prefix.outputs.path }}
+
+runs:
+  using: composite
+  steps:
+    - name: Install system dependencies
+      shell: bash
+      run: |
+        brew install           \
+          ninja                \
+          googletest           \
+          qt@${{ inputs.qt-version }} \
+          curl                 \
+          cpp-httplib          \
+          jsoncpp
+
+    - name: Determine Qt prefix path
+      id: qt-prefix
+      shell: bash
+      run: echo "path=$(brew --prefix qt@${{ inputs.qt-version }})" >> "$GITHUB_OUTPUT"

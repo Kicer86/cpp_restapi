@@ -34,6 +34,9 @@ namespace cpp_restapi::CppHttplibBackend
         const httplib::Headers headers(getHeaderEntries().begin(), getHeaderEntries().end());
         const auto response = cli.Get(query, headers);
 
+        if (!response)
+            return {};
+
         std::string header;
         for(const auto& [key, value]: response->headers)
             header += key + ": " + value + "\n";

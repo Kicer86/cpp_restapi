@@ -48,7 +48,7 @@ namespace
     std::shared_ptr<IConnection> buildNewApi(std::function<void(GitHub::ConnectionBuilder &)> c = {})
     {
         auto builder = GitHub::ConnectionBuilder();
-        builder.setAddress(std::string("http://localhost:") + std::to_string(port));
+        builder.setAddress(std::string("http://127.0.0.1:") + std::to_string(port));
 
         if (c)
             c(builder);

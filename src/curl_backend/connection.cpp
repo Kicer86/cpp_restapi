@@ -88,11 +88,10 @@ namespace cpp_restapi::CurlBackend
 
             curl_easy_perform(curl);
 
-            curl_slist_free_all(list);
             curl_easy_cleanup(curl);
+            curl_slist_free_all(list);
         }
 
-        curl_global_cleanup();
         return std::make_pair(result, header_links);
     }
 

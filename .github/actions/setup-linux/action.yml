@@ -1,0 +1,35 @@
+name: 'Setup Linux Build Environment'
+description: 'Install common build dependencies and cpp-httplib on Ubuntu'
+
+inputs:
+  extra-packages:
+    description: 'Additional apt packages to install (space-separated)'
+    required: false
+    default: ''
+
+runs:
+  using: composite
+  steps:
+    - name: Install system dependencies
+      shell: bash
+      run: |
+        sudo apt-get update &&  \
+        sudo apt-get install    \
+          ninja-build           \
+          libgmock-dev          \
+          libcurl4-openssl-dev  \
+          libjsoncpp-dev        \
+          ${{ inputs.extra-packages }}
+
+    # Ubuntu 24.04 ships libcpp-httplib-dev 0.14.3 which segfaults when
+    # httplib::Client and httplib::Server are used in the same process
+    # (our test mock pattern). Build latest from source as a workaround.
+    # Once the distro packages a fixed version this step can be replaced
+    # with: libcpp-httplib-dev in the apt-get install list above.
+    - name: Install cpp-httplib from source
+      shell: bash
+      run: |
+        git clone --depth 1 https://github.com/yhirose/cpp-httplib.git /tmp/cpp-httplib
+        cmake -B /tmp/cpp-httplib/build -S /tmp/cpp-httplib \
+          -DHTTPLIB_USE_ZSTD_IF_AVAILABLE=OFF
+        sudo cmake --install /tmp/cpp-httplib/build

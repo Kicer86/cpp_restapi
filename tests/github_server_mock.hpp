@@ -14,14 +14,15 @@ class GithubServerMock
     explicit GithubServerMock(int port = 9200)
       : m_port(port)
     {
-
+      m_svr.set_socket_options([](socket_t sock) {
+        int yes = 1;
+        setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, reinterpret_cast<const char *>(&yes), sizeof(yes));
+      });
     }
 
     ~GithubServerMock()
     {
-      httplib::Client cli("localhost", m_port);
       m_svr.stop();
-
       m_svrThread.join();
     }
 
@@ -38,7 +39,7 @@ class GithubServerMock
 
       m_svrThread = std::thread([this]()
       {
-        m_svr.listen("localhost", m_port);
+        m_svr.listen("127.0.0.1", m_port);
       });
 
       // wait for server to be ready

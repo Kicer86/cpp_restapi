@@ -1,0 +1,39 @@
+name: Build-FreeBSD-Qt6
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        submodules: false
+
+    - name: Build and test on FreeBSD
+      uses: vmactions/freebsd-vm@v1
+      with:
+        usesh: true
+        prepare: |
+          pkg install -y         \
+            cmake                \
+            ninja                \
+            googletest           \
+            qt6-base             \
+            curl                 \
+            cpp-httplib          \
+            jsoncpp              \
+            pkgconf
+        run: |
+          cmake -B build -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCppRestAPI_Tests=ON \
+            -DCppRestAPI_UseQt6=ON \
+            -DCppRestAPI_Examples=ON
+          cmake --build build
+          ctest --test-dir build --output-on-failure

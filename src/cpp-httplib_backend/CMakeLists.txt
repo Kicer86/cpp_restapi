@@ -9,7 +9,6 @@ else()
     pkg_check_modules(HTTPLIB REQUIRED cpp-httplib)
 endif()
 
-
 target_sources(cpp_restapi
     PRIVATE
         connection.cpp

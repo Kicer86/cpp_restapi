@@ -1,0 +1,29 @@
+name: Build-macOS-Qt6
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        submodules: false
+
+    - uses: ./.github/actions/setup-macos
+      id: setup
+      with:
+        qt-version: '6'
+
+    - name: Build
+      uses: ashutoshvarma/action-cmake-build@master
+      with:
+        build-dir: ${{ runner.workspace }}/build
+        build-type: Release
+        configure-options: -DCppRestAPI_Tests=ON -DCppRestAPI_UseQt6=ON -DCppRestAPI_Examples=ON -DCMAKE_PREFIX_PATH=${{ steps.setup.outputs.cmake-prefix-path }}
+        run-test: true
