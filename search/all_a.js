@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['qt_5fconnection_2ehpp_0',['qt_connection.hpp',['../de/dfe/qt__connection_8hpp.html',1,'']]]
+  ['merge_0',['merge',['../db/d62/structcpp__restapi_1_1IPaginationStrategy.html#a50aa301f285d045677cbc930ce0001ed',1,'cpp_restapi::IPaginationStrategy::merge()'],['../d6/d5d/classcpp__restapi_1_1LinkHeaderPaginationStrategy.html#a45bb4aa6b7d9986ae829569b3e03ff5f',1,'cpp_restapi::LinkHeaderPaginationStrategy::merge()']]]
 ];

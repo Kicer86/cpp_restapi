@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['repocontributors_0',['repoContributors',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a4f9914c6ae931e7750f1927cf3cfd3b8',1,'cpp_restapi::GitHub::Request']]],
-  ['request_1',['Request',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#af2d1c820d49b720f1644fcdab75b7f28',1,'cpp_restapi::GitHub::Request::Request(std::shared_ptr&lt; cpp_restapi::IConnection &gt;)'],['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a3da3f31f5d68320f4fc91dea947e1241',1,'cpp_restapi::GitHub::Request::Request(const Request &amp;)=delete']]]
+  ['nextpageurl_0',['nextPageUrl',['../db/d62/structcpp__restapi_1_1IPaginationStrategy.html#a6053c87c69ad0e8de7a7c2c7f685a19a',1,'cpp_restapi::IPaginationStrategy::nextPageUrl()'],['../d6/d5d/classcpp__restapi_1_1LinkHeaderPaginationStrategy.html#ac33ced0ff09c30823b14edc928eac801',1,'cpp_restapi::LinkHeaderPaginationStrategy::nextPageUrl()']]]
 ];

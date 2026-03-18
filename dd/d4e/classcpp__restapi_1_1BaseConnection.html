@@ -120,6 +120,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0450232692026b9fe147ef08b31f7b98" id="r_a0450232692026b9fe147ef08b31f7b98"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0450232692026b9fe147ef08b31f7b98">get</a> (const std::string &amp;) final</td></tr>
 <tr class="memdesc:a0450232692026b9fe147ef08b31f7b98"><td class="mdescLeft">&#160;</td><td class="mdescRight">perform a request to api  <br /></td></tr>
 <tr class="separator:a0450232692026b9fe147ef08b31f7b98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaaedd3ae6beac6badde7fdd00c879fb1" id="r_aaaedd3ae6beac6badde7fdd00c879fb1"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaaedd3ae6beac6badde7fdd00c879fb1">fetch</a> (const std::string &amp;request) final</td></tr>
+<tr class="memdesc:aaaedd3ae6beac6badde7fdd00c879fb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a single HTTP request.  <br /></td></tr>
+<tr class="separator:aaaedd3ae6beac6badde7fdd00c879fb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9883029319becff57567d4ca1dbeaf47" id="r_a9883029319becff57567d4ca1dbeaf47"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9883029319becff57567d4ca1dbeaf47">fetch</a> (const std::string &amp;request, <a class="el" href="../../db/d62/structcpp__restapi_1_1IPaginationStrategy.html">IPaginationStrategy</a> &amp;strategy) final</td></tr>
+<tr class="memdesc:a9883029319becff57567d4ca1dbeaf47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform requests with automatic pagination.  <br /></td></tr>
+<tr class="separator:a9883029319becff57567d4ca1dbeaf47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92927e8bcea894908da142277a9a26f2" id="r_a92927e8bcea894908da142277a9a26f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/db5/structcpp__restapi_1_1Response.html">Response</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a92927e8bcea894908da142277a9a26f2">fetchResponse</a> (const std::string &amp;<a class="el" href="#a649d1f78bac941a9d7a6901854d9588d">url</a>) final</td></tr>
+<tr class="memdesc:a92927e8bcea894908da142277a9a26f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a single HTTP request returning full response.  <br /></td></tr>
+<tr class="separator:a92927e8bcea894908da142277a9a26f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a649d1f78bac941a9d7a6901854d9588d" id="r_a649d1f78bac941a9d7a6901854d9588d"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a649d1f78bac941a9d7a6901854d9588d">url</a> () const final</td></tr>
 <tr class="memdesc:a649d1f78bac941a9d7a6901854d9588d"><td class="mdescLeft">&#160;</td><td class="mdescRight">return API url  <br /></td></tr>
 <tr class="separator:a649d1f78bac941a9d7a6901854d9588d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -203,6 +212,83 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="aaaedd3ae6beac6badde7fdd00c879fb1" name="aaaedd3ae6beac6badde7fdd00c879fb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaaedd3ae6beac6badde7fdd00c879fb1">&#9670;&#160;</a></span>fetch() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string cpp_restapi::BaseConnection::fetch </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>request</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">final</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Perform a single HTTP request. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">request</td><td>relative API path (e.g. "api/v1/disks") </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>response body </dd></dl>
+
+<p>Implements <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html#a9799177a82b3ef8f07b03cb0786bba8b">cpp_restapi::IConnection</a>.</p>
+
+</div>
+</div>
+<a id="a9883029319becff57567d4ca1dbeaf47" name="a9883029319becff57567d4ca1dbeaf47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9883029319becff57567d4ca1dbeaf47">&#9670;&#160;</a></span>fetch() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string cpp_restapi::BaseConnection::fetch </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>request</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../db/d62/structcpp__restapi_1_1IPaginationStrategy.html">IPaginationStrategy</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>strategy</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">final</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Perform requests with automatic pagination. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">request</td><td>relative API path </td></tr>
+    <tr><td class="paramname">strategy</td><td>pagination strategy defining how to discover next page and merge results </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>merged response body from all pages </dd></dl>
+
+<p>Implements <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html#a6b46e9d67ba6d80ca16b05209e759647">cpp_restapi::IConnection</a>.</p>
+
+</div>
+</div>
 <a id="aef1b4468c8bf75cc83c71eb33663a921" name="aef1b4468c8bf75cc83c71eb33663a921"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aef1b4468c8bf75cc83c71eb33663a921">&#9670;&#160;</a></span>fetchPage()</h2>
 
@@ -227,6 +313,42 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Implemented in <a class="el" href="../../de/d13/classcpp__restapi_1_1CppHttplibBackend_1_1Connection.html#af74498ebb3eea9d1b07c0c5028d5e637">cpp_restapi::CppHttplibBackend::Connection</a>, <a class="el" href="../../d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html#a54deb58574f4f86f1d3fb0bf1a62722a">cpp_restapi::CurlBackend::Connection</a>, and <a class="el" href="../../d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html#a7194a4187a50274ebfee287d4bc6b50a">cpp_restapi::QtBackend::Connection</a>.</p>
+
+</div>
+</div>
+<a id="a92927e8bcea894908da142277a9a26f2" name="a92927e8bcea894908da142277a9a26f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92927e8bcea894908da142277a9a26f2">&#9670;&#160;</a></span>fetchResponse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d8/db5/structcpp__restapi_1_1Response.html">Response</a> cpp_restapi::BaseConnection::fetchResponse </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">final</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Perform a single HTTP request returning full response. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">url</td><td>full URL to fetch </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>response with body and raw headers </dd></dl>
+
+<p>Implements <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html#a0e4566a105a6f14b388859aa62b7cd2b">cpp_restapi::IConnection</a>.</p>
 
 </div>
 </div>
@@ -261,6 +383,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>api response in json format </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="../../da/d58/deprecated.html#_deprecated000001">Deprecated</a></b></dt><dd>Use <a class="el" href="#aaaedd3ae6beac6badde7fdd00c879fb1" title="Perform a single HTTP request.">fetch()</a> for single requests or <a class="el" href="#aaaedd3ae6beac6badde7fdd00c879fb1" title="Perform a single HTTP request.">fetch()</a> with <a class="el" href="../../db/d62/structcpp__restapi_1_1IPaginationStrategy.html" title="Interface for pagination strategies.">IPaginationStrategy</a> for paginated requests. This method has hardcoded GitHub-specific pagination logic. </dd></dl>
 
 <p>Implements <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html#ab3ee829a93ec8753eb56a95adb5b8229">cpp_restapi::IConnection</a>.</p>
 

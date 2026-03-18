@@ -1,5 +1,25 @@
 var searchData=
 [
-  ['operator_3d_0',['operator=',['../de/d13/classcpp__restapi_1_1CppHttplibBackend_1_1Connection.html#a0dea7f375bcce77ed0ded297fc8ec5c1',1,'cpp_restapi::CppHttplibBackend::Connection::operator=()'],['../d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html#a9853e2dfca1b626bed78a26cdc4f5da8',1,'cpp_restapi::CurlBackend::Connection::operator=()'],['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#ab1b2c354af4768da1fee099502cc1f7e',1,'cpp_restapi::GitHub::Request::operator=()'],['../d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html#af6f4d805421a2152f71205691d95b9be',1,'cpp_restapi::QtBackend::Connection::operator=()']]],
-  ['orgissues_1',['orgIssues',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#ad97829d0e4b81fcb5c6d41b5936bf62a',1,'cpp_restapi::GitHub::Request']]]
+  ['link_5fheader_5fpagination_5fstrategy_2ehpp_0',['link_header_pagination_strategy.hpp',['../d0/de8/link__header__pagination__strategy_8hpp.html',1,'']]],
+  ['linkheaderpaginationstrategy_1',['LinkHeaderPaginationStrategy',['../d6/d5d/classcpp__restapi_1_1LinkHeaderPaginationStrategy.html',1,'cpp_restapi']]],
+  ['list_2',['Deprecated List',['../da/d58/deprecated.html',1,'']]],
+  ['listauthuserrepo_3',['listAuthUserRepo',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a952b5dfa4764e532ca12ca2e32ae33b5',1,'cpp_restapi::GitHub::Request']]],
+  ['listbranchheadcommit_4',['listBranchHeadCommit',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#aaed2b7c73cbbfd150153eaa50c3dacdf',1,'cpp_restapi::GitHub::Request']]],
+  ['listcommitpullrequest_5',['listCommitPullRequest',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a07311d1ffb1c12bd825ca70378c29674',1,'cpp_restapi::GitHub::Request']]],
+  ['listcommits_6',['listCommits',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a9fac750076286f941b2af95171843966',1,'cpp_restapi::GitHub::Request']]],
+  ['listnetworkrepoevent_7',['listNetworkRepoEvent',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a8f5148202fc39667ca83a60b4737d1e7',1,'cpp_restapi::GitHub::Request']]],
+  ['listorgevent_8',['listOrgEvent',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a5e37f007a2fb3be293b21d8135f855ca',1,'cpp_restapi::GitHub::Request']]],
+  ['listpullrequest_9',['listPullRequest',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a482c8af34309c019d30a381daeea8f96',1,'cpp_restapi::GitHub::Request']]],
+  ['listpullrequestcommit_10',['listPullRequestCommit',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#ac6a39157bf26843b0318ff98d24d5840',1,'cpp_restapi::GitHub::Request']]],
+  ['listpullrequestfiles_11',['listPullRequestfiles',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#aa57febe3984f58541dbd788e66896125',1,'cpp_restapi::GitHub::Request']]],
+  ['listrepocollaborators_12',['listRepoCollaborators',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a7698c7e6025dfa355b3499b5d8ae8099',1,'cpp_restapi::GitHub::Request']]],
+  ['listrepoevent_13',['listRepoEvent',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#ad8c7f3f92ef1451db09e78319d445c3b',1,'cpp_restapi::GitHub::Request']]],
+  ['listrepoissues_14',['listRepoIssues',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a2a25da2708dd09599d5945398a90bb23',1,'cpp_restapi::GitHub::Request']]],
+  ['listrepowatchers_15',['listRepoWatchers',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#ad16132ca3660ec9d10b52f006cf3ea0d',1,'cpp_restapi::GitHub::Request']]],
+  ['liststargazers_16',['listStargazers',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#ac1997b205feda18b55d2a3590a48000d',1,'cpp_restapi::GitHub::Request']]],
+  ['listuserevent_17',['listUserEvent',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a3507064e60898c9c15a9dafd40bc248c',1,'cpp_restapi::GitHub::Request']]],
+  ['listuserrepo_18',['listUserRepo',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#af1b6b8ff025c0d6b7a4a7b8923ad5b12',1,'cpp_restapi::GitHub::Request']]],
+  ['listusers_19',['listUsers',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a6569e1311e0b81eda1985edffcf1cc13',1,'cpp_restapi::GitHub::Request']]],
+  ['listuserstarredrepo_20',['listUserStarredRepo',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#ae7b2e5bf270ecd4a68da7f2a4e717beb',1,'cpp_restapi::GitHub::Request']]],
+  ['listuserwatchedrepos_21',['listUserWatchedRepos',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#ae065b601d9c26b09e5e6331d3128092b',1,'cpp_restapi::GitHub::Request']]]
 ];

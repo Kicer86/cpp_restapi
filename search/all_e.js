@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['_7econnection_0',['~Connection',['../d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html#a9e13a03e1df26808382a1cdce93a4907',1,'cpp_restapi::CurlBackend::Connection::~Connection()'],['../d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html#aa2873efd95efc14d1e93b675489aa288',1,'cpp_restapi::QtBackend::Connection::~Connection()']]],
-  ['_7eiconnection_1',['~IConnection',['../de/dd0/structcpp__restapi_1_1IConnection.html#ab85ba8ffe44f1ebfa2ff329c007cc4f0',1,'cpp_restapi::IConnection']]],
-  ['_7eisseconnection_2',['~ISseConnection',['../d6/dff/structcpp__restapi_1_1ISseConnection.html#a01501c23ae609b14054ab1bad3ceb456',1,'cpp_restapi::ISseConnection']]],
-  ['_7erequest_3',['~Request',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#aa8ff3cc972e5eaefcbd12734385e2dd8',1,'cpp_restapi::GitHub::Request']]]
+  ['repocontributors_0',['repoContributors',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a4f9914c6ae931e7750f1927cf3cfd3b8',1,'cpp_restapi::GitHub::Request']]],
+  ['request_1',['Request',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html',1,'cpp_restapi::GitHub::Request'],['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#af2d1c820d49b720f1644fcdab75b7f28',1,'cpp_restapi::GitHub::Request::Request(std::shared_ptr&lt; cpp_restapi::IConnection &gt;)'],['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a3da3f31f5d68320f4fc91dea947e1241',1,'cpp_restapi::GitHub::Request::Request(const Request &amp;)=delete']]],
+  ['request_2ehpp_2',['request.hpp',['../d6/d6f/request_8hpp.html',1,'']]],
+  ['response_3',['Response',['../d8/db5/structcpp__restapi_1_1Response.html',1,'cpp_restapi']]],
+  ['retry_4',['retry',['../d9/d37/structcpp__restapi_1_1SseEvent.html#a636a1bc6de14affd7184b1904057b1f9',1,'cpp_restapi::SseEvent']]]
 ];

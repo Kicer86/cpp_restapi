@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['request_0',['Request',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html',1,'cpp_restapi::GitHub']]]
+  ['linkheaderpaginationstrategy_0',['LinkHeaderPaginationStrategy',['../d6/d5d/classcpp__restapi_1_1LinkHeaderPaginationStrategy.html',1,'cpp_restapi']]]
 ];

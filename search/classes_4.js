@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['sseevent_0',['SseEvent',['../d9/d37/structcpp__restapi_1_1SseEvent.html',1,'cpp_restapi']]],
-  ['sseparser_1',['SseParser',['../d6/d83/classcpp__restapi_1_1SseParser.html',1,'cpp_restapi']]]
+  ['request_0',['Request',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html',1,'cpp_restapi::GitHub']]],
+  ['response_1',['Response',['../d8/db5/structcpp__restapi_1_1Response.html',1,'cpp_restapi']]]
 ];
