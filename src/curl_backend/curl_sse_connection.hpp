@@ -36,6 +36,8 @@ namespace cpp_restapi::CurlBackend
         void close() override;
 
     private:
+        void closeImpl();
+
         std::string m_address;
         std::map<std::string, std::string> m_headerEntries;
         std::thread m_thread;

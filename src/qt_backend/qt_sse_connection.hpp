@@ -38,6 +38,8 @@ namespace cpp_restapi::QtBackend
         void close() override;
 
     private:
+        void closeImpl();
+
         QNetworkAccessManager& m_networkManager;
         std::string m_address;
         std::map<std::string, std::string> m_headerEntries;
