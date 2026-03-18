@@ -103,4 +103,38 @@ namespace cpp_restapi::QtBackend
         sse->subscribe(request, std::move(callback));
         return sse;
     }
+
+
+    void Connection::fetch(const std::string& url, FetchCallback onSuccess, ErrorCallback onError)
+    {
+        QNetworkRequest request = prepareRequest();
+        request.setUrl(QUrl(QString::fromStdString(url)));
+        QNetworkReply* reply = m_networkManager.get(request);
+
+        QObject::connect(reply, &QNetworkReply::finished,
+            [reply, onSuccess = std::move(onSuccess), onError = std::move(onError)]()
+        {
+            reply->deleteLater();
+
+            if (reply->error() == QNetworkReply::NoError)
+            {
+                Response resp;
+                resp.body = reply->readAll().toStdString();
+
+                QString header;
+                const QList<QByteArray> headerList = reply->rawHeaderList();
+                for (const QByteArray& head : headerList)
+                    header.append(QString("%1: %2\n").arg(head.constData()).arg(reply->rawHeader(head).constData()));
+                resp.headers = header.toStdString();
+
+                if (onSuccess)
+                    onSuccess(std::move(resp));
+            }
+            else
+            {
+                if (onError)
+                    onError(reply->errorString().toStdString());
+            }
+        });
+    }
 }
