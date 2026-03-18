@@ -2,6 +2,8 @@
 #include <cpp_restapi/base_connection.hpp>
 #include <cpp_restapi/link_header_pagination_strategy.hpp>
 
+#include <thread>
+
 
 namespace cpp_restapi
 {
@@ -79,6 +81,24 @@ const std::map<std::string, std::string>& BaseConnection::getHeaderEntries() con
 const std::string & BaseConnection::address() const
 {
     return m_address;
+}
+
+
+void BaseConnection::fetch(const std::string& url, FetchCallback onSuccess, ErrorCallback onError)
+{
+    std::thread([this, url, onSuccess = std::move(onSuccess), onError = std::move(onError)]() {
+        auto result = fetchResponse(url);
+        if (result)
+        {
+            if (onSuccess)
+                onSuccess(std::move(*result));
+        }
+        else
+        {
+            if (onError)
+                onError(result.error().message);
+        }
+    }).detach();
 }
 
 }
