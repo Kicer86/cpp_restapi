@@ -133,7 +133,7 @@ namespace cpp_restapi::GitHub
     }
 
     std::string Request::listCommits(const std::string& owner, const std::string& repo) {
-        const std::string request = std::string("repos/") + owner + "/" + repo + "/issues";
+        const std::string request = std::string("repos/") + owner + "/" + repo + "/commits";
         return doRequest(request);
     }
 
@@ -223,7 +223,7 @@ namespace cpp_restapi::GitHub
 
     std::string Request::listOrgEvent(const std::string& org)
     {
-        const std::string request = std::string("orgs/") + org + "/" + "/events";
+        const std::string request = std::string("orgs/") + org + "/events";
         return doRequest(request);
     }
 
