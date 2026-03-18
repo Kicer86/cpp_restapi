@@ -9,8 +9,15 @@ int main(int argc, char** argv)
     // Access The Star Wars API
     cpp_restapi::CppHttplibBackend::Connection connection("https://swapi.dev/api", {});
 
-    std::cout << connection.get("people/1") << '\n';
-    std::cout << connection.get("starships/12/") << '\n';
+    // fetch() returns std::expected<std::string, HttpError>
+    for (const auto& endpoint: {"people/1", "starships/12/"})
+    {
+        const auto result = connection.fetch(endpoint);
+        if (result)
+            std::cout << result.value() << '\n';
+        else
+            std::cerr << "Error " << result.error().statusCode << ": " << result.error().message << '\n';
+    }
 
     return 0;
 }
