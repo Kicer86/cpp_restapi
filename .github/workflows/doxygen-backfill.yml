@@ -1,40 +1,23 @@
-
-name: Generate Doxygen
+name: Backfill Doxygen for existing tags
 
 on:
-  push:
-    branches:
-      - master
-    tags:
-      - 'v*'
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  build:
+  backfill:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repo
+    - name: Checkout Repo (full history)
       uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
 
-    - name: Determine version slug
-      id: version
-      run: |
-        if [[ "$GITHUB_REF" == refs/tags/* ]]; then
-          echo "slug=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
-        else
-          echo "slug=master" >> "$GITHUB_OUTPUT"
-        fi
-
-    - name: Set version in Doxyfile
-      run: |
-        sed -i "s/^PROJECT_NUMBER.*/PROJECT_NUMBER = ${{ steps.version.outputs.slug }}/" Doxyfile
-
-    - name: Generate Docs
-      uses: mattnotmitt/doxygen-action@v1.12.0
+    - name: Install Doxygen
+      run: sudo apt-get update && sudo apt-get install -y doxygen graphviz
 
     - name: Checkout gh-pages
       uses: actions/checkout@v6
@@ -45,22 +28,39 @@ jobs:
     - name: Clean up legacy flat layout
       run: |
         cd gh-pages
-        # Remove everything except version directories, .nojekyll, index.html, and .git
         find . -maxdepth 1 \
           ! -name '.' ! -name '.git' ! -name '.nojekyll' ! -name 'index.html' \
           ! -name 'master' ! -name 'v*' \
           -exec rm -rf {} +
 
-    - name: Update versioned docs
+    - name: Generate docs for each tag
       run: |
-        SLUG="${{ steps.version.outputs.slug }}"
-        rm -rf "gh-pages/${SLUG}"
-        cp -r docs/html "gh-pages/${SLUG}"
+        for TAG in $(git tag -l 'v*' | sort -rV); do
+          if [ -d "gh-pages/${TAG}" ]; then
+            echo "Skipping ${TAG} — already exists"
+            continue
+          fi
+          echo "=== Generating docs for ${TAG} ==="
+          git checkout "${TAG}" -- . || continue
+          sed -i "s/^PROJECT_NUMBER.*/PROJECT_NUMBER = ${TAG}/" Doxyfile
+          doxygen Doxyfile
+          cp -r docs/html "gh-pages/${TAG}"
+          rm -rf docs/html
+          git checkout HEAD -- .
+        done
+
+    - name: Generate docs for master
+      run: |
+        git checkout master -- .
+        sed -i "s/^PROJECT_NUMBER.*/PROJECT_NUMBER = master/" Doxyfile
+        doxygen Doxyfile
+        rm -rf gh-pages/master
+        cp -r docs/html gh-pages/master
+        git checkout HEAD -- .
 
     - name: Generate landing page
       run: |
         cd gh-pages
-        # collect all version directories (vX.Y.Z), sort descending
         VERSIONS=$(find . -maxdepth 1 -type d -name 'v*' | sed 's|./||' | sort -rV)
 
         cat > index.html << 'HEADER'
