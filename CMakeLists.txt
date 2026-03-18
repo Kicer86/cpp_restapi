@@ -35,6 +35,7 @@ endif()
 
 add_library(cpp_restapi
     src/base_connection.cpp
+    src/threaded_connection.cpp
     src/header_utils.cpp
     src/sse_parser.cpp
     src/link_header_pagination_strategy.cpp
