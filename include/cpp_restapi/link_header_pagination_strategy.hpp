@@ -10,7 +10,7 @@ namespace cpp_restapi
     /**
      * @brief Pagination strategy using RFC 5988 Link headers
      *
-     * Discovers the next page via the Link: <url>; rel="next" header
+     * Discovers the next page via the `Link: <url>; rel="next"` header
      * and merges JSON responses by concatenating arrays or deep-merging objects.
      * Used by GitHub API and other services that paginate with Link headers.
      */
