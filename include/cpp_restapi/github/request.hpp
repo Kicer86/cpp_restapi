@@ -82,10 +82,16 @@ namespace cpp_restapi::GitHub
             // --------------- user info related api
 
             /**
-             * @brief get the authenticated user info
+             * @brief Get the authenticated user info
              *
-             * @return std::string json std::string response
+             * @return api response in json format
              */
+            std::string getAuthenticatedUser();
+
+            /**
+             * @deprecated Use getAuthenticatedUser() instead (fixes typo in method name).
+             */
+            [[deprecated("Use getAuthenticatedUser() instead")]]
             std::string getAuntenticatedUser();
 
             /**
