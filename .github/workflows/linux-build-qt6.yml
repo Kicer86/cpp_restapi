@@ -1,4 +1,3 @@
-
 name: Build-Linux-Qt6
 
 on:
@@ -9,11 +8,10 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04]
         compiler:
           - { cc: gcc, cxx: g++ }
           - { cc: clang, cxx: clang++ }
@@ -23,21 +21,9 @@ jobs:
       with:
         submodules: false
 
-    - name: Install system dependencies
-      run: |
-        sudo apt-get update &&  \
-        sudo apt-get install    \
-          ninja-build           \
-          libgmock-dev          \
-          qt6-base-dev          \
-          libcurl4-openssl-dev  \
-          libjsoncpp-dev
-
-    - name: Install cpp-httplib from source
-      run: |
-        git clone --depth 1 https://github.com/yhirose/cpp-httplib.git /tmp/cpp-httplib
-        cmake -B /tmp/cpp-httplib/build -S /tmp/cpp-httplib -DHTTPLIB_USE_ZSTD_IF_AVAILABLE=OFF
-        sudo cmake --install /tmp/cpp-httplib/build
+    - uses: ./.github/actions/setup-linux
+      with:
+        extra-packages: qt6-base-dev
 
     - name: Build
       uses: ashutoshvarma/action-cmake-build@master
@@ -46,4 +32,3 @@ jobs:
         build-type: Release
         configure-options: -DCppRestAPI_Tests=ON -DCppRestAPI_UseQt6=ON -DCppRestAPI_Examples=ON -DCMAKE_C_COMPILER=${{ matrix.compiler.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.compiler.cxx }}
         run-test: true
-

@@ -9,7 +9,7 @@ on:
 jobs:
   asan:
     name: ASan (${{ matrix.compiler.cc }}, ${{ matrix.build_type }})
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -23,21 +23,9 @@ jobs:
       with:
         submodules: false
 
-    - name: Install system dependencies
-      run: |
-        sudo apt-get update &&  \
-        sudo apt-get install    \
-          ninja-build           \
-          libgmock-dev          \
-          qt6-base-dev          \
-          libcurl4-openssl-dev  \
-          libjsoncpp-dev
-
-    - name: Install cpp-httplib from source
-      run: |
-        git clone --depth 1 https://github.com/yhirose/cpp-httplib.git /tmp/cpp-httplib
-        cmake -B /tmp/cpp-httplib/build -S /tmp/cpp-httplib -DHTTPLIB_USE_ZSTD_IF_AVAILABLE=OFF
-        sudo cmake --install /tmp/cpp-httplib/build
+    - uses: ./.github/actions/setup-linux
+      with:
+        extra-packages: qt6-base-dev
 
     - name: Configure
       run: |
@@ -62,7 +50,7 @@ jobs:
 
   ubsan:
     name: UBSan (${{ matrix.compiler.cc }})
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -75,21 +63,9 @@ jobs:
       with:
         submodules: false
 
-    - name: Install system dependencies
-      run: |
-        sudo apt-get update &&  \
-        sudo apt-get install    \
-          ninja-build           \
-          libgmock-dev          \
-          qt6-base-dev          \
-          libcurl4-openssl-dev  \
-          libjsoncpp-dev
-
-    - name: Install cpp-httplib from source
-      run: |
-        git clone --depth 1 https://github.com/yhirose/cpp-httplib.git /tmp/cpp-httplib
-        cmake -B /tmp/cpp-httplib/build -S /tmp/cpp-httplib -DHTTPLIB_USE_ZSTD_IF_AVAILABLE=OFF
-        sudo cmake --install /tmp/cpp-httplib/build
+    - uses: ./.github/actions/setup-linux
+      with:
+        extra-packages: qt6-base-dev
 
     - name: Configure
       run: |
