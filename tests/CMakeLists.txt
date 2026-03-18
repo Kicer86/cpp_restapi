@@ -1,7 +1,7 @@
 
 find_package(GTest REQUIRED CONFIG)
-
 find_package(httplib)
+
 
 if(httplib_FOUND)
     set(HTTPLIB_LIBRARIES httplib::httplib)
@@ -18,6 +18,7 @@ add_executable(api_tests
     sse_parser_tests.cpp
     main.cpp
 )
+
 
 target_link_libraries(api_tests
     PRIVATE
