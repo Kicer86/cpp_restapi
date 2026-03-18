@@ -1,6 +1,10 @@
 
 #include <gmock/gmock.h>
 
+#include <chrono>
+#include <future>
+#include <thread>
+
 #include <cpp_restapi/threaded_connection.hpp>
 #include <cpp_restapi/link_header_pagination_strategy.hpp>
 
@@ -42,6 +46,26 @@ namespace
 
     private:
         std::map<std::string, PageResponse> m_pages;
+    };
+
+
+    class ThrowingStubConnection : public ThreadedConnection
+    {
+    public:
+        using ThreadedConnection::ThreadedConnection;
+
+        std::atomic<bool> fetchPageCalled{false};
+
+        std::pair<std::string, std::string> fetchPage(const std::string&) override
+        {
+            fetchPageCalled.store(true, std::memory_order_release);
+            throw std::runtime_error("simulated fetch error");
+        }
+
+        std::unique_ptr<ISseConnection> subscribe(const std::string&, EventCallback) override
+        {
+            return nullptr;
+        }
     };
 }
 
@@ -143,4 +167,60 @@ TEST(BaseConnectionTest, getDelegatesToFetchWithPagination)
     const auto result = conn.get("items");
 #pragma GCC diagnostic pop
     EXPECT_EQ(result, "{\"a\":1,\"b\":2}\n");
+}
+
+
+// --- async fetch(url, onSuccess, onError) ---
+
+TEST(ThreadedConnectionTest, fetchCallsOnSuccessWithBodyAndHeaders)
+{
+    StubConnection conn("http://localhost", {});
+    conn.addPage("http://localhost/api/data", {"async body", "X-Custom: header\n"});
+
+    std::promise<Response> promise;
+    auto future = promise.get_future();
+
+    conn.fetch("http://localhost/api/data",
+        [&promise](Response resp) { promise.set_value(std::move(resp)); });
+
+    ASSERT_EQ(future.wait_for(std::chrono::seconds(5)), std::future_status::ready);
+    const auto resp = future.get();
+    EXPECT_EQ(resp.body,    "async body");
+    EXPECT_EQ(resp.headers, "X-Custom: header\n");
+}
+
+TEST(ThreadedConnectionTest, fetchCallsOnErrorWhenFetchPageThrows)
+{
+    ThrowingStubConnection conn("http://localhost", {});
+
+    std::promise<std::string> promise;
+    auto future = promise.get_future();
+
+    conn.fetch("http://localhost/api/data",
+        [](Response) {},
+        [&promise](std::string err) { promise.set_value(std::move(err)); });
+
+    ASSERT_EQ(future.wait_for(std::chrono::seconds(5)), std::future_status::ready);
+    EXPECT_EQ(future.get(), "simulated fetch error");
+}
+
+TEST(ThreadedConnectionTest, fetchWithoutErrorCallbackDoesNotCrashOnException)
+{
+    ThrowingStubConnection conn("http://localhost", {});
+
+    // Pass no error callback — exception must be swallowed silently.
+    conn.fetch("http://localhost/api/data", {}, {});
+
+    // Spin-wait until fetchPage() has been entered (and the throw issued).
+    // Once fetchPageCalled is true, 'this' is no longer accessed by the thread,
+    // so destroying 'conn' at scope exit is safe.
+    const auto deadline = std::chrono::steady_clock::now() + std::chrono::seconds(5);
+    while (!conn.fetchPageCalled.load(std::memory_order_acquire) &&
+           std::chrono::steady_clock::now() < deadline)
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    }
+
+    EXPECT_TRUE(conn.fetchPageCalled.load());
+    // Reaching here without a crash confirms the missing callback is handled safely.
 }
