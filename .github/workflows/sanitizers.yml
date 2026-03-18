@@ -36,7 +36,7 @@ jobs:
     - name: Install cpp-httplib from source
       run: |
         git clone --depth 1 https://github.com/yhirose/cpp-httplib.git /tmp/cpp-httplib
-        cmake -B /tmp/cpp-httplib/build -S /tmp/cpp-httplib
+        cmake -B /tmp/cpp-httplib/build -S /tmp/cpp-httplib -DHTTPLIB_USE_ZSTD_IF_AVAILABLE=OFF
         sudo cmake --install /tmp/cpp-httplib/build
 
     - name: Configure
@@ -88,7 +88,7 @@ jobs:
     - name: Install cpp-httplib from source
       run: |
         git clone --depth 1 https://github.com/yhirose/cpp-httplib.git /tmp/cpp-httplib
-        cmake -B /tmp/cpp-httplib/build -S /tmp/cpp-httplib
+        cmake -B /tmp/cpp-httplib/build -S /tmp/cpp-httplib -DHTTPLIB_USE_ZSTD_IF_AVAILABLE=OFF
         sudo cmake --install /tmp/cpp-httplib/build
 
     - name: Configure
