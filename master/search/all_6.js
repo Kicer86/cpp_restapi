@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['get_0',['get',['../dd/d4e/classcpp__restapi_1_1BaseConnection.html#a0450232692026b9fe147ef08b31f7b98',1,'cpp_restapi::BaseConnection::get()'],['../de/dd0/structcpp__restapi_1_1IConnection.html#ab3ee829a93ec8753eb56a95adb5b8229',1,'cpp_restapi::IConnection::get()']]],
+  ['get_0',['get',['../de/dd0/structcpp__restapi_1_1IConnection.html#ab3ee829a93ec8753eb56a95adb5b8229',1,'cpp_restapi::IConnection::get()'],['../dd/d4e/classcpp__restapi_1_1BaseConnection.html#a0450232692026b9fe147ef08b31f7b98',1,'cpp_restapi::BaseConnection::get()']]],
   ['getauntenticateduser_1',['getAuntenticatedUser',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#afd16bf90636956f67d533d237ed238df',1,'cpp_restapi::GitHub::Request']]],
   ['getauthenticateduser_2',['getAuthenticatedUser',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#ab296ccbe30f1b7189faf082a53c37c3c',1,'cpp_restapi::GitHub::Request']]],
   ['getcommitcount_3',['getCommitCount',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#ac30a57177a77c6ecf1985284c187ef50',1,'cpp_restapi::GitHub::Request']]],
