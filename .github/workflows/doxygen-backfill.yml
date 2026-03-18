@@ -1,0 +1,106 @@
+name: Backfill Doxygen for existing tags
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repo (full history)
+      uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
+
+    - name: Install Doxygen
+      run: sudo apt-get update && sudo apt-get install -y doxygen graphviz
+
+    - name: Checkout gh-pages
+      uses: actions/checkout@v6
+      with:
+        ref: gh-pages
+        path: gh-pages
+
+    - name: Clean up legacy flat layout
+      run: |
+        cd gh-pages
+        find . -maxdepth 1 \
+          ! -name '.' ! -name '.git' ! -name '.nojekyll' ! -name 'index.html' \
+          ! -name 'master' ! -name 'v*' \
+          -exec rm -rf {} +
+
+    - name: Generate docs for each tag
+      run: |
+        for TAG in $(git tag -l 'v*' | sort -rV); do
+          if [ -d "gh-pages/${TAG}" ]; then
+            echo "Skipping ${TAG} — already exists"
+            continue
+          fi
+          echo "=== Generating docs for ${TAG} ==="
+          git checkout "${TAG}" -- . || continue
+          sed -i "s/^PROJECT_NUMBER.*/PROJECT_NUMBER = ${TAG}/" Doxyfile
+          doxygen Doxyfile
+          cp -r docs/html "gh-pages/${TAG}"
+          rm -rf docs/html
+          git checkout HEAD -- .
+        done
+
+    - name: Generate docs for master
+      run: |
+        git checkout master -- .
+        sed -i "s/^PROJECT_NUMBER.*/PROJECT_NUMBER = master/" Doxyfile
+        doxygen Doxyfile
+        rm -rf gh-pages/master
+        cp -r docs/html gh-pages/master
+        git checkout HEAD -- .
+
+    - name: Generate landing page
+      run: |
+        cd gh-pages
+        VERSIONS=$(find . -maxdepth 1 -type d -name 'v*' | sed 's|./||' | sort -rV)
+
+        cat > index.html << 'HEADER'
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>cpp Rest API – Documentation</title>
+          <style>
+            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif; max-width: 700px; margin: 60px auto; padding: 0 20px; color: #333; }
+            h1 { border-bottom: 2px solid #eee; padding-bottom: 12px; }
+            ul { list-style: none; padding: 0; }
+            li { margin: 8px 0; }
+            a { color: #0366d6; text-decoration: none; font-size: 1.1em; }
+            a:hover { text-decoration: underline; }
+            .latest-tag { font-size: 0.8em; color: #6a737d; margin-left: 6px; }
+          </style>
+        </head>
+        <body>
+          <h1>cpp Rest API – Documentation</h1>
+          <ul>
+            <li><a href="master/">master</a> <span class="latest-tag">(development)</span></li>
+        HEADER
+
+        FIRST=true
+        for V in $VERSIONS; do
+          TAG=""
+          if $FIRST; then TAG=' <span class="latest-tag">(latest release)</span>'; FIRST=false; fi
+          echo "    <li><a href=\"${V}/\">${V}</a>${TAG}</li>" >> index.html
+        done
+
+        cat >> index.html << 'FOOTER'
+          </ul>
+        </body>
+        </html>
+        FOOTER
+
+    - name: Deploy to Github Pages
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./gh-pages
