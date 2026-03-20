@@ -10,6 +10,12 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Install LLVM 19 apt repository
+      shell: bash
+      run: |
+        wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key | sudo tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc
+        echo "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-19 main" | sudo tee /etc/apt/sources.list.d/llvm-19.list
+
     - name: Install system dependencies
       shell: bash
       run: |
@@ -19,6 +25,7 @@ runs:
           libgmock-dev          \
           libcurl4-openssl-dev  \
           libjsoncpp-dev        \
+          clang-19              \
           ${{ inputs.extra-packages }}
 
     # Ubuntu 24.04 ships libcpp-httplib-dev 0.14.3 which segfaults when
