@@ -134,7 +134,10 @@ namespace cpp_restapi::QtBackend
             else
             {
                 if (onError)
-                    onError(reply->errorString().toStdString());
+                {
+                    const int code = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+                    onError(HttpError{code, reply->readAll().toStdString(), reply->errorString().toStdString()});
+                }
             }
         });
     }

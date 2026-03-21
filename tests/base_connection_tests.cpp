@@ -193,15 +193,17 @@ TEST(ThreadedConnectionTest, fetchCallsOnErrorWhenFetchPageThrows)
 {
     ThrowingStubConnection conn("http://localhost", {});
 
-    std::promise<std::string> promise;
+    std::promise<HttpError> promise;
     auto future = promise.get_future();
 
     conn.fetch("http://localhost/api/data",
         [](Response) {},
-        [&promise](std::string err) { promise.set_value(std::move(err)); });
+        [&promise](HttpError err) { promise.set_value(std::move(err)); });
 
     ASSERT_EQ(future.wait_for(std::chrono::seconds(5)), std::future_status::ready);
-    EXPECT_EQ(future.get(), "simulated fetch error");
+    const auto err = future.get();
+    EXPECT_EQ(err.statusCode, 0);
+    EXPECT_EQ(err.message, "simulated fetch error");
 }
 
 TEST(ThreadedConnectionTest, fetchWithoutErrorCallbackDoesNotCrashOnException)

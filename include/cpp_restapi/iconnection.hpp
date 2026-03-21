@@ -34,7 +34,7 @@ namespace cpp_restapi
         public:
             using EventCallback   = std::function<void(const SseEvent&)>;
             using FetchCallback   = std::function<void(Response)>;
-            using ErrorCallback   = std::function<void(std::string)>;
+            using ErrorCallback   = std::function<void(HttpError)>;
 
             virtual ~IConnection() = default;
 
@@ -97,8 +97,8 @@ namespace cpp_restapi
              * (Qt backend) — callers must handle thread-safety accordingly.
              *
              * @param url  Full URL to fetch (e.g. "http://host:port/api/v1/info")
-             * @param onSuccess called with Response{body, headers} on success
-             * @param onError   called with an error string on failure (optional)
+             * @param onSuccess called with Response{body, headers, statusCode} on success
+             * @param onError   called with an HttpError on failure (optional)
              */
             virtual void fetch(const std::string& url,
                                FetchCallback onSuccess,

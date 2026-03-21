@@ -32,13 +32,13 @@ void ThreadedConnection::fetch(const std::string& url, FetchCallback onSuccess, 
             else
             {
                 if (onError)
-                    onError(result.error().message);
+                    onError(std::move(result.error()));
             }
         }
         catch (const std::exception& e)
         {
             if (onError)
-                onError(e.what());
+                onError(HttpError{0, {}, e.what()});
         }
 
         {
