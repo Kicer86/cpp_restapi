@@ -4,6 +4,7 @@ var dir_1dfdaf2a20c264418d0279052f697d7b =
     [ "base_connection.hpp", "de/dcc/base__connection_8hpp.html", "de/dcc/base__connection_8hpp" ],
     [ "cpp-httplib_connection.hpp", "dc/dfa/cpp-httplib__connection_8hpp.html", "dc/dfa/cpp-httplib__connection_8hpp" ],
     [ "curl_connection.hpp", "de/d0e/curl__connection_8hpp.html", "de/d0e/curl__connection_8hpp" ],
+    [ "http_error.hpp", "da/dfa/http__error_8hpp.html", "da/dfa/http__error_8hpp" ],
     [ "iconnection.hpp", "d9/d6d/iconnection_8hpp.html", "d9/d6d/iconnection_8hpp" ],
     [ "ipagination_strategy.hpp", "d7/d02/ipagination__strategy_8hpp.html", "d7/d02/ipagination__strategy_8hpp" ],
     [ "isse_connection.hpp", "d8/dc4/isse__connection_8hpp.html", "d8/dc4/isse__connection_8hpp" ],

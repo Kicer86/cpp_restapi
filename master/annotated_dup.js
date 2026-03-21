@@ -15,6 +15,7 @@ var annotated_dup =
         [ "Connection", "d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html", "d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection" ]
       ] ],
       [ "BaseConnection", "dd/d4e/classcpp__restapi_1_1BaseConnection.html", "dd/d4e/classcpp__restapi_1_1BaseConnection" ],
+      [ "HttpError", "d5/d9b/structcpp__restapi_1_1HttpError.html", "d5/d9b/structcpp__restapi_1_1HttpError" ],
       [ "IConnection", "de/dd0/structcpp__restapi_1_1IConnection.html", "de/dd0/structcpp__restapi_1_1IConnection" ],
       [ "IPaginationStrategy", "db/d62/structcpp__restapi_1_1IPaginationStrategy.html", "db/d62/structcpp__restapi_1_1IPaginationStrategy" ],
       [ "ISseConnection", "d6/dff/structcpp__restapi_1_1ISseConnection.html", "d6/dff/structcpp__restapi_1_1ISseConnection" ],

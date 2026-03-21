@@ -1,6 +1,7 @@
 var hierarchy =
 [
     [ "cpp_restapi::GitHub::ConnectionBuilder", "d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html", null ],
+    [ "cpp_restapi::HttpError", "d5/d9b/structcpp__restapi_1_1HttpError.html", null ],
     [ "cpp_restapi::IConnection", "de/dd0/structcpp__restapi_1_1IConnection.html", [
       [ "cpp_restapi::BaseConnection", "dd/d4e/classcpp__restapi_1_1BaseConnection.html", [
         [ "cpp_restapi::CppHttplibBackend::Connection", "de/d13/classcpp__restapi_1_1CppHttplibBackend_1_1Connection.html", null ],

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['qt_5fconnection_2ehpp_0',['qt_connection.hpp',['../de/dfe/qt__connection_8hpp.html',1,'']]]
+  ['link_5fheader_5fpagination_5fstrategy_2ehpp_0',['link_header_pagination_strategy.hpp',['../d0/de8/link__header__pagination__strategy_8hpp.html',1,'']]]
 ];
