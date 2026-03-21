@@ -43,15 +43,14 @@ namespace cpp_restapi
 
             virtual ~IConnection() = default;
 
+            // -- connection info --
+
             /**
-             * @brief perform a request to api
-             * @param request api request. For example "users/SomeUserName/repos"
-             * @return api response in json format
-             * @deprecated Use fetch() for single requests or fetch() with IPaginationStrategy for paginated requests.
-             *             This method has hardcoded GitHub-specific pagination logic.
+             * @brief return API url
              */
-            [[deprecated("Use fetch() or fetch() with IPaginationStrategy instead")]]
-            virtual std::string get(const std::string& request) = 0;
+            virtual const std::string& url() const = 0;
+
+            // -- synchronous fetch --
 
             /**
              * @brief Perform a single HTTP request
@@ -79,18 +78,7 @@ namespace cpp_restapi
              */
             virtual std::expected<Response, HttpError> fetchResponse(const std::string& url) = 0;
 
-            /**
-             * @brief return API url
-             */
-            virtual const std::string& url() const = 0;
-
-            /**
-             * @brief Subscribe to an SSE endpoint
-             * @param request API endpoint path (e.g. "events" or "api/v1/events")
-             * @param callback function called for each received SSE event
-             * @return SSE connection handle; use its close() method to stop
-             */
-            virtual std::unique_ptr<ISseConnection> subscribe(const std::string& request, EventCallback callback) = 0;
+            // -- asynchronous fetch --
 
             /**
              * @brief Perform an HTTP GET request asynchronously
@@ -127,6 +115,28 @@ namespace cpp_restapi
                                IPaginationStrategy& strategy,
                                StringCallback onSuccess,
                                ErrorCallback onError = {}) = 0;
+
+            // -- Server-Sent Events --
+
+            /**
+             * @brief Subscribe to an SSE endpoint
+             * @param request API endpoint path (e.g. "events" or "api/v1/events")
+             * @param callback function called for each received SSE event
+             * @return SSE connection handle; use its close() method to stop
+             */
+            virtual std::unique_ptr<ISseConnection> subscribe(const std::string& request, EventCallback callback) = 0;
+
+            // -- deprecated --
+
+            /**
+             * @brief perform a request to api
+             * @param request api request. For example "users/SomeUserName/repos"
+             * @return api response in json format
+             * @deprecated Use fetch() for single requests or fetch() with IPaginationStrategy for paginated requests.
+             *             This method has hardcoded GitHub-specific pagination logic.
+             */
+            [[deprecated("Use fetch() or fetch() with IPaginationStrategy instead")]]
+            virtual std::string get(const std::string& request) = 0;
     };
 }
 

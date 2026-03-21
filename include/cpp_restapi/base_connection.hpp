@@ -19,13 +19,22 @@ namespace cpp_restapi
     public:
         explicit BaseConnection(const std::string& address, const std::map<std::string, std::string>& headerEntries);
 
-        std::string get(const std::string &) final;
+        // -- connection info --
+        const std::string& url() const final;
+
+        // -- synchronous fetch --
         std::expected<std::string, HttpError> fetch(const std::string& request) final;
         std::expected<std::string, HttpError> fetch(const std::string& request, IPaginationStrategy& strategy) final;
         std::expected<Response, HttpError> fetchResponse(const std::string& url) final;
-        const std::string& url() const final;
+
+        // -- asynchronous fetch --
         CancellationToken fetch(const std::string& request, FetchCallback onSuccess, ErrorCallback onError = {}) final;
         CancellationToken fetch(const std::string& request, IPaginationStrategy& strategy, StringCallback onSuccess, ErrorCallback onError = {}) final;
+
+        // -- deprecated --
+        std::string get(const std::string &) final;
+
+        // -- backend interface --
         virtual Response fetchPage(const std::string& request) = 0;
 
     protected:

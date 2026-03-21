@@ -14,13 +14,15 @@ BaseConnection::BaseConnection(const std::string& address, const std::map<std::s
 }
 
 
-std::string BaseConnection::get(const std::string& request)
+// -- connection info --
+
+const std::string& BaseConnection::url() const
 {
-    LinkHeaderPaginationStrategy strategy;
-    // Deprecated method: throws std::bad_expected_access<HttpError> on error.
-    return fetch(request, strategy).value();
+    return m_address;
 }
 
+
+// -- synchronous fetch --
 
 std::expected<std::string, HttpError> BaseConnection::fetch(const std::string& request)
 {
@@ -49,12 +51,6 @@ std::expected<std::string, HttpError> BaseConnection::fetch(const std::string& r
 }
 
 
-const std::string& BaseConnection::url() const
-{
-    return m_address;
-}
-
-
 std::expected<Response, HttpError> BaseConnection::fetchResponse(const std::string& requestUrl)
 {
     Response resp = fetchPage(requestUrl);
@@ -70,17 +66,7 @@ std::expected<Response, HttpError> BaseConnection::fetchResponse(const std::stri
 }
 
 
-const std::map<std::string, std::string>& BaseConnection::getHeaderEntries() const
-{
-    return m_headerEntries;
-}
-
-
-const std::string & BaseConnection::address() const
-{
-    return m_address;
-}
-
+// -- asynchronous fetch --
 
 CancellationToken BaseConnection::fetch(const std::string& request, FetchCallback onSuccess, ErrorCallback onError)
 {
@@ -138,6 +124,30 @@ CancellationToken BaseConnection::fetch(const std::string& request, IPaginationS
     (*fetchNextPage)(firstUrl);
 
     return cancel;
+}
+
+
+// -- deprecated --
+
+std::string BaseConnection::get(const std::string& request)
+{
+    LinkHeaderPaginationStrategy strategy;
+    // Deprecated method: throws std::bad_expected_access<HttpError> on error.
+    return fetch(request, strategy).value();
+}
+
+
+// -- protected helpers --
+
+const std::map<std::string, std::string>& BaseConnection::getHeaderEntries() const
+{
+    return m_headerEntries;
+}
+
+
+const std::string & BaseConnection::address() const
+{
+    return m_address;
 }
 
 }
