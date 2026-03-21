@@ -180,7 +180,7 @@ TEST(ThreadedConnectionTest, fetchCallsOnSuccessWithBodyAndHeaders)
     std::promise<Response> promise;
     auto future = promise.get_future();
 
-    conn.fetch("http://localhost/api/data",
+    conn.fetch("api/data",
         [&promise](Response resp) { promise.set_value(std::move(resp)); });
 
     ASSERT_EQ(future.wait_for(std::chrono::seconds(5)), std::future_status::ready);
@@ -196,7 +196,7 @@ TEST(ThreadedConnectionTest, fetchCallsOnErrorWhenFetchPageThrows)
     std::promise<HttpError> promise;
     auto future = promise.get_future();
 
-    conn.fetch("http://localhost/api/data",
+    conn.fetch("api/data",
         [](Response) {},
         [&promise](HttpError err) { promise.set_value(std::move(err)); });
 
@@ -211,7 +211,7 @@ TEST(ThreadedConnectionTest, fetchWithoutErrorCallbackDoesNotCrashOnException)
     ThrowingStubConnection conn("http://localhost", {});
 
     // Pass no error callback — exception must be swallowed silently.
-    conn.fetch("http://localhost/api/data", {}, {});
+    conn.fetch("api/data", {}, {});
 
     // Spin-wait until fetchPage() has been entered (and the throw issued).
     // Once fetchPageCalled is true, 'this' is no longer accessed by the thread,

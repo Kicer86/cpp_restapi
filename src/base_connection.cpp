@@ -82,4 +82,9 @@ const std::string & BaseConnection::address() const
 }
 
 
+void BaseConnection::fetch(const std::string& request, FetchCallback onSuccess, ErrorCallback onError)
+{
+    fetchAsync(m_address + "/" + request, std::move(onSuccess), std::move(onError));
+}
+
 }

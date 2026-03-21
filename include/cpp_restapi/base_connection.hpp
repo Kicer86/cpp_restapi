@@ -24,9 +24,14 @@ namespace cpp_restapi
         std::expected<std::string, HttpError> fetch(const std::string& request, IPaginationStrategy& strategy) final;
         std::expected<Response, HttpError> fetchResponse(const std::string& url) final;
         const std::string& url() const final;
+        void fetch(const std::string& request, FetchCallback onSuccess, ErrorCallback onError = {}) final;
         virtual Response fetchPage(const std::string& request) = 0;
 
     protected:
+        virtual void fetchAsync(const std::string& fullUrl,
+                                FetchCallback onSuccess,
+                                ErrorCallback onError) = 0;
+
         const std::map<std::string, std::string>& getHeaderEntries() const;
 
         const std::string& address() const;

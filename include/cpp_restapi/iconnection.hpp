@@ -91,16 +91,16 @@ namespace cpp_restapi
              * @brief Perform an HTTP GET request asynchronously
              *
              * Non-blocking. @p onSuccess is called with the full response when the
-             * request completes successfully; @p onError is called with an error
-             * message if the request fails. The callbacks may be invoked from a
+             * request completes successfully; @p onError is called with an HttpError
+             * if the request fails. The callbacks may be invoked from a
              * background thread (non-Qt backends) or from the Qt event-loop thread
              * (Qt backend) — callers must handle thread-safety accordingly.
              *
-             * @param url  Full URL to fetch (e.g. "http://host:port/api/v1/info")
+             * @param request relative API path (e.g. "users/octocat")
              * @param onSuccess called with Response{body, headers, statusCode} on success
              * @param onError   called with an HttpError on failure (optional)
              */
-            virtual void fetch(const std::string& url,
+            virtual void fetch(const std::string& request,
                                FetchCallback onSuccess,
                                ErrorCallback onError = {}) = 0;
     };

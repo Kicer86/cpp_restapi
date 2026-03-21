@@ -12,7 +12,7 @@ ThreadedConnection::~ThreadedConnection()
     m_cv.wait(lock, [this]{ return m_activeCount == 0; });
 }
 
-void ThreadedConnection::fetch(const std::string& url, FetchCallback onSuccess, ErrorCallback onError)
+void ThreadedConnection::fetchAsync(const std::string& url, FetchCallback onSuccess, ErrorCallback onError)
 {
     {
         std::lock_guard lock(m_mutex);

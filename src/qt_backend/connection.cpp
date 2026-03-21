@@ -105,7 +105,7 @@ namespace cpp_restapi::QtBackend
     }
 
 
-    void Connection::fetch(const std::string& url, FetchCallback onSuccess, ErrorCallback onError)
+    void Connection::fetchAsync(const std::string& url, FetchCallback onSuccess, ErrorCallback onError)
     {
         QNetworkRequest request = prepareRequest();
         request.setUrl(QUrl(QString::fromStdString(url)));

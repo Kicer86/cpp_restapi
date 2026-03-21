@@ -29,9 +29,10 @@ namespace cpp_restapi
 
         ~ThreadedConnection() override;
 
-        void fetch(const std::string& url,
-                   FetchCallback onSuccess,
-                   ErrorCallback onError = {}) override;
+    protected:
+        void fetchAsync(const std::string& fullUrl,
+                        FetchCallback onSuccess,
+                        ErrorCallback onError) override;
 
     private:
         std::mutex m_mutex;
