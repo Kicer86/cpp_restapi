@@ -67,6 +67,26 @@ namespace
             return nullptr;
         }
     };
+
+
+    class SlowStubConnection : public ThreadedConnection
+    {
+    public:
+        using ThreadedConnection::ThreadedConnection;
+
+        ~SlowStubConnection() override { waitForPending(); }
+
+        Response fetchPage(const std::string&) override
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(200));
+            return {"slow body", "", 200};
+        }
+
+        std::unique_ptr<ISseConnection> subscribe(const std::string&, EventCallback) override
+        {
+            return nullptr;
+        }
+    };
 }
 
 
@@ -225,4 +245,39 @@ TEST(ThreadedConnectionTest, fetchWithoutErrorCallbackDoesNotCrashOnException)
 
     EXPECT_TRUE(conn.fetchPageCalled.load());
     // Reaching here without a crash confirms the missing callback is handled safely.
+}
+
+TEST(ThreadedConnectionTest, cancelledFetchSuppressesCallbacks)
+{
+    SlowStubConnection conn("http://localhost", {});
+
+    std::atomic<bool> callbackInvoked{false};
+
+    auto token = conn.fetch("api/data",
+        [&callbackInvoked](Response) { callbackInvoked.store(true); },
+        [&callbackInvoked](HttpError)   { callbackInvoked.store(true); });
+
+    // Cancel immediately, before the slow fetchPage() completes.
+    token->store(true, std::memory_order_release);
+
+    // Wait for the background thread to finish — destructor joins.
+    // After that, neither callback should have been invoked.
+    // (SlowStubConnection's destructor waits for active threads.)
+}
+
+TEST(ThreadedConnectionTest, cancelledFetchCallbacksNotInvoked)
+{
+    std::atomic<bool> callbackInvoked{false};
+
+    {
+        SlowStubConnection conn("http://localhost", {});
+
+        auto token = conn.fetch("api/data",
+            [&callbackInvoked](Response) { callbackInvoked.store(true); },
+            [&callbackInvoked](HttpError)   { callbackInvoked.store(true); });
+
+        token->store(true, std::memory_order_release);
+    }
+    // conn destroyed — destructor waited for the thread.
+    EXPECT_FALSE(callbackInvoked.load());
 }

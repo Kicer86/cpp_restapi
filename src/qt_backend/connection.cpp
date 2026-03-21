@@ -105,16 +105,19 @@ namespace cpp_restapi::QtBackend
     }
 
 
-    void Connection::fetchAsync(const std::string& url, FetchCallback onSuccess, ErrorCallback onError)
+    void Connection::fetchAsync(const std::string& url, CancellationToken cancel, FetchCallback onSuccess, ErrorCallback onError)
     {
         QNetworkRequest request = prepareRequest();
         request.setUrl(QUrl(QString::fromStdString(url)));
         QNetworkReply* reply = m_networkManager.get(request);
 
         QObject::connect(reply, &QNetworkReply::finished,
-            [reply, onSuccess = std::move(onSuccess), onError = std::move(onError)]()
+            [reply, cancel = std::move(cancel), onSuccess = std::move(onSuccess), onError = std::move(onError)]()
         {
             reply->deleteLater();
+
+            if (cancel->load(std::memory_order_acquire))
+                return;
 
             if (reply->error() == QNetworkReply::NoError)
             {

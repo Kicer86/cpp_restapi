@@ -82,9 +82,11 @@ const std::string & BaseConnection::address() const
 }
 
 
-void BaseConnection::fetch(const std::string& request, FetchCallback onSuccess, ErrorCallback onError)
+CancellationToken BaseConnection::fetch(const std::string& request, FetchCallback onSuccess, ErrorCallback onError)
 {
-    fetchAsync(m_address + "/" + request, std::move(onSuccess), std::move(onError));
+    auto cancel = std::make_shared<std::atomic<bool>>(false);
+    fetchAsync(m_address + "/" + request, cancel, std::move(onSuccess), std::move(onError));
+    return cancel;
 }
 
 }

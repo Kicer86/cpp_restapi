@@ -2,6 +2,7 @@
 #ifndef ACONNECTION_HPP
 #define ACONNECTION_HPP
 
+#include <atomic>
 #include <expected>
 #include <functional>
 #include <memory>
@@ -25,6 +26,9 @@ namespace cpp_restapi
         std::string headers;
         int         statusCode = 0;  ///< HTTP status code (e.g. 200, 404). 0 means no response was received (network error).
     };
+
+    /// Token returned by asynchronous fetch(); set it to true to cancel the request.
+    using CancellationToken = std::shared_ptr<std::atomic<bool>>;
 
     /**
      * @brief Interface representing connection with rest api server
@@ -99,8 +103,9 @@ namespace cpp_restapi
              * @param request relative API path (e.g. "users/octocat")
              * @param onSuccess called with Response{body, headers, statusCode} on success
              * @param onError   called with an HttpError on failure (optional)
+             * @return cancellation token; store it and set to true to suppress callbacks
              */
-            virtual void fetch(const std::string& request,
+            virtual CancellationToken fetch(const std::string& request,
                                FetchCallback onSuccess,
                                ErrorCallback onError = {}) = 0;
     };

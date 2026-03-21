@@ -8,23 +8,33 @@ namespace cpp_restapi
 
 ThreadedConnection::~ThreadedConnection()
 {
+    waitForPending();
+}
+
+void ThreadedConnection::waitForPending()
+{
     std::unique_lock lock(m_mutex);
     m_cv.wait(lock, [this]{ return m_activeCount == 0; });
 }
 
-void ThreadedConnection::fetchAsync(const std::string& url, FetchCallback onSuccess, ErrorCallback onError)
+void ThreadedConnection::fetchAsync(const std::string& url, CancellationToken cancel, FetchCallback onSuccess, ErrorCallback onError)
 {
     {
         std::lock_guard lock(m_mutex);
         ++m_activeCount;
     }
 
-    std::thread([this, url, onSuccess = std::move(onSuccess), onError = std::move(onError)]()
+    std::thread([this, url, cancel = std::move(cancel), onSuccess = std::move(onSuccess), onError = std::move(onError)]()
     {
         try
         {
             auto result = fetchResponse(url);
-            if (result)
+
+            if (cancel->load(std::memory_order_acquire))
+            {
+                // cancelled — skip callbacks
+            }
+            else if (result)
             {
                 if (onSuccess)
                     onSuccess(std::move(*result));
@@ -37,7 +47,7 @@ void ThreadedConnection::fetchAsync(const std::string& url, FetchCallback onSucc
         }
         catch (const std::exception& e)
         {
-            if (onError)
+            if (!cancel->load(std::memory_order_acquire) && onError)
                 onError(HttpError{0, {}, e.what()});
         }
 

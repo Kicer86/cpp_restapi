@@ -31,8 +31,14 @@ namespace cpp_restapi
 
     protected:
         void fetchAsync(const std::string& fullUrl,
+                        CancellationToken cancel,
                         FetchCallback onSuccess,
                         ErrorCallback onError) override;
+
+        /// Block until all in-flight async requests complete.
+        /// Derived classes whose fetchPage() override is virtual should call
+        /// this in their destructor to prevent pure-virtual calls.
+        void waitForPending();
 
     private:
         std::mutex m_mutex;

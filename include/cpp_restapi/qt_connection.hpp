@@ -30,7 +30,7 @@ namespace cpp_restapi::QtBackend
             std::unique_ptr<ISseConnection> subscribe(const std::string& request, EventCallback callback) override;
 
         protected:
-            void fetchAsync(const std::string& fullUrl, FetchCallback onSuccess, ErrorCallback onError) override;
+            void fetchAsync(const std::string& fullUrl, CancellationToken cancel, FetchCallback onSuccess, ErrorCallback onError) override;
 
         private:
             QNetworkAccessManager& m_networkManager;
