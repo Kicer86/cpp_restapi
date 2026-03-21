@@ -119,6 +119,7 @@ namespace cpp_restapi::QtBackend
             if (reply->error() == QNetworkReply::NoError)
             {
                 Response resp;
+                resp.statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
                 resp.body = reply->readAll().toStdString();
 
                 QString header;
