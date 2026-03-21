@@ -13,8 +13,8 @@ jobs:
       fail-fast: false
       matrix:
         compiler:
-          - { cc: gcc, cxx: g++ }
-          - { cc: clang, cxx: clang++ }
+          - { cc: gcc-13, cxx: g++-13 }
+          - { cc: clang-19, cxx: clang++-19 }
 
     steps:
     - uses: actions/checkout@v6

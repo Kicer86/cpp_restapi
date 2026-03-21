@@ -96,3 +96,49 @@ TYPED_TEST(ConnectionTest, arraysPagination)
     const auto info = connection->get("users/userName1234");
     EXPECT_EQ(info, "[{\"id\":1234,\"login\":\"userName1234\"},{\"someotherfield\":\"value\"},{\"more_fields\":\"value234\"}]\n");
 }
+
+
+TYPED_TEST(ConnectionTest, fetchSuccessReturnsBody)
+{
+    auto connection = buildConnection<TypeParam>();
+
+    EXPECT_CALL(this->server, request("/api/data", _))
+        .WillOnce(Return(GithubServerMock::Response{R"({"key":"value"})", {}, 200}));
+
+    this->server.listen();
+
+    const auto result = connection->fetch("api/data");
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(result.value(), "{\"key\":\"value\"}");
+}
+
+
+TYPED_TEST(ConnectionTest, fetchReturns404Error)
+{
+    auto connection = buildConnection<TypeParam>();
+
+    EXPECT_CALL(this->server, request("/missing", _))
+        .WillOnce(Return(GithubServerMock::Response{"Not Found", {}, 404}));
+
+    this->server.listen();
+
+    const auto result = connection->fetch("missing");
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error().statusCode, 404);
+}
+
+
+TYPED_TEST(ConnectionTest, fetchReturns500Error)
+{
+    auto connection = buildConnection<TypeParam>();
+
+    EXPECT_CALL(this->server, request("/broken", _))
+        .WillOnce(Return(GithubServerMock::Response{"Internal Server Error", {}, 500}));
+
+    this->server.listen();
+
+    const auto result = connection->fetch("broken");
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error().statusCode, 500);
+    EXPECT_EQ(result.error().body, "Internal Server Error");
+}

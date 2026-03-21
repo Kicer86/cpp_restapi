@@ -35,7 +35,7 @@ namespace cpp_restapi::GitHub
             /**
              * @brief Request user info
              * @param user GitHub user name
-             * @return api response in json format
+             * @return api response in json format, or empty string on failure
              *
              * Request user information. Equivalent of fetching https://api.github.com/users/\<user>
              */

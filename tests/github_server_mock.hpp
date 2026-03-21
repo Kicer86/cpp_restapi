@@ -9,7 +9,12 @@
 class GithubServerMock
 {
   public:
-    using Response = std::pair<std::string, httplib::Headers>;
+    struct Response
+    {
+        std::string      body;
+        httplib::Headers headers;
+        int              statusCode = 200;
+    };
 
     explicit GithubServerMock(int port = 9200)
       : m_port(port)
@@ -31,9 +36,10 @@ class GithubServerMock
       m_svr.Get("/.*", [this](const httplib::Request& req, httplib::Response& res)
       {
         const auto response = request(req.path, req.headers);
-        res.set_content(response.first, "text/plain");
+        res.status = response.statusCode;
+        res.set_content(response.body, "text/plain");
 
-        for(const auto& [key, value]: response.second)
+        for(const auto& [key, value]: response.headers)
           res.set_header(key, value);
       });
 

@@ -71,15 +71,22 @@ int main(int argc, char** argv)
     // Access The Star Wars API
     cpp_restapi::CurlBackend::Connection connection("https://swapi.dev/api", {});
 
-    std::cout << connection.get("people/1") << '\n';
-    std::cout << connection.get("starships/12/") << '\n';
+    // fetch() returns std::expected<std::string, HttpError>
+    for (const auto& endpoint: {"people/1", "starships/12/"})
+    {
+        const auto result = connection.fetch(endpoint);
+        if (result)
+            std::cout << result.value() << '\n';
+        else
+            std::cerr << "Error " << result.error().statusCode << ": " << result.error().message << '\n';
+    }
 
     return 0;
 }
 ```
 
 This example accesses The Star Wars API using curl backend.<br>
-As you can see it is enought to instantiate `cpp_restapi::CurlBackend::Connection` object providing API url and after that request can be made.
+`fetch()` returns `std::expected<std::string, HttpError>` — on success the response body is available via `value()`, on failure the `HttpError` carries the HTTP status code, response body and a human-readable message.
 
 Qt version:
 ```c++
@@ -98,8 +105,15 @@ int main(int argc, char** argv)
     // Access The Star Wars API
     cpp_restapi::QtBackend::Connection connection(manager, "https://swapi.dev/api", {});
 
-    std::cout << connection.get("people/1") << '\n';
-    std::cout << connection.get("starships/12/") << '\n';
+    // fetch() returns std::expected<std::string, HttpError>
+    for (const auto& endpoint: {"people/1", "starships/12/"})
+    {
+        const auto result = connection.fetch(endpoint);
+        if (result)
+            std::cout << result.value() << '\n';
+        else
+            std::cerr << "Error " << result.error().statusCode << ": " << result.error().message << '\n';
+    }
 
     return 0;
 }
@@ -117,8 +131,15 @@ int main(int argc, char** argv)
     // Access The Star Wars API
     cpp_restapi::CppHttplibBackend::Connection connection("https://swapi.dev/api", {});
 
-    std::cout << connection.get("people/1") << '\n';
-    std::cout << connection.get("starships/12/") << '\n';
+    // fetch() returns std::expected<std::string, HttpError>
+    for (const auto& endpoint: {"people/1", "starships/12/"})
+    {
+        const auto result = connection.fetch(endpoint);
+        if (result)
+            std::cout << result.value() << '\n';
+        else
+            std::cerr << "Error " << result.error().statusCode << ": " << result.error().message << '\n';
+    }
 
     return 0;
 }

@@ -24,7 +24,7 @@ namespace cpp_restapi::QtBackend
 
             Connection& operator=(const Connection &) = delete;
 
-            std::pair<std::string, std::string> fetchPage(const std::string& request) override;
+            Response fetchPage(const std::string& request) override;
             std::unique_ptr<ISseConnection> subscribe(const std::string& request, EventCallback callback) override;
 
         private:

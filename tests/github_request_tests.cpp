@@ -121,3 +121,35 @@ TYPED_TEST(ApiTest, authorization)
 
     EXPECT_EQ(info, "{\"id\":1234,\"login\":\"userName1234\"}\n");
 }
+
+
+TYPED_TEST(ApiTest, requestReturns404ErrorGivesEmptyString)
+{
+    EXPECT_CALL(this->server, request(_, _))
+        .WillOnce(Return(GithubServerMock::Response{"Not Found", {}, 404}));
+
+    this->server.listen();
+
+    auto connection = buildNewApi<TypeParam>([](GitHub::ConnectionBuilder&) {});
+
+    GitHub::Request request(connection);
+    const auto result = request.getUserInfo("nonexistent");
+
+    EXPECT_TRUE(result.empty());
+}
+
+
+TYPED_TEST(ApiTest, requestReturns500ErrorGivesEmptyString)
+{
+    EXPECT_CALL(this->server, request(_, _))
+        .WillOnce(Return(GithubServerMock::Response{"Internal Server Error", {}, 500}));
+
+    this->server.listen();
+
+    auto connection = buildNewApi<TypeParam>([](GitHub::ConnectionBuilder&) {});
+
+    GitHub::Request request(connection);
+    const auto result = request.getUserInfo("anyuser");
+
+    EXPECT_TRUE(result.empty());
+}
