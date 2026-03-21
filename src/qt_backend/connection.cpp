@@ -103,4 +103,45 @@ namespace cpp_restapi::QtBackend
         sse->subscribe(request, std::move(callback));
         return sse;
     }
+
+
+    void Connection::fetchAsync(const std::string& url, CancellationToken cancel, FetchCallback onSuccess, ErrorCallback onError)
+    {
+        QNetworkRequest request = prepareRequest();
+        request.setUrl(QUrl(QString::fromStdString(url)));
+        QNetworkReply* reply = m_networkManager.get(request);
+
+        QObject::connect(reply, &QNetworkReply::finished,
+            [reply, cancel = std::move(cancel), onSuccess = std::move(onSuccess), onError = std::move(onError)]()
+        {
+            reply->deleteLater();
+
+            if (cancel->load(std::memory_order_acquire))
+                return;
+
+            if (reply->error() == QNetworkReply::NoError)
+            {
+                Response resp;
+                resp.statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+                resp.body = reply->readAll().toStdString();
+
+                QString header;
+                const QList<QByteArray> headerList = reply->rawHeaderList();
+                for (const QByteArray& head : headerList)
+                    header.append(QString("%1: %2\n").arg(head.constData()).arg(reply->rawHeader(head).constData()));
+                resp.headers = header.toStdString();
+
+                if (onSuccess)
+                    onSuccess(std::move(resp));
+            }
+            else
+            {
+                if (onError)
+                {
+                    const int code = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+                    onError(HttpError{code, reply->readAll().toStdString(), reply->errorString().toStdString()});
+                }
+            }
+        });
+    }
 }

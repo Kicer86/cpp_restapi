@@ -2,13 +2,13 @@
 #ifndef CONNECTION_QT_HPP
 #define CONNECTION_QT_HPP
 
-#include "base_connection.hpp"
+#include "threaded_connection.hpp"
 #include "cpp_restapi_export.h"
 
 
 namespace cpp_restapi::CurlBackend
 {
-    class CPP_RESTAPI_EXPORT Connection: public BaseConnection
+    class CPP_RESTAPI_EXPORT Connection: public ThreadedConnection
     {
         public:
             Connection(const std::string& address, const std::map<std::string, std::string>& headerEntries);

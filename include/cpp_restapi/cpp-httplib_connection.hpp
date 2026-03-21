@@ -2,13 +2,13 @@
 #ifndef CPP_HTTPLIB_CONNECTION_HPP_INCLUDED
 #define CPP_HTTPLIB_CONNECTION_HPP_INCLUDED
 
-#include "base_connection.hpp"
+#include "threaded_connection.hpp"
 #include "cpp_restapi_export.h"
 
 
 namespace cpp_restapi::CppHttplibBackend
 {
-    class CPP_RESTAPI_EXPORT Connection: public BaseConnection
+    class CPP_RESTAPI_EXPORT Connection: public ThreadedConnection
     {
         public:
             Connection(const std::string& address, const std::map<std::string, std::string>& headerEntries);
