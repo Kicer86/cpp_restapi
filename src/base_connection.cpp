@@ -77,7 +77,7 @@ CancellationToken BaseConnection::fetch(const std::string& request, FetchCallbac
 
 
 CancellationToken BaseConnection::fetch(const std::string& request, IPaginationStrategy& strategy,
-                                         StringCallback onSuccess, ErrorCallback onError)
+                                         BodyCallback onSuccess, ErrorCallback onError)
 {
     auto cancel = std::make_shared<std::atomic<bool>>(false);
     auto pages  = std::make_shared<std::vector<std::string>>();

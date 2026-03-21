@@ -38,7 +38,7 @@ namespace cpp_restapi
         public:
             using EventCallback   = std::function<void(const SseEvent&)>;
             using FetchCallback   = std::function<void(Response)>;
-            using StringCallback  = std::function<void(std::string)>;
+            using BodyCallback    = std::function<void(std::string)>;
             using ErrorCallback   = std::function<void(HttpError)>;
 
             virtual ~IConnection() = default;
@@ -113,7 +113,7 @@ namespace cpp_restapi
              */
             virtual CancellationToken fetch(const std::string& request,
                                IPaginationStrategy& strategy,
-                               StringCallback onSuccess,
+                               BodyCallback onSuccess,
                                ErrorCallback onError = {}) = 0;
 
             // -- Server-Sent Events --

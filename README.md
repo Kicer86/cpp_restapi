@@ -433,7 +433,7 @@ cancel->store(true);
 ### Async pagination
 
 Paginated requests can also be performed asynchronously.
-The merged result is delivered through a `StringCallback` once all pages have been collected:
+The merged result is delivered through a `BodyCallback` once all pages have been collected:
 
 ```c++
 cpp_restapi::LinkHeaderPaginationStrategy strategy;

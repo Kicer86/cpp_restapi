@@ -29,7 +29,7 @@ namespace cpp_restapi
 
         // -- asynchronous fetch --
         CancellationToken fetch(const std::string& request, FetchCallback onSuccess, ErrorCallback onError = {}) final;
-        CancellationToken fetch(const std::string& request, IPaginationStrategy& strategy, StringCallback onSuccess, ErrorCallback onError = {}) final;
+        CancellationToken fetch(const std::string& request, IPaginationStrategy& strategy, BodyCallback onSuccess, ErrorCallback onError = {}) final;
 
         // -- deprecated --
         std::string get(const std::string &) final;
