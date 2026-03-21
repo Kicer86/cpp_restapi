@@ -56,7 +56,7 @@ namespace
 
         std::atomic<bool> fetchPageCalled{false};
 
-        std::pair<std::string, std::string> fetchPage(const std::string&) override
+        Response fetchPage(const std::string&) override
         {
             fetchPageCalled.store(true, std::memory_order_release);
             throw std::runtime_error("simulated fetch error");
