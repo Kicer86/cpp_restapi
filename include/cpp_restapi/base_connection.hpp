@@ -25,6 +25,7 @@ namespace cpp_restapi
         std::expected<Response, HttpError> fetchResponse(const std::string& url) final;
         const std::string& url() const final;
         CancellationToken fetch(const std::string& request, FetchCallback onSuccess, ErrorCallback onError = {}) final;
+        CancellationToken fetch(const std::string& request, IPaginationStrategy& strategy, StringCallback onSuccess, ErrorCallback onError = {}) final;
         virtual Response fetchPage(const std::string& request) = 0;
 
     protected:

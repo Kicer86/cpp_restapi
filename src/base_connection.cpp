@@ -89,4 +89,55 @@ CancellationToken BaseConnection::fetch(const std::string& request, FetchCallbac
     return cancel;
 }
 
+
+CancellationToken BaseConnection::fetch(const std::string& request, IPaginationStrategy& strategy,
+                                         StringCallback onSuccess, ErrorCallback onError)
+{
+    auto cancel = std::make_shared<std::atomic<bool>>(false);
+    auto pages  = std::make_shared<std::vector<std::string>>();
+
+    // Shared state for the recursive chain of async fetches.
+    // We capture strategy by pointer — caller must keep it alive
+    // until the final callback fires (same contract as the sync overload).
+
+    std::string firstUrl = m_address + "/" + request;
+
+    auto fetchNextPage = std::make_shared<std::function<void(const std::string&)>>();
+
+    *fetchNextPage = [this, cancel, pages, &strategy,
+                      onSuccess = std::move(onSuccess),
+                      onError   = std::move(onError),
+                      fetchNextPage](const std::string& nextUrl)
+    {
+        fetchAsync(nextUrl, cancel,
+            [this, cancel, pages, &strategy, onSuccess, onError, fetchNextPage](Response resp)
+            {
+                if (cancel->load(std::memory_order_acquire))
+                    return;
+
+                std::string next = strategy.nextPageUrl(resp.headers);
+                pages->push_back(std::move(resp.body));
+
+                if (next.empty())
+                {
+                    if (onSuccess)
+                        onSuccess(strategy.merge(*pages));
+                }
+                else
+                {
+                    (*fetchNextPage)(next);
+                }
+            },
+            [onError](HttpError err)
+            {
+                if (onError)
+                    onError(std::move(err));
+            });
+    };
+
+    (*fetchNextPage)(firstUrl);
+
+    return cancel;
+}
+
 }

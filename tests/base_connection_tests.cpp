@@ -281,3 +281,66 @@ TEST(ThreadedConnectionTest, cancelledFetchCallbacksNotInvoked)
     // conn destroyed — destructor waited for the thread.
     EXPECT_FALSE(callbackInvoked.load());
 }
+
+
+// --- async fetch(request, strategy, onSuccess, onError) ---
+
+TEST(ThreadedConnectionTest, asyncFetchWithStrategyCollectsAllPages)
+{
+    StubConnection conn("http://localhost", {});
+    conn.addPage("http://localhost/items",
+        {R"([{"id":1}])", R"(Link: <http://localhost/items?page=2>; rel="next")" "\r\n", 200});
+    conn.addPage("http://localhost/items?page=2",
+        {R"([{"id":2}])", R"(Link: <http://localhost/items?page=3>; rel="next")" "\r\n", 200});
+    conn.addPage("http://localhost/items?page=3",
+        {R"([{"id":3}])", "", 200});
+
+    LinkHeaderPaginationStrategy strategy;
+
+    std::promise<std::string> promise;
+    auto future = promise.get_future();
+
+    conn.fetch("items", strategy,
+        [&promise](std::string merged) { promise.set_value(std::move(merged)); });
+
+    ASSERT_EQ(future.wait_for(std::chrono::seconds(5)), std::future_status::ready);
+    EXPECT_EQ(future.get(), "[{\"id\":1},{\"id\":2},{\"id\":3}]\n");
+}
+
+TEST(ThreadedConnectionTest, asyncFetchWithStrategyStopsOnError)
+{
+    StubConnection conn("http://localhost", {});
+    conn.addPage("http://localhost/items",
+        {R"([{"id":1}])", R"(Link: <http://localhost/items?page=2>; rel="next")" "\r\n", 200});
+    conn.addPage("http://localhost/items?page=2",
+        {"Internal Server Error", "", 500});
+
+    LinkHeaderPaginationStrategy strategy;
+
+    std::promise<HttpError> promise;
+    auto future = promise.get_future();
+
+    conn.fetch("items", strategy,
+        [](std::string) { FAIL() << "onSuccess should not be called"; },
+        [&promise](HttpError err) { promise.set_value(std::move(err)); });
+
+    ASSERT_EQ(future.wait_for(std::chrono::seconds(5)), std::future_status::ready);
+    EXPECT_EQ(future.get().statusCode, 500);
+}
+
+TEST(ThreadedConnectionTest, asyncFetchWithStrategySinglePage)
+{
+    StubConnection conn("http://localhost", {});
+    conn.addPage("http://localhost/items", {R"({"key":"value"})", "", 200});
+
+    LinkHeaderPaginationStrategy strategy;
+
+    std::promise<std::string> promise;
+    auto future = promise.get_future();
+
+    conn.fetch("items", strategy,
+        [&promise](std::string merged) { promise.set_value(std::move(merged)); });
+
+    ASSERT_EQ(future.wait_for(std::chrono::seconds(5)), std::future_status::ready);
+    EXPECT_EQ(future.get(), "{\"key\":\"value\"}\n");
+}

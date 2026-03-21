@@ -38,6 +38,7 @@ namespace cpp_restapi
         public:
             using EventCallback   = std::function<void(const SseEvent&)>;
             using FetchCallback   = std::function<void(Response)>;
+            using StringCallback  = std::function<void(std::string)>;
             using ErrorCallback   = std::function<void(HttpError)>;
 
             virtual ~IConnection() = default;
@@ -107,6 +108,24 @@ namespace cpp_restapi
              */
             virtual CancellationToken fetch(const std::string& request,
                                FetchCallback onSuccess,
+                               ErrorCallback onError = {}) = 0;
+
+            /**
+             * @brief Perform paginated requests asynchronously
+             *
+             * Non-blocking. Pages are fetched sequentially; once all pages have
+             * been collected the merged result is delivered via @p onSuccess.
+             * On any page failure @p onError is called and fetching stops.
+             *
+             * @param request  relative API path (e.g. "repos/owner/name/issues")
+             * @param strategy pagination strategy (next-page discovery and merge)
+             * @param onSuccess called with the merged body string on success
+             * @param onError   called with an HttpError on failure (optional)
+             * @return cancellation token
+             */
+            virtual CancellationToken fetch(const std::string& request,
+                               IPaginationStrategy& strategy,
+                               StringCallback onSuccess,
                                ErrorCallback onError = {}) = 0;
     };
 }
