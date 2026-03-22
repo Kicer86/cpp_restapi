@@ -7,7 +7,7 @@ Currently reorganized to be easily used with any Rest API available.
 It supports three backends for establishing connections with remote API servers:
 Qt6/5, Curl and cpp-httplib.
 
-### Submodules
+**Submodules:**
 This repository comes with submodules which are not necessary to build and use this project.<br>
 
 As of now the only submodule is `vcpkg` which can simplify build by providing required dependencies.<br>
