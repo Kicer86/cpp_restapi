@@ -123,10 +123,11 @@ Inheritance diagram for cpp_restapi::IConnection:</div>
  <div class="center">
   <img src="../../de/dd0/structcpp__restapi_1_1IConnection.png" usemap="#cpp_5Frestapi::IConnection_map" alt=""/>
   <map id="cpp_5Frestapi::IConnection_map" name="cpp_5Frestapi::IConnection_map">
-<area href="../../dd/d4e/classcpp__restapi_1_1BaseConnection.html" title="base class with common parts for backend specific implementations" alt="cpp_restapi::BaseConnection" shape="rect" coords="271,56,532,80"/>
-<area href="../../de/d13/classcpp__restapi_1_1CppHttplibBackend_1_1Connection.html" alt="cpp_restapi::CppHttplibBackend::Connection" shape="rect" coords="0,112,261,136"/>
-<area href="../../d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html" alt="cpp_restapi::CurlBackend::Connection" shape="rect" coords="271,112,532,136"/>
-<area href="../../d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html" alt="cpp_restapi::QtBackend::Connection" shape="rect" coords="542,112,803,136"/>
+<area href="../../dd/d4e/classcpp__restapi_1_1BaseConnection.html" title="base class with common parts for backend specific implementations" alt="cpp_restapi::BaseConnection" shape="rect" coords="135,56,396,80"/>
+<area href="../../d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html" alt="cpp_restapi::QtBackend::Connection" shape="rect" coords="0,112,261,136"/>
+<area href="../../d9/d10/classcpp__restapi_1_1ThreadedConnection.html" title="BaseConnection subclass that implements fetch(url, cb) via a background std::thread." alt="cpp_restapi::ThreadedConnection" shape="rect" coords="271,112,532,136"/>
+<area href="../../de/d13/classcpp__restapi_1_1CppHttplibBackend_1_1Connection.html" alt="cpp_restapi::CppHttplibBackend::Connection" shape="rect" coords="135,168,396,192"/>
+<area href="../../d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html" alt="cpp_restapi::CurlBackend::Connection" shape="rect" coords="406,168,667,192"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -134,14 +135,20 @@ Inheritance diagram for cpp_restapi::IConnection:</div>
 Public Types</h2></td></tr>
 <tr class="memitem:add5e8cd8587dcf938bb388482ccda961" id="r_add5e8cd8587dcf938bb388482ccda961"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#add5e8cd8587dcf938bb388482ccda961">EventCallback</a> = std::function&lt;void(const <a class="el" href="../../d9/d37/structcpp__restapi_1_1SseEvent.html">SseEvent</a>&amp;)&gt;</td></tr>
 <tr class="separator:add5e8cd8587dcf938bb388482ccda961"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8049b995cab849f0dc68d2d66e00b809" id="r_a8049b995cab849f0dc68d2d66e00b809"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8049b995cab849f0dc68d2d66e00b809">FetchCallback</a> = std::function&lt;void(<a class="el" href="../../d8/db5/structcpp__restapi_1_1Response.html">Response</a>)&gt;</td></tr>
+<tr class="separator:a8049b995cab849f0dc68d2d66e00b809"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac57c9bec1d23a5f21f31f76bf14e93ef" id="r_ac57c9bec1d23a5f21f31f76bf14e93ef"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac57c9bec1d23a5f21f31f76bf14e93ef">BodyCallback</a> = std::function&lt;void(std::string)&gt;</td></tr>
+<tr class="separator:ac57c9bec1d23a5f21f31f76bf14e93ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac52c184c25c139dd2805bc77ac12e889" id="r_ac52c184c25c139dd2805bc77ac12e889"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac52c184c25c139dd2805bc77ac12e889">ErrorCallback</a> = std::function&lt;void(<a class="el" href="../../d5/d9b/structcpp__restapi_1_1HttpError.html">HttpError</a>)&gt;</td></tr>
+<tr class="separator:ac52c184c25c139dd2805bc77ac12e889"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab85ba8ffe44f1ebfa2ff329c007cc4f0" id="r_ab85ba8ffe44f1ebfa2ff329c007cc4f0"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab85ba8ffe44f1ebfa2ff329c007cc4f0">~IConnection</a> ()=default</td></tr>
 <tr class="separator:ab85ba8ffe44f1ebfa2ff329c007cc4f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3ee829a93ec8753eb56a95adb5b8229" id="r_ab3ee829a93ec8753eb56a95adb5b8229"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab3ee829a93ec8753eb56a95adb5b8229">get</a> (const std::string &amp;request)=0</td></tr>
-<tr class="memdesc:ab3ee829a93ec8753eb56a95adb5b8229"><td class="mdescLeft">&#160;</td><td class="mdescRight">perform a request to api  <br /></td></tr>
-<tr class="separator:ab3ee829a93ec8753eb56a95adb5b8229"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a926bcc0cb45165be9ec26c89ade97916" id="r_a926bcc0cb45165be9ec26c89ade97916"><td class="memItemLeft" align="right" valign="top">virtual const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a926bcc0cb45165be9ec26c89ade97916">url</a> () const =0</td></tr>
+<tr class="memdesc:a926bcc0cb45165be9ec26c89ade97916"><td class="mdescLeft">&#160;</td><td class="mdescRight">return API url  <br /></td></tr>
+<tr class="separator:a926bcc0cb45165be9ec26c89ade97916"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae27f0a5a75a5b9e12e7589cf795250d7" id="r_ae27f0a5a75a5b9e12e7589cf795250d7"><td class="memItemLeft" align="right" valign="top">virtual std::expected&lt; std::string, <a class="el" href="../../d5/d9b/structcpp__restapi_1_1HttpError.html">HttpError</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae27f0a5a75a5b9e12e7589cf795250d7">fetch</a> (const std::string &amp;request)=0</td></tr>
 <tr class="memdesc:ae27f0a5a75a5b9e12e7589cf795250d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a single HTTP request.  <br /></td></tr>
 <tr class="separator:ae27f0a5a75a5b9e12e7589cf795250d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -151,16 +158,50 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9162d1b4ea6191bbda4de35fdb9fbcab" id="r_a9162d1b4ea6191bbda4de35fdb9fbcab"><td class="memItemLeft" align="right" valign="top">virtual std::expected&lt; <a class="el" href="../../d8/db5/structcpp__restapi_1_1Response.html">Response</a>, <a class="el" href="../../d5/d9b/structcpp__restapi_1_1HttpError.html">HttpError</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9162d1b4ea6191bbda4de35fdb9fbcab">fetchResponse</a> (const std::string &amp;<a class="el" href="#a926bcc0cb45165be9ec26c89ade97916">url</a>)=0</td></tr>
 <tr class="memdesc:a9162d1b4ea6191bbda4de35fdb9fbcab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a single HTTP request returning the full response.  <br /></td></tr>
 <tr class="separator:a9162d1b4ea6191bbda4de35fdb9fbcab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a926bcc0cb45165be9ec26c89ade97916" id="r_a926bcc0cb45165be9ec26c89ade97916"><td class="memItemLeft" align="right" valign="top">virtual const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a926bcc0cb45165be9ec26c89ade97916">url</a> () const =0</td></tr>
-<tr class="memdesc:a926bcc0cb45165be9ec26c89ade97916"><td class="mdescLeft">&#160;</td><td class="mdescRight">return API url  <br /></td></tr>
-<tr class="separator:a926bcc0cb45165be9ec26c89ade97916"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af734a2a356c067ffa2899f0d7b22fcc3" id="r_af734a2a356c067ffa2899f0d7b22fcc3"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="../../de/db6/namespacecpp__restapi.html#a137a6f919637dbaccbfe255b95f093c8">CancellationToken</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af734a2a356c067ffa2899f0d7b22fcc3">fetch</a> (const std::string &amp;request, <a class="el" href="#a8049b995cab849f0dc68d2d66e00b809">FetchCallback</a> onSuccess, <a class="el" href="#ac52c184c25c139dd2805bc77ac12e889">ErrorCallback</a> onError={})=0</td></tr>
+<tr class="memdesc:af734a2a356c067ffa2899f0d7b22fcc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform an HTTP GET request asynchronously.  <br /></td></tr>
+<tr class="separator:af734a2a356c067ffa2899f0d7b22fcc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8e70a2b000dab8ec07345c0cf2802c3" id="r_aa8e70a2b000dab8ec07345c0cf2802c3"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="../../de/db6/namespacecpp__restapi.html#a137a6f919637dbaccbfe255b95f093c8">CancellationToken</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa8e70a2b000dab8ec07345c0cf2802c3">fetch</a> (const std::string &amp;request, <a class="el" href="../../db/d62/structcpp__restapi_1_1IPaginationStrategy.html">IPaginationStrategy</a> &amp;strategy, <a class="el" href="#ac57c9bec1d23a5f21f31f76bf14e93ef">BodyCallback</a> onSuccess, <a class="el" href="#ac52c184c25c139dd2805bc77ac12e889">ErrorCallback</a> onError={})=0</td></tr>
+<tr class="memdesc:aa8e70a2b000dab8ec07345c0cf2802c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform paginated requests asynchronously.  <br /></td></tr>
+<tr class="separator:aa8e70a2b000dab8ec07345c0cf2802c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4c696d81fd7d810d0c1e027045cee3c" id="r_ad4c696d81fd7d810d0c1e027045cee3c"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; <a class="el" href="../../d6/dff/structcpp__restapi_1_1ISseConnection.html">ISseConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad4c696d81fd7d810d0c1e027045cee3c">subscribe</a> (const std::string &amp;request, <a class="el" href="#add5e8cd8587dcf938bb388482ccda961">EventCallback</a> callback)=0</td></tr>
 <tr class="memdesc:ad4c696d81fd7d810d0c1e027045cee3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subscribe to an SSE endpoint.  <br /></td></tr>
 <tr class="separator:ad4c696d81fd7d810d0c1e027045cee3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3ee829a93ec8753eb56a95adb5b8229" id="r_ab3ee829a93ec8753eb56a95adb5b8229"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab3ee829a93ec8753eb56a95adb5b8229">get</a> (const std::string &amp;request)=0</td></tr>
+<tr class="memdesc:ab3ee829a93ec8753eb56a95adb5b8229"><td class="mdescLeft">&#160;</td><td class="mdescRight">perform a request to api  <br /></td></tr>
+<tr class="separator:ab3ee829a93ec8753eb56a95adb5b8229"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface representing connection with rest api server. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="ac57c9bec1d23a5f21f31f76bf14e93ef" name="ac57c9bec1d23a5f21f31f76bf14e93ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac57c9bec1d23a5f21f31f76bf14e93ef">&#9670;&#160;</a></span>BodyCallback</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#ac57c9bec1d23a5f21f31f76bf14e93ef">cpp_restapi::IConnection::BodyCallback</a> = std::function&lt;void(std::string)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac52c184c25c139dd2805bc77ac12e889" name="ac52c184c25c139dd2805bc77ac12e889"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac52c184c25c139dd2805bc77ac12e889">&#9670;&#160;</a></span>ErrorCallback</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#ac52c184c25c139dd2805bc77ac12e889">cpp_restapi::IConnection::ErrorCallback</a> = std::function&lt;void(<a class="el" href="../../d5/d9b/structcpp__restapi_1_1HttpError.html">HttpError</a>)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="add5e8cd8587dcf938bb388482ccda961" name="add5e8cd8587dcf938bb388482ccda961"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#add5e8cd8587dcf938bb388482ccda961">&#9670;&#160;</a></span>EventCallback</h2>
 
@@ -169,6 +210,20 @@ Public Member Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="#add5e8cd8587dcf938bb388482ccda961">cpp_restapi::IConnection::EventCallback</a> = std::function&lt;void(const <a class="el" href="../../d9/d37/structcpp__restapi_1_1SseEvent.html">SseEvent</a>&amp;)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8049b995cab849f0dc68d2d66e00b809" name="a8049b995cab849f0dc68d2d66e00b809"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8049b995cab849f0dc68d2d66e00b809">&#9670;&#160;</a></span>FetchCallback</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#a8049b995cab849f0dc68d2d66e00b809">cpp_restapi::IConnection::FetchCallback</a> = std::function&lt;void(<a class="el" href="../../d8/db5/structcpp__restapi_1_1Response.html">Response</a>)&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -203,7 +258,7 @@ Public Member Functions</h2></td></tr>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="ae27f0a5a75a5b9e12e7589cf795250d7" name="ae27f0a5a75a5b9e12e7589cf795250d7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae27f0a5a75a5b9e12e7589cf795250d7">&#9670;&#160;</a></span>fetch() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae27f0a5a75a5b9e12e7589cf795250d7">&#9670;&#160;</a></span>fetch() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -238,12 +293,60 @@ Public Member Functions</h2></td></tr>
 <li>A network-level failure occurs (statusCode == 0 in the error) </li>
 </ul>
 
-<p>Implemented in <a class="el" href="../../dd/d4e/classcpp__restapi_1_1BaseConnection.html#ac8346d4203856d821d66fe2ca18ed7e9">cpp_restapi::BaseConnection</a>.</p>
+<p>Implemented in <a class="el" href="../../dd/d4e/classcpp__restapi_1_1BaseConnection.html#ac8346d4203856d821d66fe2ca18ed7e9">cpp_restapi::BaseConnection</a>, <a class="el" href="../../d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html#ac8346d4203856d821d66fe2ca18ed7e9">cpp_restapi::QtBackend::Connection</a>, and <a class="el" href="../../d9/d10/classcpp__restapi_1_1ThreadedConnection.html#ac8346d4203856d821d66fe2ca18ed7e9">cpp_restapi::ThreadedConnection</a>.</p>
+
+</div>
+</div>
+<a id="af734a2a356c067ffa2899f0d7b22fcc3" name="af734a2a356c067ffa2899f0d7b22fcc3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af734a2a356c067ffa2899f0d7b22fcc3">&#9670;&#160;</a></span>fetch() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="../../de/db6/namespacecpp__restapi.html#a137a6f919637dbaccbfe255b95f093c8">CancellationToken</a> cpp_restapi::IConnection::fetch </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>request</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a8049b995cab849f0dc68d2d66e00b809">FetchCallback</a></td>          <td class="paramname"><span class="paramname"><em>onSuccess</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#ac52c184c25c139dd2805bc77ac12e889">ErrorCallback</a></td>          <td class="paramname"><span class="paramname"><em>onError</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Perform an HTTP GET request asynchronously. </p>
+<p>Non-blocking. <code>onSuccess</code> is called with the full response when the request completes successfully; <code>onError</code> is called with an <a class="el" href="../../d5/d9b/structcpp__restapi_1_1HttpError.html" title="Represents an HTTP or network-level error.">HttpError</a> if the request fails. The callbacks may be invoked from a background thread (non-Qt backends) or from the Qt event-loop thread (Qt backend) — callers must handle thread-safety accordingly.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">request</td><td>relative API path (e.g. "users/octocat") </td></tr>
+    <tr><td class="paramname">onSuccess</td><td>called with <a class="el" href="../../d8/db5/structcpp__restapi_1_1Response.html" title="HTTP response containing body, raw headers and the HTTP status code.">Response</a>{body, headers, statusCode} on success </td></tr>
+    <tr><td class="paramname">onError</td><td>called with an <a class="el" href="../../d5/d9b/structcpp__restapi_1_1HttpError.html" title="Represents an HTTP or network-level error.">HttpError</a> on failure (optional) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>cancellation token; store it and set to true to suppress callbacks </dd></dl>
+
+<p>Implemented in <a class="el" href="../../dd/d4e/classcpp__restapi_1_1BaseConnection.html#a7e9a8519892c05b48839314966c3bce1">cpp_restapi::BaseConnection</a>, <a class="el" href="../../d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html#a7e9a8519892c05b48839314966c3bce1">cpp_restapi::QtBackend::Connection</a>, and <a class="el" href="../../d9/d10/classcpp__restapi_1_1ThreadedConnection.html#a7e9a8519892c05b48839314966c3bce1">cpp_restapi::ThreadedConnection</a>.</p>
 
 </div>
 </div>
 <a id="a94bd4ff8cff35018f61bb6360e19593a" name="a94bd4ff8cff35018f61bb6360e19593a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a94bd4ff8cff35018f61bb6360e19593a">&#9670;&#160;</a></span>fetch() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a94bd4ff8cff35018f61bb6360e19593a">&#9670;&#160;</a></span>fetch() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -279,7 +382,61 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>merged response body from all pages on success, or an <a class="el" href="../../d5/d9b/structcpp__restapi_1_1HttpError.html" title="Represents an HTTP or network-level error.">HttpError</a> on first failure </dd></dl>
 
-<p>Implemented in <a class="el" href="../../dd/d4e/classcpp__restapi_1_1BaseConnection.html#ae2d99c282441096b202d92ff7aeac9eb">cpp_restapi::BaseConnection</a>.</p>
+<p>Implemented in <a class="el" href="../../dd/d4e/classcpp__restapi_1_1BaseConnection.html#ae2d99c282441096b202d92ff7aeac9eb">cpp_restapi::BaseConnection</a>, <a class="el" href="../../d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html#ae2d99c282441096b202d92ff7aeac9eb">cpp_restapi::QtBackend::Connection</a>, and <a class="el" href="../../d9/d10/classcpp__restapi_1_1ThreadedConnection.html#ae2d99c282441096b202d92ff7aeac9eb">cpp_restapi::ThreadedConnection</a>.</p>
+
+</div>
+</div>
+<a id="aa8e70a2b000dab8ec07345c0cf2802c3" name="aa8e70a2b000dab8ec07345c0cf2802c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8e70a2b000dab8ec07345c0cf2802c3">&#9670;&#160;</a></span>fetch() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="../../de/db6/namespacecpp__restapi.html#a137a6f919637dbaccbfe255b95f093c8">CancellationToken</a> cpp_restapi::IConnection::fetch </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>request</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../db/d62/structcpp__restapi_1_1IPaginationStrategy.html">IPaginationStrategy</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>strategy</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#ac57c9bec1d23a5f21f31f76bf14e93ef">BodyCallback</a></td>          <td class="paramname"><span class="paramname"><em>onSuccess</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#ac52c184c25c139dd2805bc77ac12e889">ErrorCallback</a></td>          <td class="paramname"><span class="paramname"><em>onError</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Perform paginated requests asynchronously. </p>
+<p>Non-blocking. Pages are fetched sequentially; once all pages have been collected the merged result is delivered via <code>onSuccess</code>. On any page failure <code>onError</code> is called and fetching stops.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">request</td><td>relative API path (e.g. "repos/owner/name/issues") </td></tr>
+    <tr><td class="paramname">strategy</td><td>pagination strategy (next-page discovery and merge) </td></tr>
+    <tr><td class="paramname">onSuccess</td><td>called with the merged body string on success </td></tr>
+    <tr><td class="paramname">onError</td><td>called with an <a class="el" href="../../d5/d9b/structcpp__restapi_1_1HttpError.html" title="Represents an HTTP or network-level error.">HttpError</a> on failure (optional) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>cancellation token </dd></dl>
+
+<p>Implemented in <a class="el" href="../../dd/d4e/classcpp__restapi_1_1BaseConnection.html#a5b8b1c0ba0417d14e1057226b755fa32">cpp_restapi::BaseConnection</a>, <a class="el" href="../../d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html#a5b8b1c0ba0417d14e1057226b755fa32">cpp_restapi::QtBackend::Connection</a>, and <a class="el" href="../../d9/d10/classcpp__restapi_1_1ThreadedConnection.html#a5b8b1c0ba0417d14e1057226b755fa32">cpp_restapi::ThreadedConnection</a>.</p>
 
 </div>
 </div>

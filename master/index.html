@@ -409,14 +409,117 @@ SseEvent fields</h3>
 <td class="markdownTableBodyNone"><code>retry</code>   </td><td class="markdownTableBodyNone"><code>int</code>   </td><td class="markdownTableBodyNone">Reconnection time in ms (from <code>retry:</code> field, -1 if N/A)   </td></tr>
 </table>
 <h2><a class="anchor" id="autotoc_md16"></a>
+Asynchronous Requests</h2>
+<p>All three backends support non-blocking HTTP requests via a callback-based API. <code>fetch()</code> returns immediately and delivers the result through <code>onSuccess</code> / <code>onError</code> callbacks. It also returns a <code>CancellationToken</code> that can be used to suppress callbacks before they fire.</p>
+<p>For non-Qt backends (curl, cpp-httplib) callbacks run on a background <code>std::thread</code>. For the Qt backend, callbacks are invoked on the Qt event-loop thread.</p>
+<h3><a class="anchor" id="autotoc_md17"></a>
+Async with curl</h3>
+<div class="fragment"><div class="line"> ++</div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;future&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="de/d0e/curl__connection_8hpp.html">cpp_restapi/curl_connection.hpp</a>&gt;</span></div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">    <a class="code hl_class" href="d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html">cpp_restapi::CurlBackend::Connection</a> connection(<span class="stringliteral">&quot;https://swapi.dev/api&quot;</span>, {});</div>
+<div class="line"> </div>
+<div class="line">    std::promise&lt;void&gt; done;</div>
+<div class="line">    <span class="keyword">auto</span> future = done.get_future();</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">auto</span> cancel = connection.<a class="code hl_function" href="d9/d10/classcpp__restapi_1_1ThreadedConnection.html#ac8346d4203856d821d66fe2ca18ed7e9">fetch</a>(<span class="stringliteral">&quot;people/1&quot;</span>,</div>
+<div class="line">        [&amp;done](<a class="code hl_struct" href="d8/db5/structcpp__restapi_1_1Response.html">cpp_restapi::Response</a> resp)</div>
+<div class="line">        {</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Status: &quot;</span> &lt;&lt; resp.<a class="code hl_variable" href="d8/db5/structcpp__restapi_1_1Response.html#afae365aee29c6657d017fbe808e124ca">statusCode</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Body:   &quot;</span> &lt;&lt; resp.<a class="code hl_variable" href="d8/db5/structcpp__restapi_1_1Response.html#ad8ec7c6fd74a48e3fbebe557a80ead96">body</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            done.set_value();</div>
+<div class="line">        },</div>
+<div class="line">        [&amp;done](<a class="code hl_struct" href="d5/d9b/structcpp__restapi_1_1HttpError.html">cpp_restapi::HttpError</a> err)</div>
+<div class="line">        {</div>
+<div class="line">            std::cerr &lt;&lt; <span class="stringliteral">&quot;Error &quot;</span> &lt;&lt; err.statusCode &lt;&lt; <span class="stringliteral">&quot;: &quot;</span> &lt;&lt; err.message &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            done.set_value();</div>
+<div class="line">        });</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Do other work while the request runs in the background...</span></div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Request in flight — doing other work...\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">    future.wait();</div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclasscpp__restapi_1_1ThreadedConnection_html_ac8346d4203856d821d66fe2ca18ed7e9"><div class="ttname"><a href="d9/d10/classcpp__restapi_1_1ThreadedConnection.html#ac8346d4203856d821d66fe2ca18ed7e9">cpp_restapi::ThreadedConnection::fetch</a></div><div class="ttdeci">std::expected&lt; std::string, HttpError &gt; fetch(const std::string &amp;request) final</div><div class="ttdoc">Perform a single HTTP request.</div></div>
+<div class="ttc" id="astructcpp__restapi_1_1HttpError_html"><div class="ttname"><a href="d5/d9b/structcpp__restapi_1_1HttpError.html">cpp_restapi::HttpError</a></div><div class="ttdoc">Represents an HTTP or network-level error.</div><div class="ttdef"><b>Definition</b> http_error.hpp:28</div></div>
+<div class="ttc" id="astructcpp__restapi_1_1Response_html"><div class="ttname"><a href="d8/db5/structcpp__restapi_1_1Response.html">cpp_restapi::Response</a></div><div class="ttdoc">HTTP response containing body, raw headers and the HTTP status code.</div><div class="ttdef"><b>Definition</b> iconnection.hpp:24</div></div>
+<div class="ttc" id="astructcpp__restapi_1_1Response_html_ad8ec7c6fd74a48e3fbebe557a80ead96"><div class="ttname"><a href="d8/db5/structcpp__restapi_1_1Response.html#ad8ec7c6fd74a48e3fbebe557a80ead96">cpp_restapi::Response::body</a></div><div class="ttdeci">std::string body</div><div class="ttdef"><b>Definition</b> iconnection.hpp:25</div></div>
+<div class="ttc" id="astructcpp__restapi_1_1Response_html_afae365aee29c6657d017fbe808e124ca"><div class="ttname"><a href="d8/db5/structcpp__restapi_1_1Response.html#afae365aee29c6657d017fbe808e124ca">cpp_restapi::Response::statusCode</a></div><div class="ttdeci">int statusCode</div><div class="ttdoc">HTTP status code (e.g. 200, 404). 0 means no response was received (network error).</div><div class="ttdef"><b>Definition</b> iconnection.hpp:27</div></div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md18"></a>
+Async with Qt</h3>
+<div class="fragment"><div class="line"> ++</div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;QCoreApplication&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;QNetworkAccessManager&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="de/dfe/qt__connection_8hpp.html">cpp_restapi/qt_connection.hpp</a>&gt;</span></div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv)</div>
+<div class="line">{</div>
+<div class="line">    QCoreApplication qapp(argc, argv);</div>
+<div class="line">    QNetworkAccessManager manager;</div>
+<div class="line"> </div>
+<div class="line">    <a class="code hl_class" href="d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html">cpp_restapi::QtBackend::Connection</a> connection(manager, <span class="stringliteral">&quot;https://swapi.dev/api&quot;</span>, {});</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">auto</span> cancel = connection.<a class="code hl_function" href="d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html#ac8346d4203856d821d66fe2ca18ed7e9">fetch</a>(<span class="stringliteral">&quot;people/1&quot;</span>,</div>
+<div class="line">        [&amp;qapp](<a class="code hl_struct" href="d8/db5/structcpp__restapi_1_1Response.html">cpp_restapi::Response</a> resp)</div>
+<div class="line">        {</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Status: &quot;</span> &lt;&lt; resp.<a class="code hl_variable" href="d8/db5/structcpp__restapi_1_1Response.html#afae365aee29c6657d017fbe808e124ca">statusCode</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Body:   &quot;</span> &lt;&lt; resp.<a class="code hl_variable" href="d8/db5/structcpp__restapi_1_1Response.html#ad8ec7c6fd74a48e3fbebe557a80ead96">body</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            qapp.quit();</div>
+<div class="line">        },</div>
+<div class="line">        [&amp;qapp](<a class="code hl_struct" href="d5/d9b/structcpp__restapi_1_1HttpError.html">cpp_restapi::HttpError</a> err)</div>
+<div class="line">        {</div>
+<div class="line">            std::cerr &lt;&lt; <span class="stringliteral">&quot;Error &quot;</span> &lt;&lt; err.statusCode &lt;&lt; <span class="stringliteral">&quot;: &quot;</span> &lt;&lt; err.message &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            qapp.quit();</div>
+<div class="line">        });</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> qapp.exec();</div>
+<div class="line">}</div>
+<div class="ttc" id="aclasscpp__restapi_1_1QtBackend_1_1Connection_html_ac8346d4203856d821d66fe2ca18ed7e9"><div class="ttname"><a href="d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html#ac8346d4203856d821d66fe2ca18ed7e9">cpp_restapi::QtBackend::Connection::fetch</a></div><div class="ttdeci">std::expected&lt; std::string, HttpError &gt; fetch(const std::string &amp;request) final</div><div class="ttdoc">Perform a single HTTP request.</div></div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md19"></a>
+Cancellation</h3>
+<p>The <code>CancellationToken</code> returned by async <code>fetch()</code> is a <code>std::shared_ptr&lt;std::atomic&lt;bool&gt;&gt;</code>. Setting it to <code>true</code> suppresses further callbacks:</p>
+<div class="fragment"><div class="line"> ++</div>
+<div class="line"><span class="keyword">auto</span> cancel = connection.fetch(<span class="stringliteral">&quot;slow/endpoint&quot;</span>,</div>
+<div class="line">    [](<a class="code hl_struct" href="d8/db5/structcpp__restapi_1_1Response.html">cpp_restapi::Response</a>) { <span class="comment">/* ... */</span> },</div>
+<div class="line">    [](<a class="code hl_struct" href="d5/d9b/structcpp__restapi_1_1HttpError.html">cpp_restapi::HttpError</a>) { <span class="comment">/* ... */</span> });</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Changed our mind — suppress callbacks</span></div>
+<div class="line">cancel-&gt;store(<span class="keyword">true</span>);</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md20"></a>
+Async pagination</h3>
+<p>Paginated requests can also be performed asynchronously. The merged result is delivered through a <code>BodyCallback</code> once all pages have been collected:</p>
+<div class="fragment"><div class="line"> ++</div>
+<div class="line"><a class="code hl_class" href="d6/d5d/classcpp__restapi_1_1LinkHeaderPaginationStrategy.html">cpp_restapi::LinkHeaderPaginationStrategy</a> strategy;</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">auto</span> cancel = connection.fetch(<span class="stringliteral">&quot;repos/owner/repo/issues&quot;</span>, strategy,</div>
+<div class="line">    [](std::string mergedBody)</div>
+<div class="line">    {</div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;All pages: &quot;</span> &lt;&lt; mergedBody &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    },</div>
+<div class="line">    [](<a class="code hl_struct" href="d5/d9b/structcpp__restapi_1_1HttpError.html">cpp_restapi::HttpError</a> err)</div>
+<div class="line">    {</div>
+<div class="line">        std::cerr &lt;&lt; <span class="stringliteral">&quot;Error on page: &quot;</span> &lt;&lt; err.statusCode &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    });</div>
+<div class="ttc" id="aclasscpp__restapi_1_1LinkHeaderPaginationStrategy_html"><div class="ttname"><a href="d6/d5d/classcpp__restapi_1_1LinkHeaderPaginationStrategy.html">cpp_restapi::LinkHeaderPaginationStrategy</a></div><div class="ttdoc">Pagination strategy using RFC 5988 Link headers.</div><div class="ttdef"><b>Definition</b> link_header_pagination_strategy.hpp:18</div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md21"></a>
 Building examples</h2>
 <p>Examples are located in the 'examples' directory of the project. To build them set <code>CppRestAPI_Examples</code> CMake variable to <code>ON</code>. It can be done when invoking <code>cmake</code> command by providing <code>-DCppRestAPI_Examples=ON</code> command line argument (see <code>Standalone build</code> section). Or by modifying entry <code>CppRestAPI_Examples</code> in CMakeCache.txt file located in build directory of an already configured project.</p>
 <p>Please mind that setting <code>CppRestAPI_Examples</code> to <code>ON</code> will force all backends to be used.</p>
-<h2><a class="anchor" id="autotoc_md17"></a>
+<h2><a class="anchor" id="autotoc_md22"></a>
 Building unit tests</h2>
 <p>Unit tests are located in 'tests' directory of the project. To build them set <code>CppRestAPI_Tests</code> CMake variable to <code>ON</code>.</p>
 <p>Please mind that setting <code>CppRestAPI_Tests</code> to <code>ON</code> will force all backends to be used.</p>
-<h2><a class="anchor" id="autotoc_md18"></a>
+<h2><a class="anchor" id="autotoc_md23"></a>
 Links</h2>
 <p>Code documentation available at <a href="https://kicer86.github.io/cpp_restapi/index.html">https://kicer86.github.io/cpp_restapi/index.html</a> </p>
 </div></div><!-- PageDoc -->

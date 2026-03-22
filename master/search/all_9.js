@@ -3,7 +3,7 @@ var searchData=
   ['libcurl_20example_0',['libcurl example',['../index.html#autotoc_md9',1,'']]],
   ['link_5fheader_5fpagination_5fstrategy_2ehpp_1',['link_header_pagination_strategy.hpp',['../d0/de8/link__header__pagination__strategy_8hpp.html',1,'']]],
   ['linkheaderpaginationstrategy_2',['LinkHeaderPaginationStrategy',['../d6/d5d/classcpp__restapi_1_1LinkHeaderPaginationStrategy.html',1,'cpp_restapi']]],
-  ['links_3',['Links',['../index.html#autotoc_md18',1,'']]],
+  ['links_3',['Links',['../index.html#autotoc_md23',1,'']]],
   ['list_4',['Deprecated List',['../da/d58/deprecated.html',1,'']]],
   ['listauthuserrepo_5',['listAuthUserRepo',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a952b5dfa4764e532ca12ca2e32ae33b5',1,'cpp_restapi::GitHub::Request']]],
   ['listbranchheadcommit_6',['listBranchHeadCommit',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#aaed2b7c73cbbfd150153eaa50c3dacdf',1,'cpp_restapi::GitHub::Request']]],

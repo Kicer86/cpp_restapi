@@ -16,8 +16,14 @@ var index =
         [ "SSE with cpp-httplib", "index.html#autotoc_md14", null ],
         [ "SseEvent fields", "index.html#autotoc_md15", null ]
       ] ],
-      [ "Building examples", "index.html#autotoc_md16", null ],
-      [ "Building unit tests", "index.html#autotoc_md17", null ],
-      [ "Links", "index.html#autotoc_md18", null ]
+      [ "Asynchronous Requests", "index.html#autotoc_md16", [
+        [ "Async with curl", "index.html#autotoc_md17", null ],
+        [ "Async with Qt", "index.html#autotoc_md18", null ],
+        [ "Cancellation", "index.html#autotoc_md19", null ],
+        [ "Async pagination", "index.html#autotoc_md20", null ]
+      ] ],
+      [ "Building examples", "index.html#autotoc_md21", null ],
+      [ "Building unit tests", "index.html#autotoc_md22", null ],
+      [ "Links", "index.html#autotoc_md23", null ]
     ] ]
 ];

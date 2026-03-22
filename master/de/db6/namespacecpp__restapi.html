@@ -107,7 +107,8 @@ $(function(){initNavTree('de/db6/namespacecpp__restapi.html','../../'); initResi
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle"><div class="title">cpp_restapi Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -152,7 +153,33 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d83/classcpp__restapi_1_1SseParser.html">SseParser</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Incremental parser for Server-Sent Events stream.  <a href="../../d6/d83/classcpp__restapi_1_1SseParser.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d10/classcpp__restapi_1_1ThreadedConnection.html">ThreadedConnection</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../dd/d4e/classcpp__restapi_1_1BaseConnection.html" title="base class with common parts for backend specific implementations">BaseConnection</a> subclass that implements fetch(url, cb) via a background std::thread.  <a href="../../d9/d10/classcpp__restapi_1_1ThreadedConnection.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a137a6f919637dbaccbfe255b95f093c8" id="r_a137a6f919637dbaccbfe255b95f093c8"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a137a6f919637dbaccbfe255b95f093c8">CancellationToken</a> = std::shared_ptr&lt;std::atomic&lt;bool&gt;&gt;</td></tr>
+<tr class="memdesc:a137a6f919637dbaccbfe255b95f093c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Token returned by asynchronous fetch(); set it to true to cancel the request.  <br /></td></tr>
+<tr class="separator:a137a6f919637dbaccbfe255b95f093c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="a137a6f919637dbaccbfe255b95f093c8" name="a137a6f919637dbaccbfe255b95f093c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a137a6f919637dbaccbfe255b95f093c8">&#9670;&#160;</a></span>CancellationToken</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#a137a6f919637dbaccbfe255b95f093c8">cpp_restapi::CancellationToken</a> = std::shared_ptr&lt;std::atomic&lt;bool&gt;&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Token returned by asynchronous fetch(); set it to true to cancel the request. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

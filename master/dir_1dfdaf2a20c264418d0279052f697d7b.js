@@ -11,5 +11,6 @@ var dir_1dfdaf2a20c264418d0279052f697d7b =
     [ "link_header_pagination_strategy.hpp", "d0/de8/link__header__pagination__strategy_8hpp.html", "d0/de8/link__header__pagination__strategy_8hpp" ],
     [ "qt_connection.hpp", "de/dfe/qt__connection_8hpp.html", "de/dfe/qt__connection_8hpp" ],
     [ "sse_event.hpp", "d1/dc3/sse__event_8hpp.html", "d1/dc3/sse__event_8hpp" ],
-    [ "sse_parser.hpp", "d4/d35/sse__parser_8hpp.html", "d4/d35/sse__parser_8hpp" ]
+    [ "sse_parser.hpp", "d4/d35/sse__parser_8hpp.html", "d4/d35/sse__parser_8hpp" ],
+    [ "threaded_connection.hpp", "db/d1d/threaded__connection_8hpp.html", "db/d1d/threaded__connection_8hpp" ]
 ];

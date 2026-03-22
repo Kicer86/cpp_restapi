@@ -4,9 +4,11 @@ var hierarchy =
     [ "cpp_restapi::HttpError", "d5/d9b/structcpp__restapi_1_1HttpError.html", null ],
     [ "cpp_restapi::IConnection", "de/dd0/structcpp__restapi_1_1IConnection.html", [
       [ "cpp_restapi::BaseConnection", "dd/d4e/classcpp__restapi_1_1BaseConnection.html", [
-        [ "cpp_restapi::CppHttplibBackend::Connection", "de/d13/classcpp__restapi_1_1CppHttplibBackend_1_1Connection.html", null ],
-        [ "cpp_restapi::CurlBackend::Connection", "d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html", null ],
-        [ "cpp_restapi::QtBackend::Connection", "d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html", null ]
+        [ "cpp_restapi::QtBackend::Connection", "d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html", null ],
+        [ "cpp_restapi::ThreadedConnection", "d9/d10/classcpp__restapi_1_1ThreadedConnection.html", [
+          [ "cpp_restapi::CppHttplibBackend::Connection", "de/d13/classcpp__restapi_1_1CppHttplibBackend_1_1Connection.html", null ],
+          [ "cpp_restapi::CurlBackend::Connection", "d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html", null ]
+        ] ]
       ] ]
     ] ],
     [ "cpp_restapi::IPaginationStrategy", "db/d62/structcpp__restapi_1_1IPaginationStrategy.html", [

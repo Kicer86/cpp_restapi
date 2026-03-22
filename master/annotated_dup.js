@@ -22,6 +22,7 @@ var annotated_dup =
       [ "LinkHeaderPaginationStrategy", "d6/d5d/classcpp__restapi_1_1LinkHeaderPaginationStrategy.html", "d6/d5d/classcpp__restapi_1_1LinkHeaderPaginationStrategy" ],
       [ "Response", "d8/db5/structcpp__restapi_1_1Response.html", "d8/db5/structcpp__restapi_1_1Response" ],
       [ "SseEvent", "d9/d37/structcpp__restapi_1_1SseEvent.html", "d9/d37/structcpp__restapi_1_1SseEvent" ],
-      [ "SseParser", "d6/d83/classcpp__restapi_1_1SseParser.html", "d6/d83/classcpp__restapi_1_1SseParser" ]
+      [ "SseParser", "d6/d83/classcpp__restapi_1_1SseParser.html", "d6/d83/classcpp__restapi_1_1SseParser" ],
+      [ "ThreadedConnection", "d9/d10/classcpp__restapi_1_1ThreadedConnection.html", "d9/d10/classcpp__restapi_1_1ThreadedConnection" ]
     ] ]
 ];

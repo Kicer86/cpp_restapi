@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['eventcallback_0',['EventCallback',['../de/dd0/structcpp__restapi_1_1IConnection.html#add5e8cd8587dcf938bb388482ccda961',1,'cpp_restapi::IConnection::EventCallback'],['../d6/dff/structcpp__restapi_1_1ISseConnection.html#a9302cf0738f83f3b37e1543c66e6807e',1,'cpp_restapi::ISseConnection::EventCallback']]]
+  ['bodycallback_0',['BodyCallback',['../de/dd0/structcpp__restapi_1_1IConnection.html#ac57c9bec1d23a5f21f31f76bf14e93ef',1,'cpp_restapi::IConnection']]]
 ];
