@@ -13,7 +13,8 @@ endif()
 
 
 add_executable(api_tests
-    base_connection_tests.cpp
+    sync_fetch_tests.cpp
+    async_fetch_tests.cpp
     connection_tests.cpp
     github_request_tests.cpp
     pagination_tests.cpp

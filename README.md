@@ -335,6 +335,120 @@ The `SseEvent` struct exposes all standard SSE fields:
 | `id`    | `std::string` | Last event ID (from `id:` field)                         |
 | `retry` | `int`         | Reconnection time in ms (from `retry:` field, -1 if N/A) |
 
+## Asynchronous Requests
+
+All three backends support non-blocking HTTP requests via a callback-based API.
+`fetch()` returns immediately and delivers the result through `onSuccess` / `onError`
+callbacks. It also returns a `CancellationToken` that can be used to suppress callbacks
+before they fire.
+
+For non-Qt backends (curl, cpp-httplib) callbacks run on a background `std::thread`.
+For the Qt backend, callbacks are invoked on the Qt event-loop thread.
+
+### Async with curl
+
+```c++
+#include <iostream>
+#include <future>
+
+#include <cpp_restapi/curl_connection.hpp>
+
+
+int main()
+{
+    cpp_restapi::CurlBackend::Connection connection("https://swapi.dev/api", {});
+
+    std::promise<void> done;
+    auto future = done.get_future();
+
+    auto cancel = connection.fetch("people/1",
+        [&done](cpp_restapi::Response resp)
+        {
+            std::cout << "Status: " << resp.statusCode << '\n';
+            std::cout << "Body:   " << resp.body << '\n';
+            done.set_value();
+        },
+        [&done](cpp_restapi::HttpError err)
+        {
+            std::cerr << "Error " << err.statusCode << ": " << err.message << '\n';
+            done.set_value();
+        });
+
+    // Do other work while the request runs in the background...
+    std::cout << "Request in flight — doing other work...\n";
+
+    future.wait();
+    return 0;
+}
+```
+
+### Async with Qt
+
+```c++
+#include <iostream>
+#include <QCoreApplication>
+#include <QNetworkAccessManager>
+
+#include <cpp_restapi/qt_connection.hpp>
+
+
+int main(int argc, char** argv)
+{
+    QCoreApplication qapp(argc, argv);
+    QNetworkAccessManager manager;
+
+    cpp_restapi::QtBackend::Connection connection(manager, "https://swapi.dev/api", {});
+
+    auto cancel = connection.fetch("people/1",
+        [&qapp](cpp_restapi::Response resp)
+        {
+            std::cout << "Status: " << resp.statusCode << '\n';
+            std::cout << "Body:   " << resp.body << '\n';
+            qapp.quit();
+        },
+        [&qapp](cpp_restapi::HttpError err)
+        {
+            std::cerr << "Error " << err.statusCode << ": " << err.message << '\n';
+            qapp.quit();
+        });
+
+    return qapp.exec();
+}
+```
+
+### Cancellation
+
+The `CancellationToken` returned by async `fetch()` is a `std::shared_ptr<std::atomic<bool>>`.
+Setting it to `true` suppresses further callbacks:
+
+```c++
+auto cancel = connection.fetch("slow/endpoint",
+    [](cpp_restapi::Response) { /* ... */ },
+    [](cpp_restapi::HttpError) { /* ... */ });
+
+// Changed our mind — suppress callbacks
+cancel->store(true);
+```
+
+### Async pagination
+
+Paginated requests can also be performed asynchronously.
+The merged result is delivered through a `BodyCallback` once all pages have been collected:
+
+```c++
+cpp_restapi::LinkHeaderPaginationStrategy strategy;
+
+auto cancel = connection.fetch("repos/owner/repo/issues", strategy,
+    [](std::string mergedBody)
+    {
+        std::cout << "All pages: " << mergedBody << '\n';
+    },
+    [](cpp_restapi::HttpError err)
+    {
+        std::cerr << "Error on page: " << err.statusCode << '\n';
+    });
+```
+
 ## Building examples
 Examples are located in the 'examples' directory of the project.
 To build them set `CppRestAPI_Examples` CMake variable to `ON`.

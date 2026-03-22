@@ -1,49 +1,11 @@
-
 #include <gmock/gmock.h>
 
-#include <cpp_restapi/base_connection.hpp>
 #include <cpp_restapi/link_header_pagination_strategy.hpp>
 
+#include "test_stubs.hpp"
+
 using namespace cpp_restapi;
-
-
-namespace
-{
-    class StubConnection: public BaseConnection
-    {
-    public:
-        using BaseConnection::BaseConnection;
-
-        struct PageResponse
-        {
-            std::string body;
-            std::string headers;
-            int statusCode = 200;
-        };
-
-        void addPage(const std::string& url, PageResponse response)
-        {
-            m_pages[url] = std::move(response);
-        }
-
-        Response fetchPage(const std::string& request) override
-        {
-            auto it = m_pages.find(request);
-            if (it != m_pages.end())
-                return {it->second.body, it->second.headers, it->second.statusCode};
-
-            return {"" , "", 0};
-        }
-
-        std::unique_ptr<ISseConnection> subscribe(const std::string&, EventCallback) override
-        {
-            return nullptr;
-        }
-
-    private:
-        std::map<std::string, PageResponse> m_pages;
-    };
-}
+using test_stubs::StubConnection;
 
 
 TEST(BaseConnectionTest, fetchReturnsSinglePageBody)

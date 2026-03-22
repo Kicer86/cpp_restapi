@@ -24,8 +24,13 @@ namespace cpp_restapi::QtBackend
 
             Connection& operator=(const Connection &) = delete;
 
+            using BaseConnection::fetch;
+
             Response fetchPage(const std::string& request) override;
             std::unique_ptr<ISseConnection> subscribe(const std::string& request, EventCallback callback) override;
+
+        protected:
+            void fetchAsync(const std::string& fullUrl, CancellationToken cancel, FetchCallback onSuccess, ErrorCallback onError) override;
 
         private:
             QNetworkAccessManager& m_networkManager;

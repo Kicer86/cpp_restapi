@@ -18,6 +18,9 @@ add_executable(bare_cpp-httplib_connection_example bare_cpp-httplib_connection_e
 add_executable(qt_sse_example qt_sse_example.cpp)
 add_executable(curl_sse_example curl_sse_example.cpp)
 add_executable(cpp-httplib_sse_example cpp-httplib_sse_example.cpp)
+add_executable(curl_async_example curl_async_example.cpp)
+add_executable(cpp-httplib_async_example cpp-httplib_async_example.cpp)
+add_executable(qt_async_example qt_async_example.cpp)
 
 target_link_libraries(qt_example
     PRIVATE
@@ -64,4 +67,20 @@ target_link_libraries(curl_sse_example
 target_link_libraries(cpp-httplib_sse_example
     PRIVATE
         cpp_restapi
+)
+
+target_link_libraries(curl_async_example
+    PRIVATE
+        cpp_restapi
+)
+
+target_link_libraries(cpp-httplib_async_example
+    PRIVATE
+        cpp_restapi
+)
+
+target_link_libraries(qt_async_example
+    PRIVATE
+        cpp_restapi
+        Qt::Network
 )
