@@ -473,39 +473,41 @@ a compiler that supports `<coroutine>`.
 
 | Type / Function | Description |
 |---|---|
-| `Task<T>` | Lazy, move-only coroutine that produces a `T`. `co_await` it to get the result. |
 | `Detached` | Fire-and-forget wrapper — starts a coroutine that runs to completion on its own. |
-| `coFetch(conn, request)` | Returns `Task<std::expected<Response, HttpError>>` for a single request. |
-| `coFetch(conn, request, strategy)` | Returns `Task<std::expected<std::string, HttpError>>` for paginated requests. |
+| `coFetch(conn, request)` | Returns an awaitable yielding `std::expected<Response, HttpError>`. |
+| `coFetch(conn, request, strategy)` | Returns an awaitable yielding `std::expected<std::string, HttpError>` (paginated). |
 
 ### Example (curl backend)
 
 ```c++
 #include <iostream>
+#include <future>
 
 #include <cpp_restapi/coroutine.hpp>
 #include <cpp_restapi/create_curl_connection.hpp>
-#include <cpp_restapi/iconnection.hpp>
 
-
-cpp_restapi::Detached run()
-{
-    auto connection = cpp_restapi::createCurlConnection("https://swapi.dev/api", {});
-
-    auto result = co_await cpp_restapi::coFetch(*connection, "people/1");
-
-    if (result.has_value())
-    {
-        std::cout << "Status: " << result->statusCode << '\n';
-        std::cout << "Body:   " << result->body << '\n';
-    }
-    else
-        std::cerr << "Error: " << result.error().message << '\n';
-}
 
 int main()
 {
-    run();
+    auto connection = cpp_restapi::createCurlConnection("https://swapi.dev/api", {});
+
+    std::promise<void> done;
+    auto future = done.get_future();
+
+    [&]() -> cpp_restapi::Detached
+    {
+        auto result = co_await cpp_restapi::coFetch(*connection, "people/1");
+
+        if (result)
+            std::cout << "Status: " << result->statusCode << '\n'
+                      << "Body:   " << result->body << '\n';
+        else
+            std::cerr << "Error: " << result.error().message << '\n';
+
+        done.set_value();
+    }();
+
+    future.wait();
     return 0;
 }
 ```
