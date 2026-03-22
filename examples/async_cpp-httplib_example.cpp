@@ -1,18 +1,19 @@
 #include <iostream>
 #include <future>
 
-#include <cpp_restapi/cpp-httplib_connection.hpp>
+#include <cpp_restapi/create_cpp-httplib_connection.hpp>
+#include <cpp_restapi/iconnection.hpp>
 
 
 int main()
 {
-    cpp_restapi::CppHttplibBackend::Connection connection("https://swapi.dev/api", {});
+    auto connection = cpp_restapi::createCppHttplibConnection("https://swapi.dev/api", {});
 
     // Asynchronous fetch — returns immediately, callback runs on a background thread
     std::promise<void> done;
     auto future = done.get_future();
 
-    auto cancel = connection.fetch("people/1",
+    auto cancel = connection->fetch("people/1",
         [&done](cpp_restapi::Response resp)
         {
             std::cout << "Status: " << resp.statusCode << '\n';
