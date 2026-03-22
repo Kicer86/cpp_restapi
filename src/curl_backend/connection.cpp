@@ -11,7 +11,10 @@
 #include <string>
 #include <curl/curl.h>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #include <cpp_restapi/curl_connection.hpp>
+#pragma GCC diagnostic pop
 #include "curl_sse_connection.hpp"
 
 

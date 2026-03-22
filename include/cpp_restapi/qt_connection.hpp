@@ -14,7 +14,7 @@ class QNetworkAccessManager;
 
 namespace cpp_restapi::QtBackend
 {
-    class CPP_RESTAPI_EXPORT Connection: public QObject, public BaseConnection
+    class [[deprecated("Use createQtConnection() from <cpp_restapi/create_qt_connection.hpp>")]] CPP_RESTAPI_EXPORT Connection: public QObject, public BaseConnection
     {
         public:
             Connection(QNetworkAccessManager &, const std::string& address, const std::map<std::string, std::string>& headerEntries);

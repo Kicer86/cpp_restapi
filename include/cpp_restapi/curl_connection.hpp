@@ -8,7 +8,7 @@
 
 namespace cpp_restapi::CurlBackend
 {
-    class CPP_RESTAPI_EXPORT Connection: public ThreadedConnection
+    class [[deprecated("Use createCurlConnection() from <cpp_restapi/create_curl_connection.hpp>")]] CPP_RESTAPI_EXPORT Connection: public ThreadedConnection
     {
         public:
             Connection(const std::string& address, const std::map<std::string, std::string>& headerEntries);
