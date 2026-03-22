@@ -2,7 +2,9 @@
 #ifndef GITHUB_SERVER_MOCK_HPP_INCLUDED
 #define GITHUB_SERVER_MOCK_HPP_INCLUDED
 
+#include <atomic>
 #include <thread>
+#include <vector>
 #include <gmock/gmock.h>
 #include <httplib.h>
 
@@ -14,6 +16,13 @@ class GithubServerMock
         std::string      body;
         httplib::Headers headers;
         int              statusCode = 200;
+    };
+
+    struct SseEvent
+    {
+        std::string event;
+        std::string data;
+        std::string id;
     };
 
     explicit GithubServerMock(int port = 9200)
@@ -28,11 +37,32 @@ class GithubServerMock
     ~GithubServerMock()
     {
       m_svr.stop();
-      m_svrThread.join();
+      if (m_svrThread.joinable())
+        m_svrThread.join();
+    }
+
+    void setSseEvents(std::vector<SseEvent> events)
+    {
+      m_sseEvents = std::move(events);
     }
 
     void listen()
     {
+      m_svr.Get("/sse", [this](const httplib::Request&, httplib::Response& res)
+      {
+        std::string payload;
+        for (const auto& ev : m_sseEvents)
+        {
+          if (!ev.event.empty())
+            payload += "event: " + ev.event + "\n";
+          if (!ev.id.empty())
+            payload += "id: " + ev.id + "\n";
+          payload += "data: " + ev.data + "\n\n";
+        }
+
+        res.set_content(payload, "text/event-stream");
+      });
+
       m_svr.Get("/.*", [this](const httplib::Request& req, httplib::Response& res)
       {
         const auto response = request(req.path, req.headers);
@@ -58,6 +88,7 @@ class GithubServerMock
     httplib::Server m_svr;
     std::thread m_svrThread;
     int m_port;
+    std::vector<SseEvent> m_sseEvents;
 };
 
 #endif
