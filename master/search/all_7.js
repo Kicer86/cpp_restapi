@@ -27,5 +27,5 @@ var searchData=
   ['getuser_24',['getUser',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a272ace06567573afc49769351655be7e',1,'cpp_restapi::GitHub::Request']]],
   ['getuserinfo_25',['getUserInfo',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a64adfa6d26f2f1bd796b51e4db00e2c4',1,'cpp_restapi::GitHub::Request']]],
   ['getweeklycommit_26',['getWeeklyCommit',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a4b7ae0fda44bd010137800e5edf40dac',1,'cpp_restapi::GitHub::Request']]],
-  ['github_20helpers_27',['Dedicated GitHub helpers',['../index.html#autotoc_md7',1,'']]]
+  ['github_20helpers_27',['Dedicated GitHub helpers',['../index.html#autotoc_md6',1,'']]]
 ];

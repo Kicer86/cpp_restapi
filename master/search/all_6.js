@@ -7,7 +7,7 @@ var searchData=
   ['fetchcallback_4',['FetchCallback',['../de/dd0/structcpp__restapi_1_1IConnection.html#a8049b995cab849f0dc68d2d66e00b809',1,'cpp_restapi::IConnection']]],
   ['fetchpage_5',['fetchPage',['../dd/d4e/classcpp__restapi_1_1BaseConnection.html#abd73682cf94120772692266c53448822',1,'cpp_restapi::BaseConnection::fetchPage()'],['../de/d13/classcpp__restapi_1_1CppHttplibBackend_1_1Connection.html#a1348e1f3ba855a091475d4dc9d50ab16',1,'cpp_restapi::CppHttplibBackend::Connection::fetchPage()'],['../d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html#a79fa8abae1e3ee662abeefd0397f0ee8',1,'cpp_restapi::CurlBackend::Connection::fetchPage()'],['../d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html#a9325c36f7d298d2b609e37ccaca70661',1,'cpp_restapi::QtBackend::Connection::fetchPage()']]],
   ['fetchresponse_6',['fetchResponse',['../dd/d4e/classcpp__restapi_1_1BaseConnection.html#ac2704a5b85b06840d0d9c4a122cde6d1',1,'cpp_restapi::BaseConnection::fetchResponse()'],['../de/dd0/structcpp__restapi_1_1IConnection.html#a9162d1b4ea6191bbda4de35fdb9fbcab',1,'cpp_restapi::IConnection::fetchResponse()']]],
-  ['fields_7',['SseEvent fields',['../index.html#autotoc_md15',1,'']]],
+  ['fields_7',['SseEvent fields',['../index.html#autotoc_md14',1,'']]],
   ['final_5fsuspend_8',['final_suspend',['../d8/d5f/structcpp__restapi_1_1Detached_1_1promise__type.html#a44b7c2e90a1fa5df6883ef3924089e97',1,'cpp_restapi::Detached::promise_type']]],
   ['for_20c_9',['Rest API for c++',['../index.html',1,'']]]
 ];

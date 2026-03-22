@@ -10,5 +10,5 @@ var searchData=
   ['isse_5fconnection_2ehpp_7',['isse_connection.hpp',['../d8/dc4/isse__connection_8hpp.html',1,'']]],
   ['isseconnection_8',['ISseConnection',['../d6/dff/structcpp__restapi_1_1ISseConnection.html',1,'cpp_restapi']]],
   ['issues_9',['issues',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#aa80720a39b06b9f89907fe7a94eed78e',1,'cpp_restapi::GitHub::Request']]],
-  ['it_10',['How to use it',['../index.html#autotoc_md2',1,'']]]
+  ['it_10',['How to use it',['../index.html#autotoc_md1',1,'']]]
 ];

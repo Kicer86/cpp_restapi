@@ -1,9 +1,9 @@
 var searchData=
 [
   ['c_0',['Rest API for c++',['../index.html',1,'']]],
-  ['c_2020_20coroutine_20helpers_1',['C++20 Coroutine Helpers',['../index.html#autotoc_md21',1,'']]],
+  ['c_2020_20coroutine_20helpers_1',['C++20 Coroutine Helpers',['../index.html#autotoc_md20',1,'']]],
   ['cancel_2',['cancel',['../d4/dbd/structcpp__restapi_1_1detail_1_1FetchAwaitable.html#ab04daa6d2b2d68e3c0491734314616ef',1,'cpp_restapi::detail::FetchAwaitable::cancel'],['../da/d61/structcpp__restapi_1_1detail_1_1PaginatedFetchAwaitable.html#a918b5140f23a6a747e04bb18e6abde9b',1,'cpp_restapi::detail::PaginatedFetchAwaitable::cancel']]],
-  ['cancellation_3',['Cancellation',['../index.html#autotoc_md19',1,'']]],
+  ['cancellation_3',['Cancellation',['../index.html#autotoc_md18',1,'']]],
   ['cancellationtoken_4',['CancellationToken',['../de/db6/namespacecpp__restapi.html#a137a6f919637dbaccbfe255b95f093c8',1,'cpp_restapi']]],
   ['close_5',['close',['../d6/dff/structcpp__restapi_1_1ISseConnection.html#aecd028b8630dd3caac83cc7a7f714766',1,'cpp_restapi::ISseConnection']]],
   ['cofetch_6',['coFetch',['../de/db6/namespacecpp__restapi.html#a576242a62050f0e4110b3c1b9c7ace49',1,'cpp_restapi::coFetch(IConnection &amp;connection, const std::string &amp;request)'],['../de/db6/namespacecpp__restapi.html#a40f8bacb2e5cf078920b91342699a80b',1,'cpp_restapi::coFetch(IConnection &amp;connection, const std::string &amp;request, IPaginationStrategy &amp;strategy)']]],
@@ -11,10 +11,10 @@ var searchData=
   ['connection_8',['connection',['../d4/dbd/structcpp__restapi_1_1detail_1_1FetchAwaitable.html#ad1c5e183515734b98c25d1ad90891898',1,'cpp_restapi::detail::FetchAwaitable::connection'],['../da/d61/structcpp__restapi_1_1detail_1_1PaginatedFetchAwaitable.html#aad14a67d0aaf44ff4e3a23cde93e371e',1,'cpp_restapi::detail::PaginatedFetchAwaitable::connection']]],
   ['connection_5fbuilder_2ehpp_9',['connection_builder.hpp',['../d7/dd4/connection__builder_8hpp.html',1,'']]],
   ['connectionbuilder_10',['ConnectionBuilder',['../d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html',1,'cpp_restapi::GitHub::ConnectionBuilder'],['../d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html#a7fffe44745e2b38e13c95dc88d02c808',1,'cpp_restapi::GitHub::ConnectionBuilder::ConnectionBuilder()'],['../d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html#a02daea0a18ccaf4f75042c5063c5bf84',1,'cpp_restapi::GitHub::ConnectionBuilder::ConnectionBuilder(const ConnectionBuilder &amp;)=delete']]],
-  ['coroutine_20helpers_11',['C++20 Coroutine Helpers',['../index.html#autotoc_md21',1,'']]],
+  ['coroutine_20helpers_11',['C++20 Coroutine Helpers',['../index.html#autotoc_md20',1,'']]],
   ['coroutine_2ehpp_12',['coroutine.hpp',['../de/de0/coroutine_8hpp.html',1,'']]],
-  ['cpp_20httplib_13',['SSE with cpp-httplib',['../index.html#autotoc_md14',1,'']]],
-  ['cpp_20httplib_20example_3a_14',['cpp-httplib example:',['../index.html#autotoc_md10',1,'']]],
+  ['cpp_20httplib_13',['SSE with cpp-httplib',['../index.html#autotoc_md13',1,'']]],
+  ['cpp_20httplib_20example_3a_14',['cpp-httplib example:',['../index.html#autotoc_md9',1,'']]],
   ['cpp_2dhttplib_5fconnection_2ehpp_15',['cpp-httplib_connection.hpp',['../dc/dfa/cpp-httplib__connection_8hpp.html',1,'']]],
   ['cpp_5frestapi_16',['cpp_restapi',['../de/db6/namespacecpp__restapi.html',1,'']]],
   ['cpp_5frestapi_3a_3acpphttplibbackend_17',['CppHttplibBackend',['../d9/d55/namespacecpp__restapi_1_1CppHttplibBackend.html',1,'cpp_restapi']]],
@@ -28,7 +28,7 @@ var searchData=
   ['createcpphttplibconnection_25',['createCppHttplibConnection',['../de/db6/namespacecpp__restapi.html#acbe40d7c469dc4bb521c04b5834f331b',1,'cpp_restapi']]],
   ['createcurlconnection_26',['createCurlConnection',['../de/db6/namespacecpp__restapi.html#a0b010966850f60a11a30024fa2df9927',1,'cpp_restapi']]],
   ['createqtconnection_27',['createQtConnection',['../de/db6/namespacecpp__restapi.html#aca6192c1d90d5288afc4a648e671ed5a',1,'cpp_restapi']]],
-  ['curl_28',['curl',['../index.html#autotoc_md17',1,'Async with curl'],['../index.html#autotoc_md12',1,'SSE with curl']]],
-  ['curl_20backend_29',['Example (curl backend)',['../index.html#autotoc_md23',1,'']]],
+  ['curl_28',['curl',['../index.html#autotoc_md16',1,'Async with curl'],['../index.html#autotoc_md11',1,'SSE with curl']]],
+  ['curl_20backend_29',['Example (curl backend)',['../index.html#autotoc_md22',1,'']]],
   ['curl_5fconnection_2ehpp_30',['curl_connection.hpp',['../de/d0e/curl__connection_8hpp.html',1,'']]]
 ];
