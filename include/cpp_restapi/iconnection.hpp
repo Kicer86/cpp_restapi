@@ -10,12 +10,14 @@
 #include <vector>
 
 #include "http_error.hpp"
-#include "ipagination_strategy.hpp"
-#include "isse_connection.hpp"
-#include "sse_event.hpp"
 
 namespace cpp_restapi
 {
+    // Forward declarations – include the corresponding header when
+    // you need the full definition (e.g. to access SseEvent members).
+    struct SseEvent;
+    struct ISseConnection;
+    struct IPaginationStrategy;
 
     /**
      * @brief HTTP response containing body, raw headers and the HTTP status code
