@@ -1,6 +1,6 @@
 
 cmake_minimum_required(VERSION 3.16)
-project(cppRestAPI)
+project(cppRestAPI VERSION 2.2.0)
 
 if(POLICY CMP0135)
     cmake_policy(SET CMP0135 NEW)
@@ -56,6 +56,17 @@ target_link_libraries(cpp_restapi
 )
 
 generate_export_header(cpp_restapi)
+
+configure_file(
+    ${PROJECT_SOURCE_DIR}/include/cpp_restapi/version.hpp.in
+    ${PROJECT_BINARY_DIR}/cpp_restapi/version.hpp
+    @ONLY
+)
+
+set_target_properties(cpp_restapi PROPERTIES
+    VERSION   ${PROJECT_VERSION}
+    SOVERSION ${PROJECT_VERSION_MAJOR}
+)
 
 if(NOT CppRestAPI_QtBackend AND NOT CppRestAPI_CurlBackend AND NOT CppRestAPI_CppHttplibBackend)
     message(FATAL_ERROR "No backend was chosen. Set CppRestAPI_QtBackend, CppRestAPI_CurlBackend or CppRestAPI_CppHttplibBackend variable to ON")
