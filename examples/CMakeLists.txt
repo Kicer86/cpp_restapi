@@ -21,9 +21,9 @@ add_executable(sse_cpp-httplib_example sse_cpp-httplib_example.cpp)
 add_executable(async_curl_example async_curl_example.cpp)
 add_executable(async_cpp-httplib_example async_cpp-httplib_example.cpp)
 add_executable(async_qt_example async_qt_example.cpp)
-add_executable(curl_coroutine_example curl_coroutine_example.cpp)
-add_executable(cpp-httplib_coroutine_example cpp-httplib_coroutine_example.cpp)
-add_executable(qt_coroutine_example qt_coroutine_example.cpp)
+add_executable(coroutine_curl_example coroutine_curl_example.cpp)
+add_executable(coroutine_cpp-httplib_example coroutine_cpp-httplib_example.cpp)
+add_executable(coroutine_qt_example coroutine_qt_example.cpp)
 
 target_link_libraries(github_qt_example
     PRIVATE
@@ -88,17 +88,17 @@ target_link_libraries(async_qt_example
         Qt::Network
 )
 
-target_link_libraries(curl_coroutine_example
+target_link_libraries(coroutine_curl_example
     PRIVATE
         cpp_restapi
 )
 
-target_link_libraries(cpp-httplib_coroutine_example
+target_link_libraries(coroutine_cpp-httplib_example
     PRIVATE
         cpp_restapi
 )
 
-target_link_libraries(qt_coroutine_example
+target_link_libraries(coroutine_qt_example
     PRIVATE
         cpp_restapi
         Qt::Network
