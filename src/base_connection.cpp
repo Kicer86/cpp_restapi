@@ -99,13 +99,17 @@ CancellationToken BaseConnection::fetch(const std::string& request, IPaginationS
             [this, cancel, pages, &strategy, onSuccess, onError, fetchNextPage](Response resp)
             {
                 if (cancel->load(std::memory_order_acquire))
+                {
+                    *fetchNextPage = nullptr;
                     return;
+                }
 
                 std::string next = strategy.nextPageUrl(resp.headers);
                 pages->push_back(std::move(resp.body));
 
                 if (next.empty())
                 {
+                    *fetchNextPage = nullptr;
                     if (onSuccess)
                         onSuccess(strategy.merge(*pages));
                 }
@@ -114,8 +118,9 @@ CancellationToken BaseConnection::fetch(const std::string& request, IPaginationS
                     (*fetchNextPage)(next);
                 }
             },
-            [onError](HttpError err)
+            [onError, fetchNextPage](HttpError err)
             {
+                *fetchNextPage = nullptr;
                 if (onError)
                     onError(std::move(err));
             });
