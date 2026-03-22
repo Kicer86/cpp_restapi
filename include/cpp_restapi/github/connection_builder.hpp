@@ -2,6 +2,7 @@
 #ifndef CONNECTION_BUILDER_HPP_INCLUDED
 #define CONNECTION_BUILDER_HPP_INCLUDED
 
+#include <functional>
 #include <map>
 #include <memory>
 
@@ -50,11 +51,32 @@ namespace cpp_restapi::GitHub
             }
 
             /**
+             * @brief build @ref cpp_restapi::IConnection object using a factory function
+             * @param factory callable that creates a connection (e.g. @ref cpp_restapi::createCurlConnection)
+             * @param args extra arguments passed to the factory before address and headers
+             *
+             * Usage:
+             * @code
+             * auto conn = builder.build(cpp_restapi::createCurlConnection);
+             * auto conn = builder.build(cpp_restapi::createQtConnection, networkManager);
+             * @endcode
+             */
+            template<typename Factory, typename... Args>
+            std::shared_ptr<IConnection> build(Factory&& factory, Args&&... args)
+            {
+                return std::shared_ptr<IConnection>(
+                    std::invoke(std::forward<Factory>(factory),
+                                std::forward<Args>(args)..., m_address, m_headerEntries));
+            }
+
+            /**
              * @brief build @ref cpp_restapi::IConnection object
              * @tparam CT connection type (Qt or Curl backend). @ref cpp_restapi::CurlBackend::Connection or @ref cpp_restapi::QtBackend::Connection
              * @param args backend specific arguments to be passed to connection.
+             * @deprecated Use build(factory, args...) with a factory function instead (e.g. build(createCurlConnection))
              */
             template<typename CT, typename... Args>
+            [[deprecated("Use build(factory, args...) with a factory function instead")]]
             std::shared_ptr<IConnection> build(Args&&... args)
             {
                 return std::make_shared<CT>(std::forward<Args>(args)..., m_address, m_headerEntries);
