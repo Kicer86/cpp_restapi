@@ -22,8 +22,12 @@ var index =
         [ "Cancellation", "index.html#autotoc_md19", null ],
         [ "Async pagination", "index.html#autotoc_md20", null ]
       ] ],
-      [ "Building examples", "index.html#autotoc_md21", null ],
-      [ "Building unit tests", "index.html#autotoc_md22", null ],
-      [ "Links", "index.html#autotoc_md23", null ]
+      [ "C++20 Coroutine Helpers", "index.html#autotoc_md21", [
+        [ "Key types", "index.html#autotoc_md22", null ],
+        [ "Example (curl backend)", "index.html#autotoc_md23", null ]
+      ] ],
+      [ "Building examples", "index.html#autotoc_md24", null ],
+      [ "Building unit tests", "index.html#autotoc_md25", null ],
+      [ "Links", "index.html#autotoc_md26", null ]
     ] ]
 ];

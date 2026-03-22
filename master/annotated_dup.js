@@ -7,6 +7,10 @@ var annotated_dup =
       [ "CurlBackend", "d2/dc6/namespacecpp__restapi_1_1CurlBackend.html", [
         [ "Connection", "d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html", "d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection" ]
       ] ],
+      [ "detail", "d8/da9/namespacecpp__restapi_1_1detail.html", [
+        [ "FetchAwaitable", "d4/dbd/structcpp__restapi_1_1detail_1_1FetchAwaitable.html", "d4/dbd/structcpp__restapi_1_1detail_1_1FetchAwaitable" ],
+        [ "PaginatedFetchAwaitable", "da/d61/structcpp__restapi_1_1detail_1_1PaginatedFetchAwaitable.html", "da/d61/structcpp__restapi_1_1detail_1_1PaginatedFetchAwaitable" ]
+      ] ],
       [ "GitHub", "dc/de3/namespacecpp__restapi_1_1GitHub.html", [
         [ "ConnectionBuilder", "d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html", "d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder" ],
         [ "Request", "dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html", "dd/d8c/classcpp__restapi_1_1GitHub_1_1Request" ]
@@ -15,6 +19,7 @@ var annotated_dup =
         [ "Connection", "d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html", "d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection" ]
       ] ],
       [ "BaseConnection", "dd/d4e/classcpp__restapi_1_1BaseConnection.html", "dd/d4e/classcpp__restapi_1_1BaseConnection" ],
+      [ "Detached", "dc/d63/structcpp__restapi_1_1Detached.html", "dc/d63/structcpp__restapi_1_1Detached" ],
       [ "HttpError", "d5/d9b/structcpp__restapi_1_1HttpError.html", "d5/d9b/structcpp__restapi_1_1HttpError" ],
       [ "IConnection", "de/dd0/structcpp__restapi_1_1IConnection.html", "de/dd0/structcpp__restapi_1_1IConnection" ],
       [ "IPaginationStrategy", "db/d62/structcpp__restapi_1_1IPaginationStrategy.html", "db/d62/structcpp__restapi_1_1IPaginationStrategy" ],

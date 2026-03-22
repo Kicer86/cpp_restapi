@@ -149,18 +149,19 @@ Simplest usage</h2>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="de/d0e/curl__connection_8hpp.html">cpp_restapi/curl_connection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="de/d43/create__curl__connection_8hpp.html">cpp_restapi/create_curl_connection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d9/d6d/iconnection_8hpp.html">cpp_restapi/iconnection.hpp</a>&gt;</span></div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Access The Star Wars API</span></div>
-<div class="line">    <a class="code hl_class" href="d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html">cpp_restapi::CurlBackend::Connection</a> connection(<span class="stringliteral">&quot;https://swapi.dev/api&quot;</span>, {});</div>
+<div class="line">    <span class="keyword">auto</span> connection = <a class="code hl_function" href="de/db6/namespacecpp__restapi.html#a0b010966850f60a11a30024fa2df9927">cpp_restapi::createCurlConnection</a>(<span class="stringliteral">&quot;https://swapi.dev/api&quot;</span>, {});</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// fetch() returns std::expected&lt;std::string, HttpError&gt;</span></div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; endpoint: {<span class="stringliteral">&quot;people/1&quot;</span>, <span class="stringliteral">&quot;starships/12/&quot;</span>})</div>
 <div class="line">    {</div>
-<div class="line">        <span class="keyword">const</span> <span class="keyword">auto</span> result = connection.fetch(endpoint);</div>
+<div class="line">        <span class="keyword">const</span> <span class="keyword">auto</span> result = connection-&gt;fetch(endpoint);</div>
 <div class="line">        <span class="keywordflow">if</span> (result)</div>
 <div class="line">            std::cout &lt;&lt; result.value() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">        <span class="keywordflow">else</span></div>
@@ -169,8 +170,9 @@ Simplest usage</h2>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclasscpp__restapi_1_1CurlBackend_1_1Connection_html"><div class="ttname"><a href="d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html">cpp_restapi::CurlBackend::Connection</a></div><div class="ttdef"><b>Definition</b> curl_connection.hpp:12</div></div>
-<div class="ttc" id="acurl__connection_8hpp_html"><div class="ttname"><a href="de/d0e/curl__connection_8hpp.html">curl_connection.hpp</a></div></div>
+<div class="ttc" id="acreate__curl__connection_8hpp_html"><div class="ttname"><a href="de/d43/create__curl__connection_8hpp.html">create_curl_connection.hpp</a></div></div>
+<div class="ttc" id="aiconnection_8hpp_html"><div class="ttname"><a href="d9/d6d/iconnection_8hpp.html">iconnection.hpp</a></div></div>
+<div class="ttc" id="anamespacecpp__restapi_html_a0b010966850f60a11a30024fa2df9927"><div class="ttname"><a href="de/db6/namespacecpp__restapi.html#a0b010966850f60a11a30024fa2df9927">cpp_restapi::createCurlConnection</a></div><div class="ttdeci">CPP_RESTAPI_EXPORT std::unique_ptr&lt; IConnection &gt; createCurlConnection(const std::string &amp;address, const std::map&lt; std::string, std::string &gt; &amp;headerEntries)</div><div class="ttdoc">Create a connection using the libcurl backend.</div></div>
 </div><!-- fragment --><p>This example accesses The Star Wars API using curl backend.<br  />
  <code>fetch()</code> returns <code>std::expected&lt;std::string, HttpError&gt;</code> — on success the response body is available via <code>value()</code>, on failure the <code>HttpError</code> carries the HTTP status code, response body and a human-readable message.</p>
 <p>Qt version: </p><div class="fragment"><div class="line"> ++</div>
@@ -178,7 +180,8 @@ Simplest usage</h2>
 <div class="line"><span class="preprocessor">#include &lt;QCoreApplication&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;QNetworkAccessManager&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="de/dfe/qt__connection_8hpp.html">cpp_restapi/qt_connection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d6/d99/create__qt__connection_8hpp.html">cpp_restapi/create_qt_connection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d9/d6d/iconnection_8hpp.html">cpp_restapi/iconnection.hpp</a>&gt;</span></div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv)</div>
@@ -187,12 +190,12 @@ Simplest usage</h2>
 <div class="line">    QNetworkAccessManager manager;</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// Access The Star Wars API</span></div>
-<div class="line">    <a class="code hl_class" href="d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html">cpp_restapi::QtBackend::Connection</a> connection(manager, <span class="stringliteral">&quot;https://swapi.dev/api&quot;</span>, {});</div>
+<div class="line">    <span class="keyword">auto</span> connection = <a class="code hl_function" href="de/db6/namespacecpp__restapi.html#aca6192c1d90d5288afc4a648e671ed5a">cpp_restapi::createQtConnection</a>(manager, <span class="stringliteral">&quot;https://swapi.dev/api&quot;</span>, {});</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// fetch() returns std::expected&lt;std::string, HttpError&gt;</span></div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; endpoint: {<span class="stringliteral">&quot;people/1&quot;</span>, <span class="stringliteral">&quot;starships/12/&quot;</span>})</div>
 <div class="line">    {</div>
-<div class="line">        <span class="keyword">const</span> <span class="keyword">auto</span> result = connection.fetch(endpoint);</div>
+<div class="line">        <span class="keyword">const</span> <span class="keyword">auto</span> result = connection-&gt;fetch(endpoint);</div>
 <div class="line">        <span class="keywordflow">if</span> (result)</div>
 <div class="line">            std::cout &lt;&lt; result.value() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">        <span class="keywordflow">else</span></div>
@@ -201,23 +204,24 @@ Simplest usage</h2>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclasscpp__restapi_1_1QtBackend_1_1Connection_html"><div class="ttname"><a href="d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html">cpp_restapi::QtBackend::Connection</a></div><div class="ttdef"><b>Definition</b> qt_connection.hpp:18</div></div>
-<div class="ttc" id="aqt__connection_8hpp_html"><div class="ttname"><a href="de/dfe/qt__connection_8hpp.html">qt_connection.hpp</a></div></div>
+<div class="ttc" id="acreate__qt__connection_8hpp_html"><div class="ttname"><a href="d6/d99/create__qt__connection_8hpp.html">create_qt_connection.hpp</a></div></div>
+<div class="ttc" id="anamespacecpp__restapi_html_aca6192c1d90d5288afc4a648e671ed5a"><div class="ttname"><a href="de/db6/namespacecpp__restapi.html#aca6192c1d90d5288afc4a648e671ed5a">cpp_restapi::createQtConnection</a></div><div class="ttdeci">CPP_RESTAPI_EXPORT std::unique_ptr&lt; IConnection &gt; createQtConnection(QNetworkAccessManager &amp;manager, const std::string &amp;address, const std::map&lt; std::string, std::string &gt; &amp;headerEntries)</div><div class="ttdoc">Create a connection using the Qt backend.</div></div>
 </div><!-- fragment --><p>cpp-httplib version: </p><div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="dc/dfa/cpp-httplib__connection_8hpp.html">cpp_restapi/cpp-httplib_connection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d5/d55/create__cpp-httplib__connection_8hpp.html">cpp_restapi/create_cpp-httplib_connection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d9/d6d/iconnection_8hpp.html">cpp_restapi/iconnection.hpp</a>&gt;</span></div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Access The Star Wars API</span></div>
-<div class="line">    <a class="code hl_class" href="de/d13/classcpp__restapi_1_1CppHttplibBackend_1_1Connection.html">cpp_restapi::CppHttplibBackend::Connection</a> connection(<span class="stringliteral">&quot;https://swapi.dev/api&quot;</span>, {});</div>
+<div class="line">    <span class="keyword">auto</span> connection = <a class="code hl_function" href="de/db6/namespacecpp__restapi.html#acbe40d7c469dc4bb521c04b5834f331b">cpp_restapi::createCppHttplibConnection</a>(<span class="stringliteral">&quot;https://swapi.dev/api&quot;</span>, {});</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// fetch() returns std::expected&lt;std::string, HttpError&gt;</span></div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; endpoint: {<span class="stringliteral">&quot;people/1&quot;</span>, <span class="stringliteral">&quot;starships/12/&quot;</span>})</div>
 <div class="line">    {</div>
-<div class="line">        <span class="keyword">const</span> <span class="keyword">auto</span> result = connection.fetch(endpoint);</div>
+<div class="line">        <span class="keyword">const</span> <span class="keyword">auto</span> result = connection-&gt;fetch(endpoint);</div>
 <div class="line">        <span class="keywordflow">if</span> (result)</div>
 <div class="line">            std::cout &lt;&lt; result.value() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">        <span class="keywordflow">else</span></div>
@@ -226,8 +230,8 @@ Simplest usage</h2>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclasscpp__restapi_1_1CppHttplibBackend_1_1Connection_html"><div class="ttname"><a href="de/d13/classcpp__restapi_1_1CppHttplibBackend_1_1Connection.html">cpp_restapi::CppHttplibBackend::Connection</a></div><div class="ttdef"><b>Definition</b> cpp-httplib_connection.hpp:12</div></div>
-<div class="ttc" id="acpp-httplib__connection_8hpp_html"><div class="ttname"><a href="dc/dfa/cpp-httplib__connection_8hpp.html">cpp-httplib_connection.hpp</a></div></div>
+<div class="ttc" id="acreate__cpp-httplib__connection_8hpp_html"><div class="ttname"><a href="d5/d55/create__cpp-httplib__connection_8hpp.html">create_cpp-httplib_connection.hpp</a></div></div>
+<div class="ttc" id="anamespacecpp__restapi_html_acbe40d7c469dc4bb521c04b5834f331b"><div class="ttname"><a href="de/db6/namespacecpp__restapi.html#acbe40d7c469dc4bb521c04b5834f331b">cpp_restapi::createCppHttplibConnection</a></div><div class="ttdeci">CPP_RESTAPI_EXPORT std::unique_ptr&lt; IConnection &gt; createCppHttplibConnection(const std::string &amp;address, const std::map&lt; std::string, std::string &gt; &amp;headerEntries)</div><div class="ttdoc">Create a connection using the cpp-httplib backend.</div></div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md7"></a>
 Dedicated GitHub helpers</h3>
 <p>For accessing GitHub API it is possible to use exactly the same apporach as presented above.<br  />
@@ -239,7 +243,7 @@ Qt example</h4>
 <div class="line"><span class="preprocessor">#include &lt;QDebug&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;QNetworkAccessManager&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="de/dfe/qt__connection_8hpp.html">cpp_restapi/qt_connection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d6/d99/create__qt__connection_8hpp.html">cpp_restapi/create_qt_connection.hpp</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d7/dd4/connection__builder_8hpp.html">cpp_restapi/github/connection_builder.hpp</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d6/d6f/request_8hpp.html">cpp_restapi/github/request.hpp</a>&gt;</span></div>
 <div class="line"> </div>
@@ -249,7 +253,7 @@ Qt example</h4>
 <div class="line">    QCoreApplication qapp(argc, argv);</div>
 <div class="line">    QNetworkAccessManager manager;</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> connection = <a class="code hl_class" href="d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html">cpp_restapi::GitHub::ConnectionBuilder</a>().<a class="code hl_function" href="d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html#aadd92ba163b31243a4107aadbab854cc">build</a>&lt;<a class="code hl_class" href="d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html">cpp_restapi::QtBackend::Connection</a>&gt;(manager);</div>
+<div class="line">    <span class="keyword">auto</span> connection = <a class="code hl_class" href="d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html">cpp_restapi::GitHub::ConnectionBuilder</a>().<a class="code hl_function" href="d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html#a24c9b5b660a9787bac376f06243e6f67">build</a>(<a class="code hl_function" href="de/db6/namespacecpp__restapi.html#aca6192c1d90d5288afc4a648e671ed5a">cpp_restapi::createQtConnection</a>, manager);</div>
 <div class="line">    <a class="code hl_class" href="dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html">cpp_restapi::GitHub::Request</a> request(connection);</div>
 <div class="line"> </div>
 <div class="line">    qInfo() &lt;&lt; request.getRateLimit().c_str();</div>
@@ -257,8 +261,8 @@ Qt example</h4>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclasscpp__restapi_1_1GitHub_1_1ConnectionBuilder_html"><div class="ttname"><a href="d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html">cpp_restapi::GitHub::ConnectionBuilder</a></div><div class="ttdoc">Connection build for GitHub api.</div><div class="ttdef"><b>Definition</b> connection_builder.hpp:18</div></div>
-<div class="ttc" id="aclasscpp__restapi_1_1GitHub_1_1ConnectionBuilder_html_aadd92ba163b31243a4107aadbab854cc"><div class="ttname"><a href="d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html#aadd92ba163b31243a4107aadbab854cc">cpp_restapi::GitHub::ConnectionBuilder::build</a></div><div class="ttdeci">std::shared_ptr&lt; IConnection &gt; build(Args &amp;&amp;... args)</div><div class="ttdoc">build cpp_restapi::IConnection object</div><div class="ttdef"><b>Definition</b> connection_builder.hpp:58</div></div>
+<div class="ttc" id="aclasscpp__restapi_1_1GitHub_1_1ConnectionBuilder_html"><div class="ttname"><a href="d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html">cpp_restapi::GitHub::ConnectionBuilder</a></div><div class="ttdoc">Connection build for GitHub api.</div><div class="ttdef"><b>Definition</b> connection_builder.hpp:19</div></div>
+<div class="ttc" id="aclasscpp__restapi_1_1GitHub_1_1ConnectionBuilder_html_a24c9b5b660a9787bac376f06243e6f67"><div class="ttname"><a href="d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html#a24c9b5b660a9787bac376f06243e6f67">cpp_restapi::GitHub::ConnectionBuilder::build</a></div><div class="ttdeci">std::unique_ptr&lt; IConnection &gt; build(Factory &amp;&amp;factory, Args &amp;&amp;... args)</div><div class="ttdoc">build cpp_restapi::IConnection object using a factory function</div><div class="ttdef"><b>Definition</b> connection_builder.hpp:65</div></div>
 <div class="ttc" id="aclasscpp__restapi_1_1GitHub_1_1Request_html"><div class="ttname"><a href="dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html">cpp_restapi::GitHub::Request</a></div><div class="ttdoc">GitHub api actions.</div><div class="ttdef"><b>Definition</b> request.hpp:27</div></div>
 <div class="ttc" id="aconnection__builder_8hpp_html"><div class="ttname"><a href="d7/dd4/connection__builder_8hpp.html">connection_builder.hpp</a></div></div>
 <div class="ttc" id="arequest_8hpp_html"><div class="ttname"><a href="d6/d6f/request_8hpp.html">request.hpp</a></div></div>
@@ -272,14 +276,14 @@ libcurl example</h4>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="de/d0e/curl__connection_8hpp.html">cpp_restapi/curl_connection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="de/d43/create__curl__connection_8hpp.html">cpp_restapi/create_curl_connection.hpp</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d7/dd4/connection__builder_8hpp.html">cpp_restapi/github/connection_builder.hpp</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d6/d6f/request_8hpp.html">cpp_restapi/github/request.hpp</a>&gt;</span></div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv)</div>
 <div class="line">{</div>
-<div class="line">    <span class="keyword">auto</span> connection = <a class="code hl_class" href="d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html">cpp_restapi::GitHub::ConnectionBuilder</a>().<a class="code hl_function" href="d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html#aadd92ba163b31243a4107aadbab854cc">build</a>&lt;<a class="code hl_class" href="d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html">cpp_restapi::CurlBackend::Connection</a>&gt;();</div>
+<div class="line">    <span class="keyword">auto</span> connection = <a class="code hl_class" href="d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html">cpp_restapi::GitHub::ConnectionBuilder</a>().<a class="code hl_function" href="d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html#a24c9b5b660a9787bac376f06243e6f67">build</a>(<a class="code hl_function" href="de/db6/namespacecpp__restapi.html#a0b010966850f60a11a30024fa2df9927">cpp_restapi::createCurlConnection</a>);</div>
 <div class="line">    <a class="code hl_class" href="dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html">cpp_restapi::GitHub::Request</a> request(connection);</div>
 <div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; request.getRateLimit() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
@@ -292,14 +296,14 @@ cpp-httplib example:</h4>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="dc/dfa/cpp-httplib__connection_8hpp.html">cpp_restapi/cpp-httplib_connection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d5/d55/create__cpp-httplib__connection_8hpp.html">cpp_restapi/create_cpp-httplib_connection.hpp</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d7/dd4/connection__builder_8hpp.html">cpp_restapi/github/connection_builder.hpp</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d6/d6f/request_8hpp.html">cpp_restapi/github/request.hpp</a>&gt;</span></div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv)</div>
 <div class="line">{</div>
-<div class="line">    <span class="keyword">auto</span> connection = <a class="code hl_class" href="d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html">cpp_restapi::GitHub::ConnectionBuilder</a>().<a class="code hl_function" href="d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html#aadd92ba163b31243a4107aadbab854cc">build</a>&lt;<a class="code hl_class" href="de/d13/classcpp__restapi_1_1CppHttplibBackend_1_1Connection.html">cpp_restapi::CppHttplibBackend::Connection</a>&gt;();</div>
+<div class="line">    <span class="keyword">auto</span> connection = <a class="code hl_class" href="d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html">cpp_restapi::GitHub::ConnectionBuilder</a>().<a class="code hl_function" href="d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html#a24c9b5b660a9787bac376f06243e6f67">build</a>(<a class="code hl_function" href="de/db6/namespacecpp__restapi.html#acbe40d7c469dc4bb521c04b5834f331b">cpp_restapi::createCppHttplibConnection</a>);</div>
 <div class="line">    <a class="code hl_class" href="dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html">cpp_restapi::GitHub::Request</a> request(connection);</div>
 <div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; request.getRateLimit() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
@@ -319,14 +323,17 @@ SSE with curl</h3>
 <div class="line"><span class="preprocessor">#include &lt;thread&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;chrono&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="de/d0e/curl__connection_8hpp.html">cpp_restapi/curl_connection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="de/d43/create__curl__connection_8hpp.html">cpp_restapi/create_curl_connection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d9/d6d/iconnection_8hpp.html">cpp_restapi/iconnection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d8/dc4/isse__connection_8hpp.html">cpp_restapi/isse_connection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d1/dc3/sse__event_8hpp.html">cpp_restapi/sse_event.hpp</a>&gt;</span></div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv)</div>
 <div class="line">{</div>
-<div class="line">    <a class="code hl_class" href="d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html">cpp_restapi::CurlBackend::Connection</a> connection(<span class="stringliteral">&quot;http://localhost:8080&quot;</span>, {});</div>
+<div class="line">    <span class="keyword">auto</span> connection = <a class="code hl_function" href="de/db6/namespacecpp__restapi.html#a0b010966850f60a11a30024fa2df9927">cpp_restapi::createCurlConnection</a>(<span class="stringliteral">&quot;http://localhost:8080&quot;</span>, {});</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> sse = connection.<a class="code hl_function" href="d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html#a3ac825ad9a5e0080383e600ff8c01c26">subscribe</a>(<span class="stringliteral">&quot;events&quot;</span>, [](<span class="keyword">const</span> <a class="code hl_struct" href="d9/d37/structcpp__restapi_1_1SseEvent.html">cpp_restapi::SseEvent</a>&amp; event)</div>
+<div class="line">    <span class="keyword">auto</span> sse = connection-&gt;subscribe(<span class="stringliteral">&quot;events&quot;</span>, [](<span class="keyword">const</span> <a class="code hl_struct" href="d9/d37/structcpp__restapi_1_1SseEvent.html">cpp_restapi::SseEvent</a>&amp; event)</div>
 <div class="line">    {</div>
 <div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Event: &quot;</span> &lt;&lt; <span class="keyword">event</span>.event &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Data: &quot;</span> &lt;&lt; <span class="keyword">event</span>.data &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
@@ -338,7 +345,8 @@ SSE with curl</h3>
 <div class="line">    sse-&gt;close();</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclasscpp__restapi_1_1CurlBackend_1_1Connection_html_a3ac825ad9a5e0080383e600ff8c01c26"><div class="ttname"><a href="d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html#a3ac825ad9a5e0080383e600ff8c01c26">cpp_restapi::CurlBackend::Connection::subscribe</a></div><div class="ttdeci">std::unique_ptr&lt; ISseConnection &gt; subscribe(const std::string &amp;request, EventCallback callback) override</div><div class="ttdoc">Subscribe to an SSE endpoint.</div></div>
+<div class="ttc" id="aisse__connection_8hpp_html"><div class="ttname"><a href="d8/dc4/isse__connection_8hpp.html">isse_connection.hpp</a></div></div>
+<div class="ttc" id="asse__event_8hpp_html"><div class="ttname"><a href="d1/dc3/sse__event_8hpp.html">sse_event.hpp</a></div></div>
 <div class="ttc" id="astructcpp__restapi_1_1SseEvent_html"><div class="ttname"><a href="d9/d37/structcpp__restapi_1_1SseEvent.html">cpp_restapi::SseEvent</a></div><div class="ttdoc">Represents a single Server-Sent Event.</div><div class="ttdef"><b>Definition</b> sse_event.hpp:15</div></div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md13"></a>
 SSE with Qt</h3>
@@ -347,7 +355,10 @@ SSE with Qt</h3>
 <div class="line"><span class="preprocessor">#include &lt;QCoreApplication&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;QNetworkAccessManager&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="de/dfe/qt__connection_8hpp.html">cpp_restapi/qt_connection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d6/d99/create__qt__connection_8hpp.html">cpp_restapi/create_qt_connection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d9/d6d/iconnection_8hpp.html">cpp_restapi/iconnection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d8/dc4/isse__connection_8hpp.html">cpp_restapi/isse_connection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d1/dc3/sse__event_8hpp.html">cpp_restapi/sse_event.hpp</a>&gt;</span></div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv)</div>
@@ -355,9 +366,9 @@ SSE with Qt</h3>
 <div class="line">    QCoreApplication qapp(argc, argv);</div>
 <div class="line">    QNetworkAccessManager manager;</div>
 <div class="line"> </div>
-<div class="line">    <a class="code hl_class" href="d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html">cpp_restapi::QtBackend::Connection</a> connection(manager, <span class="stringliteral">&quot;http://localhost:8080&quot;</span>, {});</div>
+<div class="line">    <span class="keyword">auto</span> connection = <a class="code hl_function" href="de/db6/namespacecpp__restapi.html#aca6192c1d90d5288afc4a648e671ed5a">cpp_restapi::createQtConnection</a>(manager, <span class="stringliteral">&quot;http://localhost:8080&quot;</span>, {});</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> sse = connection.<a class="code hl_function" href="d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html#a289cd4038110a13adabf1e01e5ed9aeb">subscribe</a>(<span class="stringliteral">&quot;events&quot;</span>, [](<span class="keyword">const</span> <a class="code hl_struct" href="d9/d37/structcpp__restapi_1_1SseEvent.html">cpp_restapi::SseEvent</a>&amp; event)</div>
+<div class="line">    <span class="keyword">auto</span> sse = connection-&gt;subscribe(<span class="stringliteral">&quot;events&quot;</span>, [](<span class="keyword">const</span> <a class="code hl_struct" href="d9/d37/structcpp__restapi_1_1SseEvent.html">cpp_restapi::SseEvent</a>&amp; event)</div>
 <div class="line">    {</div>
 <div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Event: &quot;</span> &lt;&lt; <span class="keyword">event</span>.event &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Data: &quot;</span> &lt;&lt; <span class="keyword">event</span>.data &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
@@ -365,7 +376,6 @@ SSE with Qt</h3>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> qapp.exec();</div>
 <div class="line">}</div>
-<div class="ttc" id="aclasscpp__restapi_1_1QtBackend_1_1Connection_html_a289cd4038110a13adabf1e01e5ed9aeb"><div class="ttname"><a href="d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html#a289cd4038110a13adabf1e01e5ed9aeb">cpp_restapi::QtBackend::Connection::subscribe</a></div><div class="ttdeci">std::unique_ptr&lt; ISseConnection &gt; subscribe(const std::string &amp;request, EventCallback callback) override</div><div class="ttdoc">Subscribe to an SSE endpoint.</div></div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md14"></a>
 SSE with cpp-httplib</h3>
 <div class="fragment"><div class="line"> ++</div>
@@ -373,14 +383,17 @@ SSE with cpp-httplib</h3>
 <div class="line"><span class="preprocessor">#include &lt;thread&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;chrono&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="dc/dfa/cpp-httplib__connection_8hpp.html">cpp_restapi/cpp-httplib_connection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d5/d55/create__cpp-httplib__connection_8hpp.html">cpp_restapi/create_cpp-httplib_connection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d9/d6d/iconnection_8hpp.html">cpp_restapi/iconnection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d8/dc4/isse__connection_8hpp.html">cpp_restapi/isse_connection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d1/dc3/sse__event_8hpp.html">cpp_restapi/sse_event.hpp</a>&gt;</span></div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv)</div>
 <div class="line">{</div>
-<div class="line">    <a class="code hl_class" href="de/d13/classcpp__restapi_1_1CppHttplibBackend_1_1Connection.html">cpp_restapi::CppHttplibBackend::Connection</a> connection(<span class="stringliteral">&quot;http://localhost:8080&quot;</span>, {});</div>
+<div class="line">    <span class="keyword">auto</span> connection = <a class="code hl_function" href="de/db6/namespacecpp__restapi.html#acbe40d7c469dc4bb521c04b5834f331b">cpp_restapi::createCppHttplibConnection</a>(<span class="stringliteral">&quot;http://localhost:8080&quot;</span>, {});</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> sse = connection.<a class="code hl_function" href="de/d13/classcpp__restapi_1_1CppHttplibBackend_1_1Connection.html#a03d08ab6e18d90a9aa43e33d69da8f65">subscribe</a>(<span class="stringliteral">&quot;events&quot;</span>, [](<span class="keyword">const</span> <a class="code hl_struct" href="d9/d37/structcpp__restapi_1_1SseEvent.html">cpp_restapi::SseEvent</a>&amp; event)</div>
+<div class="line">    <span class="keyword">auto</span> sse = connection-&gt;subscribe(<span class="stringliteral">&quot;events&quot;</span>, [](<span class="keyword">const</span> <a class="code hl_struct" href="d9/d37/structcpp__restapi_1_1SseEvent.html">cpp_restapi::SseEvent</a>&amp; event)</div>
 <div class="line">    {</div>
 <div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Event: &quot;</span> &lt;&lt; <span class="keyword">event</span>.event &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Data: &quot;</span> &lt;&lt; <span class="keyword">event</span>.data &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
@@ -392,7 +405,6 @@ SSE with cpp-httplib</h3>
 <div class="line">    sse-&gt;close();</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclasscpp__restapi_1_1CppHttplibBackend_1_1Connection_html_a03d08ab6e18d90a9aa43e33d69da8f65"><div class="ttname"><a href="de/d13/classcpp__restapi_1_1CppHttplibBackend_1_1Connection.html#a03d08ab6e18d90a9aa43e33d69da8f65">cpp_restapi::CppHttplibBackend::Connection::subscribe</a></div><div class="ttdeci">std::unique_ptr&lt; ISseConnection &gt; subscribe(const std::string &amp;request, EventCallback callback) override</div><div class="ttdoc">Subscribe to an SSE endpoint.</div></div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md15"></a>
 SseEvent fields</h3>
 <p>The <code>SseEvent</code> struct exposes all standard SSE fields:</p>
@@ -418,17 +430,18 @@ Async with curl</h3>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;future&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="de/d0e/curl__connection_8hpp.html">cpp_restapi/curl_connection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="de/d43/create__curl__connection_8hpp.html">cpp_restapi/create_curl_connection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d9/d6d/iconnection_8hpp.html">cpp_restapi/iconnection.hpp</a>&gt;</span></div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">    <a class="code hl_class" href="d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html">cpp_restapi::CurlBackend::Connection</a> connection(<span class="stringliteral">&quot;https://swapi.dev/api&quot;</span>, {});</div>
+<div class="line">    <span class="keyword">auto</span> connection = <a class="code hl_function" href="de/db6/namespacecpp__restapi.html#a0b010966850f60a11a30024fa2df9927">cpp_restapi::createCurlConnection</a>(<span class="stringliteral">&quot;https://swapi.dev/api&quot;</span>, {});</div>
 <div class="line"> </div>
 <div class="line">    std::promise&lt;void&gt; done;</div>
 <div class="line">    <span class="keyword">auto</span> future = done.get_future();</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> cancel = connection.<a class="code hl_function" href="d9/d10/classcpp__restapi_1_1ThreadedConnection.html#ac8346d4203856d821d66fe2ca18ed7e9">fetch</a>(<span class="stringliteral">&quot;people/1&quot;</span>,</div>
+<div class="line">    <span class="keyword">auto</span> cancel = connection-&gt;fetch(<span class="stringliteral">&quot;people/1&quot;</span>,</div>
 <div class="line">        [&amp;done](<a class="code hl_struct" href="d8/db5/structcpp__restapi_1_1Response.html">cpp_restapi::Response</a> resp)</div>
 <div class="line">        {</div>
 <div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Status: &quot;</span> &lt;&lt; resp.<a class="code hl_variable" href="d8/db5/structcpp__restapi_1_1Response.html#afae365aee29c6657d017fbe808e124ca">statusCode</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
@@ -447,11 +460,10 @@ Async with curl</h3>
 <div class="line">    future.wait();</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclasscpp__restapi_1_1ThreadedConnection_html_ac8346d4203856d821d66fe2ca18ed7e9"><div class="ttname"><a href="d9/d10/classcpp__restapi_1_1ThreadedConnection.html#ac8346d4203856d821d66fe2ca18ed7e9">cpp_restapi::ThreadedConnection::fetch</a></div><div class="ttdeci">std::expected&lt; std::string, HttpError &gt; fetch(const std::string &amp;request) final</div><div class="ttdoc">Perform a single HTTP request.</div></div>
 <div class="ttc" id="astructcpp__restapi_1_1HttpError_html"><div class="ttname"><a href="d5/d9b/structcpp__restapi_1_1HttpError.html">cpp_restapi::HttpError</a></div><div class="ttdoc">Represents an HTTP or network-level error.</div><div class="ttdef"><b>Definition</b> http_error.hpp:28</div></div>
-<div class="ttc" id="astructcpp__restapi_1_1Response_html"><div class="ttname"><a href="d8/db5/structcpp__restapi_1_1Response.html">cpp_restapi::Response</a></div><div class="ttdoc">HTTP response containing body, raw headers and the HTTP status code.</div><div class="ttdef"><b>Definition</b> iconnection.hpp:24</div></div>
-<div class="ttc" id="astructcpp__restapi_1_1Response_html_ad8ec7c6fd74a48e3fbebe557a80ead96"><div class="ttname"><a href="d8/db5/structcpp__restapi_1_1Response.html#ad8ec7c6fd74a48e3fbebe557a80ead96">cpp_restapi::Response::body</a></div><div class="ttdeci">std::string body</div><div class="ttdef"><b>Definition</b> iconnection.hpp:25</div></div>
-<div class="ttc" id="astructcpp__restapi_1_1Response_html_afae365aee29c6657d017fbe808e124ca"><div class="ttname"><a href="d8/db5/structcpp__restapi_1_1Response.html#afae365aee29c6657d017fbe808e124ca">cpp_restapi::Response::statusCode</a></div><div class="ttdeci">int statusCode</div><div class="ttdoc">HTTP status code (e.g. 200, 404). 0 means no response was received (network error).</div><div class="ttdef"><b>Definition</b> iconnection.hpp:27</div></div>
+<div class="ttc" id="astructcpp__restapi_1_1Response_html"><div class="ttname"><a href="d8/db5/structcpp__restapi_1_1Response.html">cpp_restapi::Response</a></div><div class="ttdoc">HTTP response containing body, raw headers and the HTTP status code.</div><div class="ttdef"><b>Definition</b> iconnection.hpp:26</div></div>
+<div class="ttc" id="astructcpp__restapi_1_1Response_html_ad8ec7c6fd74a48e3fbebe557a80ead96"><div class="ttname"><a href="d8/db5/structcpp__restapi_1_1Response.html#ad8ec7c6fd74a48e3fbebe557a80ead96">cpp_restapi::Response::body</a></div><div class="ttdeci">std::string body</div><div class="ttdef"><b>Definition</b> iconnection.hpp:27</div></div>
+<div class="ttc" id="astructcpp__restapi_1_1Response_html_afae365aee29c6657d017fbe808e124ca"><div class="ttname"><a href="d8/db5/structcpp__restapi_1_1Response.html#afae365aee29c6657d017fbe808e124ca">cpp_restapi::Response::statusCode</a></div><div class="ttdeci">int statusCode</div><div class="ttdoc">HTTP status code (e.g. 200, 404). 0 means no response was received (network error).</div><div class="ttdef"><b>Definition</b> iconnection.hpp:29</div></div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md18"></a>
 Async with Qt</h3>
 <div class="fragment"><div class="line"> ++</div>
@@ -459,7 +471,8 @@ Async with Qt</h3>
 <div class="line"><span class="preprocessor">#include &lt;QCoreApplication&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;QNetworkAccessManager&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="de/dfe/qt__connection_8hpp.html">cpp_restapi/qt_connection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d6/d99/create__qt__connection_8hpp.html">cpp_restapi/create_qt_connection.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d9/d6d/iconnection_8hpp.html">cpp_restapi/iconnection.hpp</a>&gt;</span></div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv)</div>
@@ -467,9 +480,9 @@ Async with Qt</h3>
 <div class="line">    QCoreApplication qapp(argc, argv);</div>
 <div class="line">    QNetworkAccessManager manager;</div>
 <div class="line"> </div>
-<div class="line">    <a class="code hl_class" href="d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html">cpp_restapi::QtBackend::Connection</a> connection(manager, <span class="stringliteral">&quot;https://swapi.dev/api&quot;</span>, {});</div>
+<div class="line">    <span class="keyword">auto</span> connection = <a class="code hl_function" href="de/db6/namespacecpp__restapi.html#aca6192c1d90d5288afc4a648e671ed5a">cpp_restapi::createQtConnection</a>(manager, <span class="stringliteral">&quot;https://swapi.dev/api&quot;</span>, {});</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> cancel = connection.<a class="code hl_function" href="d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html#ac8346d4203856d821d66fe2ca18ed7e9">fetch</a>(<span class="stringliteral">&quot;people/1&quot;</span>,</div>
+<div class="line">    <span class="keyword">auto</span> cancel = connection-&gt;fetch(<span class="stringliteral">&quot;people/1&quot;</span>,</div>
 <div class="line">        [&amp;qapp](<a class="code hl_struct" href="d8/db5/structcpp__restapi_1_1Response.html">cpp_restapi::Response</a> resp)</div>
 <div class="line">        {</div>
 <div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Status: &quot;</span> &lt;&lt; resp.<a class="code hl_variable" href="d8/db5/structcpp__restapi_1_1Response.html#afae365aee29c6657d017fbe808e124ca">statusCode</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
@@ -484,12 +497,11 @@ Async with Qt</h3>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> qapp.exec();</div>
 <div class="line">}</div>
-<div class="ttc" id="aclasscpp__restapi_1_1QtBackend_1_1Connection_html_ac8346d4203856d821d66fe2ca18ed7e9"><div class="ttname"><a href="d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html#ac8346d4203856d821d66fe2ca18ed7e9">cpp_restapi::QtBackend::Connection::fetch</a></div><div class="ttdeci">std::expected&lt; std::string, HttpError &gt; fetch(const std::string &amp;request) final</div><div class="ttdoc">Perform a single HTTP request.</div></div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md19"></a>
 Cancellation</h3>
 <p>The <code>CancellationToken</code> returned by async <code>fetch()</code> is a <code>std::shared_ptr&lt;std::atomic&lt;bool&gt;&gt;</code>. Setting it to <code>true</code> suppresses further callbacks:</p>
 <div class="fragment"><div class="line"> ++</div>
-<div class="line"><span class="keyword">auto</span> cancel = connection.fetch(<span class="stringliteral">&quot;slow/endpoint&quot;</span>,</div>
+<div class="line"><span class="keyword">auto</span> cancel = connection-&gt;fetch(<span class="stringliteral">&quot;slow/endpoint&quot;</span>,</div>
 <div class="line">    [](<a class="code hl_struct" href="d8/db5/structcpp__restapi_1_1Response.html">cpp_restapi::Response</a>) { <span class="comment">/* ... */</span> },</div>
 <div class="line">    [](<a class="code hl_struct" href="d5/d9b/structcpp__restapi_1_1HttpError.html">cpp_restapi::HttpError</a>) { <span class="comment">/* ... */</span> });</div>
 <div class="line"> </div>
@@ -501,7 +513,7 @@ Async pagination</h3>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><a class="code hl_class" href="d6/d5d/classcpp__restapi_1_1LinkHeaderPaginationStrategy.html">cpp_restapi::LinkHeaderPaginationStrategy</a> strategy;</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">auto</span> cancel = connection.fetch(<span class="stringliteral">&quot;repos/owner/repo/issues&quot;</span>, strategy,</div>
+<div class="line"><span class="keyword">auto</span> cancel = connection-&gt;fetch(<span class="stringliteral">&quot;repos/owner/repo/issues&quot;</span>, strategy,</div>
 <div class="line">    [](std::string mergedBody)</div>
 <div class="line">    {</div>
 <div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;All pages: &quot;</span> &lt;&lt; mergedBody &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
@@ -512,14 +524,65 @@ Async pagination</h3>
 <div class="line">    });</div>
 <div class="ttc" id="aclasscpp__restapi_1_1LinkHeaderPaginationStrategy_html"><div class="ttname"><a href="d6/d5d/classcpp__restapi_1_1LinkHeaderPaginationStrategy.html">cpp_restapi::LinkHeaderPaginationStrategy</a></div><div class="ttdoc">Pagination strategy using RFC 5988 Link headers.</div><div class="ttdef"><b>Definition</b> link_header_pagination_strategy.hpp:18</div></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md21"></a>
+C++20 Coroutine Helpers</h2>
+<p>The header-only <code>&lt;<a class="el" href="de/de0/coroutine_8hpp.html">cpp_restapi/coroutine.hpp</a>&gt;</code> provides lightweight coroutine wrappers around the callback-based async API. It requires C++20 (or later) and a compiler that supports <code>&lt;coroutine&gt;</code>.</p>
+<h3><a class="anchor" id="autotoc_md22"></a>
+Key types</h3>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Type / Function   </th><th class="markdownTableHeadNone">Description    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>Detached</code>   </td><td class="markdownTableBodyNone">Fire-and-forget wrapper — starts a coroutine that runs to completion on its own.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>coFetch(conn, request)</code>   </td><td class="markdownTableBodyNone">Returns an awaitable yielding <code>std::expected&lt;Response, HttpError&gt;</code>.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>coFetch(conn, request, strategy)</code>   </td><td class="markdownTableBodyNone">Returns an awaitable yielding <code>std::expected&lt;std::string, HttpError&gt;</code> (paginated).   </td></tr>
+</table>
+<h3><a class="anchor" id="autotoc_md23"></a>
+Example (curl backend)</h3>
+<div class="fragment"><div class="line"> ++</div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;future&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="de/de0/coroutine_8hpp.html">cpp_restapi/coroutine.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="de/d43/create__curl__connection_8hpp.html">cpp_restapi/create_curl_connection.hpp</a>&gt;</span></div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">    <span class="keyword">auto</span> connection = <a class="code hl_function" href="de/db6/namespacecpp__restapi.html#a0b010966850f60a11a30024fa2df9927">cpp_restapi::createCurlConnection</a>(<span class="stringliteral">&quot;https://swapi.dev/api&quot;</span>, {});</div>
+<div class="line"> </div>
+<div class="line">    std::promise&lt;void&gt; done;</div>
+<div class="line">    <span class="keyword">auto</span> future = done.get_future();</div>
+<div class="line"> </div>
+<div class="line">    [&amp;]() -&gt; <a class="code hl_struct" href="dc/d63/structcpp__restapi_1_1Detached.html">cpp_restapi::Detached</a></div>
+<div class="line">    {</div>
+<div class="line">        <span class="keyword">auto</span> result = <span class="keyword">co_await</span> <a class="code hl_function" href="de/db6/namespacecpp__restapi.html#a576242a62050f0e4110b3c1b9c7ace49">cpp_restapi::coFetch</a>(*connection, <span class="stringliteral">&quot;people/1&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">if</span> (result)</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Status: &quot;</span> &lt;&lt; result-&gt;statusCode &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">                      &lt;&lt; <span class="stringliteral">&quot;Body:   &quot;</span> &lt;&lt; result-&gt;body &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">        <span class="keywordflow">else</span></div>
+<div class="line">            std::cerr &lt;&lt; <span class="stringliteral">&quot;Error: &quot;</span> &lt;&lt; result.error().message &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">        done.set_value();</div>
+<div class="line">    }();</div>
+<div class="line"> </div>
+<div class="line">    future.wait();</div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="acoroutine_8hpp_html"><div class="ttname"><a href="de/de0/coroutine_8hpp.html">coroutine.hpp</a></div></div>
+<div class="ttc" id="anamespacecpp__restapi_html_a576242a62050f0e4110b3c1b9c7ace49"><div class="ttname"><a href="de/db6/namespacecpp__restapi.html#a576242a62050f0e4110b3c1b9c7ace49">cpp_restapi::coFetch</a></div><div class="ttdeci">detail::FetchAwaitable coFetch(IConnection &amp;connection, const std::string &amp;request)</div><div class="ttdoc">Asynchronously fetch a single resource.</div><div class="ttdef"><b>Definition</b> coroutine.hpp:99</div></div>
+<div class="ttc" id="astructcpp__restapi_1_1Detached_html"><div class="ttname"><a href="dc/d63/structcpp__restapi_1_1Detached.html">cpp_restapi::Detached</a></div><div class="ttdoc">Fire-and-forget coroutine wrapper.</div><div class="ttdef"><b>Definition</b> coroutine.hpp:126</div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md24"></a>
 Building examples</h2>
 <p>Examples are located in the 'examples' directory of the project. To build them set <code>CppRestAPI_Examples</code> CMake variable to <code>ON</code>. It can be done when invoking <code>cmake</code> command by providing <code>-DCppRestAPI_Examples=ON</code> command line argument (see <code>Standalone build</code> section). Or by modifying entry <code>CppRestAPI_Examples</code> in CMakeCache.txt file located in build directory of an already configured project.</p>
 <p>Please mind that setting <code>CppRestAPI_Examples</code> to <code>ON</code> will force all backends to be used.</p>
-<h2><a class="anchor" id="autotoc_md22"></a>
+<h2><a class="anchor" id="autotoc_md25"></a>
 Building unit tests</h2>
 <p>Unit tests are located in 'tests' directory of the project. To build them set <code>CppRestAPI_Tests</code> CMake variable to <code>ON</code>.</p>
 <p>Please mind that setting <code>CppRestAPI_Tests</code> to <code>ON</code> will force all backends to be used.</p>
-<h2><a class="anchor" id="autotoc_md23"></a>
+<h2><a class="anchor" id="autotoc_md26"></a>
 Links</h2>
 <p>Code documentation available at <a href="https://kicer86.github.io/cpp_restapi/index.html">https://kicer86.github.io/cpp_restapi/index.html</a> </p>
 </div></div><!-- PageDoc -->

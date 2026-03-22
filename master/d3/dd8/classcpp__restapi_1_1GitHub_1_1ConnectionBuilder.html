@@ -129,6 +129,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1f72003162d82e1bca519d5820da453d" id="r_a1f72003162d82e1bca519d5820da453d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d3/dd8/classcpp__restapi_1_1GitHub_1_1ConnectionBuilder.html">ConnectionBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1f72003162d82e1bca519d5820da453d">setToken</a> (const std::string &amp;token)</td></tr>
 <tr class="memdesc:a1f72003162d82e1bca519d5820da453d"><td class="mdescLeft">&#160;</td><td class="mdescRight">set token used for authorization  <br /></td></tr>
 <tr class="separator:a1f72003162d82e1bca519d5820da453d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24c9b5b660a9787bac376f06243e6f67" id="r_a24c9b5b660a9787bac376f06243e6f67"><td class="memTemplParams" colspan="2">template&lt;typename Factory , typename... Args&gt; </td></tr>
+<tr class="memitem:a24c9b5b660a9787bac376f06243e6f67"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">IConnection</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a24c9b5b660a9787bac376f06243e6f67">build</a> (Factory &amp;&amp;factory, Args &amp;&amp;... args)</td></tr>
+<tr class="memdesc:a24c9b5b660a9787bac376f06243e6f67"><td class="mdescLeft">&#160;</td><td class="mdescRight">build <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">cpp_restapi::IConnection</a> object using a factory function  <br /></td></tr>
+<tr class="separator:a24c9b5b660a9787bac376f06243e6f67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aadd92ba163b31243a4107aadbab854cc" id="r_aadd92ba163b31243a4107aadbab854cc"><td class="memTemplParams" colspan="2">template&lt;typename CT , typename... Args&gt; </td></tr>
 <tr class="memitem:aadd92ba163b31243a4107aadbab854cc"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">IConnection</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aadd92ba163b31243a4107aadbab854cc">build</a> (Args &amp;&amp;... args)</td></tr>
 <tr class="memdesc:aadd92ba163b31243a4107aadbab854cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">build <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">cpp_restapi::IConnection</a> object  <br /></td></tr>
@@ -189,7 +193,7 @@ Public Member Functions</h2></td></tr>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="aadd92ba163b31243a4107aadbab854cc" name="aadd92ba163b31243a4107aadbab854cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aadd92ba163b31243a4107aadbab854cc">&#9670;&#160;</a></span>build()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aadd92ba163b31243a4107aadbab854cc">&#9670;&#160;</a></span>build() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -226,7 +230,52 @@ template&lt;typename CT , typename... Args&gt; </div>
   </table>
   </dd>
 </dl>
+<dl class="deprecated"><dt><b><a class="el" href="../../da/d58/deprecated.html#_deprecated000001">Deprecated</a></b></dt><dd>Use build(factory, args...) with a factory function instead (e.g. build(createCurlConnection)) </dd></dl>
 
+</div>
+</div>
+<a id="a24c9b5b660a9787bac376f06243e6f67" name="a24c9b5b660a9787bac376f06243e6f67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24c9b5b660a9787bac376f06243e6f67">&#9670;&#160;</a></span>build() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Factory , typename... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">IConnection</a> &gt; cpp_restapi::GitHub::ConnectionBuilder::build </td>
+          <td>(</td>
+          <td class="paramtype">Factory &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>factory</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Args &amp;&amp;...</td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>build <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">cpp_restapi::IConnection</a> object using a factory function </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">factory</td><td>callable that creates a connection (e.g. <a class="el" href="../../de/db6/namespacecpp__restapi.html#a0b010966850f60a11a30024fa2df9927">cpp_restapi::createCurlConnection</a>) </td></tr>
+    <tr><td class="paramname">args</td><td>extra arguments passed to the factory before address and headers</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Usage: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> conn = builder.build(<a class="code hl_function" href="../../de/db6/namespacecpp__restapi.html#a0b010966850f60a11a30024fa2df9927">cpp_restapi::createCurlConnection</a>);</div>
+<div class="line"><span class="keyword">auto</span> conn = builder.build(<a class="code hl_function" href="../../de/db6/namespacecpp__restapi.html#aca6192c1d90d5288afc4a648e671ed5a">cpp_restapi::createQtConnection</a>, networkManager);</div>
+<div class="ttc" id="anamespacecpp__restapi_html_a0b010966850f60a11a30024fa2df9927"><div class="ttname"><a href="../../de/db6/namespacecpp__restapi.html#a0b010966850f60a11a30024fa2df9927">cpp_restapi::createCurlConnection</a></div><div class="ttdeci">CPP_RESTAPI_EXPORT std::unique_ptr&lt; IConnection &gt; createCurlConnection(const std::string &amp;address, const std::map&lt; std::string, std::string &gt; &amp;headerEntries)</div><div class="ttdoc">Create a connection using the libcurl backend.</div></div>
+<div class="ttc" id="anamespacecpp__restapi_html_aca6192c1d90d5288afc4a648e671ed5a"><div class="ttname"><a href="../../de/db6/namespacecpp__restapi.html#aca6192c1d90d5288afc4a648e671ed5a">cpp_restapi::createQtConnection</a></div><div class="ttdeci">CPP_RESTAPI_EXPORT std::unique_ptr&lt; IConnection &gt; createQtConnection(QNetworkAccessManager &amp;manager, const std::string &amp;address, const std::map&lt; std::string, std::string &gt; &amp;headerEntries)</div><div class="ttdoc">Create a connection using the Qt backend.</div></div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a id="a47819ed673163d6967db1e07f7289b0c" name="a47819ed673163d6967db1e07f7289b0c"></a>

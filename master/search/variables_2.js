@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['event_0',['event',['../d9/d37/structcpp__restapi_1_1SseEvent.html#ac84cde225f0069021a370fcebc3a75e5',1,'cpp_restapi::SseEvent']]]
+  ['data_0',['data',['../d9/d37/structcpp__restapi_1_1SseEvent.html#afd0ab146e71124953b97944c60051941',1,'cpp_restapi::SseEvent']]]
 ];

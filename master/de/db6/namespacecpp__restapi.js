@@ -2,9 +2,11 @@ var namespacecpp__restapi =
 [
     [ "CppHttplibBackend", "d9/d55/namespacecpp__restapi_1_1CppHttplibBackend.html", "d9/d55/namespacecpp__restapi_1_1CppHttplibBackend" ],
     [ "CurlBackend", "d2/dc6/namespacecpp__restapi_1_1CurlBackend.html", "d2/dc6/namespacecpp__restapi_1_1CurlBackend" ],
+    [ "detail", "d8/da9/namespacecpp__restapi_1_1detail.html", "d8/da9/namespacecpp__restapi_1_1detail" ],
     [ "GitHub", "dc/de3/namespacecpp__restapi_1_1GitHub.html", "dc/de3/namespacecpp__restapi_1_1GitHub" ],
     [ "QtBackend", "d1/d12/namespacecpp__restapi_1_1QtBackend.html", "d1/d12/namespacecpp__restapi_1_1QtBackend" ],
     [ "BaseConnection", "dd/d4e/classcpp__restapi_1_1BaseConnection.html", "dd/d4e/classcpp__restapi_1_1BaseConnection" ],
+    [ "Detached", "dc/d63/structcpp__restapi_1_1Detached.html", "dc/d63/structcpp__restapi_1_1Detached" ],
     [ "HttpError", "d5/d9b/structcpp__restapi_1_1HttpError.html", "d5/d9b/structcpp__restapi_1_1HttpError" ],
     [ "IConnection", "de/dd0/structcpp__restapi_1_1IConnection.html", "de/dd0/structcpp__restapi_1_1IConnection" ],
     [ "IPaginationStrategy", "db/d62/structcpp__restapi_1_1IPaginationStrategy.html", "db/d62/structcpp__restapi_1_1IPaginationStrategy" ],
@@ -14,5 +16,10 @@ var namespacecpp__restapi =
     [ "SseEvent", "d9/d37/structcpp__restapi_1_1SseEvent.html", "d9/d37/structcpp__restapi_1_1SseEvent" ],
     [ "SseParser", "d6/d83/classcpp__restapi_1_1SseParser.html", "d6/d83/classcpp__restapi_1_1SseParser" ],
     [ "ThreadedConnection", "d9/d10/classcpp__restapi_1_1ThreadedConnection.html", "d9/d10/classcpp__restapi_1_1ThreadedConnection" ],
-    [ "CancellationToken", "de/db6/namespacecpp__restapi.html#a137a6f919637dbaccbfe255b95f093c8", null ]
+    [ "CancellationToken", "de/db6/namespacecpp__restapi.html#a137a6f919637dbaccbfe255b95f093c8", null ],
+    [ "coFetch", "de/db6/namespacecpp__restapi.html#a576242a62050f0e4110b3c1b9c7ace49", null ],
+    [ "coFetch", "de/db6/namespacecpp__restapi.html#a40f8bacb2e5cf078920b91342699a80b", null ],
+    [ "createCppHttplibConnection", "de/db6/namespacecpp__restapi.html#acbe40d7c469dc4bb521c04b5834f331b", null ],
+    [ "createCurlConnection", "de/db6/namespacecpp__restapi.html#a0b010966850f60a11a30024fa2df9927", null ],
+    [ "createQtConnection", "de/db6/namespacecpp__restapi.html#aca6192c1d90d5288afc4a648e671ed5a", null ]
 ];

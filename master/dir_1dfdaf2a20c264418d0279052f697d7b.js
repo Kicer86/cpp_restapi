@@ -2,7 +2,11 @@ var dir_1dfdaf2a20c264418d0279052f697d7b =
 [
     [ "github", "dir_790a3f79ffe4fafc5ddeae9696b6fe0e.html", "dir_790a3f79ffe4fafc5ddeae9696b6fe0e" ],
     [ "base_connection.hpp", "de/dcc/base__connection_8hpp.html", "de/dcc/base__connection_8hpp" ],
+    [ "coroutine.hpp", "de/de0/coroutine_8hpp.html", "de/de0/coroutine_8hpp" ],
     [ "cpp-httplib_connection.hpp", "dc/dfa/cpp-httplib__connection_8hpp.html", "dc/dfa/cpp-httplib__connection_8hpp" ],
+    [ "create_cpp-httplib_connection.hpp", "d5/d55/create__cpp-httplib__connection_8hpp.html", "d5/d55/create__cpp-httplib__connection_8hpp" ],
+    [ "create_curl_connection.hpp", "de/d43/create__curl__connection_8hpp.html", "de/d43/create__curl__connection_8hpp" ],
+    [ "create_qt_connection.hpp", "d6/d99/create__qt__connection_8hpp.html", "d6/d99/create__qt__connection_8hpp" ],
     [ "curl_connection.hpp", "de/d0e/curl__connection_8hpp.html", "de/d0e/curl__connection_8hpp" ],
     [ "http_error.hpp", "da/dfa/http__error_8hpp.html", "da/dfa/http__error_8hpp" ],
     [ "iconnection.hpp", "d9/d6d/iconnection_8hpp.html", "d9/d6d/iconnection_8hpp" ],

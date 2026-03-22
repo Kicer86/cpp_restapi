@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['httperror_0',['HttpError',['../d5/d9b/structcpp__restapi_1_1HttpError.html',1,'cpp_restapi']]]
+  ['detached_0',['Detached',['../dc/d63/structcpp__restapi_1_1Detached.html',1,'cpp_restapi']]]
 ];

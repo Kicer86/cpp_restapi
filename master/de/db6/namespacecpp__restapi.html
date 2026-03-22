@@ -108,7 +108,8 @@ $(function(){initNavTree('de/db6/namespacecpp__restapi.html','../../'); initResi
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">cpp_restapi Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -119,6 +120,8 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc6/namespacecpp__restapi_1_1CurlBackend.html">CurlBackend</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/da9/namespacecpp__restapi_1_1detail.html">detail</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/de3/namespacecpp__restapi_1_1GitHub.html">GitHub</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d12/namespacecpp__restapi_1_1QtBackend.html">QtBackend</a></td></tr>
@@ -128,6 +131,9 @@ Namespaces</h2></td></tr>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d4e/classcpp__restapi_1_1BaseConnection.html">BaseConnection</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">base class with common parts for backend specific implementations  <a href="../../dd/d4e/classcpp__restapi_1_1BaseConnection.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d63/structcpp__restapi_1_1Detached.html">Detached</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fire-and-forget coroutine wrapper.  <a href="../../dc/d63/structcpp__restapi_1_1Detached.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d9b/structcpp__restapi_1_1HttpError.html">HttpError</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents an HTTP or network-level error.  <a href="../../d5/d9b/structcpp__restapi_1_1HttpError.html#details">More...</a><br /></td></tr>
@@ -162,6 +168,24 @@ Typedefs</h2></td></tr>
 <tr class="memitem:a137a6f919637dbaccbfe255b95f093c8" id="r_a137a6f919637dbaccbfe255b95f093c8"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a137a6f919637dbaccbfe255b95f093c8">CancellationToken</a> = std::shared_ptr&lt;std::atomic&lt;bool&gt;&gt;</td></tr>
 <tr class="memdesc:a137a6f919637dbaccbfe255b95f093c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Token returned by asynchronous fetch(); set it to true to cancel the request.  <br /></td></tr>
 <tr class="separator:a137a6f919637dbaccbfe255b95f093c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a576242a62050f0e4110b3c1b9c7ace49" id="r_a576242a62050f0e4110b3c1b9c7ace49"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/dbd/structcpp__restapi_1_1detail_1_1FetchAwaitable.html">detail::FetchAwaitable</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a576242a62050f0e4110b3c1b9c7ace49">coFetch</a> (<a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">IConnection</a> &amp;connection, const std::string &amp;request)</td></tr>
+<tr class="memdesc:a576242a62050f0e4110b3c1b9c7ace49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously fetch a single resource.  <br /></td></tr>
+<tr class="separator:a576242a62050f0e4110b3c1b9c7ace49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40f8bacb2e5cf078920b91342699a80b" id="r_a40f8bacb2e5cf078920b91342699a80b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/d61/structcpp__restapi_1_1detail_1_1PaginatedFetchAwaitable.html">detail::PaginatedFetchAwaitable</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a40f8bacb2e5cf078920b91342699a80b">coFetch</a> (<a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">IConnection</a> &amp;connection, const std::string &amp;request, <a class="el" href="../../db/d62/structcpp__restapi_1_1IPaginationStrategy.html">IPaginationStrategy</a> &amp;strategy)</td></tr>
+<tr class="memdesc:a40f8bacb2e5cf078920b91342699a80b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously fetch with pagination.  <br /></td></tr>
+<tr class="separator:a40f8bacb2e5cf078920b91342699a80b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbe40d7c469dc4bb521c04b5834f331b" id="r_acbe40d7c469dc4bb521c04b5834f331b"><td class="memItemLeft" align="right" valign="top">CPP_RESTAPI_EXPORT std::unique_ptr&lt; <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">IConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acbe40d7c469dc4bb521c04b5834f331b">createCppHttplibConnection</a> (const std::string &amp;address, const std::map&lt; std::string, std::string &gt; &amp;headerEntries)</td></tr>
+<tr class="memdesc:acbe40d7c469dc4bb521c04b5834f331b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a connection using the cpp-httplib backend.  <br /></td></tr>
+<tr class="separator:acbe40d7c469dc4bb521c04b5834f331b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b010966850f60a11a30024fa2df9927" id="r_a0b010966850f60a11a30024fa2df9927"><td class="memItemLeft" align="right" valign="top">CPP_RESTAPI_EXPORT std::unique_ptr&lt; <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">IConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0b010966850f60a11a30024fa2df9927">createCurlConnection</a> (const std::string &amp;address, const std::map&lt; std::string, std::string &gt; &amp;headerEntries)</td></tr>
+<tr class="memdesc:a0b010966850f60a11a30024fa2df9927"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a connection using the libcurl backend.  <br /></td></tr>
+<tr class="separator:a0b010966850f60a11a30024fa2df9927"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca6192c1d90d5288afc4a648e671ed5a" id="r_aca6192c1d90d5288afc4a648e671ed5a"><td class="memItemLeft" align="right" valign="top">CPP_RESTAPI_EXPORT std::unique_ptr&lt; <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">IConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aca6192c1d90d5288afc4a648e671ed5a">createQtConnection</a> (QNetworkAccessManager &amp;manager, const std::string &amp;address, const std::map&lt; std::string, std::string &gt; &amp;headerEntries)</td></tr>
+<tr class="memdesc:aca6192c1d90d5288afc4a648e671ed5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a connection using the Qt backend.  <br /></td></tr>
+<tr class="separator:aca6192c1d90d5288afc4a648e671ed5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="a137a6f919637dbaccbfe255b95f093c8" name="a137a6f919637dbaccbfe255b95f093c8"></a>
@@ -177,6 +201,180 @@ Typedefs</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Token returned by asynchronous fetch(); set it to true to cancel the request. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a576242a62050f0e4110b3c1b9c7ace49" name="a576242a62050f0e4110b3c1b9c7ace49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a576242a62050f0e4110b3c1b9c7ace49">&#9670;&#160;</a></span>coFetch() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d4/dbd/structcpp__restapi_1_1detail_1_1FetchAwaitable.html">detail::FetchAwaitable</a> cpp_restapi::coFetch </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">IConnection</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>connection</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>request</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Asynchronously fetch a single resource. </p>
+<p>Returns an awaitable — use with <code>co_await</code>: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> result = <span class="keyword">co_await</span> <a class="code hl_function" href="#a576242a62050f0e4110b3c1b9c7ace49">coFetch</a>(connection, <span class="stringliteral">&quot;users/1&quot;</span>);</div>
+<div class="line"><span class="keywordflow">if</span> (result)</div>
+<div class="line">    std::cout &lt;&lt; result-&gt;body;</div>
+<div class="ttc" id="anamespacecpp__restapi_html_a576242a62050f0e4110b3c1b9c7ace49"><div class="ttname"><a href="#a576242a62050f0e4110b3c1b9c7ace49">cpp_restapi::coFetch</a></div><div class="ttdeci">detail::FetchAwaitable coFetch(IConnection &amp;connection, const std::string &amp;request)</div><div class="ttdoc">Asynchronously fetch a single resource.</div><div class="ttdef"><b>Definition</b> coroutine.hpp:99</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a40f8bacb2e5cf078920b91342699a80b" name="a40f8bacb2e5cf078920b91342699a80b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40f8bacb2e5cf078920b91342699a80b">&#9670;&#160;</a></span>coFetch() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../da/d61/structcpp__restapi_1_1detail_1_1PaginatedFetchAwaitable.html">detail::PaginatedFetchAwaitable</a> cpp_restapi::coFetch </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">IConnection</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>connection</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>request</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../db/d62/structcpp__restapi_1_1IPaginationStrategy.html">IPaginationStrategy</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>strategy</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Asynchronously fetch with pagination. </p>
+<p>Returns an awaitable — use with <code>co_await</code>: </p><div class="fragment"><div class="line"><a class="code hl_class" href="../../d6/d5d/classcpp__restapi_1_1LinkHeaderPaginationStrategy.html">LinkHeaderPaginationStrategy</a> strategy;</div>
+<div class="line"><span class="keyword">auto</span> result = <span class="keyword">co_await</span> <a class="code hl_function" href="#a576242a62050f0e4110b3c1b9c7ace49">coFetch</a>(connection, <span class="stringliteral">&quot;repos/owner/repo/issues&quot;</span>, strategy);</div>
+<div class="ttc" id="aclasscpp__restapi_1_1LinkHeaderPaginationStrategy_html"><div class="ttname"><a href="../../d6/d5d/classcpp__restapi_1_1LinkHeaderPaginationStrategy.html">cpp_restapi::LinkHeaderPaginationStrategy</a></div><div class="ttdoc">Pagination strategy using RFC 5988 Link headers.</div><div class="ttdef"><b>Definition</b> link_header_pagination_strategy.hpp:18</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="acbe40d7c469dc4bb521c04b5834f331b" name="acbe40d7c469dc4bb521c04b5834f331b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbe40d7c469dc4bb521c04b5834f331b">&#9670;&#160;</a></span>createCppHttplibConnection()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CPP_RESTAPI_EXPORT std::unique_ptr&lt; <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">IConnection</a> &gt; cpp_restapi::createCppHttplibConnection </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>address</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::map&lt; std::string, std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>headerEntries</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a connection using the cpp-httplib backend. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>base URL of the API (e.g. "https://api.github.com") </td></tr>
+    <tr><td class="paramname">headerEntries</td><td>HTTP headers added to every request </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>owning pointer to the connection </dd></dl>
+
+</div>
+</div>
+<a id="a0b010966850f60a11a30024fa2df9927" name="a0b010966850f60a11a30024fa2df9927"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b010966850f60a11a30024fa2df9927">&#9670;&#160;</a></span>createCurlConnection()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CPP_RESTAPI_EXPORT std::unique_ptr&lt; <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">IConnection</a> &gt; cpp_restapi::createCurlConnection </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>address</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::map&lt; std::string, std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>headerEntries</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a connection using the libcurl backend. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>base URL of the API (e.g. "https://api.github.com") </td></tr>
+    <tr><td class="paramname">headerEntries</td><td>HTTP headers added to every request </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>owning pointer to the connection </dd></dl>
+
+</div>
+</div>
+<a id="aca6192c1d90d5288afc4a648e671ed5a" name="aca6192c1d90d5288afc4a648e671ed5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca6192c1d90d5288afc4a648e671ed5a">&#9670;&#160;</a></span>createQtConnection()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CPP_RESTAPI_EXPORT std::unique_ptr&lt; <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">IConnection</a> &gt; cpp_restapi::createQtConnection </td>
+          <td>(</td>
+          <td class="paramtype">QNetworkAccessManager &amp;</td>          <td class="paramname"><span class="paramname"><em>manager</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>address</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::map&lt; std::string, std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>headerEntries</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a connection using the Qt backend. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">manager</td><td>Qt network access manager (must outlive the connection) </td></tr>
+    <tr><td class="paramname">address</td><td>base URL of the API (e.g. "https://api.github.com") </td></tr>
+    <tr><td class="paramname">headerEntries</td><td>HTTP headers added to every request </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>owning pointer to the connection </dd></dl>
 
 </div>
 </div>
