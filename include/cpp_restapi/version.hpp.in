@@ -1,0 +1,17 @@
+#ifndef CPP_RESTAPI_VERSION_HPP
+#define CPP_RESTAPI_VERSION_HPP
+
+#define CPP_RESTAPI_VERSION_MAJOR @PROJECT_VERSION_MAJOR@
+#define CPP_RESTAPI_VERSION_MINOR @PROJECT_VERSION_MINOR@
+#define CPP_RESTAPI_VERSION_PATCH @PROJECT_VERSION_PATCH@
+#define CPP_RESTAPI_VERSION "@PROJECT_VERSION@"
+
+namespace cpp_restapi
+{
+    inline constexpr int versionMajor = @PROJECT_VERSION_MAJOR@;
+    inline constexpr int versionMinor = @PROJECT_VERSION_MINOR@;
+    inline constexpr int versionPatch = @PROJECT_VERSION_PATCH@;
+    inline constexpr char version[]   = "@PROJECT_VERSION@";
+}
+
+#endif
