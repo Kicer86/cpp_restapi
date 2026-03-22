@@ -3,6 +3,7 @@
 #define COROUTINE_HPP_INCLUDED
 
 #include <coroutine>
+#include <exception>
 #include <expected>
 #include <optional>
 #include <string>
