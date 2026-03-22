@@ -1,7 +1,10 @@
 
 #include <httplib.h>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #include <cpp_restapi/cpp-httplib_connection.hpp>
+#pragma GCC diagnostic pop
 #include "cpp-httplib_sse_connection.hpp"
 
 

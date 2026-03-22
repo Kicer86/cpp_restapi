@@ -1,5 +1,8 @@
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #include <cpp_restapi/qt_connection.hpp>
+#pragma GCC diagnostic pop
 #include "qt_sse_connection.hpp"
 
 #include <cassert>

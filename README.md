@@ -63,18 +63,19 @@ It can be usefull if you want to play with examples from `examples` dir or to ru
 ```c++
 #include <iostream>
 
-#include <cpp_restapi/curl_connection.hpp>
+#include <cpp_restapi/create_curl_connection.hpp>
+#include <cpp_restapi/iconnection.hpp>
 
 
 int main(int argc, char** argv)
 {
     // Access The Star Wars API
-    cpp_restapi::CurlBackend::Connection connection("https://swapi.dev/api", {});
+    auto connection = cpp_restapi::createCurlConnection("https://swapi.dev/api", {});
 
     // fetch() returns std::expected<std::string, HttpError>
     for (const auto& endpoint: {"people/1", "starships/12/"})
     {
-        const auto result = connection.fetch(endpoint);
+        const auto result = connection->fetch(endpoint);
         if (result)
             std::cout << result.value() << '\n';
         else
@@ -94,7 +95,8 @@ Qt version:
 #include <QCoreApplication>
 #include <QNetworkAccessManager>
 
-#include <cpp_restapi/qt_connection.hpp>
+#include <cpp_restapi/create_qt_connection.hpp>
+#include <cpp_restapi/iconnection.hpp>
 
 
 int main(int argc, char** argv)
@@ -103,12 +105,12 @@ int main(int argc, char** argv)
     QNetworkAccessManager manager;
 
     // Access The Star Wars API
-    cpp_restapi::QtBackend::Connection connection(manager, "https://swapi.dev/api", {});
+    auto connection = cpp_restapi::createQtConnection(manager, "https://swapi.dev/api", {});
 
     // fetch() returns std::expected<std::string, HttpError>
     for (const auto& endpoint: {"people/1", "starships/12/"})
     {
-        const auto result = connection.fetch(endpoint);
+        const auto result = connection->fetch(endpoint);
         if (result)
             std::cout << result.value() << '\n';
         else
@@ -123,18 +125,19 @@ cpp-httplib version:
 ```c++
 #include <iostream>
 
-#include <cpp_restapi/cpp-httplib_connection.hpp>
+#include <cpp_restapi/create_cpp-httplib_connection.hpp>
+#include <cpp_restapi/iconnection.hpp>
 
 
 int main(int argc, char** argv)
 {
     // Access The Star Wars API
-    cpp_restapi::CppHttplibBackend::Connection connection("https://swapi.dev/api", {});
+    auto connection = cpp_restapi::createCppHttplibConnection("https://swapi.dev/api", {});
 
     // fetch() returns std::expected<std::string, HttpError>
     for (const auto& endpoint: {"people/1", "starships/12/"})
     {
-        const auto result = connection.fetch(endpoint);
+        const auto result = connection->fetch(endpoint);
         if (result)
             std::cout << result.value() << '\n';
         else
@@ -157,7 +160,7 @@ However, for conveniance, there are also additional helpers available:
 #include <QDebug>
 #include <QNetworkAccessManager>
 
-#include <cpp_restapi/qt_connection.hpp>
+#include <cpp_restapi/create_qt_connection.hpp>
 #include <cpp_restapi/github/connection_builder.hpp>
 #include <cpp_restapi/github/request.hpp>
 
@@ -167,7 +170,7 @@ int main(int argc, char** argv)
     QCoreApplication qapp(argc, argv);
     QNetworkAccessManager manager;
 
-    auto connection = cpp_restapi::GitHub::ConnectionBuilder().build<cpp_restapi::QtBackend::Connection>(manager);
+    auto connection = cpp_restapi::GitHub::ConnectionBuilder().build(cpp_restapi::createQtConnection, manager);
     cpp_restapi::GitHub::Request request(connection);
 
     qInfo() << request.getRateLimit().c_str();
@@ -189,14 +192,14 @@ Additionaly there is also `cpp_restapi::GitHub::Request` class available which c
 ```c++
 #include <iostream>
 
-#include <cpp_restapi/curl_connection.hpp>
+#include <cpp_restapi/create_curl_connection.hpp>
 #include <cpp_restapi/github/connection_builder.hpp>
 #include <cpp_restapi/github/request.hpp>
 
 
 int main(int argc, char** argv)
 {
-    auto connection = cpp_restapi::GitHub::ConnectionBuilder().build<cpp_restapi::CurlBackend::Connection>();
+    auto connection = cpp_restapi::GitHub::ConnectionBuilder().build(cpp_restapi::createCurlConnection);
     cpp_restapi::GitHub::Request request(connection);
 
     std::cout << request.getRateLimit() << '\n';
@@ -210,14 +213,14 @@ int main(int argc, char** argv)
 ```c++
 #include <iostream>
 
-#include <cpp_restapi/cpp-httplib_connection.hpp>
+#include <cpp_restapi/create_cpp-httplib_connection.hpp>
 #include <cpp_restapi/github/connection_builder.hpp>
 #include <cpp_restapi/github/request.hpp>
 
 
 int main(int argc, char** argv)
 {
-    auto connection = cpp_restapi::GitHub::ConnectionBuilder().build<cpp_restapi::CppHttplibBackend::Connection>();
+    auto connection = cpp_restapi::GitHub::ConnectionBuilder().build(cpp_restapi::createCppHttplibConnection);
     cpp_restapi::GitHub::Request request(connection);
 
     std::cout << request.getRateLimit() << '\n';
@@ -248,14 +251,17 @@ thread (or via the Qt event loop for the Qt backend). Use `close()` to stop.
 #include <thread>
 #include <chrono>
 
-#include <cpp_restapi/curl_connection.hpp>
+#include <cpp_restapi/create_curl_connection.hpp>
+#include <cpp_restapi/iconnection.hpp>
+#include <cpp_restapi/isse_connection.hpp>
+#include <cpp_restapi/sse_event.hpp>
 
 
 int main(int argc, char** argv)
 {
-    cpp_restapi::CurlBackend::Connection connection("http://localhost:8080", {});
+    auto connection = cpp_restapi::createCurlConnection("http://localhost:8080", {});
 
-    auto sse = connection.subscribe("events", [](const cpp_restapi::SseEvent& event)
+    auto sse = connection->subscribe("events", [](const cpp_restapi::SseEvent& event)
     {
         std::cout << "Event: " << event.event << '\n';
         std::cout << "Data: " << event.data << '\n';
@@ -276,7 +282,10 @@ int main(int argc, char** argv)
 #include <QCoreApplication>
 #include <QNetworkAccessManager>
 
-#include <cpp_restapi/qt_connection.hpp>
+#include <cpp_restapi/create_qt_connection.hpp>
+#include <cpp_restapi/iconnection.hpp>
+#include <cpp_restapi/isse_connection.hpp>
+#include <cpp_restapi/sse_event.hpp>
 
 
 int main(int argc, char** argv)
@@ -284,9 +293,9 @@ int main(int argc, char** argv)
     QCoreApplication qapp(argc, argv);
     QNetworkAccessManager manager;
 
-    cpp_restapi::QtBackend::Connection connection(manager, "http://localhost:8080", {});
+    auto connection = cpp_restapi::createQtConnection(manager, "http://localhost:8080", {});
 
-    auto sse = connection.subscribe("events", [](const cpp_restapi::SseEvent& event)
+    auto sse = connection->subscribe("events", [](const cpp_restapi::SseEvent& event)
     {
         std::cout << "Event: " << event.event << '\n';
         std::cout << "Data: " << event.data << '\n';
@@ -303,14 +312,17 @@ int main(int argc, char** argv)
 #include <thread>
 #include <chrono>
 
-#include <cpp_restapi/cpp-httplib_connection.hpp>
+#include <cpp_restapi/create_cpp-httplib_connection.hpp>
+#include <cpp_restapi/iconnection.hpp>
+#include <cpp_restapi/isse_connection.hpp>
+#include <cpp_restapi/sse_event.hpp>
 
 
 int main(int argc, char** argv)
 {
-    cpp_restapi::CppHttplibBackend::Connection connection("http://localhost:8080", {});
+    auto connection = cpp_restapi::createCppHttplibConnection("http://localhost:8080", {});
 
-    auto sse = connection.subscribe("events", [](const cpp_restapi::SseEvent& event)
+    auto sse = connection->subscribe("events", [](const cpp_restapi::SseEvent& event)
     {
         std::cout << "Event: " << event.event << '\n';
         std::cout << "Data: " << event.data << '\n';
@@ -351,17 +363,18 @@ For the Qt backend, callbacks are invoked on the Qt event-loop thread.
 #include <iostream>
 #include <future>
 
-#include <cpp_restapi/curl_connection.hpp>
+#include <cpp_restapi/create_curl_connection.hpp>
+#include <cpp_restapi/iconnection.hpp>
 
 
 int main()
 {
-    cpp_restapi::CurlBackend::Connection connection("https://swapi.dev/api", {});
+    auto connection = cpp_restapi::createCurlConnection("https://swapi.dev/api", {});
 
     std::promise<void> done;
     auto future = done.get_future();
 
-    auto cancel = connection.fetch("people/1",
+    auto cancel = connection->fetch("people/1",
         [&done](cpp_restapi::Response resp)
         {
             std::cout << "Status: " << resp.statusCode << '\n';
@@ -389,7 +402,8 @@ int main()
 #include <QCoreApplication>
 #include <QNetworkAccessManager>
 
-#include <cpp_restapi/qt_connection.hpp>
+#include <cpp_restapi/create_qt_connection.hpp>
+#include <cpp_restapi/iconnection.hpp>
 
 
 int main(int argc, char** argv)
@@ -397,9 +411,9 @@ int main(int argc, char** argv)
     QCoreApplication qapp(argc, argv);
     QNetworkAccessManager manager;
 
-    cpp_restapi::QtBackend::Connection connection(manager, "https://swapi.dev/api", {});
+    auto connection = cpp_restapi::createQtConnection(manager, "https://swapi.dev/api", {});
 
-    auto cancel = connection.fetch("people/1",
+    auto cancel = connection->fetch("people/1",
         [&qapp](cpp_restapi::Response resp)
         {
             std::cout << "Status: " << resp.statusCode << '\n';
@@ -422,7 +436,7 @@ The `CancellationToken` returned by async `fetch()` is a `std::shared_ptr<std::a
 Setting it to `true` suppresses further callbacks:
 
 ```c++
-auto cancel = connection.fetch("slow/endpoint",
+auto cancel = connection->fetch("slow/endpoint",
     [](cpp_restapi::Response) { /* ... */ },
     [](cpp_restapi::HttpError) { /* ... */ });
 
@@ -438,7 +452,7 @@ The merged result is delivered through a `BodyCallback` once all pages have been
 ```c++
 cpp_restapi::LinkHeaderPaginationStrategy strategy;
 
-auto cancel = connection.fetch("repos/owner/repo/issues", strategy,
+auto cancel = connection->fetch("repos/owner/repo/issues", strategy,
     [](std::string mergedBody)
     {
         std::cout << "All pages: " << mergedBody << '\n';
@@ -447,6 +461,55 @@ auto cancel = connection.fetch("repos/owner/repo/issues", strategy,
     {
         std::cerr << "Error on page: " << err.statusCode << '\n';
     });
+```
+
+## C++20 Coroutine Helpers
+
+The header-only `<cpp_restapi/coroutine.hpp>` provides lightweight coroutine
+wrappers around the callback-based async API.  It requires C++20 (or later) and
+a compiler that supports `<coroutine>`.
+
+### Key types
+
+| Type / Function | Description |
+|---|---|
+| `Detached` | Fire-and-forget wrapper — starts a coroutine that runs to completion on its own. |
+| `coFetch(conn, request)` | Returns an awaitable yielding `std::expected<Response, HttpError>`. |
+| `coFetch(conn, request, strategy)` | Returns an awaitable yielding `std::expected<std::string, HttpError>` (paginated). |
+
+### Example (curl backend)
+
+```c++
+#include <iostream>
+#include <future>
+
+#include <cpp_restapi/coroutine.hpp>
+#include <cpp_restapi/create_curl_connection.hpp>
+
+
+int main()
+{
+    auto connection = cpp_restapi::createCurlConnection("https://swapi.dev/api", {});
+
+    std::promise<void> done;
+    auto future = done.get_future();
+
+    [&]() -> cpp_restapi::Detached
+    {
+        auto result = co_await cpp_restapi::coFetch(*connection, "people/1");
+
+        if (result)
+            std::cout << "Status: " << result->statusCode << '\n'
+                      << "Body:   " << result->body << '\n';
+        else
+            std::cerr << "Error: " << result.error().message << '\n';
+
+        done.set_value();
+    }();
+
+    future.wait();
+    return 0;
+}
 ```
 
 ## Building examples

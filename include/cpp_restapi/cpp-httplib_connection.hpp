@@ -8,7 +8,7 @@
 
 namespace cpp_restapi::CppHttplibBackend
 {
-    class CPP_RESTAPI_EXPORT Connection: public ThreadedConnection
+    class [[deprecated("Use createCppHttplibConnection() from <cpp_restapi/create_cpp-httplib_connection.hpp>")]] CPP_RESTAPI_EXPORT Connection: public ThreadedConnection
     {
         public:
             Connection(const std::string& address, const std::map<std::string, std::string>& headerEntries);

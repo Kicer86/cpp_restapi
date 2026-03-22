@@ -6,6 +6,7 @@
 #include <chrono>
 #include <thread>
 
+#include <cpp_restapi/isse_connection.hpp>
 #include <cpp_restapi/threaded_connection.hpp>
 
 namespace test_stubs
