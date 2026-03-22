@@ -14,7 +14,7 @@ int main(int argc, char** argv)
     QNetworkAccessManager manager;
 
     auto connection = cpp_restapi::GitHub::ConnectionBuilder().build(cpp_restapi::createQtConnection, manager);
-    cpp_restapi::GitHub::Request request(connection);
+    cpp_restapi::GitHub::Request request(std::move(connection));
 
     qInfo() << request.getRateLimit().c_str();
     qInfo() << request.getUserInfo("Kicer86").c_str();

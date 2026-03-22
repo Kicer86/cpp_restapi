@@ -62,11 +62,10 @@ namespace cpp_restapi::GitHub
              * @endcode
              */
             template<typename Factory, typename... Args>
-            std::shared_ptr<IConnection> build(Factory&& factory, Args&&... args)
+            std::unique_ptr<IConnection> build(Factory&& factory, Args&&... args)
             {
-                return std::shared_ptr<IConnection>(
-                    std::invoke(std::forward<Factory>(factory),
-                                std::forward<Args>(args)..., m_address, m_headerEntries));
+                return std::invoke(std::forward<Factory>(factory),
+                                   std::forward<Args>(args)..., m_address, m_headerEntries);
             }
 
             /**
