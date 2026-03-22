@@ -3,9 +3,15 @@
 #include <gmock/gmock.h>
 #include <httplib.h>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #include "cpp_restapi/cpp-httplib_connection.hpp"
 #include "cpp_restapi/curl_connection.hpp"
 #include "cpp_restapi/qt_connection.hpp"
+#pragma GCC diagnostic pop
+#include "cpp_restapi/create_cpp-httplib_connection.hpp"
+#include "cpp_restapi/create_curl_connection.hpp"
+#include "cpp_restapi/create_qt_connection.hpp"
 #include "cpp_restapi/github/connection_builder.hpp"
 #include "cpp_restapi/github/request.hpp"
 
@@ -25,24 +31,29 @@ namespace
     template<typename T>
     std::shared_ptr<IConnection> buildConnection(GitHub::ConnectionBuilder &);
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
     template<>
     std::shared_ptr<IConnection> buildConnection<CurlBackend::Connection>(GitHub::ConnectionBuilder& builder)
     {
-        return builder.build<CurlBackend::Connection>();
+        return builder.build(createCurlConnection);
     }
 
     template<>
     std::shared_ptr<IConnection> buildConnection<QtBackend::Connection>(GitHub::ConnectionBuilder& builder)
     {
         static QNetworkAccessManager networkmanager;
-        return builder.build<QtBackend::Connection>(networkmanager);
+        return builder.build(createQtConnection, networkmanager);
     }
 
     template<>
     std::shared_ptr<IConnection> buildConnection<CppHttplibBackend::Connection>(GitHub::ConnectionBuilder& builder)
     {
-       return builder.build<CppHttplibBackend::Connection>();
+       return builder.build(createCppHttplibConnection);
     }
+
+#pragma GCC diagnostic pop
 
     template<typename T>
     std::shared_ptr<IConnection> buildNewApi(std::function<void(GitHub::ConnectionBuilder &)> c = {})
@@ -86,7 +97,10 @@ class ApiTest: public testing::Test
 };
 
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 using Backends = testing::Types<CurlBackend::Connection, QtBackend::Connection, CppHttplibBackend::Connection>;
+#pragma GCC diagnostic pop
 TYPED_TEST_SUITE(ApiTest, Backends);
 
 
