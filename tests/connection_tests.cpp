@@ -16,6 +16,7 @@
 #include "cpp_restapi/create_curl_connection.hpp"
 #include "cpp_restapi/create_qt_connection.hpp"
 #include "cpp_restapi/isse_connection.hpp"
+#include "cpp_restapi/link_header_pagination_strategy.hpp"
 #include "cpp_restapi/sse_event.hpp"
 #include "github_server_mock.hpp"
 
@@ -95,11 +96,8 @@ TYPED_TEST(ConnectionTest, pagination)
     EXPECT_CALL(this->server, request("/url/to/last/page&page=3", _)).WillOnce(Return(GithubServerMock::Response{ R"({"more_fields":"value234"})", {} }));
 
     this->server.listen();
-
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-    const auto info = connection->get("users/userName1234");
-#pragma GCC diagnostic pop
+    LinkHeaderPaginationStrategy strategy;
+    const auto info = connection->fetch("users/userName1234", strategy).value_or(std::string{});
     EXPECT_EQ(info, "{\"id\":1234,\"login\":\"userName1234\",\"more_fields\":\"value234\",\"someotherfield\":\"value\"}\n");
 }
 
@@ -117,10 +115,8 @@ TYPED_TEST(ConnectionTest, arraysPagination)
 
     this->server.listen();
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-    const auto info = connection->get("users/userName1234");
-#pragma GCC diagnostic pop
+    LinkHeaderPaginationStrategy strategy;
+    const auto info = connection->fetch("users/userName1234", strategy).value_or(std::string{});
     EXPECT_EQ(info, "[{\"id\":1234,\"login\":\"userName1234\"},{\"someotherfield\":\"value\"},{\"more_fields\":\"value234\"}]\n");
 }
 

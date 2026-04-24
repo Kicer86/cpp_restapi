@@ -31,9 +31,6 @@ namespace cpp_restapi
         CancellationToken fetch(const std::string& request, FetchCallback onSuccess, ErrorCallback onError = {}) final;
         CancellationToken fetch(const std::string& request, IPaginationStrategy& strategy, BodyCallback onSuccess, ErrorCallback onError = {}) final;
 
-        // -- deprecated --
-        std::string get(const std::string &) final;
-
         // -- backend interface --
         virtual Response fetchPage(const std::string& request) = 0;
 

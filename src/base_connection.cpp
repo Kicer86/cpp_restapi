@@ -1,6 +1,6 @@
 
 #include <cpp_restapi/base_connection.hpp>
-#include <cpp_restapi/link_header_pagination_strategy.hpp>
+#include <cpp_restapi/ipagination_strategy.hpp>
 
 
 namespace cpp_restapi
@@ -129,16 +129,6 @@ CancellationToken BaseConnection::fetch(const std::string& request, IPaginationS
     (*fetchNextPage)(firstUrl);
 
     return cancel;
-}
-
-
-// -- deprecated --
-
-std::string BaseConnection::get(const std::string& request)
-{
-    LinkHeaderPaginationStrategy strategy;
-    // Deprecated method: throws std::bad_expected_access<HttpError> on error.
-    return fetch(request, strategy).value();
 }
 
 
