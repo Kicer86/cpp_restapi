@@ -28,17 +28,20 @@ add_executable(coroutine_qt_example coroutine_qt_example.cpp)
 target_link_libraries(github_qt_example
     PRIVATE
         cpp_restapi
+        cpp_restapi_json_pagination
         Qt::Network
 )
 
 target_link_libraries(github_curl_example
     PRIVATE
         cpp_restapi
+        cpp_restapi_json_pagination
 )
 
 target_link_libraries(github_cpp-httplib_example
     PRIVATE
         cpp_restapi
+        cpp_restapi_json_pagination
 )
 
 target_link_libraries(bare_curl_connection_example

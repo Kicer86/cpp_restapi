@@ -39,6 +39,27 @@ target_link_libraries(app
 
 and that's all.
 
+##### JSON-aware pagination and GitHub helpers:
+The optional `cpp_restapi_json_pagination` library provides
+`cpp_restapi::LinkHeaderPaginationStrategy` (RFC 5988 `Link`-header based pagination
+with JSON-aware merging) and the `cpp_restapi::GitHub::Request` / `ConnectionBuilder`
+helpers. It is built by default (controlled by the `CppRestAPI_JsonPagination` CMake
+option, ON by default) and adds a dependency on the `jsoncpp` library.
+
+Applications that use JSON-aware pagination or the GitHub helpers must link against
+it explicitly in addition to `cpp_restapi`:
+
+```cmake
+target_link_libraries(app
+    PRIVATE
+        cpp_restapi
+        cpp_restapi_json_pagination
+)
+```
+
+Applications that do not need those features can set
+`-DCppRestAPI_JsonPagination=OFF` to drop the `jsoncpp` dependency entirely.
+
 ##### Note:
 Depending on your choice of backend you may need to install libcurl, Qt and/or cpp-httplib libraries.
 
