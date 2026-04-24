@@ -19,7 +19,32 @@ jobs:
       uses: vmactions/freebsd-vm@v1
       with:
         usesh: true
+        # Pin to a stable FreeBSD release. The default image tracks
+        # FreeBSD CURRENT (15), whose pkg(8) binary repository is
+        # regularly broken (e.g. "truncated reply for
+        # signature_fingerprints" leaves the ports catalogue unreadable
+        # and no packages installable).
+        release: "14.2"
         prepare: |
+          # Switch pkg(8) from the default "quarterly" repo to "latest" so
+          # Qt6 and its dependencies (notably pcre2) come from the same
+          # build slice. Otherwise Qt6 may link against a newer pcre2 than
+          # the one available, producing runtime errors like
+          # "libpcre2-16.so.0: version PCRE2_10.47 required by
+          # libQt6Core.so.6 not defined".
+          mkdir -p /usr/local/etc/pkg/repos
+          sed 's|/quarterly|/latest|' /etc/pkg/FreeBSD.conf \
+            > /usr/local/etc/pkg/repos/FreeBSD.conf
+          # The "latest" repo is already built against a newer userland
+          # (14.3) than the 14.2 VM, so tell pkg(8) to proceed anyway.
+          export IGNORE_OSVERSION=yes
+          echo "IGNORE_OSVERSION=yes" >> /usr/local/etc/pkg.conf
+          pkg update -f
+          # Upgrade packages already on the image (installed from the
+          # quarterly repo) so their shared libraries match what the
+          # newly installed Qt6 expects. Without this, pcre2 can stay at
+          # an older version while Qt6 links against a newer one.
+          pkg upgrade -y
           pkg install -y         \
             cmake                \
             ninja                \
