@@ -1,6 +1,6 @@
 
 cmake_minimum_required(VERSION 3.16)
-project(cppRestAPI VERSION 2.2.0)
+project(cppRestAPI VERSION 2.3.0)
 
 if(POLICY CMP0135)
     cmake_policy(SET CMP0135 NEW)
