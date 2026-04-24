@@ -167,9 +167,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad4c696d81fd7d810d0c1e027045cee3c" id="r_ad4c696d81fd7d810d0c1e027045cee3c"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; <a class="el" href="../../d6/dff/structcpp__restapi_1_1ISseConnection.html">ISseConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad4c696d81fd7d810d0c1e027045cee3c">subscribe</a> (const std::string &amp;request, <a class="el" href="#add5e8cd8587dcf938bb388482ccda961">EventCallback</a> callback)=0</td></tr>
 <tr class="memdesc:ad4c696d81fd7d810d0c1e027045cee3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subscribe to an SSE endpoint.  <br /></td></tr>
 <tr class="separator:ad4c696d81fd7d810d0c1e027045cee3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3ee829a93ec8753eb56a95adb5b8229" id="r_ab3ee829a93ec8753eb56a95adb5b8229"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab3ee829a93ec8753eb56a95adb5b8229">get</a> (const std::string &amp;request)=0</td></tr>
-<tr class="memdesc:ab3ee829a93ec8753eb56a95adb5b8229"><td class="mdescLeft">&#160;</td><td class="mdescRight">perform a request to api  <br /></td></tr>
-<tr class="separator:ab3ee829a93ec8753eb56a95adb5b8229"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface representing connection with rest api server. </p>
@@ -473,43 +470,6 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>full <a class="el" href="../../d8/db5/structcpp__restapi_1_1Response.html" title="HTTP response containing body, raw headers and the HTTP status code.">Response</a> (body, headers, statusCode) on success, or an <a class="el" href="../../d5/d9b/structcpp__restapi_1_1HttpError.html" title="Represents an HTTP or network-level error.">HttpError</a> on failure </dd></dl>
 
 <p>Implemented in <a class="el" href="../../dd/d4e/classcpp__restapi_1_1BaseConnection.html#ac2704a5b85b06840d0d9c4a122cde6d1">cpp_restapi::BaseConnection</a>.</p>
-
-</div>
-</div>
-<a id="ab3ee829a93ec8753eb56a95adb5b8229" name="ab3ee829a93ec8753eb56a95adb5b8229"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3ee829a93ec8753eb56a95adb5b8229">&#9670;&#160;</a></span>get()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual std::string cpp_restapi::IConnection::get </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>request</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>perform a request to api </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">request</td><td>api request. For example "users/SomeUserName/repos" </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>api response in json format </dd></dl>
-<dl class="deprecated"><dt><b><a class="el" href="../../da/d58/deprecated.html#_deprecated000003">Deprecated</a></b></dt><dd>Use <a class="el" href="#ae27f0a5a75a5b9e12e7589cf795250d7" title="Perform a single HTTP request.">fetch()</a> for single requests or <a class="el" href="#ae27f0a5a75a5b9e12e7589cf795250d7" title="Perform a single HTTP request.">fetch()</a> with <a class="el" href="../../db/d62/structcpp__restapi_1_1IPaginationStrategy.html" title="Interface for pagination strategies.">IPaginationStrategy</a> for paginated requests. This method has hardcoded GitHub-specific pagination logic. </dd></dl>
-
-<p>Implemented in <a class="el" href="../../dd/d4e/classcpp__restapi_1_1BaseConnection.html#a0450232692026b9fe147ef08b31f7b98">cpp_restapi::BaseConnection</a>.</p>
 
 </div>
 </div>
