@@ -31,8 +31,6 @@ target_link_libraries(api_tests
         ${HTTPLIB_LIBRARIES}
 
         cpp_restapi
-        cpp_restapi_json_pagination
-        cpp_restapi_github
 )
 
 add_test(NAME api_tests COMMAND api_tests)

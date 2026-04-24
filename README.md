@@ -46,19 +46,10 @@ pagination strategy with JSON-aware merging (concatenates arrays, deep-merges
 objects). It is built by default (controlled by the `CppRestAPI_JsonPagination`
 CMake option) and adds a dependency on the `jsoncpp` library.
 
-Applications that use JSON-aware pagination must link against it explicitly in
-addition to `cpp_restapi`:
-
-```cmake
-target_link_libraries(app
-    PRIVATE
-        cpp_restapi
-        cpp_restapi_json_pagination
-)
-```
-
-Applications that do not need it can set `-DCppRestAPI_JsonPagination=OFF` to
-drop the `jsoncpp` dependency entirely.
+When enabled it is automatically exposed through the main `cpp_restapi`
+interface, so applications do not need any extra `target_link_libraries` entry
+to use it. To drop the `jsoncpp` dependency entirely, configure with
+`-DCppRestAPI_JsonPagination=OFF`.
 
 ##### GitHub helpers:
 The optional `cpp_restapi_github` library provides
@@ -68,15 +59,9 @@ convenience wrappers for the GitHub REST API. It depends on
 default (controlled by the `CppRestAPI_GitHub` CMake option; enabling it
 automatically enables `CppRestAPI_JsonPagination`).
 
-Applications using the GitHub helpers must link against it explicitly:
-
-```cmake
-target_link_libraries(app
-    PRIVATE
-        cpp_restapi
-        cpp_restapi_github
-)
-```
+Like the JSON-pagination library, it is automatically exposed through
+`cpp_restapi`; no extra link entry is required in consumer projects. Disable
+with `-DCppRestAPI_GitHub=OFF` if not needed.
 
 ##### Note:
 Depending on your choice of backend you may need to install libcurl, Qt and/or cpp-httplib libraries.

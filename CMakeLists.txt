@@ -35,7 +35,6 @@ endif()
 add_library(cpp_restapi
     src/base_connection.cpp
     src/threaded_connection.cpp
-    src/header_utils.cpp
     src/sse_parser.cpp
 )
 
@@ -90,6 +89,7 @@ if(CppRestAPI_JsonPagination)
     endif()
 
     add_library(cpp_restapi_json_pagination
+        src/header_utils.cpp
         src/link_header_pagination_strategy.cpp
     )
 
@@ -113,6 +113,10 @@ if(CppRestAPI_JsonPagination)
         VERSION   ${PROJECT_VERSION}
         SOVERSION ${PROJECT_VERSION_MAJOR}
     )
+
+    # Re-export via cpp_restapi so downstream users only have to link
+    # against cpp_restapi to get access to the optional component.
+    target_link_libraries(cpp_restapi INTERFACE cpp_restapi_json_pagination)
 endif()
 
 if(CppRestAPI_GitHub)
@@ -137,6 +141,10 @@ if(CppRestAPI_GitHub)
         VERSION   ${PROJECT_VERSION}
         SOVERSION ${PROJECT_VERSION_MAJOR}
     )
+
+    # Re-export via cpp_restapi so downstream users only have to link
+    # against cpp_restapi to get the GitHub helpers.
+    target_link_libraries(cpp_restapi INTERFACE cpp_restapi_github)
 endif()
 
 if(CppRestAPI_Tests)
