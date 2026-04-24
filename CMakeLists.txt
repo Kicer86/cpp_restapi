@@ -89,7 +89,6 @@ if(CppRestAPI_JsonPagination)
     endif()
 
     add_library(cpp_restapi_json_pagination
-        src/header_utils.cpp
         src/link_header_pagination_strategy.cpp
     )
 
