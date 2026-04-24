@@ -100,9 +100,7 @@ TEST(BaseConnectionTest, getDelegatesToFetchWithPagination)
     conn.addPage("http://localhost/items?page=2",
         {R"({"b":2})", ""});
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-    const auto result = conn.get("items");
-#pragma GCC diagnostic pop
+    LinkHeaderPaginationStrategy strategy;
+    const auto result = conn.fetch("items", strategy).value_or(std::string{});
     EXPECT_EQ(result, "{\"a\":1,\"b\":2}\n");
 }

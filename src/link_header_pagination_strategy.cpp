@@ -1,3 +1,4 @@
+
 #include <json/value.h>
 #include <json/reader.h>
 #include <json/writer.h>
@@ -27,33 +28,33 @@ namespace
 namespace cpp_restapi
 {
 
-std::string LinkHeaderPaginationStrategy::nextPageUrl(const std::string& responseHeaders)
-{
-    return HeaderUtils::getNextPageUrl(responseHeaders);
-}
-
-
-std::string LinkHeaderPaginationStrategy::merge(const std::vector<std::string>& pages)
-{
-    Json::Value output;
-    Json::CharReaderBuilder readerBuilder;
-    const std::unique_ptr<Json::CharReader> reader(readerBuilder.newCharReader());
-
-    for (const auto& page : pages)
+    std::string LinkHeaderPaginationStrategy::nextPageUrl(const std::string& responseHeaders)
     {
-        Json::Value parsed;
-        std::string errs;
-        reader->parse(page.data(), page.data() + page.size(), &parsed, &errs);
-
-        if (output.isNull())
-            output.swap(parsed);
-        else
-            update(output, parsed);
+        return HeaderUtils::getNextPageUrl(responseHeaders);
     }
 
-    Json::StreamWriterBuilder writerBuilder;
-    writerBuilder["indentation"] = "";
-    return Json::writeString(writerBuilder, output) + "\n";
-}
+
+    std::string LinkHeaderPaginationStrategy::merge(const std::vector<std::string>& pages)
+    {
+        Json::Value output;
+        Json::CharReaderBuilder readerBuilder;
+        const std::unique_ptr<Json::CharReader> reader(readerBuilder.newCharReader());
+
+        for (const auto& page : pages)
+        {
+            Json::Value parsed;
+            std::string errs;
+            reader->parse(page.data(), page.data() + page.size(), &parsed, &errs);
+
+            if (output.isNull())
+                output.swap(parsed);
+            else
+                update(output, parsed);
+        }
+
+        Json::StreamWriterBuilder writerBuilder;
+        writerBuilder["indentation"] = "";
+        return Json::writeString(writerBuilder, output) + "\n";
+    }
 
 }
