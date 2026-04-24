@@ -14,7 +14,8 @@ include(GenerateExportHeader)
 option(CppRestAPI_QtBackend "Qt backend for CppRestAPI" OFF)
 option(CppRestAPI_CurlBackend "libcurl backend for CppRestAPI" OFF)
 option(CppRestAPI_CppHttplibBackend "cpp-httplib backend for CppRestAPI" OFF)
-option(CppRestAPI_JsonPagination "JSON-aware pagination and GitHub helpers (requires jsoncpp)" ON)
+option(CppRestAPI_JsonPagination "JSON-aware Link-header pagination strategy (requires jsoncpp)" ON)
+option(CppRestAPI_GitHub "GitHub API helpers (ConnectionBuilder, Request). Implies CppRestAPI_JsonPagination." ON)
 option(CppRestAPI_Tests "Enable CppRestAPI tests. Forces all backends to be ON" OFF)
 option(CppRestAPI_Examples "Build CppRestAPI examples. Forces all backends to be ON" OFF)
 
@@ -22,6 +23,12 @@ if(CppRestAPI_Tests OR CppRestAPI_Examples)
     set(CppRestAPI_QtBackend ON)
     set(CppRestAPI_CurlBackend ON)
     set(CppRestAPI_CppHttplibBackend ON)
+    set(CppRestAPI_JsonPagination ON)
+    set(CppRestAPI_GitHub ON)
+endif()
+
+if(CppRestAPI_GitHub AND NOT CppRestAPI_JsonPagination)
+    message(STATUS "CppRestAPI_GitHub implies CppRestAPI_JsonPagination; enabling it.")
     set(CppRestAPI_JsonPagination ON)
 endif()
 
@@ -69,8 +76,8 @@ endif()
 
 if(CppRestAPI_JsonPagination)
     # Optional component pulling in the jsoncpp dependency. Contains the
-    # Link-header pagination strategy and GitHub request helpers. Users who
-    # do not need JSON-aware pagination do not have to link against it
+    # Link-header based pagination strategy. Users that do not need
+    # JSON-aware multi-page merging do not have to link against it
     # (and do not pay the jsoncpp dependency cost).
     find_package(jsoncpp CONFIG)
 
@@ -84,7 +91,6 @@ if(CppRestAPI_JsonPagination)
 
     add_library(cpp_restapi_json_pagination
         src/link_header_pagination_strategy.cpp
-        src/services/github/request.cpp
     )
 
     target_include_directories(cpp_restapi_json_pagination
@@ -104,6 +110,30 @@ if(CppRestAPI_JsonPagination)
     )
 
     set_target_properties(cpp_restapi_json_pagination PROPERTIES
+        VERSION   ${PROJECT_VERSION}
+        SOVERSION ${PROJECT_VERSION_MAJOR}
+    )
+endif()
+
+if(CppRestAPI_GitHub)
+    # Optional component with GitHub API helpers (ConnectionBuilder, Request).
+    # Relies on LinkHeaderPaginationStrategy from cpp_restapi_json_pagination
+    # to merge paginated responses.
+    add_library(cpp_restapi_github
+        src/services/github/request.cpp
+    )
+
+    target_link_libraries(cpp_restapi_github
+        PUBLIC
+            cpp_restapi
+            cpp_restapi_json_pagination
+    )
+
+    generate_export_header(cpp_restapi_github
+        BASE_NAME cpp_restapi_github
+    )
+
+    set_target_properties(cpp_restapi_github PROPERTIES
         VERSION   ${PROJECT_VERSION}
         SOVERSION ${PROJECT_VERSION_MAJOR}
     )

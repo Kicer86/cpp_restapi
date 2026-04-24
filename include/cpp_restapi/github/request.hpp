@@ -6,7 +6,7 @@
 #include <string>
 
 #include <cpp_restapi/iconnection.hpp>
-#include "cpp_restapi_json_pagination_export.h"
+#include "cpp_restapi_github_export.h"
 
 
 namespace cpp_restapi::GitHub
@@ -23,10 +23,10 @@ namespace cpp_restapi::GitHub
      *
      * All methods return a response in json format.
      *
-     * Provided by the optional `cpp_restapi_json_pagination` CMake target
-     * (requires jsoncpp).
+     * Provided by the optional `cpp_restapi_github` CMake target
+     * (which itself depends on `cpp_restapi_json_pagination` and jsoncpp).
      */
-    class CPP_RESTAPI_JSON_PAGINATION_EXPORT Request
+    class CPP_RESTAPI_GITHUB_EXPORT Request
     {
         public:
             Request(std::shared_ptr<cpp_restapi::IConnection>);
