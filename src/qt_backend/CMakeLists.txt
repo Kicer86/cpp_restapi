@@ -9,19 +9,19 @@ else()
     endif()
 endif()
 
-target_sources(cpp_restapi PRIVATE
+target_sources(cpp_restapi_core PRIVATE
     connection.cpp
     create_connection.cpp
     sse_connection.cpp
 )
 
-target_link_libraries(cpp_restapi
+target_link_libraries(cpp_restapi_core
     PUBLIC
         Qt::Core
         Qt::Network
 )
 
-target_include_directories(cpp_restapi
+target_include_directories(cpp_restapi_core
     PRIVATE
         ${PROJECT_SOURCE_DIR}/src
 )
