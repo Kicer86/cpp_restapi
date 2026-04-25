@@ -1,6 +1,7 @@
 
 add_library(cpp_restapi_core OBJECT
     base_connection.cpp
+    header_utils.cpp
     threaded_connection.cpp
     sse_parser.cpp
 )
