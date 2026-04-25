@@ -74,76 +74,11 @@ if(CppRestAPI_CppHttplibBackend)
 endif()
 
 if(CppRestAPI_JsonPagination)
-    # Optional component pulling in the jsoncpp dependency. Contains the
-    # Link-header based pagination strategy. Users that do not need
-    # JSON-aware multi-page merging do not have to link against it
-    # (and do not pay the jsoncpp dependency cost).
-    find_package(jsoncpp CONFIG)
-
-    if(jsoncpp_FOUND)
-        set(JSONCPP_LIBRARIES JsonCpp::JsonCpp)
-    else()
-        find_package(PkgConfig REQUIRED)
-
-        pkg_check_modules(JSONCPP REQUIRED jsoncpp)
-    endif()
-
-    add_library(cpp_restapi_json_pagination
-        src/link_header_pagination_strategy.cpp
-    )
-
-    target_include_directories(cpp_restapi_json_pagination
-        PRIVATE SYSTEM
-            ${JSONCPP_INCLUDE_DIRS}
-    )
-
-    target_link_libraries(cpp_restapi_json_pagination
-        PUBLIC
-            cpp_restapi
-        PRIVATE
-            ${JSONCPP_LIBRARIES}
-    )
-
-    generate_export_header(cpp_restapi_json_pagination
-        BASE_NAME cpp_restapi_json_pagination
-    )
-
-    set_target_properties(cpp_restapi_json_pagination PROPERTIES
-        VERSION   ${PROJECT_VERSION}
-        SOVERSION ${PROJECT_VERSION_MAJOR}
-    )
-
-    # Re-export via cpp_restapi so downstream users only have to link
-    # against cpp_restapi to get access to the optional component.
-    target_link_libraries(cpp_restapi INTERFACE cpp_restapi_json_pagination)
+    add_subdirectory(src/json_pagination)
 endif()
 
 if(CppRestAPI_GitHub)
-    # Optional component with GitHub API helpers (ConnectionBuilder, Request).
-    # Relies on LinkHeaderPaginationStrategy from cpp_restapi_json_pagination
-    # to merge paginated responses.
-    add_library(cpp_restapi_github
-        src/services/github/request.cpp
-    )
-
-    target_link_libraries(cpp_restapi_github
-        PUBLIC
-            cpp_restapi
-            cpp_restapi_json_pagination
-    )
-
-    generate_export_header(cpp_restapi_github
-        BASE_NAME cpp_restapi_github
-    )
-
-    set_target_properties(cpp_restapi_github PROPERTIES
-        VERSION   ${PROJECT_VERSION}
-        SOVERSION ${PROJECT_VERSION_MAJOR}
-    )
-
-    # Re-export via cpp_restapi so downstream users only have to link
-    # against cpp_restapi to get the GitHub helpers.
-    target_link_libraries(cpp_restapi INTERFACE cpp_restapi_github)
+    add_subdirectory(src/services/github)
 endif()
 
 if(CppRestAPI_Tests)
