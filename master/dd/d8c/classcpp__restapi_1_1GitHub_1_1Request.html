@@ -119,8 +119,8 @@ $(function(){initNavTree('dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html','.
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af2d1c820d49b720f1644fcdab75b7f28" id="r_af2d1c820d49b720f1644fcdab75b7f28"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af2d1c820d49b720f1644fcdab75b7f28">Request</a> (std::shared_ptr&lt; <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">cpp_restapi::IConnection</a> &gt;)</td></tr>
-<tr class="separator:af2d1c820d49b720f1644fcdab75b7f28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a351197554f930a4a49d92c2aec9ffcf1" id="r_a351197554f930a4a49d92c2aec9ffcf1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a351197554f930a4a49d92c2aec9ffcf1">Request</a> (std::unique_ptr&lt; <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">cpp_restapi::IConnection</a> &gt;)</td></tr>
+<tr class="separator:a351197554f930a4a49d92c2aec9ffcf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3da3f31f5d68320f4fc91dea947e1241" id="r_a3da3f31f5d68320f4fc91dea947e1241"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3da3f31f5d68320f4fc91dea947e1241">Request</a> (const <a class="el" href="../../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html">Request</a> &amp;)=delete</td></tr>
 <tr class="separator:a3da3f31f5d68320f4fc91dea947e1241"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8ff3cc972e5eaefcbd12734385e2dd8" id="r_aa8ff3cc972e5eaefcbd12734385e2dd8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa8ff3cc972e5eaefcbd12734385e2dd8">~Request</a> ()</td></tr>
@@ -145,8 +145,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab296ccbe30f1b7189faf082a53c37c3c" id="r_ab296ccbe30f1b7189faf082a53c37c3c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab296ccbe30f1b7189faf082a53c37c3c">getAuthenticatedUser</a> ()</td></tr>
 <tr class="memdesc:ab296ccbe30f1b7189faf082a53c37c3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the authenticated user info.  <br /></td></tr>
 <tr class="separator:ab296ccbe30f1b7189faf082a53c37c3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd16bf90636956f67d533d237ed238df" id="r_afd16bf90636956f67d533d237ed238df"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afd16bf90636956f67d533d237ed238df">getAuntenticatedUser</a> ()</td></tr>
-<tr class="separator:afd16bf90636956f67d533d237ed238df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6569e1311e0b81eda1985edffcf1cc13" id="r_a6569e1311e0b81eda1985edffcf1cc13"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6569e1311e0b81eda1985edffcf1cc13">listUsers</a> ()</td></tr>
 <tr class="memdesc:a6569e1311e0b81eda1985edffcf1cc13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lists all users, in the order that they signed up on <a class="el" href="../../dc/de3/namespacecpp__restapi_1_1GitHub.html">GitHub</a>. This list includes personal user accounts and organization accounts.  <br /></td></tr>
 <tr class="separator:a6569e1311e0b81eda1985edffcf1cc13"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -274,19 +272,27 @@ Public Member Functions</h2></td></tr>
 <p>All methods return a response in json format.</p>
 <p>Provided by the optional <code>cpp_restapi_github</code> CMake target (which itself depends on <code>cpp_restapi_json_pagination</code> and jsoncpp). </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="af2d1c820d49b720f1644fcdab75b7f28" name="af2d1c820d49b720f1644fcdab75b7f28"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af2d1c820d49b720f1644fcdab75b7f28">&#9670;&#160;</a></span>Request() <span class="overload">[1/2]</span></h2>
+<a id="a351197554f930a4a49d92c2aec9ffcf1" name="a351197554f930a4a49d92c2aec9ffcf1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a351197554f930a4a49d92c2aec9ffcf1">&#9670;&#160;</a></span>Request() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">cpp_restapi::GitHub::Request::Request </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">cpp_restapi::IConnection</a> &gt;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">cpp_restapi::IConnection</a> &gt;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
@@ -334,24 +340,6 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="afd16bf90636956f67d533d237ed238df" name="afd16bf90636956f67d533d237ed238df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd16bf90636956f67d533d237ed238df">&#9670;&#160;</a></span>getAuntenticatedUser()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string cpp_restapi::GitHub::Request::getAuntenticatedUser </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="../../da/d58/deprecated.html#_deprecated000002">Deprecated</a></b></dt><dd>Use <a class="el" href="#ab296ccbe30f1b7189faf082a53c37c3c" title="Get the authenticated user info.">getAuthenticatedUser()</a> instead (fixes typo in method name). </dd></dl>
-
-</div>
-</div>
 <a id="ab296ccbe30f1b7189faf082a53c37c3c" name="ab296ccbe30f1b7189faf082a53c37c3c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab296ccbe30f1b7189faf082a53c37c3c">&#9670;&#160;</a></span>getAuthenticatedUser()</h2>
 

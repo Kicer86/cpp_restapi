@@ -1,9 +1,8 @@
 var classcpp__restapi_1_1GitHub_1_1Request =
 [
-    [ "Request", "dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#af2d1c820d49b720f1644fcdab75b7f28", null ],
+    [ "Request", "dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a351197554f930a4a49d92c2aec9ffcf1", null ],
     [ "Request", "dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a3da3f31f5d68320f4fc91dea947e1241", null ],
     [ "~Request", "dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#aa8ff3cc972e5eaefcbd12734385e2dd8", null ],
-    [ "getAuntenticatedUser", "dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#afd16bf90636956f67d533d237ed238df", null ],
     [ "getAuthenticatedUser", "dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#ab296ccbe30f1b7189faf082a53c37c3c", null ],
     [ "getCommitCount", "dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#ac30a57177a77c6ecf1985284c187ef50", null ],
     [ "getCommits", "dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#ae4ec6f8548bc1ec3a24cf34e0ee1270f", null ],

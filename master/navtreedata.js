@@ -26,7 +26,6 @@ var NAVTREE =
 [
   [ "cpp Rest API", "index.html", [
     [ "REST API for C++", "index.html", "index" ],
-    [ "Deprecated List", "da/d58/deprecated.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -55,7 +54,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#a2a25da2708dd09599d5945398a90bb23"
+"de/db6/namespacecpp__restapi.html#a137a6f919637dbaccbfe255b95f093c8"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

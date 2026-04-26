@@ -133,10 +133,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a24c9b5b660a9787bac376f06243e6f67"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">IConnection</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a24c9b5b660a9787bac376f06243e6f67">build</a> (Factory &amp;&amp;factory, Args &amp;&amp;... args)</td></tr>
 <tr class="memdesc:a24c9b5b660a9787bac376f06243e6f67"><td class="mdescLeft">&#160;</td><td class="mdescRight">build <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">cpp_restapi::IConnection</a> object using a factory function  <br /></td></tr>
 <tr class="separator:a24c9b5b660a9787bac376f06243e6f67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aadd92ba163b31243a4107aadbab854cc" id="r_aadd92ba163b31243a4107aadbab854cc"><td class="memTemplParams" colspan="2">template&lt;typename CT , typename... Args&gt; </td></tr>
-<tr class="memitem:aadd92ba163b31243a4107aadbab854cc"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">IConnection</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aadd92ba163b31243a4107aadbab854cc">build</a> (Args &amp;&amp;... args)</td></tr>
-<tr class="memdesc:aadd92ba163b31243a4107aadbab854cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">build <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">cpp_restapi::IConnection</a> object  <br /></td></tr>
-<tr class="separator:aadd92ba163b31243a4107aadbab854cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Connection build for <a class="el" href="../../dc/de3/namespacecpp__restapi_1_1GitHub.html">GitHub</a> api. </p>
@@ -192,50 +188,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aadd92ba163b31243a4107aadbab854cc" name="aadd92ba163b31243a4107aadbab854cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aadd92ba163b31243a4107aadbab854cc">&#9670;&#160;</a></span>build() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename CT , typename... Args&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::shared_ptr&lt; <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">IConnection</a> &gt; cpp_restapi::GitHub::ConnectionBuilder::build </td>
-          <td>(</td>
-          <td class="paramtype">Args &amp;&amp;...</td>          <td class="paramname"><span class="paramname"><em>args</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>build <a class="el" href="../../de/dd0/structcpp__restapi_1_1IConnection.html">cpp_restapi::IConnection</a> object </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">CT</td><td>connection type (Qt or Curl backend). <a class="el" href="../../d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html">cpp_restapi::CurlBackend::Connection</a> or <a class="el" href="../../d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html">cpp_restapi::QtBackend::Connection</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">args</td><td>backend specific arguments to be passed to connection. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="deprecated"><dt><b><a class="el" href="../../da/d58/deprecated.html#_deprecated000001">Deprecated</a></b></dt><dd>Use build(factory, args...) with a factory function instead (e.g. build(createCurlConnection)) </dd></dl>
-
-</div>
-</div>
 <a id="a24c9b5b660a9787bac376f06243e6f67" name="a24c9b5b660a9787bac376f06243e6f67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a24c9b5b660a9787bac376f06243e6f67">&#9670;&#160;</a></span>build() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a24c9b5b660a9787bac376f06243e6f67">&#9670;&#160;</a></span>build()</h2>
 
 <div class="memitem">
 <div class="memproto">
