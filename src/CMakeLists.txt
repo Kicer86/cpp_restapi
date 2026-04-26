@@ -49,10 +49,7 @@ endif()
 
 # Umbrella library: the only artifact consumers link against. Composed
 # entirely of OBJECT libraries; type follows BUILD_SHARED_LIBS.
-set(_cpp_restapi_stub "${PROJECT_BINARY_DIR}/cpp_restapi_umbrella.cpp")
-file(WRITE ${_cpp_restapi_stub} "// Auto-generated stub for cpp_restapi umbrella library.\n")
-
-add_library(cpp_restapi ${_cpp_restapi_stub})
+add_library(cpp_restapi cpp_restapi_umbrella.cpp)
 
 target_link_libraries(cpp_restapi PUBLIC cpp_restapi_core)
 
