@@ -1,30 +1,47 @@
 
-# Rest API for c++
+# REST API for C++
 
-This is a c++ library originally written for accessing GitHub REST API v3.
-Currently reorganized to be easily used with any Rest API available.
+This is a C++ library originally written for accessing GitHub REST API v3.
+It is now organized to work with any REST API.
 
-It supports three backends for establishing connections with remote API servers:
-Qt6/5, Curl and cpp-httplib.
+It supports three interchangeable HTTP backends for connecting to remote API servers:
+Qt 6/5, libcurl and cpp-httplib. All backends expose the same `IConnection` API,
+so applications can choose the HTTP stack that best fits their existing dependencies.
 
-**Submodules:**
-This repository comes with submodules which are not necessary to build and use this project.<br>
+## Requirements
 
-As of now the only submodule is `vcpkg` which can simplify build by providing required dependencies.<br>
-Please mind that vcpkg uses **telemetry**.<br>
-Visit https://learn.microsoft.com/vcpkg/about/privacy for more details.
+- CMake 3.16 or newer.
+- A C++23 compiler. The public API uses C++23 library facilities such as `std::expected`.
+- At least one HTTP backend must be enabled at configure time.
+
+| Backend option                    | Public factory header                             | Factory function                            | External dependency |
+|-----------------------------------|---------------------------------------------------|---------------------------------------------|---------------------|
+| `CppRestAPI_QtBackend=ON`         | `<cpp_restapi/create_qt_connection.hpp>`          | `cpp_restapi::createQtConnection()`         | Qt Network/Core     |
+| `CppRestAPI_CurlBackend=ON`       | `<cpp_restapi/create_curl_connection.hpp>`        | `cpp_restapi::createCurlConnection()`       | libcurl             |
+| `CppRestAPI_CppHttplibBackend=ON` | `<cpp_restapi/create_cpp-httplib_connection.hpp>` | `cpp_restapi::createCppHttplibConnection()` | cpp-httplib         |
+
+Typical applications enable one backend: for example, Qt applications usually use the Qt backend,
+while non-Qt applications can choose libcurl or cpp-httplib. Multiple backends can be enabled in
+one build because each backend provides its own factory function behind the same `IConnection`
+interface. This is mainly useful for examples, tests or comparing backends rather than for normal
+application builds. If you do enable more than one backend, all corresponding dependencies must be
+available to CMake.
+
+The Qt backend uses Qt 6 by default and falls back to Qt 5 when Qt 6 is not found.
+Set `CppRestAPI_UseQt5` CMake variable to `TRUE` to force Qt 5 usage when both versions are available.
 
 ## How to use it
 
-This is a CMake based project and is meant to be included as a subproject.
+This is a CMake-based project and is primarily meant to be included as a subproject.
 
 Simply embed cpp_restapi's sources in your project,
-choose which http backend you prefer (all can be used simoultanously) and include `cpp_restapi` project in your `CMakeLists.txt` like this:
+choose the HTTP backend you want to use and include the `cpp_restapi` project in your `CMakeLists.txt` like this:
 
 ```cmake
-set(CppRestAPI_QtBackend ON)         # use this line if you prefer Qt backend
-set(CppRestAPI_CurlBackend ON)       # use this line if you prefer Curl backend
-set(CppRestAPI_CppHttplibBackend ON) # use this line if you prefer cpp-httplib backend
+# Pick one backend for a typical application.
+set(CppRestAPI_CurlBackend ON)         # libcurl backend
+# set(CppRestAPI_QtBackend ON)         # Qt backend
+# set(CppRestAPI_CppHttplibBackend ON) # cpp-httplib backend
 add_subdirectory(cpp_restapi)
 ```
 
@@ -37,14 +54,21 @@ target_link_libraries(app
 )
 ```
 
-and that's all.
-
 ##### JSON-aware pagination:
 `cpp_restapi::LinkHeaderPaginationStrategy` is an RFC 5988 `Link`-header based
 pagination strategy with JSON-aware merging (concatenates arrays, deep-merges
-objects). It is built by default (controlled by the `CppRestAPI_JsonPagination`
-CMake option) and adds a dependency on the `jsoncpp` library. To drop the
-`jsoncpp` dependency entirely, configure with `-DCppRestAPI_JsonPagination=OFF`.
+objects).
+
+This is useful for REST APIs that split large list responses into pages. For example,
+GitHub returns only one page of issues, releases or repositories at a time and exposes
+the next page through the HTTP `Link` header. The pagination strategy lets the library
+follow those links and return one merged response instead of forcing each caller to
+repeat the same "read header, fetch next page, merge JSON" loop.
+
+It is built by default (controlled by the `CppRestAPI_JsonPagination` CMake option)
+because the GitHub helpers use it for paginated endpoints. It adds a dependency on the
+`jsoncpp` library. To drop the `jsoncpp` dependency entirely, disable both JSON pagination and GitHub helpers:
+`-DCppRestAPI_GitHub=OFF -DCppRestAPI_JsonPagination=OFF`.
 
 ##### GitHub helpers:
 `cpp_restapi::GitHub::ConnectionBuilder` and `cpp_restapi::GitHub::Request`
@@ -53,26 +77,9 @@ are convenience wrappers for the GitHub REST API. They are built by default
 enables `CppRestAPI_JsonPagination`). Disable with `-DCppRestAPI_GitHub=OFF`
 if not needed.
 
-##### Note:
-Depending on your choice of backend you may need to install libcurl, Qt and/or cpp-httplib libraries.
-
-Qt backend can be compiled with Qt6 (default) or Qt5.
-If no Qt6 is found, an automatic fallback to Qt5 will happen.
-
-Set `CppRestAPI_UseQt5` CMake variable to `TRUE` to force Qt5 usage (in case both versions are available).
-
-##### Standalone build:
-It is possible to build this project as any other regular CMake project by invoking:
-```bash
-cmake -B build
-cmake --build build
-```
-
-It can be usefull if you want to play with examples from `examples` dir or to run unit tests.
-
 ## Examples
 
-## Simplest usage
+### Simplest usage
 
 ```c++
 #include <iostream>
@@ -100,10 +107,10 @@ int main(int argc, char** argv)
 }
 ```
 
-This example accesses The Star Wars API using curl backend.<br>
+This example accesses The Star Wars API using the libcurl backend.<br>
 `fetch()` returns `std::expected<std::string, HttpError>` — on success the response body is available via `value()`, on failure the `HttpError` carries the HTTP status code, response body and a human-readable message.
 
-Qt version:
+#### Qt version
 ```c++
 #include <iostream>
 #include <QCoreApplication>
@@ -135,7 +142,7 @@ int main(int argc, char** argv)
 }
 ```
 
-cpp-httplib version:
+#### cpp-httplib version
 ```c++
 #include <iostream>
 
@@ -164,8 +171,8 @@ int main(int argc, char** argv)
 
 ### Dedicated GitHub helpers
 
-For accessing GitHub API it is possible to use exactly the same apporach as presented above.<br>
-However, for conveniance, there are also additional helpers available:
+For accessing the GitHub API it is possible to use exactly the same approach as presented above.<br>
+However, for convenience, there are also additional helpers available:
 
 #### Qt example
 
@@ -173,6 +180,8 @@ However, for conveniance, there are also additional helpers available:
 #include <QCoreApplication>
 #include <QDebug>
 #include <QNetworkAccessManager>
+
+#include <utility>
 
 #include <cpp_restapi/create_qt_connection.hpp>
 #include <cpp_restapi/github/connection_builder.hpp>
@@ -185,7 +194,7 @@ int main(int argc, char** argv)
     QNetworkAccessManager manager;
 
     auto connection = cpp_restapi::GitHub::ConnectionBuilder().build(cpp_restapi::createQtConnection, manager);
-    cpp_restapi::GitHub::Request request(connection);
+    cpp_restapi::GitHub::Request request(std::move(connection));
 
     qInfo() << request.getRateLimit().c_str();
     qInfo() << request.getUserInfo("Kicer86").c_str();
@@ -194,17 +203,21 @@ int main(int argc, char** argv)
 }
 ```
 
-Here connection is being build with `ConnectionBuilder`.<br>
-Builder provides methods for setting additional connection parameters (passed as a second argument to `Connection` after API url).<br>
-It also sets the API url automatically.<br>
-Refer documentation of `ConnectionBuilder` for more details.
+Here the connection is built with `ConnectionBuilder`.<br>
+The builder sets the GitHub API URL and headers automatically.
+When calling `build(factory, args...)`, any backend-specific arguments are forwarded to the factory before the URL and headers.
+For example, the Qt factory receives the `QNetworkAccessManager` first.
+The returned `std::unique_ptr<IConnection>` is then moved into `GitHub::Request`, which owns the connection.
+Refer to the documentation of `ConnectionBuilder` for more details.
 
-Additionaly there is also `cpp_restapi::GitHub::Request` class available which comes with accessors to most common API requests.
+The `cpp_restapi::GitHub::Request` class provides accessors for the most common GitHub API requests.
 
 #### libcurl example
 
 ```c++
 #include <iostream>
+
+#include <utility>
 
 #include <cpp_restapi/create_curl_connection.hpp>
 #include <cpp_restapi/github/connection_builder.hpp>
@@ -214,7 +227,7 @@ Additionaly there is also `cpp_restapi::GitHub::Request` class available which c
 int main(int argc, char** argv)
 {
     auto connection = cpp_restapi::GitHub::ConnectionBuilder().build(cpp_restapi::createCurlConnection);
-    cpp_restapi::GitHub::Request request(connection);
+    cpp_restapi::GitHub::Request request(std::move(connection));
 
     std::cout << request.getRateLimit() << '\n';
     std::cout << request.getUserInfo("Kicer86") << '\n';
@@ -227,6 +240,8 @@ int main(int argc, char** argv)
 ```c++
 #include <iostream>
 
+#include <utility>
+
 #include <cpp_restapi/create_cpp-httplib_connection.hpp>
 #include <cpp_restapi/github/connection_builder.hpp>
 #include <cpp_restapi/github/request.hpp>
@@ -235,7 +250,7 @@ int main(int argc, char** argv)
 int main(int argc, char** argv)
 {
     auto connection = cpp_restapi::GitHub::ConnectionBuilder().build(cpp_restapi::createCppHttplibConnection);
-    cpp_restapi::GitHub::Request request(connection);
+    cpp_restapi::GitHub::Request request(std::move(connection));
 
     std::cout << request.getRateLimit() << '\n';
     std::cout << request.getUserInfo("Kicer86") << '\n';
@@ -244,7 +259,7 @@ int main(int argc, char** argv)
 }
 ```
 
-Also please look into 'examples' directory for details.
+See the `examples` directory for complete example programs.
 
 ## Server-Sent Events (SSE)
 
@@ -252,13 +267,15 @@ In addition to regular REST requests, the library supports
 [Server-Sent Events](https://html.spec.whatwg.org/multipage/server-sent-events.html) —
 a standard mechanism for receiving a stream of events from a server over HTTP.
 
-SSE support is available for all three backends via `Connection::subscribe()`.
+SSE support is available for all three backends via `IConnection::subscribe()`.
 The method connects to an SSE endpoint,
 delivers parsed events through a callback and returns an `ISseConnection` handle.
 The call is non-blocking — events are received on an internal
 thread (or via the Qt event loop for the Qt backend). Use `close()` to stop.
+Keep the returned `ISseConnection` alive for as long as you want to receive events.
+For the Qt backend, the Qt event loop must be running.
 
-### SSE with curl
+### SSE with libcurl
 
 ```c++
 #include <iostream>
@@ -371,7 +388,7 @@ before they fire.
 For non-Qt backends (curl, cpp-httplib) callbacks run on a background `std::thread`.
 For the Qt backend, callbacks are invoked on the Qt event-loop thread.
 
-### Async with curl
+### Async with libcurl
 
 ```c++
 #include <iostream>
@@ -447,7 +464,8 @@ int main(int argc, char** argv)
 ### Cancellation
 
 The `CancellationToken` returned by async `fetch()` is a `std::shared_ptr<std::atomic<bool>>`.
-Setting it to `true` suppresses further callbacks:
+Setting it to `true` suppresses further callbacks. It does not guarantee that an already-started
+network request is aborted immediately:
 
 ```c++
 auto cancel = connection->fetch("slow/endpoint",
@@ -477,11 +495,11 @@ auto cancel = connection->fetch("repos/owner/repo/issues", strategy,
     });
 ```
 
-## C++20 Coroutine Helpers
+## Coroutine Helpers
 
 The header-only `<cpp_restapi/coroutine.hpp>` provides lightweight coroutine
-wrappers around the callback-based async API.  It requires C++20 (or later) and
-a compiler that supports `<coroutine>`.
+wrappers around the callback-based async API. The project requires C++23, and
+the coroutine helpers also require compiler support for `<coroutine>`.
 
 ### Key types
 
@@ -491,7 +509,7 @@ a compiler that supports `<coroutine>`.
 | `coFetch(conn, request)` | Returns an awaitable yielding `std::expected<Response, HttpError>`. |
 | `coFetch(conn, request, strategy)` | Returns an awaitable yielding `std::expected<std::string, HttpError>` (paginated). |
 
-### Example (curl backend)
+### Example (libcurl backend)
 
 ```c++
 #include <iostream>
@@ -526,19 +544,56 @@ int main()
 }
 ```
 
-## Building examples
-Examples are located in the 'examples' directory of the project.
+## Standalone builds, examples and tests
+
+Standalone builds are mostly useful when you want to run the examples or unit tests from this repository.
+The main integration scenario is still to include cpp_restapi as a CMake subproject.
+
+### Basic standalone build
+
+It is possible to build this project as any other regular CMake project by invoking:
+
+```bash
+cmake -B build -DCppRestAPI_CurlBackend=ON
+cmake --build build
+```
+
+Replace `CppRestAPI_CurlBackend` with another backend option if you prefer Qt or cpp-httplib.
+At least one backend option must be enabled, otherwise configuration fails.
+
+### Using bundled vcpkg
+
+This repository has an optional `vcpkg` submodule. It is not required when you include cpp_restapi as a subproject,
+but it can simplify standalone builds by providing dependencies.
+
+Please mind that vcpkg uses **telemetry**.<br>
+Visit https://learn.microsoft.com/vcpkg/about/privacy for more details.
+
+If you want to use the bundled vcpkg checkout, initialize it and configure CMake with the vcpkg toolchain file:
+
+```bash
+git submodule update --init vcpkg
+./vcpkg/bootstrap-vcpkg.sh
+cmake -B build -DCMAKE_TOOLCHAIN_FILE=$PWD/vcpkg/scripts/buildsystems/vcpkg.cmake -DCppRestAPI_CppHttplibBackend=ON
+```
+
+The repository also provides vcpkg-based CMake presets in `CMakePresets.json`.
+
+### Building examples
+
+Examples are located in the `examples` directory of the project.
 To build them set `CppRestAPI_Examples` CMake variable to `ON`.
-It can be done when invoking `cmake` command by providing `-DCppRestAPI_Examples=ON` command line argument (see `Standalone build` section).
-Or by modifying entry `CppRestAPI_Examples` in CMakeCache.txt file located in build directory of an already configured project.
+It can be done when invoking `cmake` command by providing the `-DCppRestAPI_Examples=ON` command-line argument (see the `Basic standalone build` section),
+or by modifying the `CppRestAPI_Examples` entry in the `CMakeCache.txt` file located in the build directory of an already configured project.
 
-Please mind that setting `CppRestAPI_Examples` to `ON` will force all backends to be used.
+Please mind that setting `CppRestAPI_Examples` to `ON` forces all backends and optional components to be used, so all backend dependencies must be available.
 
-## Building unit tests
-Unit tests are located in 'tests' directory of the project.
+### Building unit tests
+
+Unit tests are located in the `tests` directory of the project.
 To build them set `CppRestAPI_Tests` CMake variable to `ON`.
 
-Please mind that setting `CppRestAPI_Tests` to `ON` will force all backends to be used.
+Please mind that setting `CppRestAPI_Tests` to `ON` forces all backends and optional components to be used, so all backend dependencies must be available.
 
 ## Links
 
