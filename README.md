@@ -42,7 +42,6 @@ target_link_libraries(app
 )
 ```
 
-That is enough to link your application against the library.
 
 ##### JSON-aware pagination:
 `cpp_restapi::LinkHeaderPaginationStrategy` is an RFC 5988 `Link`-header based
