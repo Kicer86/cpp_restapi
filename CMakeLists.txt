@@ -28,7 +28,9 @@ if(CppRestAPI_Tests OR CppRestAPI_Examples)
 endif()
 
 if(CppRestAPI_GitHub AND NOT CppRestAPI_JsonPagination)
-    message(STATUS "CppRestAPI_GitHub implies CppRestAPI_JsonPagination; enabling it.")
+    message(WARNING
+        "CppRestAPI_GitHub=ON requires CppRestAPI_JsonPagination=ON; "
+        "overriding the requested CppRestAPI_JsonPagination=OFF.")
     set(CppRestAPI_JsonPagination ON)
 endif()
 
