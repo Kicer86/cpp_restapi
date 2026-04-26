@@ -180,8 +180,8 @@ int main(int argc, char** argv)
 
 ### Dedicated GitHub helpers
 
-For accessing GitHub API it is possible to use exactly the same apporach as presented above.<br>
-However, for conveniance, there are also additional helpers available:
+For accessing GitHub API it is possible to use exactly the same approach as presented above.<br>
+However, for convenience, there are also additional helpers available:
 
 #### Qt example
 
@@ -189,6 +189,8 @@ However, for conveniance, there are also additional helpers available:
 #include <QCoreApplication>
 #include <QDebug>
 #include <QNetworkAccessManager>
+
+#include <utility>
 
 #include <cpp_restapi/create_qt_connection.hpp>
 #include <cpp_restapi/github/connection_builder.hpp>
@@ -201,7 +203,7 @@ int main(int argc, char** argv)
     QNetworkAccessManager manager;
 
     auto connection = cpp_restapi::GitHub::ConnectionBuilder().build(cpp_restapi::createQtConnection, manager);
-    cpp_restapi::GitHub::Request request(connection);
+    cpp_restapi::GitHub::Request request(std::move(connection));
 
     qInfo() << request.getRateLimit().c_str();
     qInfo() << request.getUserInfo("Kicer86").c_str();
@@ -210,17 +212,21 @@ int main(int argc, char** argv)
 }
 ```
 
-Here connection is being build with `ConnectionBuilder`.<br>
-Builder provides methods for setting additional connection parameters (passed as a second argument to `Connection` after API url).<br>
-It also sets the API url automatically.<br>
-Refer documentation of `ConnectionBuilder` for more details.
+Here the connection is built with `ConnectionBuilder`.<br>
+The builder sets the GitHub API URL and headers automatically.
+When calling `build(factory, args...)`, any backend-specific arguments are forwarded to the factory before the URL and headers.
+For example, the Qt factory receives the `QNetworkAccessManager` first.
+The returned `std::unique_ptr<IConnection>` is then moved into `GitHub::Request`, which owns the connection.
+Refer to the documentation of `ConnectionBuilder` for more details.
 
-Additionaly there is also `cpp_restapi::GitHub::Request` class available which comes with accessors to most common API requests.
+The `cpp_restapi::GitHub::Request` class provides accessors for the most common GitHub API requests.
 
 #### libcurl example
 
 ```c++
 #include <iostream>
+
+#include <utility>
 
 #include <cpp_restapi/create_curl_connection.hpp>
 #include <cpp_restapi/github/connection_builder.hpp>
@@ -230,7 +236,7 @@ Additionaly there is also `cpp_restapi::GitHub::Request` class available which c
 int main(int argc, char** argv)
 {
     auto connection = cpp_restapi::GitHub::ConnectionBuilder().build(cpp_restapi::createCurlConnection);
-    cpp_restapi::GitHub::Request request(connection);
+    cpp_restapi::GitHub::Request request(std::move(connection));
 
     std::cout << request.getRateLimit() << '\n';
     std::cout << request.getUserInfo("Kicer86") << '\n';
@@ -243,6 +249,8 @@ int main(int argc, char** argv)
 ```c++
 #include <iostream>
 
+#include <utility>
+
 #include <cpp_restapi/create_cpp-httplib_connection.hpp>
 #include <cpp_restapi/github/connection_builder.hpp>
 #include <cpp_restapi/github/request.hpp>
@@ -251,7 +259,7 @@ int main(int argc, char** argv)
 int main(int argc, char** argv)
 {
     auto connection = cpp_restapi::GitHub::ConnectionBuilder().build(cpp_restapi::createCppHttplibConnection);
-    cpp_restapi::GitHub::Request request(connection);
+    cpp_restapi::GitHub::Request request(std::move(connection));
 
     std::cout << request.getRateLimit() << '\n';
     std::cout << request.getUserInfo("Kicer86") << '\n';
