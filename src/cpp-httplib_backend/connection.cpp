@@ -4,8 +4,8 @@
 #include <httplib.h>
 
 #include <cpp_restapi/create_cpp-httplib_connection.hpp>
-#include <cpp_restapi/threaded_connection.hpp>
 #include "cpp-httplib_sse_connection.hpp"
+#include "threaded_connection.hpp"
 
 
 namespace

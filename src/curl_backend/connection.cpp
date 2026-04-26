@@ -13,8 +13,8 @@
 #include <curl/curl.h>
 
 #include <cpp_restapi/create_curl_connection.hpp>
-#include <cpp_restapi/threaded_connection.hpp>
 #include "curl_sse_connection.hpp"
+#include "threaded_connection.hpp"
 
 
 namespace

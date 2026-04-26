@@ -1,7 +1,5 @@
 
-#include <cpp_restapi/base_connection.hpp>
 #include <cpp_restapi/create_qt_connection.hpp>
-#include "qt_sse_connection.hpp"
 
 #include <cassert>
 #include <string>
@@ -11,6 +9,9 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QEventLoop>
+
+#include "base_connection.hpp"
+#include "qt_sse_connection.hpp"
 
 
 namespace
