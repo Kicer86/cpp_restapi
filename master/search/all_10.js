@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['paginatedfetchawaitable_0',['PaginatedFetchAwaitable',['../da/d61/structcpp__restapi_1_1detail_1_1PaginatedFetchAwaitable.html',1,'cpp_restapi::detail']]],
-  ['pagination_1',['Async pagination',['../index.html#autotoc_md21',1,'']]],
-  ['pagination_3a_2',['JSON-aware pagination:',['../index.html#autotoc_md2',1,'']]],
-  ['promise_5ftype_3',['promise_type',['../d8/d5f/structcpp__restapi_1_1Detached_1_1promise__type.html',1,'cpp_restapi::Detached']]]
+  ['qt_0',['Qt',['../index.html#autotoc_md20',1,'Async with Qt'],['../index.html#autotoc_md15',1,'SSE with Qt']]],
+  ['qt_20example_1',['Qt example',['../index.html#autotoc_md10',1,'']]],
+  ['qt_20version_2',['Qt version',['../index.html#autotoc_md7',1,'']]],
+  ['qt_5fconnection_2ehpp_3',['qt_connection.hpp',['../de/dfe/qt__connection_8hpp.html',1,'']]]
 ];

@@ -1,7 +1,13 @@
 var searchData=
 [
-  ['data_0',['data',['../d9/d37/structcpp__restapi_1_1SseEvent.html#afd0ab146e71124953b97944c60051941',1,'cpp_restapi::SseEvent']]],
-  ['dedicated_20github_20helpers_1',['Dedicated GitHub helpers',['../index.html#autotoc_md8',1,'']]],
-  ['deprecated_20list_2',['Deprecated List',['../da/d58/deprecated.html',1,'']]],
-  ['detached_3',['Detached',['../dc/d63/structcpp__restapi_1_1Detached.html',1,'cpp_restapi']]]
+  ['errorcallback_0',['ErrorCallback',['../de/dd0/structcpp__restapi_1_1IConnection.html#ac52c184c25c139dd2805bc77ac12e889',1,'cpp_restapi::IConnection']]],
+  ['event_1',['event',['../d9/d37/structcpp__restapi_1_1SseEvent.html#ac84cde225f0069021a370fcebc3a75e5',1,'cpp_restapi::SseEvent']]],
+  ['eventcallback_2',['EventCallback',['../de/dd0/structcpp__restapi_1_1IConnection.html#add5e8cd8587dcf938bb388482ccda961',1,'cpp_restapi::IConnection::EventCallback'],['../d6/dff/structcpp__restapi_1_1ISseConnection.html#a9302cf0738f83f3b37e1543c66e6807e',1,'cpp_restapi::ISseConnection::EventCallback']]],
+  ['events_20sse_3',['Server-Sent Events (SSE)',['../index.html#autotoc_md13',1,'']]],
+  ['example_4',['example',['../index.html#autotoc_md11',1,'libcurl example'],['../index.html#autotoc_md10',1,'Qt example']]],
+  ['example_20libcurl_20backend_5',['Example (libcurl backend)',['../index.html#autotoc_md25',1,'']]],
+  ['example_3a_6',['cpp-httplib example:',['../index.html#autotoc_md12',1,'']]],
+  ['examples_7',['Examples',['../index.html#autotoc_md5',1,'']]],
+  ['examples_8',['Building examples',['../index.html#autotoc_md29',1,'']]],
+  ['examples_20and_20tests_9',['Standalone builds, examples and tests',['../index.html#autotoc_md26',1,'']]]
 ];

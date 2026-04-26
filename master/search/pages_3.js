@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['for_20c_0',['Rest API for c++',['../index.html',1,'']]]
+  ['for_20c_0',['REST API for C++',['../index.html',1,'']]]
 ];

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['nextpageurl_0',['nextPageUrl',['../db/d62/structcpp__restapi_1_1IPaginationStrategy.html#a6053c87c69ad0e8de7a7c2c7f685a19a',1,'cpp_restapi::IPaginationStrategy::nextPageUrl()'],['../d6/d5d/classcpp__restapi_1_1LinkHeaderPaginationStrategy.html#ac33ced0ff09c30823b14edc928eac801',1,'cpp_restapi::LinkHeaderPaginationStrategy::nextPageUrl()']]],
-  ['note_3a_1',['Note:',['../index.html#autotoc_md4',1,'']]]
+  ['operator_3d_0',['operator=',['../de/d13/classcpp__restapi_1_1CppHttplibBackend_1_1Connection.html#a0dea7f375bcce77ed0ded297fc8ec5c1',1,'cpp_restapi::CppHttplibBackend::Connection::operator=()'],['../d6/d5e/classcpp__restapi_1_1CurlBackend_1_1Connection.html#a9853e2dfca1b626bed78a26cdc4f5da8',1,'cpp_restapi::CurlBackend::Connection::operator=()'],['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#ab1b2c354af4768da1fee099502cc1f7e',1,'cpp_restapi::GitHub::Request::operator=()'],['../d2/dbb/classcpp__restapi_1_1QtBackend_1_1Connection.html#af6f4d805421a2152f71205691d95b9be',1,'cpp_restapi::QtBackend::Connection::operator=()']]],
+  ['orgissues_1',['orgIssues',['../dd/d8c/classcpp__restapi_1_1GitHub_1_1Request.html#ad97829d0e4b81fcb5c6d41b5936bf62a',1,'cpp_restapi::GitHub::Request']]]
 ];

@@ -25,7 +25,7 @@
 var NAVTREE =
 [
   [ "cpp Rest API", "index.html", [
-    [ "Rest API for c++", "index.html", "index" ],
+    [ "REST API for C++", "index.html", "index" ],
     [ "Deprecated List", "da/d58/deprecated.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],

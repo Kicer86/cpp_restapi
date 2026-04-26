@@ -1,8 +1,9 @@
 var searchData=
 [
-  ['tests_0',['Building unit tests',['../index.html#autotoc_md26',1,'']]],
-  ['threaded_5fconnection_2ehpp_1',['threaded_connection.hpp',['../db/d1d/threaded__connection_8hpp.html',1,'']]],
-  ['threadedconnection_2',['ThreadedConnection',['../d9/d10/classcpp__restapi_1_1ThreadedConnection.html',1,'cpp_restapi']]],
-  ['to_20use_20it_3',['How to use it',['../index.html#autotoc_md1',1,'']]],
-  ['types_4',['Key types',['../index.html#autotoc_md23',1,'']]]
+  ['unhandled_5fexception_0',['unhandled_exception',['../d8/d5f/structcpp__restapi_1_1Detached_1_1promise__type.html#a6fbfea204eef2112a6bd7e68d53ab0af',1,'cpp_restapi::Detached::promise_type']]],
+  ['unit_20tests_1',['Building unit tests',['../index.html#autotoc_md30',1,'']]],
+  ['url_2',['url',['../dd/d4e/classcpp__restapi_1_1BaseConnection.html#a649d1f78bac941a9d7a6901854d9588d',1,'cpp_restapi::BaseConnection::url()'],['../de/dd0/structcpp__restapi_1_1IConnection.html#a926bcc0cb45165be9ec26c89ade97916',1,'cpp_restapi::IConnection::url()']]],
+  ['usage_3',['Simplest usage',['../index.html#autotoc_md6',1,'']]],
+  ['use_20it_4',['How to use it',['../index.html#autotoc_md2',1,'']]],
+  ['using_20bundled_20vcpkg_5',['Using bundled vcpkg',['../index.html#autotoc_md28',1,'']]]
 ];
