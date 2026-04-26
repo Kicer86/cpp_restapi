@@ -13,11 +13,17 @@ Qt 6/5, libcurl and cpp-httplib.
 - A C++23 compiler. The public API uses C++23 library facilities such as `std::expected`.
 - At least one HTTP backend must be enabled at configure time.
 
-| Backend option                    | Public factory header                             | Factory function                            | External dependency                                 |
-|-----------------------------------|---------------------------------------------------|---------------------------------------------|-----------------------------------------------------|
-| `CppRestAPI_QtBackend=ON`         | `<cpp_restapi/create_qt_connection.hpp>`          | `cpp_restapi::createQtConnection()`         | Qt Network/Core, Qt 6 by default with Qt 5 fallback |
-| `CppRestAPI_CurlBackend=ON`       | `<cpp_restapi/create_curl_connection.hpp>`        | `cpp_restapi::createCurlConnection()`       | libcurl                                             |
-| `CppRestAPI_CppHttplibBackend=ON` | `<cpp_restapi/create_cpp-httplib_connection.hpp>` | `cpp_restapi::createCppHttplibConnection()` | cpp-httplib                                         |
+| Backend option                    | Public factory header                             | Factory function                            | External dependency |
+|-----------------------------------|---------------------------------------------------|---------------------------------------------|---------------------|
+| `CppRestAPI_QtBackend=ON`         | `<cpp_restapi/create_qt_connection.hpp>`          | `cpp_restapi::createQtConnection()`         | Qt Network/Core     |
+| `CppRestAPI_CurlBackend=ON`       | `<cpp_restapi/create_curl_connection.hpp>`        | `cpp_restapi::createCurlConnection()`       | libcurl             |
+| `CppRestAPI_CppHttplibBackend=ON` | `<cpp_restapi/create_cpp-httplib_connection.hpp>` | `cpp_restapi::createCppHttplibConnection()` | cpp-httplib         |
+
+Only dependencies for the backends you enable need to be available to CMake.
+If you enable multiple backends, all corresponding dependencies must be available.
+
+The Qt backend uses Qt 6 by default and falls back to Qt 5 when Qt 6 is not found.
+Set `CppRestAPI_UseQt5` CMake variable to `TRUE` to force Qt 5 usage when both versions are available.
 
 ## How to use it
 
@@ -64,14 +70,6 @@ are convenience wrappers for the GitHub REST API. They are built by default
 (controlled by the `CppRestAPI_GitHub` CMake option; enabling it automatically
 enables `CppRestAPI_JsonPagination`). Disable with `-DCppRestAPI_GitHub=OFF`
 if not needed.
-
-##### Note:
-Depending on your choice of backend you may need to install libcurl, Qt and/or cpp-httplib libraries.
-
-Qt backend can be compiled with Qt6 (default) or Qt5.
-If no Qt6 is found, an automatic fallback to Qt5 will happen.
-
-Set `CppRestAPI_UseQt5` CMake variable to `TRUE` to force Qt5 usage (in case both versions are available).
 
 ## Examples
 
