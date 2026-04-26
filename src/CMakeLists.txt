@@ -21,6 +21,10 @@ generate_export_header(cpp_restapi_core
     EXPORT_FILE_NAME ${PROJECT_BINARY_DIR}/cpp_restapi_export.h
 )
 
+# Map CMake options to cmakedefine01 inputs consumed by version.hpp.in.
+set(CPP_RESTAPI_HAS_JSON_PAGINATION ${CppRestAPI_JsonPagination})
+set(CPP_RESTAPI_HAS_GITHUB ${CppRestAPI_GitHub})
+
 configure_file(
     ${PROJECT_SOURCE_DIR}/include/cpp_restapi/version.hpp.in
     ${PROJECT_BINARY_DIR}/cpp_restapi/version.hpp

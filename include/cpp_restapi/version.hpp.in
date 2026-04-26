@@ -6,6 +6,13 @@
 #define CPP_RESTAPI_VERSION_PATCH @PROJECT_VERSION_PATCH@
 #define CPP_RESTAPI_VERSION "@PROJECT_VERSION@"
 
+// Feature macros: set to 1 when the corresponding optional component
+// was enabled at build time, 0 otherwise. Public headers belonging to
+// an optional component check these to fail with a readable diagnostic
+// when included against a library that was built without the feature.
+#cmakedefine01 CPP_RESTAPI_HAS_JSON_PAGINATION
+#cmakedefine01 CPP_RESTAPI_HAS_GITHUB
+
 namespace cpp_restapi
 {
     inline constexpr int versionMajor = @PROJECT_VERSION_MAJOR@;

@@ -2,6 +2,12 @@
 #ifndef REQUEST_HPP
 #define REQUEST_HPP
 
+#include <cpp_restapi/version.hpp>
+
+#if !CPP_RESTAPI_HAS_GITHUB
+#error "cpp_restapi was built without GitHub helpers. Rebuild with -DCppRestAPI_GitHub=ON to use cpp_restapi::GitHub::Request."
+#endif
+
 #include <memory>
 #include <string>
 

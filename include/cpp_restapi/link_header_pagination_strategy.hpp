@@ -1,6 +1,12 @@
 #ifndef LINK_HEADER_PAGINATION_STRATEGY_HPP_INCLUDED
 #define LINK_HEADER_PAGINATION_STRATEGY_HPP_INCLUDED
 
+#include <cpp_restapi/version.hpp>
+
+#if !CPP_RESTAPI_HAS_JSON_PAGINATION
+#error "cpp_restapi was built without JSON pagination support. Rebuild with -DCppRestAPI_JsonPagination=ON to use LinkHeaderPaginationStrategy."
+#endif
+
 #include <cpp_restapi/ipagination_strategy.hpp>
 #include "cpp_restapi_json_pagination_export.h"
 
