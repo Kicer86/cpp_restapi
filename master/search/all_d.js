@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['nextpageurl_0',['nextPageUrl',['../db/d62/structcpp__restapi_1_1IPaginationStrategy.html#a6053c87c69ad0e8de7a7c2c7f685a19a',1,'cpp_restapi::IPaginationStrategy::nextPageUrl()'],['../d6/d5d/classcpp__restapi_1_1LinkHeaderPaginationStrategy.html#ac33ced0ff09c30823b14edc928eac801',1,'cpp_restapi::LinkHeaderPaginationStrategy::nextPageUrl()']]],
-  ['note_3a_1',['Note:',['../index.html#autotoc_md2',1,'']]]
+  ['merge_0',['merge',['../db/d62/structcpp__restapi_1_1IPaginationStrategy.html#a50aa301f285d045677cbc930ce0001ed',1,'cpp_restapi::IPaginationStrategy::merge()'],['../d6/d5d/classcpp__restapi_1_1LinkHeaderPaginationStrategy.html#a45bb4aa6b7d9986ae829569b3e03ff5f',1,'cpp_restapi::LinkHeaderPaginationStrategy::merge()']]],
+  ['message_1',['message',['../d5/d9b/structcpp__restapi_1_1HttpError.html#abe866c8b4cc6fbd1e8aaaed6dd6c13fe',1,'cpp_restapi::HttpError']]]
 ];

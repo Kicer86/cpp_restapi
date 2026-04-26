@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['key_20types_0',['Key types',['../index.html#autotoc_md21',1,'']]]
+  ['json_20aware_20pagination_3a_0',['JSON-aware pagination:',['../index.html#autotoc_md2',1,'']]]
 ];
