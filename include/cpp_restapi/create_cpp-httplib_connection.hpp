@@ -8,10 +8,10 @@
 
 #include "cpp_restapi_export.h"
 
+#include "iconnection.hpp"
+
 namespace cpp_restapi
 {
-    struct IConnection;
-
     /**
      * @brief Create a connection using the cpp-httplib backend
      * @param address base URL of the API (e.g. "https://api.github.com")
