@@ -1,5 +1,6 @@
 
 #include <expected>
+#include <utility>
 
 #include <cpp_restapi/github/request.hpp>
 #include <cpp_restapi/link_header_pagination_strategy.hpp>
@@ -13,7 +14,7 @@
 namespace cpp_restapi::GitHub
 {
 
-    Request::Request(std::shared_ptr<cpp_restapi::IConnection> connection)
+    Request::Request(std::unique_ptr<cpp_restapi::IConnection> connection)
         : m_connection(std::move(connection))
     {
     }
@@ -60,11 +61,6 @@ namespace cpp_restapi::GitHub
     std::string Request::getAuthenticatedUser()
     {
         return doRequest("user");
-    }
-
-    std::string Request::getAuntenticatedUser()
-    {
-        return getAuthenticatedUser();
     }
 
     std::string Request::listUsers()

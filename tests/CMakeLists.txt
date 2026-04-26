@@ -23,6 +23,10 @@ add_executable(api_tests
     main.cpp
 )
 
+target_include_directories(api_tests
+    PRIVATE
+        ${PROJECT_SOURCE_DIR}/src
+)
 
 target_link_libraries(api_tests
     PRIVATE

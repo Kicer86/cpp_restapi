@@ -1,16 +1,10 @@
 
 #include <future>
-#include <type_traits>
+#include <memory>
+#include <string>
 #include <QNetworkAccessManager>
 #include <gmock/gmock.h>
 #include <httplib.h>
-
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#include "cpp_restapi/cpp-httplib_connection.hpp"
-#include "cpp_restapi/curl_connection.hpp"
-#include "cpp_restapi/qt_connection.hpp"
-#pragma GCC diagnostic pop
 
 #include "cpp_restapi/create_cpp-httplib_connection.hpp"
 #include "cpp_restapi/create_curl_connection.hpp"
@@ -31,35 +25,36 @@ namespace
 {
     constexpr int port = 9010;
 
-    template<typename T>
-    std::unique_ptr<IConnection> buildConnection();
-
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
-    template<>
-    std::unique_ptr<IConnection> buildConnection<CurlBackend::Connection>()
+    struct CurlBackendTag
     {
-        return createCurlConnection(std::string("http://127.0.0.1:") + std::to_string(port), {});
-    }
+        static constexpr bool usesQtEventLoop = false;
 
-    template<>
-    std::unique_ptr<IConnection> buildConnection<QtBackend::Connection>()
+        static std::unique_ptr<IConnection> build()
+        {
+            return createCurlConnection(std::string("http://127.0.0.1:") + std::to_string(port), {});
+        }
+    };
+
+    struct QtBackendTag
     {
-        static QNetworkAccessManager networkmanager;
-        return createQtConnection(networkmanager, std::string("http://127.0.0.1:") + std::to_string(port), {});
-    }
+        static constexpr bool usesQtEventLoop = true;
 
-    template<>
-    std::unique_ptr<IConnection> buildConnection<CppHttplibBackend::Connection>()
+        static std::unique_ptr<IConnection> build()
+        {
+            static QNetworkAccessManager networkmanager;
+            return createQtConnection(networkmanager, std::string("http://127.0.0.1:") + std::to_string(port), {});
+        }
+    };
+
+    struct CppHttplibBackendTag
     {
-        return createCppHttplibConnection(std::string("http://127.0.0.1:") + std::to_string(port), {});
-    }
+        static constexpr bool usesQtEventLoop = false;
 
-    template<typename T>
-    constexpr bool isQtBackend = std::is_same_v<T, QtBackend::Connection>;
-
-#pragma GCC diagnostic pop
+        static std::unique_ptr<IConnection> build()
+        {
+            return createCppHttplibConnection(std::string("http://127.0.0.1:") + std::to_string(port), {});
+        }
+    };
 }
 
 
@@ -77,16 +72,13 @@ class ConnectionTest: public testing::Test
 };
 
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-using Backends = testing::Types<CurlBackend::Connection, QtBackend::Connection, CppHttplibBackend::Connection>;
-#pragma GCC diagnostic pop
+using Backends = testing::Types<CurlBackendTag, QtBackendTag, CppHttplibBackendTag>;
 TYPED_TEST_SUITE(ConnectionTest, Backends);
 
 
 TYPED_TEST(ConnectionTest, pagination)
 {
-    auto connection = buildConnection<TypeParam>();
+    auto connection = TypeParam::build();
 
     const std::string secondPage = connection->url() + "/url/to/second/page&page=2";
     const std::string thirdPage = connection->url() + "/url/to/last/page&page=3";
@@ -104,7 +96,7 @@ TYPED_TEST(ConnectionTest, pagination)
 
 TYPED_TEST(ConnectionTest, arraysPagination)
 {
-    auto connection = buildConnection<TypeParam>();
+    auto connection = TypeParam::build();
 
     const std::string secondPage = connection->url() + "/url/to/second/page&page=2";
     const std::string thirdPage = connection->url() + "/url/to/last/page&page=3";
@@ -123,7 +115,7 @@ TYPED_TEST(ConnectionTest, arraysPagination)
 
 TYPED_TEST(ConnectionTest, fetchSuccessReturnsBody)
 {
-    auto connection = buildConnection<TypeParam>();
+    auto connection = TypeParam::build();
 
     EXPECT_CALL(this->server, request("/api/data", _))
         .WillOnce(Return(GithubServerMock::Response{R"({"key":"value"})", {}, 200}));
@@ -138,7 +130,7 @@ TYPED_TEST(ConnectionTest, fetchSuccessReturnsBody)
 
 TYPED_TEST(ConnectionTest, fetchReturns404Error)
 {
-    auto connection = buildConnection<TypeParam>();
+    auto connection = TypeParam::build();
 
     EXPECT_CALL(this->server, request("/missing", _))
         .WillOnce(Return(GithubServerMock::Response{"Not Found", {}, 404}));
@@ -153,7 +145,7 @@ TYPED_TEST(ConnectionTest, fetchReturns404Error)
 
 TYPED_TEST(ConnectionTest, fetchReturns500Error)
 {
-    auto connection = buildConnection<TypeParam>();
+    auto connection = TypeParam::build();
 
     EXPECT_CALL(this->server, request("/broken", _))
         .WillOnce(Return(GithubServerMock::Response{"Internal Server Error", {}, 500}));
@@ -169,10 +161,10 @@ TYPED_TEST(ConnectionTest, fetchReturns500Error)
 
 TYPED_TEST(ConnectionTest, asyncFetchCallsOnSuccess)
 {
-    if constexpr (isQtBackend<TypeParam>)
+    if constexpr (TypeParam::usesQtEventLoop)
         GTEST_SKIP() << "Qt backend requires event loop for async operations";
 
-    auto connection = buildConnection<TypeParam>();
+    auto connection = TypeParam::build();
 
     EXPECT_CALL(this->server, request("/async/ok", _))
         .WillOnce(Return(GithubServerMock::Response{R"({"async":"ok"})", {}, 200}));
@@ -195,10 +187,10 @@ TYPED_TEST(ConnectionTest, asyncFetchCallsOnSuccess)
 
 TYPED_TEST(ConnectionTest, asyncFetchCallsOnError)
 {
-    if constexpr (isQtBackend<TypeParam>)
+    if constexpr (TypeParam::usesQtEventLoop)
         GTEST_SKIP() << "Qt backend requires event loop for async operations";
 
-    auto connection = buildConnection<TypeParam>();
+    auto connection = TypeParam::build();
 
     EXPECT_CALL(this->server, request("/async/fail", _))
         .WillOnce(Return(GithubServerMock::Response{"Server Error", {}, 500}));
@@ -220,7 +212,7 @@ TYPED_TEST(ConnectionTest, asyncFetchCallsOnError)
 
 TYPED_TEST(ConnectionTest, sseSubscribeReceivesEvents)
 {
-    if constexpr (isQtBackend<TypeParam>)
+    if constexpr (TypeParam::usesQtEventLoop)
         GTEST_SKIP() << "Qt backend requires event loop for SSE";
 
     this->server.setSseEvents({
@@ -230,7 +222,7 @@ TYPED_TEST(ConnectionTest, sseSubscribeReceivesEvents)
     });
     this->server.listen();
 
-    auto connection = buildConnection<TypeParam>();
+    auto connection = TypeParam::build();
 
     std::promise<std::vector<cpp_restapi::SseEvent>> promise;
     auto future = promise.get_future();

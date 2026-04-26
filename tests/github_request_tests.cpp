@@ -1,14 +1,15 @@
 
+#include <algorithm>
+#include <cctype>
+#include <functional>
+#include <memory>
+#include <string>
+#include <utility>
+
 #include <QNetworkAccessManager>
 #include <gmock/gmock.h>
 #include <httplib.h>
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#include "cpp_restapi/cpp-httplib_connection.hpp"
-#include "cpp_restapi/curl_connection.hpp"
-#include "cpp_restapi/qt_connection.hpp"
-#pragma GCC diagnostic pop
 #include "cpp_restapi/create_cpp-httplib_connection.hpp"
 #include "cpp_restapi/create_curl_connection.hpp"
 #include "cpp_restapi/create_qt_connection.hpp"
@@ -28,35 +29,33 @@ namespace
 {
     constexpr int port = 9010;
 
-    template<typename T>
-    std::shared_ptr<IConnection> buildConnection(GitHub::ConnectionBuilder &);
-
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
-    template<>
-    std::shared_ptr<IConnection> buildConnection<CurlBackend::Connection>(GitHub::ConnectionBuilder& builder)
+    struct CurlBackendTag
     {
-        return builder.build(createCurlConnection);
-    }
+        static std::unique_ptr<IConnection> build(GitHub::ConnectionBuilder& builder)
+        {
+            return builder.build(createCurlConnection);
+        }
+    };
 
-    template<>
-    std::shared_ptr<IConnection> buildConnection<QtBackend::Connection>(GitHub::ConnectionBuilder& builder)
+    struct QtBackendTag
     {
-        static QNetworkAccessManager networkmanager;
-        return builder.build(createQtConnection, networkmanager);
-    }
+        static std::unique_ptr<IConnection> build(GitHub::ConnectionBuilder& builder)
+        {
+            static QNetworkAccessManager networkmanager;
+            return builder.build(createQtConnection, networkmanager);
+        }
+    };
 
-    template<>
-    std::shared_ptr<IConnection> buildConnection<CppHttplibBackend::Connection>(GitHub::ConnectionBuilder& builder)
+    struct CppHttplibBackendTag
     {
-       return builder.build(createCppHttplibConnection);
-    }
-
-#pragma GCC diagnostic pop
+        static std::unique_ptr<IConnection> build(GitHub::ConnectionBuilder& builder)
+        {
+            return builder.build(createCppHttplibConnection);
+        }
+    };
 
     template<typename T>
-    std::shared_ptr<IConnection> buildNewApi(std::function<void(GitHub::ConnectionBuilder &)> c = {})
+    std::unique_ptr<IConnection> buildNewApi(std::function<void(GitHub::ConnectionBuilder &)> c = {})
     {
         auto builder = GitHub::ConnectionBuilder();
         builder.setAddress(std::string("http://127.0.0.1:") + std::to_string(port));
@@ -64,7 +63,7 @@ namespace
         if (c)
             c(builder);
 
-        return buildConnection<T>(builder);
+        return T::build(builder);
     }
 }
 
@@ -97,10 +96,7 @@ class ApiTest: public testing::Test
 };
 
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-using Backends = testing::Types<CurlBackend::Connection, QtBackend::Connection, CppHttplibBackend::Connection>;
-#pragma GCC diagnostic pop
+using Backends = testing::Types<CurlBackendTag, QtBackendTag, CppHttplibBackendTag>;
 TYPED_TEST_SUITE(ApiTest, Backends);
 
 
@@ -111,7 +107,7 @@ TYPED_TEST(ApiTest, fetchRegularUser)
 
     auto connection = buildNewApi<TypeParam>();
 
-    GitHub::Request request(connection);
+    GitHub::Request request(std::move(connection));
     const auto info = request.getUserInfo("userName1234");
 
     EXPECT_EQ(info, "{\"id\":1234,\"login\":\"userName1234\"}\n");
@@ -130,7 +126,7 @@ TYPED_TEST(ApiTest, authorization)
         builder.setToken("github_token");
     });
 
-    GitHub::Request request(connection);
+    GitHub::Request request(std::move(connection));
     const auto info = request.getUserInfo("userName1234");
 
     EXPECT_EQ(info, "{\"id\":1234,\"login\":\"userName1234\"}\n");
@@ -146,7 +142,7 @@ TYPED_TEST(ApiTest, requestReturns404ErrorGivesEmptyString)
 
     auto connection = buildNewApi<TypeParam>([](GitHub::ConnectionBuilder&) {});
 
-    GitHub::Request request(connection);
+    GitHub::Request request(std::move(connection));
     const auto result = request.getUserInfo("nonexistent");
 
     EXPECT_TRUE(result.empty());
@@ -162,7 +158,7 @@ TYPED_TEST(ApiTest, requestReturns500ErrorGivesEmptyString)
 
     auto connection = buildNewApi<TypeParam>([](GitHub::ConnectionBuilder&) {});
 
-    GitHub::Request request(connection);
+    GitHub::Request request(std::move(connection));
     const auto result = request.getUserInfo("anyuser");
 
     EXPECT_TRUE(result.empty());

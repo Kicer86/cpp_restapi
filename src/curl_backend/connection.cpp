@@ -9,31 +9,45 @@
 #include <cassert>
 #include <iterator>
 #include <string>
+#include <utility>
 #include <curl/curl.h>
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#include <cpp_restapi/curl_connection.hpp>
-#pragma GCC diagnostic pop
+#include <cpp_restapi/create_curl_connection.hpp>
 #include "curl_sse_connection.hpp"
+#include "threaded_connection.hpp"
 
 
-namespace cpp_restapi::CurlBackend
+namespace
 {
-    Connection::Connection(const std::string& address, const std::map<std::string, std::string>& headerEntries)
-        : ThreadedConnection(address, headerEntries)
+    class CurlConnection final: public cpp_restapi::ThreadedConnection
+    {
+        public:
+            CurlConnection(const std::string& address, const std::map<std::string, std::string>& headerEntries);
+            CurlConnection(const CurlConnection &) = delete;
+
+            ~CurlConnection() override;
+
+            CurlConnection& operator=(const CurlConnection &) = delete;
+
+            cpp_restapi::Response fetchPage(const std::string& request) override;
+            std::unique_ptr<cpp_restapi::ISseConnection> subscribe(const std::string& request, cpp_restapi::IConnection::EventCallback callback) override;
+    };
+
+
+    CurlConnection::CurlConnection(const std::string& address, const std::map<std::string, std::string>& headerEntries)
+        : cpp_restapi::ThreadedConnection(address, headerEntries)
     {
 
     }
 
 
-    Connection::~Connection()
+    CurlConnection::~CurlConnection()
     {
 
     }
 
 
-    Response Connection::fetchPage(const std::string& page)
+    cpp_restapi::Response CurlConnection::fetchPage(const std::string& page)
     {
         std::string body;
         std::string headers;
@@ -102,10 +116,21 @@ namespace cpp_restapi::CurlBackend
     }
 
 
-    std::unique_ptr<ISseConnection> Connection::subscribe(const std::string& request, EventCallback callback)
+    std::unique_ptr<cpp_restapi::ISseConnection> CurlConnection::subscribe(const std::string& request, cpp_restapi::IConnection::EventCallback callback)
     {
-        auto sse = std::make_unique<SseConnection>(address(), getHeaderEntries());
+        auto sse = std::make_unique<cpp_restapi::CurlBackend::SseConnection>(address(), getHeaderEntries());
         sse->subscribe(request, std::move(callback));
         return sse;
+    }
+}
+
+
+namespace cpp_restapi
+{
+    std::unique_ptr<IConnection> createCurlConnection(
+        const std::string& address,
+        const std::map<std::string, std::string>& headerEntries)
+    {
+        return std::make_unique<CurlConnection>(address, headerEntries);
     }
 }

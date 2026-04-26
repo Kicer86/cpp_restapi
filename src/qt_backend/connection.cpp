@@ -1,38 +1,64 @@
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#include <cpp_restapi/qt_connection.hpp>
-#pragma GCC diagnostic pop
-#include "qt_sse_connection.hpp"
+#include <cpp_restapi/create_qt_connection.hpp>
 
 #include <cassert>
 #include <string>
+#include <utility>
 
 #include <QNetworkRequest>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QEventLoop>
 
+#include "base_connection.hpp"
+#include "qt_sse_connection.hpp"
 
-namespace cpp_restapi::QtBackend
+
+namespace
 {
-    Connection::Connection(QNetworkAccessManager& manager, const std::string& address, const std::map<std::string, std::string>& headerEntries)
-        : BaseConnection(address, headerEntries)
+    class QtConnection final: public QObject, public cpp_restapi::BaseConnection
+    {
+        public:
+            QtConnection(QNetworkAccessManager &, const std::string& address, const std::map<std::string, std::string>& headerEntries);
+            QtConnection(const QtConnection &) = delete;
+
+            ~QtConnection() override;
+
+            QtConnection& operator=(const QtConnection &) = delete;
+
+            cpp_restapi::Response fetchPage(const std::string& request) override;
+            std::unique_ptr<cpp_restapi::ISseConnection> subscribe(const std::string& request, cpp_restapi::IConnection::EventCallback callback) override;
+
+        protected:
+            void fetchAsync(const std::string& fullUrl,
+                            cpp_restapi::CancellationToken cancel,
+                            cpp_restapi::IConnection::FetchCallback onSuccess,
+                            cpp_restapi::IConnection::ErrorCallback onError) override;
+
+        private:
+            QNetworkAccessManager& m_networkManager;
+
+            QNetworkRequest prepareRequest();
+    };
+
+
+    QtConnection::QtConnection(QNetworkAccessManager& manager, const std::string& address, const std::map<std::string, std::string>& headerEntries)
+        : cpp_restapi::BaseConnection(address, headerEntries)
         , m_networkManager(manager)
     {
 
     }
 
 
-    Connection::~Connection()
+    QtConnection::~QtConnection()
     {
 
     }
 
 
-    Response Connection::fetchPage(const std::string& page)
+    cpp_restapi::Response QtConnection::fetchPage(const std::string& page)
     {
-        Response result;
+        cpp_restapi::Response result;
 
         QNetworkRequest request = prepareRequest();
         const QUrl url(QString::fromStdString(page));
@@ -85,7 +111,7 @@ namespace cpp_restapi::QtBackend
     }
 
 
-    QNetworkRequest Connection::prepareRequest()
+    QNetworkRequest QtConnection::prepareRequest()
     {
         QNetworkRequest request;
 
@@ -100,15 +126,18 @@ namespace cpp_restapi::QtBackend
     }
 
 
-    std::unique_ptr<ISseConnection> Connection::subscribe(const std::string& request, EventCallback callback)
+    std::unique_ptr<cpp_restapi::ISseConnection> QtConnection::subscribe(const std::string& request, cpp_restapi::IConnection::EventCallback callback)
     {
-        auto sse = std::make_unique<SseConnection>(m_networkManager, address(), getHeaderEntries());
+        auto sse = std::make_unique<cpp_restapi::QtBackend::SseConnection>(m_networkManager, address(), getHeaderEntries());
         sse->subscribe(request, std::move(callback));
         return sse;
     }
 
 
-    void Connection::fetchAsync(const std::string& url, CancellationToken cancel, FetchCallback onSuccess, ErrorCallback onError)
+    void QtConnection::fetchAsync(const std::string& url,
+                                  cpp_restapi::CancellationToken cancel,
+                                  cpp_restapi::IConnection::FetchCallback onSuccess,
+                                  cpp_restapi::IConnection::ErrorCallback onError)
     {
         QNetworkRequest request = prepareRequest();
         request.setUrl(QUrl(QString::fromStdString(url)));
@@ -124,7 +153,7 @@ namespace cpp_restapi::QtBackend
 
             if (reply->error() == QNetworkReply::NoError)
             {
-                Response resp;
+                cpp_restapi::Response resp;
                 resp.statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
                 resp.body = reply->readAll().toStdString();
 
@@ -142,9 +171,21 @@ namespace cpp_restapi::QtBackend
                 if (onError)
                 {
                     const int code = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-                    onError(HttpError{code, reply->readAll().toStdString(), reply->errorString().toStdString()});
+                    onError(cpp_restapi::HttpError{code, reply->readAll().toStdString(), reply->errorString().toStdString()});
                 }
             }
         });
+    }
+}
+
+
+namespace cpp_restapi
+{
+    std::unique_ptr<IConnection> createQtConnection(
+        QNetworkAccessManager& manager,
+        const std::string& address,
+        const std::map<std::string, std::string>& headerEntries)
+    {
+        return std::make_unique<QtConnection>(manager, address, headerEntries);
     }
 }
