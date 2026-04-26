@@ -276,11 +276,13 @@ In addition to regular REST requests, the library supports
 [Server-Sent Events](https://html.spec.whatwg.org/multipage/server-sent-events.html) —
 a standard mechanism for receiving a stream of events from a server over HTTP.
 
-SSE support is available for all three backends via `Connection::subscribe()`.
+SSE support is available for all three backends via `IConnection::subscribe()`.
 The method connects to an SSE endpoint,
 delivers parsed events through a callback and returns an `ISseConnection` handle.
 The call is non-blocking — events are received on an internal
 thread (or via the Qt event loop for the Qt backend). Use `close()` to stop.
+Keep the returned `ISseConnection` alive for as long as you want to receive events.
+For the Qt backend, the Qt event loop must be running.
 
 ### SSE with curl
 
@@ -471,7 +473,8 @@ int main(int argc, char** argv)
 ### Cancellation
 
 The `CancellationToken` returned by async `fetch()` is a `std::shared_ptr<std::atomic<bool>>`.
-Setting it to `true` suppresses further callbacks:
+Setting it to `true` suppresses further callbacks. It does not guarantee that an already-started
+network request is aborted immediately:
 
 ```c++
 auto cancel = connection->fetch("slow/endpoint",
@@ -501,11 +504,11 @@ auto cancel = connection->fetch("repos/owner/repo/issues", strategy,
     });
 ```
 
-## C++20 Coroutine Helpers
+## Coroutine Helpers
 
 The header-only `<cpp_restapi/coroutine.hpp>` provides lightweight coroutine
-wrappers around the callback-based async API.  It requires C++20 (or later) and
-a compiler that supports `<coroutine>`.
+wrappers around the callback-based async API. The project requires C++23, and
+the coroutine helpers also require compiler support for `<coroutine>`.
 
 ### Key types
 
