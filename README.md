@@ -45,7 +45,7 @@ choose which HTTP backend you prefer (all can be used simultaneously) and includ
 
 ```cmake
 set(CppRestAPI_QtBackend ON)         # use this line if you prefer Qt backend
-set(CppRestAPI_CurlBackend ON)       # use this line if you prefer Curl backend
+set(CppRestAPI_CurlBackend ON)       # use this line if you prefer libcurl backend
 set(CppRestAPI_CppHttplibBackend ON) # use this line if you prefer cpp-httplib backend
 add_subdirectory(cpp_restapi)
 ```
@@ -59,7 +59,7 @@ target_link_libraries(app
 )
 ```
 
-and that's all.
+That is enough to link your application against the library.
 
 ##### JSON-aware pagination:
 `cpp_restapi::LinkHeaderPaginationStrategy` is an RFC 5988 `Link`-header based
@@ -98,7 +98,7 @@ It can be useful if you want to play with examples from the `examples` directory
 
 ## Examples
 
-## Simplest usage
+### Simplest usage
 
 ```c++
 #include <iostream>
@@ -126,10 +126,10 @@ int main(int argc, char** argv)
 }
 ```
 
-This example accesses The Star Wars API using curl backend.<br>
+This example accesses The Star Wars API using the libcurl backend.<br>
 `fetch()` returns `std::expected<std::string, HttpError>` — on success the response body is available via `value()`, on failure the `HttpError` carries the HTTP status code, response body and a human-readable message.
 
-Qt version:
+#### Qt version
 ```c++
 #include <iostream>
 #include <QCoreApplication>
@@ -161,7 +161,7 @@ int main(int argc, char** argv)
 }
 ```
 
-cpp-httplib version:
+#### cpp-httplib version
 ```c++
 #include <iostream>
 
@@ -190,7 +190,7 @@ int main(int argc, char** argv)
 
 ### Dedicated GitHub helpers
 
-For accessing GitHub API it is possible to use exactly the same approach as presented above.<br>
+For accessing the GitHub API it is possible to use exactly the same approach as presented above.<br>
 However, for convenience, there are also additional helpers available:
 
 #### Qt example
@@ -278,7 +278,7 @@ int main(int argc, char** argv)
 }
 ```
 
-Also please look into 'examples' directory for details.
+See the `examples` directory for complete example programs.
 
 ## Server-Sent Events (SSE)
 
@@ -294,7 +294,7 @@ thread (or via the Qt event loop for the Qt backend). Use `close()` to stop.
 Keep the returned `ISseConnection` alive for as long as you want to receive events.
 For the Qt backend, the Qt event loop must be running.
 
-### SSE with curl
+### SSE with libcurl
 
 ```c++
 #include <iostream>
@@ -407,7 +407,7 @@ before they fire.
 For non-Qt backends (curl, cpp-httplib) callbacks run on a background `std::thread`.
 For the Qt backend, callbacks are invoked on the Qt event-loop thread.
 
-### Async with curl
+### Async with libcurl
 
 ```c++
 #include <iostream>
@@ -528,7 +528,7 @@ the coroutine helpers also require compiler support for `<coroutine>`.
 | `coFetch(conn, request)` | Returns an awaitable yielding `std::expected<Response, HttpError>`. |
 | `coFetch(conn, request, strategy)` | Returns an awaitable yielding `std::expected<std::string, HttpError>` (paginated). |
 
-### Example (curl backend)
+### Example (libcurl backend)
 
 ```c++
 #include <iostream>
