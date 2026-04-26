@@ -35,7 +35,7 @@ namespace cpp_restapi::GitHub
     class CPP_RESTAPI_GITHUB_EXPORT Request
     {
         public:
-            Request(std::shared_ptr<cpp_restapi::IConnection>);
+            explicit Request(std::unique_ptr<cpp_restapi::IConnection>);
             Request(const Request &) = delete;
             ~Request();
 
@@ -96,12 +96,6 @@ namespace cpp_restapi::GitHub
              * @return api response in json format
              */
             std::string getAuthenticatedUser();
-
-            /**
-             * @deprecated Use getAuthenticatedUser() instead (fixes typo in method name).
-             */
-            [[deprecated("Use getAuthenticatedUser() instead")]]
-            std::string getAuntenticatedUser();
 
             /**
              * @brief Lists all users, in the order that they
@@ -520,7 +514,7 @@ namespace cpp_restapi::GitHub
             std::string repoContributors(const std::string& owner, const std::string& repo);
 
         private:
-            std::shared_ptr<cpp_restapi::IConnection> m_connection;
+            std::unique_ptr<cpp_restapi::IConnection> m_connection;
 
             std::string doRequest(const std::string &);
     };

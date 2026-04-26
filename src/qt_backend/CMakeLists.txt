@@ -11,7 +11,6 @@ endif()
 
 target_sources(cpp_restapi_core PRIVATE
     connection.cpp
-    create_connection.cpp
     sse_connection.cpp
 )
 

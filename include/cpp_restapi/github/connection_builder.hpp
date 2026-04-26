@@ -5,6 +5,7 @@
 #include <functional>
 #include <map>
 #include <memory>
+#include <utility>
 
 #include <cpp_restapi/iconnection.hpp>
 
@@ -66,19 +67,6 @@ namespace cpp_restapi::GitHub
             {
                 return std::invoke(std::forward<Factory>(factory),
                                    std::forward<Args>(args)..., m_address, m_headerEntries);
-            }
-
-            /**
-             * @brief build @ref cpp_restapi::IConnection object
-             * @tparam CT connection type (Qt or Curl backend). @ref cpp_restapi::CurlBackend::Connection or @ref cpp_restapi::QtBackend::Connection
-             * @param args backend specific arguments to be passed to connection.
-             * @deprecated Use build(factory, args...) with a factory function instead (e.g. build(createCurlConnection))
-             */
-            template<typename CT, typename... Args>
-            [[deprecated("Use build(factory, args...) with a factory function instead")]]
-            std::shared_ptr<IConnection> build(Args&&... args)
-            {
-                return std::make_shared<CT>(std::forward<Args>(args)..., m_address, m_headerEntries);
             }
 
         private:
