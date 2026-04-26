@@ -42,7 +42,6 @@ target_link_libraries(app
 )
 ```
 
-
 ##### JSON-aware pagination:
 `cpp_restapi::LinkHeaderPaginationStrategy` is an RFC 5988 `Link`-header based
 pagination strategy with JSON-aware merging (concatenates arrays, deep-merges
