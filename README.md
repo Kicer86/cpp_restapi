@@ -19,26 +19,9 @@ Qt 6/5, libcurl and cpp-httplib.
 | `CppRestAPI_CurlBackend=ON`       | `<cpp_restapi/create_curl_connection.hpp>`        | `cpp_restapi::createCurlConnection()`       | libcurl                                             |
 | `CppRestAPI_CppHttplibBackend=ON` | `<cpp_restapi/create_cpp-httplib_connection.hpp>` | `cpp_restapi::createCppHttplibConnection()` | cpp-httplib                                         |
 
-**Submodules:**
-This repository comes with submodules which are not necessary to build and use this project.<br>
-
-As of now the only submodule is `vcpkg` which can simplify build by providing required dependencies.<br>
-Please mind that vcpkg uses **telemetry**.<br>
-Visit https://learn.microsoft.com/vcpkg/about/privacy for more details.
-
-If you want to use the bundled vcpkg checkout, initialize it and configure CMake with the vcpkg toolchain file:
-
-```bash
-git submodule update --init vcpkg
-./vcpkg/bootstrap-vcpkg.sh
-cmake -B build -DCMAKE_TOOLCHAIN_FILE=$PWD/vcpkg/scripts/buildsystems/vcpkg.cmake -DCppRestAPI_CppHttplibBackend=ON
-```
-
-The repository also provides vcpkg-based CMake presets in `CMakePresets.json`.
-
 ## How to use it
 
-This is a CMake-based project and is meant to be included as a subproject.
+This is a CMake-based project and is primarily meant to be included as a subproject.
 
 Simply embed cpp_restapi's sources in your project,
 choose which HTTP backend you prefer (all can be used simultaneously) and include the `cpp_restapi` project in your `CMakeLists.txt` like this:
@@ -83,18 +66,6 @@ Qt backend can be compiled with Qt6 (default) or Qt5.
 If no Qt6 is found, an automatic fallback to Qt5 will happen.
 
 Set `CppRestAPI_UseQt5` CMake variable to `TRUE` to force Qt5 usage (in case both versions are available).
-
-##### Standalone build:
-It is possible to build this project as any other regular CMake project by invoking:
-```bash
-cmake -B build -DCppRestAPI_CurlBackend=ON
-cmake --build build
-```
-
-Replace `CppRestAPI_CurlBackend` with another backend option if you prefer Qt or cpp-httplib.
-At least one backend option must be enabled, otherwise configuration fails.
-
-It can be useful if you want to play with examples from the `examples` directory or run unit tests.
 
 ## Examples
 
@@ -563,15 +534,52 @@ int main()
 }
 ```
 
-## Building examples
+## Standalone builds, examples and tests
+
+Standalone builds are mostly useful when you want to run the examples or unit tests from this repository.
+The main integration scenario is still to include cpp_restapi as a CMake subproject.
+
+### Basic standalone build
+
+It is possible to build this project as any other regular CMake project by invoking:
+
+```bash
+cmake -B build -DCppRestAPI_CurlBackend=ON
+cmake --build build
+```
+
+Replace `CppRestAPI_CurlBackend` with another backend option if you prefer Qt or cpp-httplib.
+At least one backend option must be enabled, otherwise configuration fails.
+
+### Using bundled vcpkg
+
+This repository has an optional `vcpkg` submodule. It is not required when you include cpp_restapi as a subproject,
+but it can simplify standalone builds by providing dependencies.
+
+Please mind that vcpkg uses **telemetry**.<br>
+Visit https://learn.microsoft.com/vcpkg/about/privacy for more details.
+
+If you want to use the bundled vcpkg checkout, initialize it and configure CMake with the vcpkg toolchain file:
+
+```bash
+git submodule update --init vcpkg
+./vcpkg/bootstrap-vcpkg.sh
+cmake -B build -DCMAKE_TOOLCHAIN_FILE=$PWD/vcpkg/scripts/buildsystems/vcpkg.cmake -DCppRestAPI_CppHttplibBackend=ON
+```
+
+The repository also provides vcpkg-based CMake presets in `CMakePresets.json`.
+
+### Building examples
+
 Examples are located in the `examples` directory of the project.
 To build them set `CppRestAPI_Examples` CMake variable to `ON`.
-It can be done when invoking `cmake` command by providing the `-DCppRestAPI_Examples=ON` command-line argument (see the `Standalone build` section),
+It can be done when invoking `cmake` command by providing the `-DCppRestAPI_Examples=ON` command-line argument (see the `Basic standalone build` section),
 or by modifying the `CppRestAPI_Examples` entry in the `CMakeCache.txt` file located in the build directory of an already configured project.
 
 Please mind that setting `CppRestAPI_Examples` to `ON` forces all backends and optional components to be used, so all backend dependencies must be available.
 
-## Building unit tests
+### Building unit tests
+
 Unit tests are located in the `tests` directory of the project.
 To build them set `CppRestAPI_Tests` CMake variable to `ON`.
 
