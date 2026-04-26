@@ -5,7 +5,8 @@ This is a C++ library originally written for accessing GitHub REST API v3.
 It is now organized to work with any REST API.
 
 It supports three interchangeable HTTP backends for connecting to remote API servers:
-Qt 6/5, libcurl and cpp-httplib.
+Qt 6/5, libcurl and cpp-httplib. All backends expose the same `IConnection` API,
+so applications can choose the HTTP stack that best fits their existing dependencies.
 
 ## Requirements
 
@@ -19,8 +20,12 @@ Qt 6/5, libcurl and cpp-httplib.
 | `CppRestAPI_CurlBackend=ON`       | `<cpp_restapi/create_curl_connection.hpp>`        | `cpp_restapi::createCurlConnection()`       | libcurl             |
 | `CppRestAPI_CppHttplibBackend=ON` | `<cpp_restapi/create_cpp-httplib_connection.hpp>` | `cpp_restapi::createCppHttplibConnection()` | cpp-httplib         |
 
-Only dependencies for the backends you enable need to be available to CMake.
-If you enable multiple backends, all corresponding dependencies must be available.
+Typical applications enable one backend: for example, Qt applications usually use the Qt backend,
+while non-Qt applications can choose libcurl or cpp-httplib. Multiple backends can be enabled in
+one build because each backend provides its own factory function behind the same `IConnection`
+interface. This is mainly useful for examples, tests or comparing backends rather than for normal
+application builds. If you do enable more than one backend, all corresponding dependencies must be
+available to CMake.
 
 The Qt backend uses Qt 6 by default and falls back to Qt 5 when Qt 6 is not found.
 Set `CppRestAPI_UseQt5` CMake variable to `TRUE` to force Qt 5 usage when both versions are available.
@@ -30,12 +35,13 @@ Set `CppRestAPI_UseQt5` CMake variable to `TRUE` to force Qt 5 usage when both v
 This is a CMake-based project and is primarily meant to be included as a subproject.
 
 Simply embed cpp_restapi's sources in your project,
-choose which HTTP backend you prefer (all can be used simultaneously) and include the `cpp_restapi` project in your `CMakeLists.txt` like this:
+choose the HTTP backend you want to use and include the `cpp_restapi` project in your `CMakeLists.txt` like this:
 
 ```cmake
-set(CppRestAPI_QtBackend ON)         # use this line if you prefer Qt backend
-set(CppRestAPI_CurlBackend ON)       # use this line if you prefer libcurl backend
-set(CppRestAPI_CppHttplibBackend ON) # use this line if you prefer cpp-httplib backend
+# Pick one backend for a typical application.
+set(CppRestAPI_CurlBackend ON)         # libcurl backend
+# set(CppRestAPI_QtBackend ON)         # Qt backend
+# set(CppRestAPI_CppHttplibBackend ON) # cpp-httplib backend
 add_subdirectory(cpp_restapi)
 ```
 
