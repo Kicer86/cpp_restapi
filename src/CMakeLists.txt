@@ -52,8 +52,20 @@ if(CppRestAPI_GitHub)
 endif()
 
 # Umbrella library: the only artifact consumers link against. Composed
-# entirely of OBJECT libraries; type follows BUILD_SHARED_LIBS.
-add_library(cpp_restapi cpp_restapi_umbrella.cpp)
+# entirely of OBJECT libraries plus its own version.cpp; type follows
+# BUILD_SHARED_LIBS.
+add_library(cpp_restapi version.cpp)
+
+# version.cpp includes the configured cpp_restapi/version.hpp and
+# cpp_restapi_export.h, so it needs the same include paths the core
+# OBJECT lib publishes. CPP_RESTAPI_EXPORTS makes runtimeVersion() an
+# exported symbol on shared builds.
+target_include_directories(cpp_restapi
+    PRIVATE
+        ${PROJECT_BINARY_DIR}
+        ${PROJECT_SOURCE_DIR}/include
+)
+target_compile_definitions(cpp_restapi PRIVATE cpp_restapi_EXPORTS)
 
 target_link_libraries(cpp_restapi PUBLIC cpp_restapi_core)
 

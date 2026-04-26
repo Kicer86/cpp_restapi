@@ -1,6 +1,8 @@
 #ifndef CPP_RESTAPI_VERSION_HPP
 #define CPP_RESTAPI_VERSION_HPP
 
+#include "cpp_restapi_export.h"
+
 #define CPP_RESTAPI_VERSION_MAJOR @PROJECT_VERSION_MAJOR@
 #define CPP_RESTAPI_VERSION_MINOR @PROJECT_VERSION_MINOR@
 #define CPP_RESTAPI_VERSION_PATCH @PROJECT_VERSION_PATCH@
@@ -19,6 +21,16 @@ namespace cpp_restapi
     inline constexpr int versionMinor = @PROJECT_VERSION_MINOR@;
     inline constexpr int versionPatch = @PROJECT_VERSION_PATCH@;
     inline constexpr char version[]   = "@PROJECT_VERSION@";
+
+    /**
+     * @brief Returns the version string of the linked cpp_restapi library.
+     *
+     * Unlike the compile-time @ref version constant (which reflects the
+     * headers the consumer was built against), this function returns the
+     * version baked into the actually-linked shared library, allowing
+     * detection of header/library mismatch after an in-place upgrade.
+     */
+    CPP_RESTAPI_EXPORT const char* runtimeVersion() noexcept;
 }
 
 #endif
