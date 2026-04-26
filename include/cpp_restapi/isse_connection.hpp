@@ -12,7 +12,7 @@ namespace cpp_restapi
      * @brief Interface for SSE (Server-Sent Events) connections
      *
      * Provides streaming subscription to an SSE endpoint.
-    * Unlike IConnection::fetch() which returns a complete response,
+     * Unlike IConnection::fetch() which returns a complete response,
      * SSE delivers events continuously via a callback.
      */
     struct ISseConnection
