@@ -1,8 +1,14 @@
 #ifndef LINK_HEADER_PAGINATION_STRATEGY_HPP_INCLUDED
 #define LINK_HEADER_PAGINATION_STRATEGY_HPP_INCLUDED
 
+#include <cpp_restapi/version.hpp>
+
+#if !CPP_RESTAPI_HAS_JSON_PAGINATION
+#error "cpp_restapi was built without JSON pagination support. Rebuild with -DCppRestAPI_JsonPagination=ON to use LinkHeaderPaginationStrategy."
+#endif
+
 #include <cpp_restapi/ipagination_strategy.hpp>
-#include "cpp_restapi_export.h"
+#include "cpp_restapi_json_pagination_export.h"
 
 namespace cpp_restapi
 {
@@ -13,8 +19,11 @@ namespace cpp_restapi
      * Discovers the next page via the `Link: <url>; rel="next"` header
      * and merges JSON responses by concatenating arrays or deep-merging objects.
      * Used by GitHub API and other services that paginate with Link headers.
+     *
+     * Provided by the optional `cpp_restapi_json_pagination` CMake target
+     * (requires jsoncpp).
      */
-    class CPP_RESTAPI_EXPORT LinkHeaderPaginationStrategy: public IPaginationStrategy
+    class CPP_RESTAPI_JSON_PAGINATION_EXPORT LinkHeaderPaginationStrategy: public IPaginationStrategy
     {
     public:
         std::string nextPageUrl(const std::string& responseHeaders) override;

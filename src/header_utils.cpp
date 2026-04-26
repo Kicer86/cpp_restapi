@@ -1,13 +1,14 @@
 
+#include "header_utils.hpp"
+
+#include <algorithm>
+#include <cctype>
 #include <regex>
 #include <sstream>
-
-#include "header_utils.hpp"
 
 
 namespace HeaderUtils
 {
-
     std::string getNextPageUrl(const std::string& header)
     {
         std::istringstream header_(header);
@@ -36,5 +37,4 @@ namespace HeaderUtils
 
         return link;
     }
-
 }

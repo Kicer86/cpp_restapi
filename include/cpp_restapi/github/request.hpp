@@ -2,11 +2,17 @@
 #ifndef REQUEST_HPP
 #define REQUEST_HPP
 
+#include <cpp_restapi/version.hpp>
+
+#if !CPP_RESTAPI_HAS_GITHUB
+#error "cpp_restapi was built without GitHub helpers. Rebuild with -DCppRestAPI_GitHub=ON to use cpp_restapi::GitHub::Request."
+#endif
+
 #include <memory>
 #include <string>
 
 #include <cpp_restapi/iconnection.hpp>
-#include "cpp_restapi_export.h"
+#include "cpp_restapi_github_export.h"
 
 
 namespace cpp_restapi::GitHub
@@ -22,8 +28,11 @@ namespace cpp_restapi::GitHub
      * to construct a \ref cpp_restapi::IConnection object.
      *
      * All methods return a response in json format.
+     *
+     * Provided by the optional `cpp_restapi_github` CMake target
+     * (which itself depends on `cpp_restapi_json_pagination` and jsoncpp).
      */
-    class CPP_RESTAPI_EXPORT Request
+    class CPP_RESTAPI_GITHUB_EXPORT Request
     {
         public:
             Request(std::shared_ptr<cpp_restapi::IConnection>);
