@@ -26,6 +26,16 @@ As of now the only submodule is `vcpkg` which can simplify build by providing re
 Please mind that vcpkg uses **telemetry**.<br>
 Visit https://learn.microsoft.com/vcpkg/about/privacy for more details.
 
+If you want to use the bundled vcpkg checkout, initialize it and configure CMake with the vcpkg toolchain file:
+
+```bash
+git submodule update --init vcpkg
+./vcpkg/bootstrap-vcpkg.sh
+cmake -B build -DCMAKE_TOOLCHAIN_FILE=$PWD/vcpkg/scripts/buildsystems/vcpkg.cmake -DCppRestAPI_CppHttplibBackend=ON
+```
+
+The repository also provides vcpkg-based CMake presets in `CMakePresets.json`.
+
 ## How to use it
 
 This is a CMake-based project and is meant to be included as a subproject.
