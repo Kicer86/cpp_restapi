@@ -12,7 +12,7 @@
 #include <string>
 
 #include <cpp_restapi/iconnection.hpp>
-#include "cpp_restapi_github_export.h"
+#include "cpp_restapi_export.h"
 
 
 namespace cpp_restapi::GitHub
@@ -32,7 +32,7 @@ namespace cpp_restapi::GitHub
      * Provided by the optional `cpp_restapi_github` CMake target
      * (which itself depends on `cpp_restapi_json_pagination` and jsoncpp).
      */
-    class CPP_RESTAPI_GITHUB_EXPORT Request
+    class CPP_RESTAPI_EXPORT Request
     {
         public:
             explicit Request(std::unique_ptr<cpp_restapi::IConnection>);

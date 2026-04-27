@@ -1,26 +1,4 @@
 
-add_library(cpp_restapi_core OBJECT
-    base_connection.cpp
-    header_utils.cpp
-    threaded_connection.cpp
-    sse_parser.cpp
-)
-
-set_target_properties(cpp_restapi_core PROPERTIES POSITION_INDEPENDENT_CODE ON)
-
-target_include_directories(cpp_restapi_core
-    PUBLIC
-        ${PROJECT_BINARY_DIR}
-        ${PROJECT_SOURCE_DIR}/include
-)
-
-target_compile_definitions(cpp_restapi_core PRIVATE cpp_restapi_EXPORTS)
-
-generate_export_header(cpp_restapi_core
-    BASE_NAME cpp_restapi
-    EXPORT_FILE_NAME ${PROJECT_BINARY_DIR}/cpp_restapi_export.h
-)
-
 # Map CMake options to cmakedefine01 inputs consumed by version.hpp.in.
 set(CPP_RESTAPI_HAS_JSON_PAGINATION ${CppRestAPI_JsonPagination})
 set(CPP_RESTAPI_HAS_GITHUB ${CppRestAPI_GitHub})
@@ -29,6 +7,31 @@ configure_file(
     ${PROJECT_SOURCE_DIR}/include/cpp_restapi/version.hpp.in
     ${PROJECT_BINARY_DIR}/cpp_restapi/version.hpp
     @ONLY
+)
+
+add_library(cpp_restapi version.cpp)
+
+target_include_directories(cpp_restapi
+    PUBLIC
+        ${PROJECT_SOURCE_DIR}/include
+        ${PROJECT_BINARY_DIR}
+        ${CMAKE_CURRENT_BINARY_DIR}
+    PRIVATE
+        ${PROJECT_SOURCE_DIR}/src
+)
+
+generate_export_header(cpp_restapi)
+
+set_target_properties(cpp_restapi PROPERTIES
+    VERSION   ${PROJECT_VERSION}
+    SOVERSION ${PROJECT_VERSION_MAJOR}
+)
+
+target_sources(cpp_restapi PRIVATE
+    base_connection.cpp
+    header_utils.cpp
+    threaded_connection.cpp
+    sse_parser.cpp
 )
 
 if(CppRestAPI_QtBackend)
@@ -50,34 +53,3 @@ endif()
 if(CppRestAPI_GitHub)
     add_subdirectory(services/github)
 endif()
-
-# Umbrella library: the only artifact consumers link against. Composed
-# entirely of OBJECT libraries plus its own version.cpp; type follows
-# BUILD_SHARED_LIBS.
-add_library(cpp_restapi version.cpp)
-
-# version.cpp includes the configured cpp_restapi/version.hpp and
-# cpp_restapi_export.h, so it needs the same include paths the core
-# OBJECT lib publishes. CPP_RESTAPI_EXPORTS makes runtimeVersion() an
-# exported symbol on shared builds.
-target_include_directories(cpp_restapi
-    PRIVATE
-        ${PROJECT_BINARY_DIR}
-        ${PROJECT_SOURCE_DIR}/include
-)
-target_compile_definitions(cpp_restapi PRIVATE cpp_restapi_EXPORTS)
-
-target_link_libraries(cpp_restapi PUBLIC cpp_restapi_core)
-
-if(TARGET cpp_restapi_json_pagination)
-    target_link_libraries(cpp_restapi PUBLIC cpp_restapi_json_pagination)
-endif()
-
-if(TARGET cpp_restapi_github)
-    target_link_libraries(cpp_restapi PUBLIC cpp_restapi_github)
-endif()
-
-set_target_properties(cpp_restapi PROPERTIES
-    VERSION   ${PROJECT_VERSION}
-    SOVERSION ${PROJECT_VERSION_MAJOR}
-)
