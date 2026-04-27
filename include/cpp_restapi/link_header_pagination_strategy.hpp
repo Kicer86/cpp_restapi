@@ -8,7 +8,7 @@
 #endif
 
 #include <cpp_restapi/ipagination_strategy.hpp>
-#include "cpp_restapi_json_pagination_export.h"
+#include "cpp_restapi_export.h"
 
 namespace cpp_restapi
 {
@@ -23,7 +23,7 @@ namespace cpp_restapi
      * Provided by the optional `cpp_restapi_json_pagination` CMake target
      * (requires jsoncpp).
      */
-    class CPP_RESTAPI_JSON_PAGINATION_EXPORT LinkHeaderPaginationStrategy: public IPaginationStrategy
+    class CPP_RESTAPI_EXPORT LinkHeaderPaginationStrategy: public IPaginationStrategy
     {
     public:
         std::string nextPageUrl(const std::string& responseHeaders) override;
