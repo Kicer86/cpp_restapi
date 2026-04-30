@@ -9,7 +9,11 @@ configure_file(
     @ONLY
 )
 
-add_library(cpp_restapi version.cpp)
+if(CppRestAPI_BuildShared)
+    add_library(cpp_restapi SHARED)
+else()
+    add_library(cpp_restapi STATIC)
+endif()
 
 target_include_directories(cpp_restapi
     PUBLIC
@@ -32,6 +36,7 @@ target_sources(cpp_restapi PRIVATE
     header_utils.cpp
     threaded_connection.cpp
     sse_parser.cpp
+    version.cpp
 )
 
 if(CppRestAPI_QtBackend)

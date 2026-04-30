@@ -18,6 +18,7 @@ option(CppRestAPI_JsonPagination "JSON-aware Link-header pagination strategy (re
 option(CppRestAPI_GitHub "GitHub API helpers (ConnectionBuilder, Request). Implies CppRestAPI_JsonPagination." ON)
 option(CppRestAPI_Tests "Enable CppRestAPI tests. Forces all backends to be ON" OFF)
 option(CppRestAPI_Examples "Build CppRestAPI examples. Forces all backends to be ON" OFF)
+option(CppRestAPI_BuildShared "Build CppRestAPI as shared library if ON" ${CMAKE_SHARED_LIBS})
 
 if(CppRestAPI_Tests OR CppRestAPI_Examples)
     set(CppRestAPI_QtBackend ON)
