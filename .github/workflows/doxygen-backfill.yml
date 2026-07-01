@@ -12,7 +12,7 @@ jobs:
 
     steps:
     - name: Checkout Repo (full history)
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         fetch-depth: 0
 
@@ -24,7 +24,7 @@ jobs:
         git clone --depth 1 https://github.com/jothepro/doxygen-awesome-css.git /tmp/doxygen-awesome-css
 
     - name: Checkout gh-pages
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         ref: gh-pages
         path: gh-pages
