@@ -33,7 +33,7 @@ jobs:
       run: echo 'set(VCPKG_BUILD_TYPE "release")' >> vcpkg/triplets/x64-windows.cmake
 
     - name: Run vcpkg
-      uses: lukka/run-vcpkg@v11.5
+      uses: lukka/run-vcpkg@v11.6
 
     - name: Build
       uses: lukka/run-cmake@v10
